@@ -36,13 +36,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "input_file",
         nargs="?",
-        default="demographics_data/clean/ok_vote_intention_2012.csv",
+        default="demographics_data/clean/ok_vote_intention_2015.csv",
         help="Path to input CSV file"
     )
     parser.add_argument(
         "output_file",
         nargs="?",
-        default="demographics_data/clean/ok_vote_intention_2012.csv",
+        default="demographics_data/clean/ok_vote_intention_2015.csv",
         help="Path to output CSV file"
     )
     args = parser.parse_args()

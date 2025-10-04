@@ -225,7 +225,7 @@ class CataloniaElectionSimulator:
 
         if verbose:
             print("\n" + "=" * 60)
-            print("CATALONIA 2012 ELECTION SIMULATION")
+            print("CATALONIA ELECTION SIMULATION")
             print("=" * 60)
             print(f"Electoral system: d'Hondt method")
             print(f"Threshold: {threshold}% per province")
@@ -500,7 +500,7 @@ def main(population_file: str, votes_file: str, output_file: str):
 
 
     # --- Visualization ---
-    simulator.plot_votes_and_seats(detailed_results, total_results, province_votes, simulator.seats_per_province)
+    # simulator.plot_votes_and_seats(detailed_results, total_results, province_votes, simulator.seats_per_province)
 
     return simulator, detailed_results, total_results, province_votes
 
@@ -509,19 +509,19 @@ if __name__ == "__main__":
     parser.add_argument(
         "input_file",
         nargs="?",
-        default="demographics_data/clean/ok_population_weights_2012.csv",
+        default="demographics_data/clean/ok_population_weights_2015.csv",
         help="Path to input CSV file"
     )
     parser.add_argument(
         "votes_file",
         nargs="?",
-        default="demographics_data/clean/ok_vote_intention_2012.csv",
+        default="demographics_data/clean/ok_vote_intention_2015.csv",
         help="Path to output CSV file"
     )
     parser.add_argument(
         "output_file",
         nargs="?",
-        default="demographics_data/simulation_results/catalonia_2012_results.csv",
+        default="demographics_data/simulation_results/cat_2015_results.csv",
         help="Path to output CSV file"
     )
     args = parser.parse_args()

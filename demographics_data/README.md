@@ -44,7 +44,8 @@ The election simulation bit is actually the most realistic part. Voting intentio
 ### Folder Structure
 
 - `auto_balancer.py`: Helps a ton for cooking the data. Ensures that your percentages always properly add up to 100.
-- `cat_ceo_process.py`: Wrestles raw CEO survey data into something the simulation can actually use. Manual cooking is needed after that-
+- `adjust_unemployment.py`: Rebalances unemployment rates according to unemployment evolution over the years, folowing the criteria explained before (trasnfers between unemployed, middle, ind, buss). For when you want your simulated misery to be a bit more statistically accurate.
+- `cat_ceo_process.py`: Wrestles raw CEO survey data into something the simulation can actually use. Manual cooking is needed after that.
 - `cat_pop_weights.py`: Turns IDESCAT data into population weights. Manual cooking is also needed but to a much lesser extent.
 - `cat_simulation.py`: Runs the actual election simulations
 - `ceo_raw/`: All the raw CEO survey CSVs (e.g., `cat_data_2012.csv`).
@@ -57,10 +58,10 @@ The election simulation bit is actually the most realistic part. Voting intentio
 
 1. **Prepare Data:** Drop new raw files into `ceo_raw/` or `idescat_raw/` as needed. Optional: pray.
 2. **Run the Scripts:** Fire up the Python scripts to process and clean the data. Outputs land in `clean/`. If something breaks, blame the CEO or IDESCAT.
-3. **Simulate:** Call people to vote with `cat_simulation.py`. Results go to `simulation_results/`.
+3. **Simulate:** Pókemon-go-to-the-polls with `cat_simulation.py`. Results go to `simulation_results/`.
 
 ### Final Notes
 
 - All scripts are Python, and you’ll need the usual suspects (pandas, numpy, matplotlib, etc.).
 - Note that no library installation system or virtual environments are included because I was too lazy to create them. For reference I am using Python 3.12.
-- For questions, complaints, or existential dread about the data, check the script comments. Or just yell into the abyss. Sometimes it yells back.
+- For questions, complaints, or existential dread about the data, check the script comments. Maybe they help?
