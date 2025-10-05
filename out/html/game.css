@@ -234,7 +234,10 @@ blockquote + blockquote.attribution {
     /*float: left;*/
     border: none;
     outline: none;
-    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 9px;
+    padding-right: 9px;
 }
 .tab_button.active {
     background-color: var(--content-bg-color);

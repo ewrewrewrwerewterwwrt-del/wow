@@ -1,0 +1,60 @@
+Title: About
+go-to: force_new_page_about
+
+@force_new_page_about
+new-page: true
+
+= Route to Ítaca - An Alternate Procés
+
+It's hard to classify this work. What am I modding from? Formally it is a fork from <a href="https://red-autumn.itch.io/petrograd-1917">Petrograd 1917</a>, but it clearly takes a lot form the  <a href="https://originn0.github.io/dynamic_social_democracy/">Dynamic Social Democracy</a> mod and, by extension, from the original <a href="https://red-autumn.itch.io/social-democracy">Social Democracy, an Alternate History</a> game. It could have been a fork from that amazing mod for all that matters.
+
+In any case, if you're lost or confused on what's this about, do check the info here.
+
+- @route_to_itaca: Route to Ítaca
+- @frequent_questions: Frequently Asked Questions
+- @changelog: Changelog & Future Updates
+- @credits: Credits
+- @root: Back
+
+@route_to_itaca
+
+Route to Ítaca is about imagining how different could the 2010's have been for Catalonia, had things worked even so slightly differently. 
+
+- @force_new_page_about: Back
+
+
+@frequent_questions
+
+= FAQ
+
+**How do I cross the Rubicon?**
+You need to have the Catalan Parlament pass the twin laws on self-determination and juridical transition. I.e. the path for a non-agreement referendum. Just like in Dynamic Social Democracy, this makes time slow down to a weekly basis to reflect how critical the situation is. Also just like in Dynamic Social Democracy, Rubicon mode remains active for the rest of the game.
+
+**Will you make XYZ party playable?**
+Most probably not. Excluding the three main pro-indy parties, I *might* do one for Comuns/Podemos, but the might is carrying a lot in this sentence. You are free to mod them in yourself, though. Do, nonetheless, refrain from doing them for the far-right parties. The original game by Autumn Chen was already about preventing their rise, and I have absolutely no intention to change that.
+
+- @force_new_page_about: Back
+
+@changelog
+
+= changelog
+
+**v1.0** - TBD
+- Initial Release
+- <span style='color: #ff8000; font-weight: bold;'>ERC</span> playable paths.
+- First achievements batch.
+
+
+= Future Plans
+
+Planned features for future updates include:
+- <span style='color: #002782; font-weight: bold;'>CiU</span> / <span style='color: #20c0b2; font-weight: bold;'>Junts</span> playable paths.
+- <span style='color: #ffed00; font-weight: bold;'>CUP</span> playable paths.
+- More achievements.
+- Historical difficulty mode (no saving, loading, nor polls).
+- European elections?
+- More Spanish-related paths.
+- Path to having a Catalan Electoral Law?? Based on vegueries rather than provinces. Maybe.
+
+- @force_new_page_about: Back
+

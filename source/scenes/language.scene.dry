@@ -1,0 +1,7 @@
+title: Language
+
+You're currently playing the English version of the game (based on this text, this is a shocker, I know). I have taken the compromise to always have the Catalan translation up to date. Other translations may be available by request in the future, maybe. If you'd like to help translating into a language of your choice, please reach out to me via DM.
+
+<button style="border-radius: 5px; border: 2px solid #887766; padding: 0.5em; width: 100%; font-family: inherit; font-size: inherit; color: #900; margin-left: -1em; text-align: left; background-color: transparent;" onmouseover="this.style.backgroundColor='var(--link-hover-color)'" onmouseout="this.style.backgroundColor='transparent'" onclick="window.location.href='https://broken-arrows.github.io/cami_a_itaca/'">Versió en Català</button>
+
+- @root: I actually like it in English

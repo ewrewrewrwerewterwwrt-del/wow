@@ -536,7 +536,7 @@ if (Q.month == 4 && Q.week == 1) {
 !}
 go-to: events_choice if has_event = 1; main if has_event = 0 and difficulty = 0; main.main_easy if has_event = 0 and difficulty < 0; main.main_hard if has_event = 0 and difficulty > 0
 
-= Week [+ week +], [+ month : month +] [+ year +]
+= [+ month : month +] [+ year +][? if rubicon:, Week [+ week +]?]
 
 @events_choice
 

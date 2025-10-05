@@ -9,12 +9,14 @@ new-page: true
 go-to: start_menu_2
 
 
-= Route to Itaca - An Alternate Procés
+= Route to Ítaca - An Alternate Procés
 
 @start_menu_2
 
 - @start: Start game
 - @election_simulation: Election simulation
+- @language: Language
+- @about: About - v1.0 (10.2025)
 - @credits: Credits
 - @game_over.achievements
 
@@ -27,8 +29,10 @@ Q.time = 1;
 Q.year = 2012;
 Q.month = 8;
 Q.week = 1;
+Q.rubicon = 0;
+
 // how many actions have been taken this week?
-Q.week_actions = 0;
+Q.week_actions = 0; // FIXME: delete me
 // how many actions have been taken this month?
 Q.month_actions = 0;
 
@@ -36,7 +40,8 @@ Q.month_actions = 0;
 Q.difficulty = 0;
 Q.historical_mode = 0;
 Q.player_party_name = "<span style='font-style: italic;'>Not yet chosen</span>";
-Q.player_party = "none";
+Q.player_party = "";
+Q.position_disp = "";
 Q.party_name_map = {"erc": "<span style='color: #ff8000; font-weight: bold;'>ERC</span>",
         "ciu": "<span style='color: #002782; font-weight: bold;'>CiU</span>",
         "cdc": "<span style='color: #002782; font-weight: bold;'>CDC</span>",
@@ -44,6 +49,38 @@ Q.party_name_map = {"erc": "<span style='color: #ff8000; font-weight: bold;'>ERC
         "jxsi": "<span style='color: #3ab6a5; font-weight: bold;'>JxSí</span>",
         "junts": "<span style='color: #20c0b2; font-weight: bold;'>Junts</span>",
         "cup": "<span style='color: #ffed00; font-weight: bold;'>CUP</span>"};
+
+Q.erc_dissent_percent = 10;
+Q.ciu_dissent_percent = 15;
+Q.cup_dissent_percent = 15;
+Q.jxsi_dissent_percent = 25;
+
+
+// start situation
+Q.president = "Artur Mas";
+Q.president_party = "ciu";
+Q.president_party_disp = Q.party_name_map[Q.president_party];
+Q.president_disp = "<span style='color: #002782;'>Artur Mas</span>";
+Q.cat_coalition_disp = "<span style='color: #002782;'>CiU minority government</span>";
+
+Q.spanish_pm = "Mariano Rajoy";
+Q.spanish_pm_party = "pp";
+Q.spanish_pm_party_disp = "<span style='color: #1d84ce; font-weight: bold;'>PP</span>";
+Q.spanish_pm_disp = "<span style='color: #1d84ce;'>Mariano Rajoy</span>";
+Q.spanish_coalition_disp = "<span style='color: #1d84ce;'>PP majority government</span>";
+Q.spain_is_republic = 0; // lol
+
+Q.next_election_month = 12;
+Q.next_election_year = 2014;
+Q.next_spanish_election_month = 12;
+Q.next_spanish_election_year = 2015;
+
+Q.independence_movement = 65;
+Q.social_dissent = 55;
+Q.public_debt = 25;
+Q.public_debt_qualifier = "<span style='color: #ffa200ff;'>mediocre</span>";
+Q.unemployment = 22.5;
+Q.unemployment_change = '<img src="img/arrowdown.png" style="transform: rotate(180deg);"> ';
 
 // start Parlament composition
 Q.parlament_seats = {
@@ -127,7 +164,27 @@ Q.parlament_tarragona_ind_pop = 1236;
 // Parties and initial party support
 Q.parties = ['ciu', 'erc', 'psc', 'ppc', 'icv', 'cs', 'cup', 'si', 'cdc', 'unio', 'jxsi', 'junts', 'pdcat', 'csqp', 'cecp', 'ecp', 'vox', 'ac'];
 
+// TODO: add the weights
 
+// Congreso:
+Q.ciu_congreso_s = 16;
+Q.erc_congreso_s = 3;
+Q.cup_congreso_s = 0;
+Q.jxsi_congreso_s = 0;
+
+// TODO: add the rest lol
+
+Q.congreso_seats = {
+    "catalunya": 47,
+    "rest_of_spain": 303
+};
+Q.congreso_constituencies = ["catalunya", "rest_of_spain"];
+
+
+
+
+
+//////////////////////// Soviet stuff
 Q.m_is_player = 1;
 Q.sr_is_player = 0;
 Q.b_is_player = 0;
@@ -1011,17 +1068,6 @@ Q.military_disorder_timer = 3;
 Q.crime_wave_timer = 5;
 Q.enemy_reinforcements_timer = 0
 
-// constituent assembly election
-Q.election_type = "ca";
-Q.ca_progress = 0;
-Q.ca_scheduled = 0;
-Q.next_election_year = 1918;
-Q.next_election_month = 12;
-Q.next_election_week = 0;
-Q.next_election_time = 100;
-Q.time_to_election = 100;
-
-
 // menshevik advisors
 // defensists
 Q.chkheidze_advisor = 1; // Nikolai Chkheidze
@@ -1091,33 +1137,35 @@ Q.trotsky_advisor = 0;
 set-bg: img/3rd_October_2017.jpg
 new-page: true
 
-> * I like Catalan people because [...] they do things. *
+> * I like Catalan people because [...] they do stuff. *
 
  - Mariano Rajoy, President of the Government of Spain, 2015
 
-For more information on the politics of the Provisional Government, see the "Library" page on the top left. If this is your first time playing the game, it is recommended that you read at least some of this information.
+This is a game of alternate history. While historical accuracy is a major concern, keep in mind that this is a *game*, and that any divergence from actual events will necessarily have to involve some element of make-believe. Nevertheless, please let the author know if there are any glaring mistakes.
 
-Difficulty affects starting resources and inter-party relations, as well as how difficult it is to change party advisors and ideology, reduce dissent, and increase relations.
+For more information on the politics, government, and recent history of Catalonia, please see the Library page on the top left. If this is your first time playing the game, it is strongly recommended that you read at least some of this information.
 
-- @easy_mode
-- @single_player
-- @hard_mode
+**If you are playing this mod via the Mod Loader in base game, you may be using a broken build. For the intended experience, please play using <a href="https://broken-arrows.github.io/route_to_itaca/" style="color: #0077FF">this</a> link.**
+
+- @easy_mode : Begin - <span style="color: #5B9A8D;">Easy</span>
+- @normal_mode : Begin - <span style="color: #C4B156;">Normal</span>
+- @hard_mode : Begin - <span style="color: #943006ff;">Hard</span>
 
 @easy_mode
-title: Single Player (Easy)
-on-arrival: difficulty = -1; m_resources = 4; sr_resources = 4; k_resources = 5; b_resources = 4; m_dues = 3; sr_dues = 3; b_dues = 3; m_k_relation = 50; m_sr_relation = 62; sr_k_relation = 50; m_split_threshold = 65; sr_split_threshold = 65; m_support_change = 10; sr_support_change = 10; m_discipline_change = 8; sr_discipline_change = 8; max_advisors = 5; ipr_change = 8;
+title: Begin - Easy
+on-arrival: difficulty = -1; erc_resources = 4; ciu_resources = 4; cup_resources = 5; b_resources = 4; m_dues = 3; sr_dues = 3; b_dues = 3; m_k_relation = 50; m_sr_relation = 62; sr_k_relation = 50; m_split_threshold = 65; sr_split_threshold = 65; m_support_change = 10; sr_support_change = 10; m_discipline_change = 8; sr_discipline_change = 8; max_advisors = 5; ipr_change = 8;
 go-to: party_selection
 
 Select a party:
 
-@single_player
-title: Single Player (Normal)
+@normal_mode
+title: Begin - Normal
 go-to: party_selection
 
 Select a party:
 
 @hard_mode
-title: Single Player (Hard)
+title: Begin - Hard
 on-arrival: difficulty = 1; m_resources = 2; sr_resources = 2; k_resources = 2; b_resources = 0; b_dues = 0; m_split_threshold = 50; sr_split_threshold = 50; m_support_change = 5; sr_support_change = 5; m_discipline_change = 4; sr_discipline_change = 4; max_advisors = 3; ipr_change = 5;
 go-to: party_selection
 
@@ -1141,7 +1189,7 @@ title: Republican Left of Catalonia (ERC)
 
 
 @esquerra_2
-on-arrival: player_party_name = "<span style='color: #ff8000; font-weight: bold;'>ERC</span>"; player_party = "erc"; m_is_player = 1; player_in_soviet = 1; player_in_exco = 1; player_in_gov = 0;
+on-arrival: player_party = "erc"; player_party_name = "<span style='color: #ff8000; font-weight: bold;'>ERC</span>"; position_disp = "<span style='font-style: italic;'>opposition</span>";
 go-to: intros
 
 
@@ -1157,7 +1205,7 @@ title: Convergence and Union (CiU)
 @ciu_2
 choose-if: 1==0
 unavailable-subtitle: Work in progress...
-on-arrival: player_party = "ciu"; player_party_name = "<span style='color: #002782; font-weight: bold;'>CiU</span>"; sr_is_player = 1; m_is_player = 0; player_in_soviet = 1; player_in_exco = 1; player_in_gov = 0;
+on-arrival: player_party = "ciu"; player_party_name = "<span style='color: #002782; font-weight: bold;'>CiU</span>"; position_disp = "<span style='color: #002782;'>Generalitat (minority government)</span>";
 go-to: intros
 
 @cup
@@ -1172,6 +1220,6 @@ title: Popular Unity Candidacy (CUP)
 @cup_2
 choose-if: 1==0
 unavailable-subtitle: Work in progress...
-on-arrival: player_party = "cup"; player_party_name = "<span style='color: #ffed00; font-weight: bold;'>CUP</span>"; k_is_player = 1; m_is_player = 0; player_in_soviet = 0; player_in_gov = 1; player_in_exco = 0;
+on-arrival: player_party = "cup"; player_party_name = "<span style='color: #ffed00; font-weight: bold;'>CUP</span>"; position_disp = "Non-existence";
 go-to: intros
 

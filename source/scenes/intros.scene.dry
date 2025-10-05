@@ -2,228 +2,69 @@ title: Intros
 new-page: true
 go-to: intro_menu
 face-image: img/womens_day.jpg
-audio: shuffle music/WorkersMarseillaise.ogg music/TchaikovskyQuartet.mp3 music/AyUchniem.mp3 music/SwetitMiesiatz.mp3 music/EchTyDolia.mp3 music/LongingforOurCountry.mp3 music/OdessaMama.mp3 music/VolgaBoatmen.ogg music/LomirSichIberbeiten.mp3 music/Internationale.ogg music/WorkersMarseillaise.ogg music/Kalinka.mp3 music/DearFriends.mp3 music/Dubinushka.mp3
+# audio: # TODO: add some music lol
 
-= The Revolution of February 1917
+= Something is brewing in Catalonia
 
-On International Women's Day, 1917, mass marches of hungry women filled the streets of Petrograd, the capital city of the Russian Empire. They demanded bread and peace, and the end of the Tsarist autocracy. Workers joined the protests, and the marches grew to a general strike shutting the entire city. Soldiers were ordered to suppress the marches with force; they refused, turning against their officers instead.
+Catalonia finds itself at a political and economic crossroads. Gripped by the wider Eurozone financial crisis, the region is burdened by deep austerity cuts and growing fiscal deficit. Tensions are also mounting with the Spanish government after the heavy cuts to the charter of autonomy by both the Congreso and the Constitutional Court.
 
-Now, the hated Tsar Nicholas II has abdicated, and a new Provisional Government has been formed among Duma representatives. Meanwhile, the striking workers and mutinous soldiers of Petrograd have organized the Soviet, a committee of socialist workers' representatives that is somewhere between a coordinating body and a government.
-
-It seems that for now, anything is possible. The established order is gone. A new world is ready to be built.
+President <span style='color: #002782;'>Artur Mas</span> is under heavy pressure from multiple fronts. His government has enacted unpopular austerity that have seen little effect in reducing the Generalitat's deficit nor in stimulating the economy. The renewed dissatisfaction with the Catalan-Spanish relations is also forcing his hand in assuming more pro-sovereignty stances. Now he's betting on a reform of the system of finances, hoping to kill to birds with one stone: reducing public deficit by having greater control over taxation, which would also be an expansion on the current autonomy status.
 
 @intro_menu
 
-- @abdication_of_the_tsar
-- @petrograd_soviet
-- @provisional_government
-- @order_number_1
-- @war_conduct
+- @charter_of_autonomy
+- @fiscal_agreement
+- @dire_economics
+- @current_status
 - @what_now
 
 
-@abdication_of_the_tsar
-title: The Abdication of the Tsar
+@charter_of_autonomy
+title: A Charter of Autonomy and a Fiscal Agreement
 go-to: intro_menu
 
-= The Abdication of the Tsar
+= Charter of Autonomy
 
-The Tsar has been convinced that his abdication is the only way to save Russia from civil war, and thus has abdicated in favor of his brother, Grand Duke Michael. However, Grand Duke Michael also sees the position as tsar to be untenable, and thus has refused to take the crown
+Pushed forward by the left tri-partite government of <span style='color: #e73b39'>PSC</span>, <span style='color: #ff8000; font-weight: bold;'>ERC</span>, and <span style='color: #67af2f'>ICV-EUiA</span>, the charter of autonomy represented a great expansion of Catalonia's self governing capacities and a broader recognition of its distinct national identity, culture, and language. Approved by more than 70% of the Catalan population, it also counted with the wider support of the Spanish socialist party, <span style='color: #e73b39'>PSOE</span>, who had agreed to support it in the Congreso.
 
-Now, the reign of the Tsar is over, and power is vested in the Provisional Government.
+The Congreso, nonetheless, ended up modifying more than half of the articles before its approval. Yet still, the biggest blow came from the conservative <span style='color: #1785cf'>PP</span>, who challenged the charter in the Constitutional Court. In 2010, the court struck down or reinterpreted 14 articles, including the recognition of Catalonia as a nation, linguistic rights and protections, and wider legislative and fiscal powers.
 
-@petrograd_soviet
-title: The Petrograd Soviet
+Now, many Catalans feel betrayed, which has fueled a never-before-seen rise in support for self-determination and independence. Each September 11th, the National Day of Catalonia, the strength of the independence movement is made visible in the streets, and it only seems to grow stronger.
+
+Currently, Catalonia has no special fiscal status as a Spanish Autonomous Community. Unlike the Basque Country or Navarre, Catalonia does not collect its own taxes. Instead, all taxes are collected by the Spanish government and then redistributed to the Autonomous Communities through a complex funding formula. Estimates put this redistribution deficit at around €20 billion, close to 8-10% of Catalonia's GDP, or almost half of the Generalitat's annual budget.
+
+<span style='color: #002782; font-weight: bold;'>CiU</span> has already dedicated much of its political capital in trying to negotiate at least a partial fiscal agreement, where by at least some reduction of this deficit could be achieved. However, it seems unlikely that the Spanish Gobierno presided by <span style='color: #1d84ce;'>Mariano Rajoy</span> will agree to such deal, and much less in times of hardship also for the wider Spanish and European economies.
+
+- @intro_menu: Back
+
+@dire_economics
+title: The dire economic situation
 go-to: intro_menu
 
-= The Petrograd Soviet
+= Dire Economics
 
-The Petrograd Soviet of Workers' and Soldiers' Deputies is an elected council comprised of representatives of workers and soldiers throughout the city. Organized in the wake of the general strike and the breakdown of the established order, it harkens back to the Petrograd Soviet of 1905, which functioned as an alternative government in the city during the revolution.
+- @intro_menu: Back
 
-The leaders of the Soviet, mostly Social Democrat and SR intellectuals, have organized an Executive Committee, and elected the Menshevik Nikolai Chkheidze as the chairman. They see its goal as ending the general strike and advocating for the workers and soldiers, acting as a watchdog over the bourgeois Provisional Government. They command the workers and soldiers to go back to work, and to obey the Provisional Government insofar as it does not disobey the directives of the Soviet.
 
+@current_status
+title: Present landscape
 
-@order_number_1
-title: Restoring Order to the Army
-go-to: o1_soviet if player_party = "sr" or player_party = "m"; o1_b if player_party = "b"; o1_k if player_party = "k"
-on-arrival: o1_seen = 1
+= Present Situation
 
-= Restoring Order to the Army
 
-The army is in revolt. Soldiers in Petrograd have largely shaken off their officers and commanders, and are currently answering to no higher authority except ad-hoc committees of soldiers. The unrest is spreading in the army, and might soon reach the front.
 
-@o1_soviet
-go-to: o1_soviet_menu
-
-# Source for Order Number 1: the full text is at https://www.marxists.org/history/ussr/government/1917/03/01.htm
-
-To restore order to the army, the Petrograd Soviet is considering issuing an order to the soldiers of the city garrison, promising certain concessions in exchange for obeying their officers and the Provisional Government.
-
-Which points should be included in the order?
-
-@o1_soviet_menu
-
-- @o1_committees: There will be elected soldiers' committees, which will control the distribution of weapons.
-- @o1_address: Soldiers can no longer be verbally abused by the officers, and they must be addressed by respectful terms.
-- @o1_rights: Soldiers will have the same rights as ordinary citizens when off-duty, including the right to participate in elections.
-- @o1_issue: This should be enough; issue the order!
-
-
-@o1_committees
-go-to: o1_soviet_menu
-max-visits: 1
-on-arrival: o1_points += 1; o1_committees = 1
-
-We have declared that soldiers' committees will be formed, and that these committees will control the soldiers' weapons.
-
-@o1_address
-go-to: o1_soviet_menu
-max-visits: 1
-on-arrival: o1_points += 1; o1_address = 1
-
-We have declared that soldiers must be referred to using respectful terms of address, and cannot be verbally humiliated by officers.
-
-@o1_rights
-go-to: o1_soviet_menu
-max-visits: 1
-on-arrival: o1_points += 1; o1_rights = 1
-
-We have declared that soldiers will have the same rights as civilians when off-duty.
-
-@o1_issue
-view-if: o1_points > 0
-max-visits: 1
-go-to: intro_menu
-on-arrival: army_discipline -= 0.15 if o1_points = 3; army_discipline -= 0.1 if o1_points < 3; army_morale += 0.05 if o1_points = 3; army_morale += 0.3 if o1_points < 3; soldiers_pro_prov_gov += 10*o1_points; soldiers_pro_soviet += 10*o1_points; m_k_relation -= 2*o1_points; sr_k_relation -= 2*o1_points;
-
-In addition to these points, we have declared that the orders of the Provisional Government must be carried out, unless they contradict the orders of the Soviet, and made provisions for elections of soldiers' representatives to the Soviet.
-
-The order succeeds in ending the immediate chaos in the Petrograd garrison. Soldiers return to their barracks. [? if o1_points = 3: Our proclamation is seen as radical by the liberal and conservative parties in the Provisional Government, and they claim that we are harming the war effort. ?][? if o1_points < 3: Our proclamation is seen as radical by the liberal and conservative parties in the Provisional Government, and they claim that we are harming the war effort. ?]
-
-
-@o1_b
-go-to: intro_menu
-on-arrival: army_discipline -= 0.15; army_morale += 0.05; order_number_1 = 1; o1_points = 3; soldiers_pro_prov_gov += 10*o1_points; soldiers_pro_soviet += 10*o1_points; m_k_relation -= 2*o1_points; sr_k_relation -= 2*o1_points;
-
-In response to the soldiers' revolts, the Petrograd Soviet has issued Order Number 1, which creates soldiers' committees, gives off-duty soldiers the same rights as civilians, and bans derogatory forms of address against soldiers by their officers.
-
-The Bolsheviks are pleased with this order, as it contributes to the democratization of the army, and gives Bolshevik organizers an easier route to organize among the troops.
-
-@o1_k
-go-to: intro_menu
-on-arrival: army_discipline -= 0.15; army_morale += 0.05; order_number_1 = 1; o1_points = 3; soldiers_pro_prov_gov += 10*o1_points; soldiers_pro_soviet += 10*o1_points; m_k_relation -= 2*o1_points; sr_k_relation -= 2*o1_points;
-
-In response to the soldiers' disorder, the Petrograd Soviet has issued Order Number 1, which creates soldiers' committees, gives off-duty soldiers the same rights as civilians, and bans derogatory forms of address against soldiers by their officers.
-
-The Kadets are generally displeased with this order, as it can lead to a breakdown in military discipline.
-
-
-@provisional_government
-title: The Provisional Government
-go-to: pg_k if player_party = "k"; pg_sr if player_party = "sr"; pg_m if player_party = "m"; pg_b if player_party = "b"
-on-arrival: pg_seen += 1
-
-= The Provisional Government
-
-With the abdication of the Tsar, power in Russia has been transferred to the Provisional Government, comprised primarily of liberal members of the Duma and led by Prince Georgy Lvov, a reformist noble. The government has already been recognized by the powers of the Entente.
-
-The leaders of the Provisional Government see its role as continuing to persecute the war and maintaining stability until an elected Constituent Assembly is ready to decide Russia's final form of government.
-
-@pg_k
-go-to: dual_gov
-
-The Kadets, that is our party, have the leading role in the Provisional Government.
-
-@pg_sr
-go-to: dual_gov
-
-The Provisional Government is led by the Kadets, or Constitutional Democrats, a liberal party. Alexander Kerensky, a Duma deputy, is the one self-declared socialist member (as Minister of Justice).
-
-@pg_m
-go-to: dual_gov
-
-The Provisional Government is led by the Kadets, or Constitutional Democrats, a liberal party. Alexander Kerensky, a Duma deputy, is the one self-declared socialist member (as Minister of Justice).
-
-@pg_b
-go-to: dual_gov
-
-The Provisional Government is led by the Kadets, or Constitutional Democrats, a liberal party. Alexander Kerensky, a Duma deputy, is the one self-declared socialist member (as Minister of Justice).
-
-@dual_gov
-go-to: intro_menu
-
-
-@war_conduct
-title: The Conduct of the War
-go-to: war_k if player_party = "k"; war_m if player_party = "m"; war_sr if player_party = "sr"; war_b if player_party = "b"
-on-arrival: war_seen += 1
-
-= The Conduct of the War
-
-Even as the revolution progresses, the Great War continues as before. All sectors of Russian society argue that the Tsar and his advisors failed to lead the country in the war. Tsar Nicholas, his German-born wife Alexandra, and her widely-loathed "friend" Rasputin have become symbols of the failure and corruption of the established order. Their reign led to defeats, to hunger, to betrayal.
-
-With the Tsar gone, it is hoped that the new Provisional Government would be able to persecute the war more effectively. There is an outburst of patriotic sentiment even among socialists, some of whom now see the war as a defense of freedom and revolution. Even so, many are hoping to end the war as soon as possible. The "Internationalists" are calling for the workers of all countries to fight for a just peace, even if it means revolting against their own governments.
-
-@war_k
-go-to: intro_menu
-
-More than the socialists, the Kadets support the war effort. Some in our party wish to stay in the war for the sake of the Allies, some wish to fight for freedom and democracy, and others are full-blown Russian nationalists who want Russia to conquer all the way to Constantinople.
-
-@war_m
-
-The Mensheviks are divided regarding the war effort.
-
-- @m_support_int: Support the Internationalists in our party.
-- @m_support_d: Support the Defensists in our party.
-
-@m_support_int
-go-to: intro_menu
-on-arrival: internationalist_strength += m_support_change; internationalist_dissent -= 5; defensist_dissent += 8; defensist_strength -= m_support_change + 2
-subtitle: Support an immediate end to the war.
-
-The Internationalists are currently a minority of our party.
-
-@m_support_d
-go-to: intro_menu
-on-arrival: defensist_strength += m_support_change; internationalist_dissent += 8
-subtitle: Support waging a war of defense until a just peace can be reached.
-
-Th Defensists are currently a majority of our party.
-
-@war_sr
-
-The SRs are divided regarding the war effort.
-
-- @sr_support_left: Support the internationalist Left of our party.
-- @sr_support_right: Support the defensist Right of our party.
-
-@sr_support_left
-go-to: intro_menu
-on-arrival: left_sr_strength += sr_support_change; left_sr_dissent -= 5; right_sr_dissent += 8; right_sr_strength -= sr_support_change;
-
-The Left SRs are currently a minority of the party.
-
-@sr_support_right
-go-to: intro_menu
-on-arrival: right_sr_strength += sr_support_change; right_sr_dissent -= 5; left_sr_dissent += 8
-
-The Right SRs are currently a majority of the party.
-
-
-@war_b
-go-to: intro_menu
-
-The position of the Bolsheviks is and has always been internationalism, to end the war by means of an international socialist revolution of the working class. Exiled party leader Vladimir Lenin was one of the chief figures of the Zimmerwald Conference in Switzerland, where anti-war socialists from all belligerents called for an end to war. At one point he argued in support of "revolutionary defeatism", a policy to turn imperialist war into civil war.
+- @intro_menu: Back
 
 
 @what_now
 title: What now?
-go-to: 1917_main
+go-to: 2012_main
 
-@1917_main
+@2012_main
 new-page: true
 go-to: main if difficulty = 0; main.main_easy if difficulty < 0; main.main_hard if difficulty > 0
 
-= Week 1, March 1917
+= August 2012
 
-The goal of all Russian revolutionaries, liberal or socialist, is to hold elections for the Constituent Assembly, the representative body that will decide Russia's new form of government. Until then, the Provisional Government's leaders must decide how to deal with the myriad problems facing the country today.
+The goal of all pro-independence parties is to celebrate a binding referendum on independence. How to get there, though, is a complex topic. Basque Ledakhari <span style='color: #1d813c'>Ibarretxe</span> failed to convince the Spanish Congreso in 2008 to allow such referendum for the Basque country, even if more limited in scope. Can the Spanish government be convinced now? Or is it a non-agreement referendum the only way forward?
+

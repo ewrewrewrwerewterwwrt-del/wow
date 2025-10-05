@@ -2,384 +2,125 @@ title: Status
 new-page: true
 is-special: true
 on-arrival: {!
-Q.position = "";
-if (Q.player_party == 'm') {
-    if (Q.m_in_exco) {
-        Q.position = 'Soviet Executive Committee';
-        if (Q.m_in_gov) {
-            Q.position += ', in government';
-        }
-    } else if (Q.m_in_gov) {
-        Q.position = 'in government';
-    } else {
-        Q.position = 'in opposition';
-    }
-} else if (Q.player_party == 'b') {
-    if (Q.b_in_exco) {
-        Q.position = 'Soviet Executive Committee';
-        if (Q.b_in_gov) {
-            Q.position += ', in government';
-        }
-    } else if (Q.b_in_gov) {
-        Q.position = 'in government';
-    } else {
-        Q.position = 'in opposition';
-    }
-} else if (Q.player_party == 'sr') {
-    if (Q.sr_in_exco) {
-        Q.position = 'Soviet Executive Committee';
-        if (Q.sr_in_gov) {
-            Q.position += ', in government';
-        }
-    } else if (Q.sr_in_gov) {
-        Q.position = 'in government';
-    } else {
-        Q.position = 'in opposition';
-    }
-} else if (Q.player_party == 'k') {
-    if (Q.k_in_gov) {
-        Q.position += 'in government';
-    } else {
-        Q.position = 'in oppsition';
-    }
+if (Q.spain_is_republic) {
+    Q.spanish_seal_img = "img/esp_seal_republic.svg";
+} else {
+    Q.spanish_seal_img = "img/esp_seal.svg";
 }
 
-Q.monthly_inflation_disp = Q.monthly_inflation.toFixed(1);
-Q.inflation_disp = Q.inflation.toFixed(1);
+Q.parlament_size = 0;
+for (var constituency of Q.parlament_constituencies) {
+    Q.parlament_size += Q.parlament_seats[constituency];
+}
+if (Q.parlament_size == 0){
+    Q.parlament_size = 135; // default size
+}
+Q.congreso_size = 0;
+for (var constituency of Q.congreso_constituencies) {
+    Q.congreso_size += Q.congreso_seats[constituency];
+}
+if (Q.congreso_size == 0){
+    Q.congreso_size = 350; // default size
+}
+
+if(Q.player_party == "erc") {
+    Q.status_parlament_control_disp = Q.erc_parlament_s / Q.parlament_size * 60;
+    Q.status_congreso_control_disp = Q.erc_congreso_s / 350 * 60;
+}
+if(Q.player_party == "jxsi") {
+    Q.status_parlament_control_disp = Q.jxsi_parlament_s / Q.parlament_size * 60;
+    Q.status_congreso_control_disp = Q.jxsi_congreso_s / 350 * 60;
+}
+if(Q.player_party == "ciu") {
+    Q.status_parlament_control_disp = Q.ciu_parlament_s / Q.parlament_size * 60;
+    Q.status_congreso_control_disp = Q.ciu_congreso_s / 350 * 60;
+}
+if(Q.player_party == "cup") {
+    Q.status_parlament_control_disp = Q.cup_parlament_s / Q.parlament_size * 60;
+    Q.status_congreso_control_disp = Q.cup_congreso_s / 350 * 60;
+}
+
 Q.unemployed_disp = Q.unemployed.toFixed(1);
 !}
 
 = Status
 
-Week [+ week +], [+ month : month +] [+ year +]
+[? if rubicon: Week [+ week +] ,?][+ month : month +] [+ year +]
 
-Party: [+ player_party_name +]
+[+ player_party_name +] position: [+ position_disp +]
 
-[+ player_party_name +] position: [+ position +]
+[? if player_party == "erc": Party resources: [+ erc_resources +] ?]
+[? if player_party == "jxsi": Party resources: [+ jxsi_resources +] ?]
+[? if player_party == "ciu": Party resources: [+ ciu_resources +] ?]
+[? if player_party == "cup": Party resources: [+ cup_resources +] ?]
 
-Party resources available:
-[? if player_party == "b": [+ b_resources +] ?]
-[? if player_party == "m": [+ m_resources +] ?]
-[? if player_party == "k": [+ k_resources +] ?]
-[? if player_party == "sr": [+ sr_resources +] ?]
+[? if player_party == "erc": Internal dissent: [+ erc_dissent_percent : dissent +] ?]
+[? if player_party == "jxsi": Internal dissent: [+ jxsi_dissent_percent : dissent +] ?]
+[? if player_party == "ciu": Internal dissent: [+ ciu_dissent_percent : dissent +] ?]
+[? if player_party == "cup": Internal dissent: [+ cup_dissent_percent : dissent +] ?]
 
-Internal dissent:
-[? if player_party == "b": [+ b_dissent_percent : dissent +] ?]
-[? if player_party == "m": [+ m_dissent_percent : dissent +] ?]
-[? if player_party == "k": [+ k_dissent_percent : dissent +] ?]
-[? if player_party == "sr": [+ sr_dissent_percent : dissent +] ?]
 
-= [+ government_form : government_form +]
+[? if player_party == "erc": <div style="display: flex; align-items:center;gap:0.71em;"><div>Congreso: </div><div style="border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #ff8000;overflow:visible;width:[+ status_congreso_control_disp +]%">[+ erc_congreso_s +]/350</div></div></div> ?]
+[? if player_party == "jxsi": <div style="display: flex; align-items:center;gap:0.71em;"><div>Congreso: </div><div style="border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #20c0b2;overflow:visible;width:[+ status_congreso_control_disp +]%">[+ jxsi_congreso_s +]/350</div></div></div> ?]
+[? if player_party == "ciu": <div style="display: flex; align-items:center;gap:0.71em;"><div>Congreso: </div><div style="border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #002782;overflow:visible;width:[+ status_congreso_control_disp +]%">[+ ciu_congreso_s +]/350</div></div></div> ?]
+[? if player_party == "cup": <div style="display: flex; align-items:center;gap:0.71em;"><div>Congreso: </div><div style="border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #ffed00;overflow:visible;width:[+ status_congreso_control_disp +]%">[+ cup_congreso_s +]/350</div></div></div> ?]
 
-Prime Minister: [+ prime_minister +] ([+ prime_minister_party +])
+= Government
 
-Budget: [+ budget +]
+<div style="display: flex; gap: 0.62em;margin-bottom: -1.25em;"><div style="flex: 0 0 15%;padding-left:0.2em"><img src="img/cat_seal.svg"></div><div style="flex: 1 1 84%;"><p style="font-weight:bold; margin-top:-0.25em; margin-bottom:0.25em;">Generalitat</p><p style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;max-width:100%;">[+ cat_coalition_disp +]</p></div></div>
 
-[? if not ca_election_held: Constituent Assembly elections: [? if ca_scheduled: Week [+ next_election_week +], [+ next_election_month : month +] [+ next_election_year +] ?] [? if not ca_scheduled: Not scheduled ?] ?]
+President [+ president_disp +] ([+ president_party_disp +])
 
-[? if ca_election_held: Constituent Assembly convocation: Week [+ ca_week +], [+ ca_month : month +] [+ ca_year +] ?]
+[? if player_party == "erc": <div style="display: flex; align-items:center;gap:0.25em;"><div>Parlament: </div><div style="border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #ff8000;overflow:visible;width:[+ status_parlament_control_disp +]%">[+ erc_parlament_s +]/[+ parlament_size +]</div></div></div> ?]
+[? if player_party == "jxsi": <div style="display: flex; align-items:center;gap:0.25em;"><div>Parlament: </div><div style="border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #20c0b2;overflow:visible;width:[+ status_parlament_control_disp +]%">[+ jxsi_parlament_s +]/[+ parlament_size +]</div></div></div> ?]
+[? if player_party == "ciu": <div style="display: flex; align-items:center;gap:0.25em;"><div>Parlament: </div><div style="border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #002782;overflow:visible;width:[+ status_parlament_control_disp +]%">[+ ciu_parlament_s +]/[+ parlament_size +]</div></div></div> ?]
+[? if player_party == "cup": <div style="display: flex; align-items:center;gap:0.25em;"><div>Parlament: </div><div style="border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #ffed00;overflow:visible;width:[+ status_parlament_control_disp +]%">[+ cup_parlament_s +]/[+ parlament_size +]</div></div></div> ?]
+
+Next election: [+ next_election_month : month +] [+ next_election_year +]
+
+
+<div style="display: flex; gap: 0.5em;margin-top:1.1em;margin-bottom: -1.25em;"><div style="flex: 0 0 18%;"><img src="[+spanish_seal_img+]"></div><div style="flex: 1 1 82%;"><p style="font-weight:bold; margin-top:-0.1em; margin-bottom:0.25em;">Gobierno</p><p style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;max-width:100%;">[+ spanish_coalition_disp +]</p></div></div>
+
+Presidente [+ spanish_pm_disp +] ([+ spanish_pm_party_disp +])
+
+Next election: [+ next_spanish_election_month : month +] [+ next_spanish_election_year +]
 
 = Economy and Society
 
-Monthly inflation: [+ monthly_inflation +]% ([+ inflation +]% annually)
+Debt status: [+ public_debt_qualifier +]
 
-# Real income (% of 1913): [+ income +]%
+Unemployment: [+ unemployment +]% [+ unemployment_change +]
 
-Unemployment: [+ unemployed +]%
+Independence movement momentum: [+ independence_movement : independence_movement +]
 
-Hunger: [+ hunger : hunger +]
-
-War weariness: [+ war_weariness : war_weariness +]
+Social dissent: [+ social_dissent : social_dissent +] 
 
 
 @politics
 title: Politics
 on-arrival: {!
-Q.m_relation = 0;
-Q.b_relation = 0;
-Q.sr_relation = 0;
-Q.k_relation = 0;
-switch (Q.player_party) {
-    case 'b':
-        Q.b_relation = -1;
-        Q.m_relation = Q.m_b_relation;
-        Q.k_relation = Q.b_k_relation;
-        Q.sr_relation = Q.b_sr_relation;
-        break;
-    case 'm':
-        Q.m_relation = -1;
-        Q.b_relation = Q.m_b_relation;
-        Q.k_relation = Q.m_k_relation;
-        Q.sr_relation = Q.m_sr_relation;
-        break;
-    case 'sr':
-        Q.sr_relation = -1;
-        Q.b_relation = Q.b_sr_relation;
-        Q.m_relation = Q.m_b_relation;
-        Q.k_relation = Q.sr_k_relation;
-        break;
-    case 'k':
-        Q.k_relation = -1;
-        Q.b_relation = Q.b_k_relation;
-        Q.m_relation = Q.m_k_relation;
-        Q.sr_relation = Q.sr_k_relation;
-        break;
-}
 !}
-
-# TODO: inter-party relationships
 
 = Inter-party Relationships
 
-[? if player_party != "m": Mensheviks: [+ m_relation : relationships +] ?]
-[? if player_party != "m": </br> Leadership: [+ m_leadership : m_leadership +] ?]
+= Party Positions
 
-[? if player_party != "b": Bolsheviks: [+ b_relation : relationships +] ?]
-[? if player_party != "b": </br> Leadership: [+ b_leadership : b_leadership +] ?]
+= [+ player_party_name +] Factions
 
-
-[? if player_party != "sr": SRs: [+ sr_relation : relationships +] ?]
-[? if player_party != "sr": </br> Leadership: [+ sr_leadership : sr_leadership +] ?]
+# Roadmap to Independence: [? if player_party = "erc": [+ erc_roadmap : roadmap +]?][? if player_party = "jxsi": [+ jxsi_roadmap : roadmap +]?][? if player_party = "ciu": [+ ciu_roadmap : roadmap +]?][? if player_party = "cup": [+ cup_roadmap : roadmap +]?]
 
 
-[? if player_party != "k": Kadets: [+ k_relation : relationships +] ?]
-[? if player_party != "k": </br> Leadership: [+ k_leadership : k_leadership +] ?]
-
-
-= Internal factions
-
-[? if player_party == "b": Moderate ?]
-[? if player_party == "b": dissent: [+ moderate_dissent : dissent +], strength: [+ moderate_strength : strength_2 +]?]
-
-[? if player_party == "b": Center ?]
-[? if player_party == "b": dissent: [+ center_dissent : dissent +], strength: [+ center_strength : strength_2 +]?]
-
-[? if player_party == "b": Leninist ?]
-[? if player_party == "b": dissent: [+ leninist_dissent : dissent +], strength: [+ leninist_strength : strength_2 +]?]
-
-[? if player_party == "m": Social Patriot ?]
-[? if player_party == "m": dissent: [+ social_patriot_dissent : dissent +], strength: [+ social_patriot_strength : strength_2 +]?]
-
-[? if player_party == "m": Revolutionary Defensist  ?]
-[? if player_party == "m": dissent: [+ defensist_dissent : dissent +], strength: [+ defensist_strength : strength_2 +]?]
-
-[? if player_party == "m": Internationalist ?]
-[? if player_party == "m": dissent: [+ internationalist_dissent : dissent +], strength: [+ internationalist_strength : strength_2 +]?]
-
-[? if player_party == "k": Right-Kadet ?]
-[? if player_party == "k": dissent: [+ right_kadet_dissent : dissent +], strength: [+ right_kadet_strength : strength_2 +]?]
-
-[? if player_party == "k": Left-Kadet ?]
-[? if player_party == "k": dissent: [+ left_kadet_dissent : dissent +], strength: [+ left_kadet_strength : strength_2 +]?]
-
-[? if player_party == "sr": Right-SR ?]
-[? if player_party == "sr": dissent: [+ right_sr_dissent : dissent +], strength: [+ right_sr_strength : strength_2 +]?]
-
-[? if player_party == "sr": Center-SR ?]
-[? if player_party == "sr": dissent: [+ center_sr_dissent : dissent +], strength: [+ center_sr_strength : strength_2 +]?]
-
-[? if player_party == "sr": Left-SR ?]
-[? if player_party == "sr": dissent: [+ left_sr_dissent : dissent +], strength: [+ left_sr_strength : strength_2 +]?]
-
-= [+ player_party_name +] Party Positions
-
-Provisional Government policy: [? if player_party = "m": [+ m_prov_gov_policy : prov_gov_policy +]?][? if player_party = "sr": [+ sr_prov_gov_policy : prov_gov_policy +]?][? if player_party = "k": [+ k_prov_gov_policy : prov_gov_policy +]?][? if player_party = "b": [+ b_prov_gov_policy : prov_gov_policy +]?]
-
-Labor policy: [? if player_party = "m": [+ m_industrial_policy : industrial_policy +]?][? if player_party = "sr": [+ sr_industrial_policy : industrial_policy +]?][? if player_party = "k": [+ k_industrial_policy : industrial_policy +]?][? if player_party = "b": [+ b_industrial_policy : industrial_policy +]?]
-
-War policy: [? if player_party = "m": [+ m_war_policy : war_policy +]?][? if player_party = "sr": [+ sr_war_policy : war_policy +]?][? if player_party = "k": [+ k_war_policy : war_policy +]?][? if player_party = "b": [+ b_war_policy : war_policy +]?]
-
-Land/agricultural policy: [? if player_party = "m": [+ m_land_policy : land_policy +], [+ m_agricultural_policy : agricultural_policy +]?][? if player_party = "sr": [+ sr_land_policy : land_policy +], [+ sr_agricultural_policy : agricultural_policy +]?][? if player_party = "k": [+ k_land_policy : land_policy +], [+ k_agricultural_policy : agricultural_policy +]?][? if player_party = "b": [+ b_land_policy : land_policy +], [+ b_agricultural_policy : agricultural_policy +]?]
-
-Nationality policy: [? if player_party = "m": [+ m_nationality_policy : nationality_policy +]?][? if player_party = "sr": [+ sr_nationality_policy : nationality_policy +]?][? if player_party = "k": [+ k_nationality_policy : nationality_policy +]?][? if player_party = "b": [+ b_nationality_policy : nationality_policy +]?]
-
-@gov
-title: Government
-
-= [+ government_form : government_form +]
-
-[+ government_form : leader +]: [+ prime_minister +] ([+ prime_minister_party +])
-
-Interior [+ government_form : minister +]: [+ interior_minister +] ([+ interior_minister_party +])
-
-Foreign [+ government_form : minister +]: [+ foreign_minister +] ([+ foreign_minister_party +])
-
-War [+ government_form : minister +]: [+ war_minister +] ([+ war_minister_party +])
-
-Finance [+ government_form : minister +]: [+ finance_minister +] ([+ finance_minister_party +])
-
-Justice [+ government_form : minister +]: [+ justice_minister +] ([+ justice_minister_party +])
-
-Agriculture [+ government_form : minister +]: [+ agriculture_minister +] ([+ agriculture_minister_party +])
-
-Transport [+ government_form : minister +]: [+ transport_minister +] ([+ transport_minister_party +])
-
-Industry and Trade [+ government_form : minister +]: [+ trade_minister +] ([+ trade_minister_party +])
-
-# there is no content for the education minister for now.
-Education [+ government_form : minister +]: [+ education_minister +] ([+ education_minister_party +])
-
-
-[? if post_minister: Posts and Telegraph [+ government_form : minister +]: [+ post_minister +] ([+ post_minister_party +]) ?]
-
-[? if labor_minister: Labor [+ government_form : minister +]: [+ labor_minister +] ([+ labor_minister_party +]) ?]
-
-Government efficacy: [+ prov_gov_efficacy : efficacy +]
-
-Government legitimacy: [+ prov_gov_legitimacy : legitimacy +]
-
-= Petrograd Soviet
-
-Chair: [+ soviet_chair +] ([+ soviet_chair_party +])
-
-Executive committee: [? if m_in_exco: Mensheviks, ?] [? if sr_in_exco: SRs ?] [? if b_in_exco: Bolsheviks ?][? if defensist_in_exco:, Menshevik-Defensists ?][? if internationalist_in_exco:, Menshevik-Internationalists ?][? if left_sr_in_exco:, Left-SRs ?][? if right_sr_in_exco:, Right-SRs ?]
-
-Overal composition:
-Mensheviks: [+ m_soviet +]%
-Bolsheviks: [+ b_soviet +]%
-SRs: [+ sr_soviet +]%
-Anarchists: [+ anarchist_soviet +]%
-Others: [+ other_soviet +]%
-[? if defensist_split: Menshevik-Defensists: [+ defensist_soviet_votes_dec +]% ?]
-[? if internationalist_split: Menshevik-Internationalists: [+ internationalist_soviet_votes_dec +]% ?]
-[? if right_sr_split: Right-SRs: [+ right_sr_soviet_votes_dec +]% ?]
-[? if left_sr_split: Left-SRs: [+ left_sr_soviet_votes_dec +]% ?]
-
-Soviet efficacy: [+ soviet_efficacy : efficacy +]
-
-Soviet cooperation with Provisional Government: [+ soviet_cooperation : efficacy +]
-
-@economy
-title: Economy
+@attitudes
+title: Attitudes
 on-arrival: {!
-Q.trains_total = Math.round(Q.train_capacity/1000);
-Q.food_total = Math.round(Q.food_production/1000);
-Q.food_sold_disp = (Q.food_sold*100).toFixed(1);
-Q.food_requisitioned_disp = (Q.food_requisitioned*100).toFixed(1);
 !}
 
-= Industrial Production
+= ATTITUDES
 
-Military: [+ military_industry +]%
+@polls
+title: Polls
+on-arrival: {!
+!}
 
-Civilian goods: [+ civilian_industry +]%
-
-Agricultural equipment: [+ agricultural_industry +]%
-
-Transportation equipment: [+ transportation_industry +]%
-
-Capital goods: [+ capital_industry +]%
-
-Total industrial production (% of 1916): [+ industry +]%
-
-= Railways
-
-Military usage: [+ military_trains +]%
-
-Civilian usage: [+ civilian_trains +]%
-
-Total transport capacity: [+ trains_total +] million tons/year
-
-= Agriculture
-
-Food production: [+ food_total +] million tons/year
-
-Food sold to cities and towns: [+ food_sold_disp +]%
-
-Food requisitioned by the military: [+ food_requisitioned_disp +]%
-
-= Land Reform
-
-Land reform policy: [+ land_reform : land_reform +]
-
-Land reform progress: [+ land_reform_progress : land_reform_progress +]
-
-= Finances and Debt
-
-Budget balance: [+ budget +]
-
-Long-term domestic debt: [+ domestic_debt +]
-
-Foreign debt: [+ foreign_debt +]
-
-
-@defense
-title: Defense
-
-[? if is_armistice and not is_peace: An armistice with the Central Powers has been signed. ?]
-
-[? if is_peace: A peace treaty with the Central Powers has been signed. ?]
-
-= Armies and Fronts
-
-Northern Front: [+ northern_front_soldiers +] divisions
-{!</br>!}[+ northern_progress : war_progress +]
-
-Western Front: [+ western_front_soldiers +] divisions
-{!</br>!}[+ western_progress : war_progress +]
-
-Southwestern Front: [+ southwestern_front_soldiers +] divisions
-{!</br>!}[+ southwestern_progress : war_progress +]
-
-Romanian Front: [+ romanian_front_soldiers +] divisions
-{!</br>!}[+ romanian_progress : war_progress +]
-
-Caucasus Front: [+ caucasus_front_soldiers +] divisions
-{!</br>!}[+ caucasus_progress : war_progress +]
-
-Garrisons and reserves: [+ reserve_soldiers +] divisions
-
-Morale: [+ morale : efficacy +]
-
-Discipline: [+ discipline : efficacy +]
-
-Supply quality: [+ supply_quality : efficacy +]
-
-= Petrograd Forces
-
-Workers' militias: [+ workers_militia_strength +] thousand
-
-Workers' militia allegiance: Mensheviks: [+ workers_militia_m_loyalty : strength_2 +], Bolsheviks: [+ workers_militia_b_loyalty : strength_2 +], SRs: [+ workers_militia_sr_loyalty : strength_2 +], Independent: [+ workers_militia_independent : strength_2 +]
-[? if right_sr_split: Right-SRs: [+ workers_militia_right_sr_loyalty : strength_2 +] ?]
-[? if left_sr_split: Left-SRs: [+ workers_militia_left_sr_loyalty : strength_2 +] ?]
-
-City militias: [+ city_militia_strength +] thousand
-
-City militia allegiance: Mensheviks: [+ city_militia_m_loyalty : strength_2 +], Kadets: [+ city_militia_k_loyalty : strength_2 +], SRs: [+ city_militia_sr_loyalty : strength_2 +], Independent: [+ city_militia_independent : strength_2 +]
-
-Garrison: [+ garrison_strength +] thousand
-
-Garrison allegiance: Mensheviks: [+ garrison_m_loyalty : strength +], Bolsheviks: [+ garrison_b_loyalty : strength +], Kadets: [+ garrison_k_loyalty : strength +], SRs: [+ garrison_sr_loyalty : strength +], Independent: [+ garrison_independent : strength +]
-[? if defensist_split: Menshevik-Defensists: [+ garrison_defensist_loyalty : strength_2 +] ?]
-[? if internationalist_split: Menshevik-Internationalists: [+ garrison_internationalist_loyalty : strength_2 +] ?]
-[? if right_sr_split: Right-SRs: [+ garrison_right_sr_loyalty : strength_2 +] ?]
-[? if left_sr_split: Left-SRs: [+ garrison_left_sr_loyalty : strength_2 +] ?]
-
-
-
-[? if loyal_troops > 0 : Loyal troops (Battalions of Death): [+ loyal_troops_strength +] thousand ?]
-
-= Foreign Relations
-
-Relations with the West: [+ west_relation : relationships +]
-
-[? if not is_armistice: Armistice negotiations: [+ armistice_progress +] ?]
-
-[? if is_armistice: We are currently in an armistice. ?]
-
-[? if is_armistice: Peace negotiations: [+ central_negotiations +]?]
-
-
-@policy
-title: Policy
-
-= Foreign Relations
-
-Relations with the West: [+ west_relation : relationships +]
-
-[? if not is_armistice: Armistice negotiations: [+ armistice_progress +] ?]
-
-[? if is_armistice: We are currently in an armistice. ?]
-
-[? if is_armistice: Peace negotiations: [+ central_negotiations +]?]
+= Polls
 

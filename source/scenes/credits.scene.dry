@@ -1,6 +1,10 @@
 title: Credits
 
-Many works were referenced in the making of this game.
+This game was developed by <a href="https://www.reddit.com/user/_BrokenArrows/">u/_BrokenArrows</a>. It is a fork from the Autumn Chen's <a href="https://red-autumn.itch.io/petrograd-1917">Petrograd 1917</a>, which if you have not tried out you should! Immediately!
+Aside from Petrograd 1917, great inspiration was taken from the original <a href="https://red-autumn.itch.io/social-democracy">Social Democracy, an Alternate History</a> also by Autumn Chen.
+Added to that, the acclaimed mod to that game, <a href="https://originn0.github.io/dynamic_social_democracy/">Dynamic Social Democracy</a> by originn0, was invaluable in making this game and all the coding tricks that it uses.
+
+Just as in the originals, many works were referenced in the making of this game.
 
 - @articles: Articles
 - @images: Image sources
@@ -10,13 +14,15 @@ Many works were referenced in the making of this game.
 
 @articles
 
-Vought, M. (2025). "Nationalism and Ethnic Mobilization: Towards an Integrated Perspective". Cambridge University Press. Available from doi: https://doi.org/10.1017/nps.2024.98
+Vought, M. (2025). "Nationalism and Ethnic Mobilization: Towards an Integrated Perspective". Cambridge University Press. Available from doi: <a href="https://doi.org/10.1017/nps.2024.98">doi.org/10.1017/nps.2024.98</a>
 
-Simón, P. (2020). The Multiple Spanish Elections of April and May 2019: The Impact of Territorial and Left-right Polarisation. South European Society and Politics. Available from doi: https://doi.org/10.1080/13608746.2020.1756612
+Simón, P. (2020). The Multiple Spanish Elections of April and May 2019: The Impact of Territorial and Left-right Polarisation. South European Society and Politics. Available from doi: <a href="https://doi.org/10.1080/13608746.2020.1756612">doi.org/10.1080/13608746.2020.1756612</a>
 
-Centre d'Estudis d'Opinió (CEO) - Generalitat de Catalunya. Available from: https://ceo.gencat.cat/ca/barometre/
+Centre d'Estudis d'Opinió (CEO) - Generalitat de Catalunya. Available from: <a href="https://ceo.gencat.cat/ca/barometre/">ceo.gencat.cat/ca/barometre/</a>
 
-Institut d'Estadística de Catalunya (IDESCAT) - Generalitat de Catalunya. Available from: https://www.idescat.cat/tema/xifpo
+Institut d'Estadística de Catalunya (IDESCAT) - Generalitat de Catalunya. Available from: <a href="https://www.idescat.cat/tema/xifpo">www.idescat.cat/tema/xifpo</a>
+
+Govern de la Generalitat de Catalunya - Departament d'Economia i Hisenda. "The Catalan fiscal deficit with the State is already close to 22.000 million €". Available from: <a href="https://govern.cat/govern/docs/2025/03/28/13/00/7109ae10-1583-41ab-944d-5a6180f33288.pdf">govern.cat/govern/docs/2025/03/28/13/00/7109ae10-1583-41ab-944d-5a6180f33288.pdfindicadors_economics/</a>
 
 - @credits: Back
 
@@ -46,13 +52,19 @@ WIP
 
 = Photographs
 
-parlament_de_catalunya.jpg: By Iván Melenchón Serrano - Own work, CC0, https://commons.wikimedia.org/w/index.php?curid=64723561 [7 December 2017]
+parlament_de_catalunya.jpg: By Iván Melenchón Serrano - Own work, CC0, <a href="https://commons.wikimedia.org/w/index.php?curid=64723561">commons.wikimedia.org/w/index.php?curid=64723561</a> [7 December 2017]
 
-3rd_October_2017.jpg: By Clàudia Abancó - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=63148434 [3 October 2017]
+3rd_October_2017.jpg: By Clàudia Abancó - Own work, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/w/index.php?curid=63148434">commons.wikimedia.org/w/index.php?curid=63148434</a> [3 October 2017]
 
 = Assets
 
-Arrow Up, Down, and Steady icons from dynamic social democracy by originn0 - MIT https://github.com/originn0/dynamic_social_democracy [2025]
+Arrow Up, Down, and Steady icons from dynamic social democracy by originn0 - MIT <a href="https://github.com/originn0/dynamic_social_democracy">github.com/originn0/dynamic_social_democracy</a> [2025]
+
+Seal of the Generalitat de Catalunya (cat_seal.svg) - By Joan M. Borràs (ebrenc), CC BY-SA 2.5, <a href="https://commons.wikimedia.org/w/index.php?curid=11618229">commons.wikimedia.org/w/index.php?curid=11618229</a> [2010]
+
+Seal of Spain (esp_seal.svg) - SVG adaptation from the PNG file following the codes as specified in the Royal Decree 2267/1982 and specifications of the relevant manuals. Public Domain, from <a href="https://commons.wikimedia.org/w/index.php?curid=151575838">commons.wikimedia.org/w/index.php?curid=151575838</a>
+
+Seal of Spain 1931-1939 (esp_seal_republic.svg) - By Heralder, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/w/index.php?curid=15286550">commons.wikimedia.org/w/index.php?curid=15286550</a> [2011]
 
 - @credits: Back
 
