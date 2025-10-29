@@ -6,19 +6,20 @@ new-page: true
 
 = Route to Ítaca - An Alternate Procés
 
-It's hard to classify this work. What am I modding from? Formally it is a fork from <a href="https://red-autumn.itch.io/petrograd-1917">Petrograd 1917</a>, but it clearly takes a lot form the  <a href="https://originn0.github.io/dynamic_social_democracy/">Dynamic Social Democracy</a> mod and, by extension, from the original <a href="https://red-autumn.itch.io/social-democracy">Social Democracy, an Alternate History</a> game. It could have been a fork from that amazing mod for all that matters.
+It's hard to classify this work. What am I modding from? Formally it is a fork from <a class="link" href="https://red-autumn.itch.io/petrograd-1917">Petrograd 1917</a>, but it clearly takes a lot form the  <a class="link" href="https://originn0.github.io/dynamic_social_democracy/">Dynamic Social Democracy</a> mod and, by extension, from the original <a class="link" href="https://red-autumn.itch.io/social-democracy">Social Democracy, an Alternate History</a> game. It could have been a fork from that amazing mod for all that matters.
 
 In any case, if you're lost or confused on what's this about, do check the info here.
 
 - @route_to_itaca: Route to Ítaca
 - @frequent_questions: Frequently Asked Questions
+- @bug_report: Bug Reporting
 - @changelog: Changelog & Future Updates
 - @credits: Credits
 - @root: Back
 
 @route_to_itaca
 
-Route to Ítaca is about imagining how different could the 2010's have been for Catalonia, had things worked even so slightly differently. 
+Route to Ítaca is about imagining how different could the 2010's have been for Catalonia, had things worked even so slightly differently. Its point is not to create a pro-independence fantasy, but rather, to serve as a tool to reflect on how far certain political movements got during the 2010's, and how further could they have gone. It's about the independence movement, but also about the anti-austerity struggles that plagued Europe, and many other street-born potentially revolutionary forces for change in the 21st century that ultimately folded into the status quo. What can hindsight provide, and what issues remain even then? Those are the enormous questions that (spoiler) will remain open even as you complete all the paths.
 
 - @force_new_page_about: Back
 
@@ -35,22 +36,41 @@ Most probably not. Excluding the three main pro-indy parties, I *might* do one f
 
 - @force_new_page_about: Back
 
+
+@bug_report
+
+= Bug Reporting
+
+If you encounter any bugs, issues, typos, or whatever other issue that bothers you, please report them via <a class="link" href="https://github.com/broken-arrows/route_to_itaca/issues">GitHub Issues</a>. If you don't have a GitHub account, you can also contact me via Reddit DM at <a class="link" href="https://www.reddit.com/user/broken_arrows_/">u/broken_arrows_</a>.
+
+If you believe you found a game-breaking bug, please include as much information as possible, like:
+- A detailed description of the bug/issue.
+- Steps to reproduce it, if applicable.
+- Your current save file (if possible).
+- Your game version (shown at the main menu).
+
+Any and all reports are most welcome!
+
+- @force_new_page_about: Back
+
 @changelog
 
 = changelog
 
 **v1.0** - TBD
 - Initial Release
-- <span style='color: #ff8000; font-weight: bold;'>ERC</span> playable paths.
+- Playable <span style='color: #ff8000; font-weight: bold;'>ERC</span>.
+- Playable <span style='color: #ffed00; font-weight: bold;'>CUP</span>.
 - First achievements batch.
 
 
 = Future Plans
 
 Planned features for future updates include:
-- <span style='color: #002782; font-weight: bold;'>CiU</span> / <span style='color: #20c0b2; font-weight: bold;'>Junts</span> playable paths.
-- <span style='color: #ffed00; font-weight: bold;'>CUP</span> playable paths.
+- Playable <span style='color: #002782; font-weight: bold;'>CiU</span> / <span style='color: #20c0b2; font-weight: bold;'>Junts</span>.
+- Post Rubicon game?
 - More achievements.
+- More advisors?
 - Historical difficulty mode (no saving, loading, nor polls).
 - European elections?
 - More Spanish-related paths.

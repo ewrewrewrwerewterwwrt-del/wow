@@ -1,8 +1,0 @@
-
-# faction strength - for parties with 3-4 factions
-
-(..20) weak
-(20..40) moderate
-(40..55) strong
-(55..70) very strong
-(70..) dominant

@@ -1,7 +1,0 @@
-# This is using the same scale as government_form
-
-(0..0) Prime Minister
-(1..1) Chairman
-(2..2) Prime Minister
-(3..3) Minister-President
-(4..4) President

@@ -1,0 +1,41 @@
+title: Fundraising
+new-page: true
+view-if: erc_fundraising_timer <= 0
+on-arrival: erc_fundraising_timer += 3; month_actions += 1
+is-card: true
+card-image: img/erc/executiva.jpg
+tags: erc_party
+
+= Fundraising
+Fact is, the party needs resources to work. Where do we get them from?
+
+- @campaign
+- @ideological
+- @social_media
+- @return: We do not need to touch anything media-related at the moment.
+- @easy_discard
+- @cancel_advisor_action
+
+@campaign
+title: The purpose of party media is to get more <span style="color:#ff8000;">ERC</span> seats.
+subtitle: Party media will focus on the electoral campaign
+# on-arrival: #effects here
+
+This strategy mostly reaches those already following <span style="color:#ff8000;">ERC</span>.
+
+@ideological
+title: Party media should encourage vibrant ideological discussions.
+subtitle: There will be space for all factions to express their views.
+# on-arrival: #effects here
+
+This represents a deviation of what our party media has been doing in the last few decades, but it does help in calming some intra-party tensions.
+
+@social_media
+title: We need to modernize our media presence.
+subtitle: -2 resources
+choose-if: erc_resources >= 2
+unavailable-subtitle: Not enough resources
+view-if: social_media = 0
+on-arrival: erc_resources -= 2; social_media = 1
+
+Our party media will focus on expanding our presence in social media platforms, reaching a younger audience.

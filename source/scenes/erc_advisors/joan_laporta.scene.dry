@@ -1,0 +1,12 @@
+title: Joan Laporta
+is-pinned-card: true
+tags: advisor, erc_civil
+card-image: img/erc/laporta.jpg
+view-if: joan_laporta_advisor = 1
+new-page: true
+
+= Joan Laporta i Estruch
+
+something
+
+- @root: Return to main

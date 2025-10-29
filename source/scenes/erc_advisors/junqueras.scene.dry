@@ -1,0 +1,12 @@
+title: Oriol Junqueras
+is-pinned-card: true
+tags: advisor, erc_republican
+card-image: img/erc/junqueras.jpg
+view-if: oriol_junqueras_advisor = 1
+new-page: true
+
+= Oriol Junqueras i Vies
+
+something
+
+- @root: Return to main

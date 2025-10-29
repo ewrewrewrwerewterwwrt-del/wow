@@ -1,19 +1,16 @@
 title: Intros
 new-page: true
 go-to: intro_menu
-face-image: img/womens_day.jpg
 # audio: # TODO: add some music lol
 
 = Something is brewing in Catalonia
 
 Catalonia finds itself at a political and economic crossroads. Gripped by the wider Eurozone financial crisis, the region is burdened by deep austerity cuts and growing fiscal deficit. Tensions are also mounting with the Spanish government after the heavy cuts to the charter of autonomy by both the Congreso and the Constitutional Court.
 
-President <span style='color: #002782;'>Artur Mas</span> is under heavy pressure from multiple fronts. His government has enacted unpopular austerity that have seen little effect in reducing the Generalitat's deficit nor in stimulating the economy. The renewed dissatisfaction with the Catalan-Spanish relations is also forcing his hand in assuming more pro-sovereignty stances. Now he's betting on a reform of the system of finances, hoping to kill to birds with one stone: reducing public deficit by having greater control over taxation, which would also be an expansion on the current autonomy status.
-
+President <span style='color: #002782;'>Artur Mas</span> is under heavy pressure from multiple fronts. His government has enacted unpopular austerity that have seen little effect in reducing the Generalitat's deficit nor in stimulating the economy. The renewed dissatisfaction with the Catalan-Spanish relations is also forcing his hand in assuming more pro-sovereignty stances.
 @intro_menu
 
 - @charter_of_autonomy
-- @fiscal_agreement
 - @dire_economics
 - @current_status
 - @what_now
@@ -23,17 +20,11 @@ President <span style='color: #002782;'>Artur Mas</span> is under heavy pressure
 title: A Charter of Autonomy and a Fiscal Agreement
 go-to: intro_menu
 
-= Charter of Autonomy
+= A Charter of Autonomy and a Fiscal Agreement
 
-Pushed forward by the left tri-partite government of <span style='color: #e73b39'>PSC</span>, <span style='color: #ff8000; font-weight: bold;'>ERC</span>, and <span style='color: #67af2f'>ICV-EUiA</span>, the charter of autonomy represented a great expansion of Catalonia's self governing capacities and a broader recognition of its distinct national identity, culture, and language. Approved by more than 70% of the Catalan population, it also counted with the wider support of the Spanish socialist party, <span style='color: #e73b39'>PSOE</span>, who had agreed to support it in the Congreso.
+Pushed forward by the left tri-partite government of <span style='color: #e73b39'>PSC</span>, <span style='color: #ff8000;'>ERC</span>, and <span style='color: #67af2f'>ICV-EUiA</span>, the very popular 2006 Charter of Autonomy represented a great expansion of Catalonia's self governing capacities and a broader recognition of its distinct national identity, culture, and language. Its death blow was foreshadowed with the cuts it had to endure to pass the Congress with the support of the <span style='color: #e73b39'>PSOE</span>, but was dealt by <span style='color: #1785cf'>PP</span>'s challenge in the Constitutional Court. In 2010, the court struck down or reinterpreted many articles, in a ruling seen by many Catalans as an attack on their self-government and identity.
 
-The Congreso, nonetheless, ended up modifying more than half of the articles before its approval. Yet still, the biggest blow came from the conservative <span style='color: #1785cf'>PP</span>, who challenged the charter in the Constitutional Court. In 2010, the court struck down or reinterpreted 14 articles, including the recognition of Catalonia as a nation, linguistic rights and protections, and wider legislative and fiscal powers.
-
-Now, many Catalans feel betrayed, which has fueled a never-before-seen rise in support for self-determination and independence. Each September 11th, the National Day of Catalonia, the strength of the independence movement is made visible in the streets, and it only seems to grow stronger.
-
-Currently, Catalonia has no special fiscal status as a Spanish Autonomous Community. Unlike the Basque Country or Navarre, Catalonia does not collect its own taxes. Instead, all taxes are collected by the Spanish government and then redistributed to the Autonomous Communities through a complex funding formula. Estimates put this redistribution deficit at around €20 billion, close to 8-10% of Catalonia's GDP, or almost half of the Generalitat's annual budget.
-
-<span style='color: #002782; font-weight: bold;'>CiU</span> has already dedicated much of its political capital in trying to negotiate at least a partial fiscal agreement, where by at least some reduction of this deficit could be achieved. However, it seems unlikely that the Spanish Gobierno presided by <span style='color: #1d84ce;'>Mariano Rajoy</span> will agree to such deal, and much less in times of hardship also for the wider Spanish and European economies.
+In a new bid for more autonomy and financial leeway, <span style='color: #002782;'>CiU</span> has already dedicated tons of political capital in trying to achieve at least a fiscal agreement. In it, president <span style='color: #002782;'>Artur Mas</span> hopes to retain in Catalonia some of the taxes that currently go to the central government. However, it seems unlikely that the Spanish Gobierno presided by <span style='color: #1d84ce;'>Mariano Rajoy</span> will agree to such deal, and much less in times of hardship also for the wider Spanish and European economies.
 
 - @intro_menu: Back
 
@@ -43,15 +34,18 @@ go-to: intro_menu
 
 = Dire Economics
 
+something
+
 - @intro_menu: Back
 
 
 @current_status
 title: Present landscape
+go-to: intro_menu
 
 = Present Situation
 
-
+something
 
 - @intro_menu: Back
 
@@ -66,5 +60,5 @@ go-to: main if difficulty = 0; main.main_easy if difficulty < 0; main.main_hard 
 
 = August 2012
 
-The goal of all pro-independence parties is to celebrate a binding referendum on independence. How to get there, though, is a complex topic. Basque Ledakhari <span style='color: #1d813c'>Ibarretxe</span> failed to convince the Spanish Congreso in 2008 to allow such referendum for the Basque country, even if more limited in scope. Can the Spanish government be convinced now? Or is it a non-agreement referendum the only way forward?
+The goal of all pro-independence parties is to celebrate a binding referendum on independence. How to get there, though, is a complex topic. Can the Spanish government really be convinced to hold one? Or is it a non-agreement referendum the only way forward?
 

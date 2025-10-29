@@ -1,0 +1,12 @@
+title: Teresa Jordà
+is-pinned-card: true
+tags: advisor, erc_left
+card-image: img/erc/jorda.jpg
+view-if: teresa_jorda_advisor = 1
+new-page: true
+
+= Teresa Jordà i Roura
+
+something
+
+- @root: Return to main

@@ -1,0 +1,12 @@
+title: Dolors Bassa
+is-pinned-card: true
+tags: advisor, erc_left
+card-image: img/erc/bassa.jpg
+view-if: dolors_bassa_advisor = 1
+new-page: true
+
+= Dolors Bassa i Coll
+
+something
+
+- @root: Return to main

@@ -1,28 +1,35 @@
 title: Credits
+go-to: force_new_page_credits
 
-This game was developed by <a href="https://www.reddit.com/user/_BrokenArrows/">u/_BrokenArrows</a>. It is a fork from the Autumn Chen's <a href="https://red-autumn.itch.io/petrograd-1917">Petrograd 1917</a>, which if you have not tried out you should! Immediately!
-Aside from Petrograd 1917, great inspiration was taken from the original <a href="https://red-autumn.itch.io/social-democracy">Social Democracy, an Alternate History</a> also by Autumn Chen.
-Added to that, the acclaimed mod to that game, <a href="https://originn0.github.io/dynamic_social_democracy/">Dynamic Social Democracy</a> by originn0, was invaluable in making this game and all the coding tricks that it uses.
+@force_new_page_credits
+new-page: true
 
-Just as in the originals, many works were referenced in the making of this game.
+This game was developed by <a class="link" href="https://www.reddit.com/user/_BrokenArrows/">u/_BrokenArrows</a>. It is a fork from the Autumn Chen's <a class="link" href="https://red-autumn.itch.io/petrograd-1917">Petrograd 1917</a>, the prequel to the amazing original, <a class="link" href="https://red-autumn.itch.io/social-democracy">Social Democracy, an Alternate History</a>.  If you have not tried them out you should! Immediately!
+
+Added to that, the acclaimed mod to that game by originn0, <a class="link" href="https://originn0.github.io/dynamic_social_democracy/">Dynamic Social Democracy</a>, was invaluable in making this game and all the coding tricks that it uses.
+
+Peak, fork, and play around with the code from <a class="link" href="https://github.com/broken-arrows/route_to_itaca">GitHub</a>. Just as in the originals, many works were referenced in the making of this game.
 
 - @articles: Articles
-- @images: Image sources
-- @music: Music sources
+- @images: Images
+- @assets: Assets
+# - @music: Music
 - @root: Back
 
 
 @articles
 
-Vought, M. (2025). "Nationalism and Ethnic Mobilization: Towards an Integrated Perspective". Cambridge University Press. Available from doi: <a href="https://doi.org/10.1017/nps.2024.98">doi.org/10.1017/nps.2024.98</a>
+Vought, M. (2025). "Nationalism and Ethnic Mobilization: Towards an Integrated Perspective". Cambridge University Press. Available from doi: <a class="link" href="https://doi.org/10.1017/nps.2024.98">doi.org/10.1017/nps.2024.98</a>
 
-Simón, P. (2020). The Multiple Spanish Elections of April and May 2019: The Impact of Territorial and Left-right Polarisation. South European Society and Politics. Available from doi: <a href="https://doi.org/10.1080/13608746.2020.1756612">doi.org/10.1080/13608746.2020.1756612</a>
+Simón, P. (2020). The Multiple Spanish Elections of April and May 2019: The Impact of Territorial and Left-right Polarisation. South European Society and Politics. Available from doi: <a class="link" href="https://doi.org/10.1080/13608746.2020.1756612">doi.org/10.1080/13608746.2020.1756612</a>
 
-Centre d'Estudis d'Opinió (CEO) - Generalitat de Catalunya. Available from: <a href="https://ceo.gencat.cat/ca/barometre/">ceo.gencat.cat/ca/barometre/</a>
+Serra, M. (2024). The ERC: from a single-issue to a mainstream party? Cogent Social Sciences, 10(1). Available from doi: <a class="link" href="https://doi.org/10.1080/23311886.2024.2306699">doi.org/10.1080/23311886.2024.2306699</a>
 
-Institut d'Estadística de Catalunya (IDESCAT) - Generalitat de Catalunya. Available from: <a href="https://www.idescat.cat/tema/xifpo">www.idescat.cat/tema/xifpo</a>
+Centre d'Estudis d'Opinió (CEO) - Generalitat de Catalunya. Available from: <a class="link" href="https://ceo.gencat.cat/ca/barometre/">ceo.gencat.cat/ca/barometre/</a>
 
-Govern de la Generalitat de Catalunya - Departament d'Economia i Hisenda. "The Catalan fiscal deficit with the State is already close to 22.000 million €". Available from: <a href="https://govern.cat/govern/docs/2025/03/28/13/00/7109ae10-1583-41ab-944d-5a6180f33288.pdf">govern.cat/govern/docs/2025/03/28/13/00/7109ae10-1583-41ab-944d-5a6180f33288.pdfindicadors_economics/</a>
+Institut d'Estadística de Catalunya (IDESCAT) - Generalitat de Catalunya. Available from: <a class="link" href="https://www.idescat.cat/tema/xifpo">www.idescat.cat/tema/xifpo</a>
+
+Govern de la Generalitat de Catalunya - Departament d'Economia i Hisenda. "The Catalan fiscal deficit with the State is already close to 22.000 million €". Available from: <a class="link" href="https://govern.cat/govern/docs/2025/03/28/13/00/7109ae10-1583-41ab-944d-5a6180f33288.pdf">govern.cat/govern/docs/2025/03/28/13/00/7109ae10-1583-41ab-944d-5a6180f33288.pdfindicadors_economics/</a>
 
 - @credits: Back
 
@@ -32,7 +39,39 @@ Govern de la Generalitat de Catalunya - Departament d'Economia i Hisenda. "The C
 
 **ERC**
 
-WIP
+erc/alfredbosch.jpg: By Press Cambrabcn, CC BY-SA 2.0 <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=40346066">commons.wikimedia.org/w/index.php?curid=40346066</a> (2015)
+
+erc/aragones.jpg: By Generalitat de Catalunya, Attribution <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=69692455">commons.wikimedia.org/w/index.php?curid=69692455</a> (2018)
+
+erc/bassa.jpg: By Generalitat de Catalunya, Attribution <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=141197676">commons.wikimedia.org/w/index.php?curid=141197676</a> (2016)
+
+erc/carlesmundo.jpg: By Generalitat de Catalunya, Attribution <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=65083150">commons.wikimedia.org/w/index.php?curid=65083150</a> (2017)
+
+erc/ernestmaragall.jpg: By Generalitat de Catalunya, Attribution <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=69692442">commons.wikimedia.org/w/index.php?curid=69692442</a> (2018)
+
+erc/forcadell.jpg: By User:Judesba, cropped and improved by Ezarate - File:Via Catalana Barcelona Plaça Catalunya 62.jpg by Judesba, CC BY-SA 3.0 <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=32047792">https://commons.wikimedia.org/w/index.php?curid=32047792</a> (2013)
+
+erc/joanjosepnuet.jpg: By Òmnium Cultural via flickr, CC BY-SA 2.0 <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=76781741">commons.wikimedia.org/w/index.php?curid=76781741</a> (2019)
+
+erc/joantarda.jpg: By Marta Jara (eldiario.es ), CC BY-SA 3.0 es <a class="link" href="http://www.eldiario.es/politica/ERC-Rajoy-Negociacion-actuaremos-consecuencia_0_696081302.html">eldiario.es/politica/ERC-Rajoy-Negociacion-actuaremos-consecuencia_0_696081302.html</a> (2017)
+
+erc/jorda.jpg: By Esquerra Republicana de Catalunya, author unknown <a class="link" href="https://locals.esquerra.cat/fedgirona/article/jorda-erc-quant-al-desdoblament-de-la-n-ii-en-aquests-moments-no-son-admissibles-ni-els-re">locals.esquerra.cat/fedgirona/article/jorda-erc-quant-al-desdoblament-de-la-n-ii-en-aquests-moments-no-son-admissibles-ni-els-re/</a> (2012)
+
+erc/junqueras.jpg: By Generalitat de Catalunya, Attribution <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=55876947">commons.wikimedia.org/w/index.php?curid=55876947</a> (2016)
+
+erc/laporta.jpg: By Mutari - Own work, CC BY-SA 4.0 <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=6154783">commons.wikimedia.org/w/index.php?curid=6154783</a> (2008)
+
+erc/martarovira.jpg: By Raulpresseguer - Own work, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=63944311">commons.wikimedia.org/w/index.php?curid=63944311</a> (2017)
+
+erc/paluzie.jpg: By Òmnium Cultural via flickr, CC BY-SA 2.0, <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=76781760">commons.wikimedia.org/w/index.php?curid=76781760</a> (2019)
+
+erc/romeva.jpg: By Generalitat de Catalunya, Attribution, <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=63909605">commons.wikimedia.org/w/index.php?curid=63909605</a> (2017)
+
+erc/rogertorrent.jpg: By Òmnium Cultural, CC BY-SA 2.0 <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=70435737">commons.wikimedia.org/w/index.php?curid=70435737</a> (2018)
+
+erc/rufian.png: By eldiario.es / Alejandro Navarro, CC BY-SA 4.0 <a class="link" href="https://www.eldiario.es/politica/Gabriel-Rufian_0_941406274.html">eldiario.es/politica/Gabriel-Rufian_0_941406274.html</a> (2019)
+
+erc/sergisabria.jpg: By Ajuntament de Palafrugell, CC BY-SA 3.0, <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=41849353">commons.wikimedia.org/w/index.php?curid=41849353</a> (2015)
 
 **JUNTS**
 
@@ -52,25 +91,86 @@ WIP
 
 = Photographs
 
-parlament_de_catalunya.jpg: By Iván Melenchón Serrano - Own work, CC0, <a href="https://commons.wikimedia.org/w/index.php?curid=64723561">commons.wikimedia.org/w/index.php?curid=64723561</a> [7 December 2017]
+3rd_October_2017.jpg: By Clàudia Abancó, CC BY-SA 4.0, <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=63148434">commons.wikimedia.org/w/index.php?curid=63148434</a> (3 October 2017)
 
-3rd_October_2017.jpg: By Clàudia Abancó - Own work, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/w/index.php?curid=63148434">commons.wikimedia.org/w/index.php?curid=63148434</a> [3 October 2017]
+parlament_de_catalunya.jpg: By Iván Melenchón Serrano, CC0, <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=64723561">commons.wikimedia.org/w/index.php?curid=64723561</a> (7 December 2017)
+
+erc/congres.png: By VilaWeb, author unknown <a class="link" href="https://www.vilaweb.cat/noticies/ara-la-republica-catalana-la-direccio-derc-acorda-amb-els-critics-de-canviar-el-nom-de-la-ponencia/">vilaweb.cat/noticies/ara-la-republica-catalana-la-direccio-derc-acorda-amb-els-critics-de-canviar-el-nom-de-la-ponencia//</a> (2018)
+
+erc/executiva.jpg: By Esquerra Republicana de Catalunya and VilaWeb, author unknown <a class="link" href="https://www.vilaweb.cat/noticies/page/4817/">vilaweb.cat/noticies/page/4817/</a> (2015)
+
+
+- @credits: Back
+
+@assets
 
 = Assets
 
-Arrow Up, Down, and Steady icons from dynamic social democracy by originn0 - MIT <a href="https://github.com/originn0/dynamic_social_democracy">github.com/originn0/dynamic_social_democracy</a> [2025]
+Arrow Up, Down, and Steady icons from Dynamic Social Democracy by originn0, MIT License <a class="link" href="https://github.com/originn0/dynamic_social_democracy">github.com/originn0/dynamic_social_democracy</a> (2025)
 
-Seal of the Generalitat de Catalunya (cat_seal.svg) - By Joan M. Borràs (ebrenc), CC BY-SA 2.5, <a href="https://commons.wikimedia.org/w/index.php?curid=11618229">commons.wikimedia.org/w/index.php?curid=11618229</a> [2010]
+Icons (home_icon.svg, politics_icon.svg, international_icon.svg, economy_icon.svg, polls_icon.svg) from RemixIcon, by Remix Design, under Apache License <a class="link" href="https://remixicon.com/">remixicon.com</a> (2025)
 
-Seal of Spain (esp_seal.svg) - SVG adaptation from the PNG file following the codes as specified in the Royal Decree 2267/1982 and specifications of the relevant manuals. Public Domain, from <a href="https://commons.wikimedia.org/w/index.php?curid=151575838">commons.wikimedia.org/w/index.php?curid=151575838</a>
+Logo of CDC (logo_cdc.png) - By CDC, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=41794132">commons.wikimedia.org/w/index.php?curid=41794132</a> (2015)
 
-Seal of Spain 1931-1939 (esp_seal_republic.svg) - By Heralder, CC BY-SA 3.0, <a href="https://commons.wikimedia.org/w/index.php?curid=15286550">commons.wikimedia.org/w/index.php?curid=15286550</a> [2011]
+Logo of CiU (logo_ciu.png) - By Coentor, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=38856327">commons.wikimedia.org/w/index.php?curid=38856327</a> (2015)
+
+Logo of CECP (logo_cecp.png) - By Catalunya en Comú Podem, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=71121874">commons.wikimedia.org/w/index.php?curid=71121874</a> (2017)
+
+Logo of Cs (logo_cs.svg) - Trademarked by Ciutadans. This file, by Jotaele91, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=22874825">commons.wikimedia.org/w/index.php?curid=22874825</a> (2012)
+
+Logo of CSQP (logo_csqp.png) - By Catalunya sí que es pot, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=50076056">commons.wikimedia.org/w/index.php?curid=50076056</a> (2016)
+
+Logo of CUP (logo_cup.svg) - By CUP, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=45405430">commons.wikimedia.org/w/index.php?curid=45405430</a> (2018)
+
+Logo of ECP (logo_ecp.svg) - By En Comú Podem, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=99312283">commons.wikimedia.org/w/index.php?curid=99312283</a> (2021)
+
+Logo of ERC (logo_erc.svg) - By Esquerra Republicana de Catalunya-Sobiranistes, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=78490643">commons.wikimedia.org/w/index.php?curid=78490643</a> (2019) (slightly modified to fit width requirements)
+
+Logo of FNC (logo_fnc.png) - By Front Nacional de Catalunya - Facebook, Public Domain, <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=80302306">commons.wikimedia.org/w/index.php?curid=80302306</a> (2013)
+
+Logo of ICV-EUiA (logo_icv.svg) - By Iniciativa per Catalunya VerdsEsquerra Unida i Alternativa, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=64414126">commons.wikimedia.org/w/index.php?curid=64414126</a> (2017)
+
+Logo of JxSí (logo_jxsi.png) - By Junts pel Sí, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=42249493">commons.wikimedia.org/w/index.php?curid=42249493</a> (2015)
+
+Logo of PDeCAT (logo_pdcat.png) - By Carlitoscarlos, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=54213737">commons.wikimedia.org/w/index.php?curid=54213737</a> (2016)
+
+Logo of PP (logo_pp.png) - By Partido Popular, Public Domain <a class="link" href="https://logos-world.net/partido-popular-logo/">logos-world.net/partido-popular-logo/</a> (2019)
+
+Logo of PSC (logo_psc.svg) - By Fer1997, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=77829407">commons.wikimedia.org/w/index.php?curid=77829407</a> (2020)
+
+Logo of PxC (logo_pxc.gif) - By PxCatalunya, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=17317770">commons.wikimedia.org/w/index.php?curid=17317770</a> (2011)
+
+Logo of SI (logo_si.jpg) - By Spuig, CC BY-SA 4.0 <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=98527076">commons.wikimedia.org/w/index.php?curid=98527076</a> (2021)
+
+Logo of UDC (logo_unio.png) - By Unió Democràtica de Catalunya, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=41755171">commons.wikimedia.org/w/index.php?curid=41755171</a> (2016)
+
+Logo of VOX (logo_vox.svg) - By VOX, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=30795789">commons.wikimedia.org/w/index.php?curid=30795789</a> (2014)
+
+= Flags and Seals
+
+Flag of the European Union (eu.svg) - By User:Verdy p, User:-xfi-, User:Paddu, User:Nightstallion, User:Funakoshi, User:Jeltz, User:Dbenbenn, User:Zscout370. File based on the specification given at [1]., Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=2615952">https://commons.wikimedia.org/w/index.php?curid=2615952</a> (2008)
+
+Flag of the People's Republic of China (prc.svg) - By Zeng Liansong. National Flag Image for Online Usage, National People's Congress of PRC, per Article 9 of the National Flag Law of PRC., Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=436175">https://commons.wikimedia.org/w/index.php?curid=436175</a> (2025)
+
+Flag of the Russian Federation (russia.svg) - By Peter the Great. Государственный флаг Российской Федерации. Цвета флага: (Blue - Pantone 286 C, Red - Pantone 485 C) взяты из [1][2][3][4], Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=9450374">https://commons.wikimedia.org/w/index.php?curid=9450374</a> (2025)
+
+Flag of the United States of America (usa.svg) - By by Dbenbenn, Zscout370, Jacobolus, Indolences, and Technion. SVG implementation of U. S. Code: Title 4, Chapter 1, Section 1, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=167150371">https://commons.wikimedia.org/w/index.php?curid=167150371</a> ()
+
+Seal of the Generalitat de Catalunya (cat_seal.svg) - By Joan M. Borràs (ebrenc), CC BY-SA 2.5, <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=11618229">commons.wikimedia.org/w/index.php?curid=11618229</a> (2010)
+
+Seal of Spain (esp_seal.svg) - SVG adaptation from the PNG file following the codes as specified in the Royal Decree 2267/1982 and specifications of the relevant manuals. Public Domain from <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=151575838">commons.wikimedia.org/w/index.php?curid=151575838</a>
+
+Seal of Spain 1931-1939 (esp_seal_republic.svg) - By Heralder, CC BY-SA 3.0, <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=15286550">commons.wikimedia.org/w/index.php?curid=15286550</a> (2011)
+
+= Fonts
+
+HK Grotesk - by Hanken Design Co. used under SIL Open Font License (OFL) <a class="link" href="https://hanken.co/products/hk-grotesk?variant=14506990633023">hanken.co/products/hk-grotesk</a> (2021)
+
+Ubuntu Regular - by Canonical Ltd. used under Ubuntu Font License <a class="link" href="https://design.ubuntu.com/font/">design.ubuntu.com/font/</a> (2010)
+
 
 - @credits: Back
 
 
-@music
-
-WIP
-
-- @credits: Back
+# @music
+# - @credits: Back

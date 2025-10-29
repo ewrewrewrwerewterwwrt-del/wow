@@ -118,7 +118,8 @@
   window.populateOptions = function () {
     var disable_bg = window.dendryUI.disable_bg;
     var animate = window.dendryUI.animate;
-    var disable_audio = window.dendryUI.disable_audio;
+    var disable_audio = true; // TODO: enable on adding music!
+    // var disable_audio = window.dendryUI.disable_audio;
     var show_portraits = window.dendryUI.show_portraits;
     if (disable_bg) {
       $("#backgrounds_no")[0].checked = true;

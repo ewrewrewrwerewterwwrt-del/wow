@@ -1,0 +1,13 @@
+title: Gabriel Rufián
+is-pinned-card: true
+tags: advisor, erc_republican
+card-image: img/erc/rufian.png
+view-if: gabriel_rufian_advisor = 1
+new-page: true
+
+= Gabriel Rufián i Romero
+
+something
+
+
+- @root: Return to main

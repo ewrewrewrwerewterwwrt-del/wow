@@ -1,0 +1,12 @@
+title: Carles Mundó
+is-pinned-card: true
+tags: advisor, erc_civil
+card-image: img/erc/carlesmundo.jpg
+view-if: carles_mundo_advisor = 1
+new-page: true
+
+= Carles Mundó i Blanch
+
+something
+
+- @root: Return to main

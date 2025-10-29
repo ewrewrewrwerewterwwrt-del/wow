@@ -1,0 +1,12 @@
+title: Alfred Bosch
+is-pinned-card: true
+tags: advisor, erc_pragmatic
+card-image: img/erc/alfredbosch.jpg
+view-if: alfred_bosch_advisor = 1
+new-page: true
+
+= Alfred Bosch i García
+
+something
+
+- @root: Return to main

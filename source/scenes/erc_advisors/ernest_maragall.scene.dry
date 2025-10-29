@@ -1,0 +1,12 @@
+title: Ernest Maragall
+is-pinned-card: true
+tags: advisor, erc_pragmatic
+card-image: img/erc/ernestmaragall.jpg
+view-if: ernest_maragall_advisor = 1
+new-page: true
+
+= Ernest Maragall i Mira
+
+something
+
+- @root: Return to main

@@ -1,0 +1,12 @@
+title: Sergi Sabrià
+is-pinned-card: true
+tags: advisor, erc_republican
+card-image: img/erc/sergisabria.jpg
+view-if: sergi_sabria_advisor = 1
+new-page: true
+
+= Sergi Sabrià i Benito
+
+something
+
+- @root: Return to main

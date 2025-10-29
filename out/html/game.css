@@ -1,3 +1,13 @@
+@font-face {
+  font-family: 'UbuntuCustom';
+  src: url('fonts/ubuntu-custom.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'HkGroteskRegular';
+  src: url('fonts/hk-grotesk-regular.ttf') format('truetype');
+}
+
 body {
   --bg-color: #f3f3e3;
   --border-color: #000;
@@ -12,10 +22,10 @@ body {
   --tab-hover-color: #ececec;
   --card-border-color: #ccc; 
   --card-bg-color: #ddd; 
-  font-family: "Minion Pro", Georgia, serif;
+  font-family: 'HkGroteskRegular', serif;
   background-color: var(--bg-color);
   padding: 0;
-  line-height: 155%;
+  line-height: 135%;
   overflow-y: scroll;
 }
 body.dark-mode {
@@ -44,13 +54,14 @@ body.dark-mode .tools {
 header, #content, footer {
   color: var(--text-color);
   max-width: 540px;
+  border-radius: 7px;
   margin: 0 auto;
   overflow: auto;
 }
 #content {
   position: relative;
   background-color: var(--content-bg-color);
-  font-size: 1.1em;
+  font-size: 1em;
   padding: 1em 1.5em 1.5em 1.5em;
   box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2);
 }
@@ -69,13 +80,30 @@ header {
   text-align: left;
   float: left;
   display: inline-block;
+  margin-top: 0.25em;
   margin-bottom: 0.5em;
-  padding-left: 1em;
-  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2);
-  background-color: var(--bg-color);
+  padding-top: 0.05em;
+  padding-bottom: 0.05em;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  background-color: var(--content-bg-color);
+  border-radius: 5px;
 }
 #header-links a {
+  padding-top: 0.375em;
+  padding-bottom: 0.375em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+#header-links a:first-of-type {
+  padding-left: 1em;
+}
+#header-links a:last-of-type {
   padding-right: 1em;
+}
+#header-links a:hover {
+  background-color: var(--link-hover-color);
 }
 header h1, header h2 {
   display: inline-block;
@@ -85,11 +113,6 @@ header h1, header h2 {
 }
 header h1 {
   font-weight: bold;
-}
-header h2:before {
-  content: "by";
-  font-style: italic;
-  padding: 0 0.3em 0 0;
 }
 
 #content #read-marker {
@@ -103,12 +126,13 @@ header h2:before {
   margin-top: 0.5em;
 }
 #content h1 {
+  font-family: 'UbuntuCustom', system-ui, -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, sans-serif;
   margin: 2em 0 1em 0;
   font-size: 1.35em;
   font-weight: normal;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   text-shadow: rgba(255, 255, 255, 0.75) 2px 2px 2px,
                rgba(0, 0, 0, 0.1) -1px -1px 2px;
 }
@@ -116,6 +140,27 @@ a {
   color: var(--link-color);
   text-decoration: none;
 }
+
+a.link {
+  color: var(--link-color);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s;
+}
+a.link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1.5px;
+  background: var(--link-color);
+  transition: width 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+a.link:hover::after {
+  width: 100%;
+}
+
 p {
   margin: 0;
   margin-bottom: 1em;
@@ -137,12 +182,33 @@ ul.choices {
   clear: left;
 }
 ul.choices li {
+  font-size:1em;
   border-bottom: 1px solid #876;
   padding: 0.5em;
+  background: none;
+  transition: background 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+ul.choices li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: var(--link-hover-color);
+  z-index: 0;
+  transition: width 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+ul.choices li:hover::before {
+  width: 100%;
 }
 ul.choices li div.subtitle {
   margin-left: 2em;
   font-style: italic;
+  position: relative;
+  z-index: 1;
 }
 ul.choices li.unavailable {
   color: var(--unavailable-color);
@@ -150,8 +216,11 @@ ul.choices li.unavailable {
   cursor: default !important;
 }
 ul.choices li:hover {
-  background-color: var(--link-hover-color);
   cursor: pointer;
+}
+ul.choices li > * {
+  position: relative;
+  z-index: 1;
 }
 ul.choices li:last-child {
   border-bottom: none;
@@ -194,6 +263,7 @@ blockquote + blockquote.attribution {
 .tools.left {
   float: left;
   left: 0.4em;
+  border-radius: 7px;
 }
 .tools.right {
   float: right;
@@ -201,17 +271,20 @@ blockquote + blockquote.attribution {
 }
 #qualities {
   text-indent: 0;
-  line-height: 1.3em;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
 }
 #qualities p {
   text-indent: 0;
+  margin-bottom: 0.75em;
 }
 #qualities h1 {
+  font-family: 'UbuntuCustom', system-ui, -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, sans-serif;
   font-size: 1.1em;
   font-weight: normal;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   text-shadow: rgba(255, 255, 255, 0.75) 2px 2px 2px,
                rgba(0, 0, 0, 0.1) -1px -1px 2px;
 }
@@ -226,54 +299,157 @@ blockquote + blockquote.attribution {
     margin-top: -0.6em;
     margin-left: -0.6em;
     margin-right: -0.6em;
+    border-radius: 7px 7px 0 0;
 }
 .tab_button {
-    font-family: "Minion Pro", Georgia, serif;
+    font-family: 'HkGroteskRegular', serif;
     background-color: var(--tab-color);
     color: var(--text-color);
     /*float: left;*/
     border: none;
     outline: none;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 9px;
-    padding-right: 9px;
+    padding: 10px;
+    border-radius: 7px 7px 0 0;
 }
 .tab_button.active {
     background-color: var(--content-bg-color);
 }
-.tab_button:hover {
+.tab_button:not(.active):hover {
     background-color: var(--tab-hover-color);
 }
+.tab_button:hover::after {
+  opacity: 1;
+  visibility: visible;
+}
+.tab_button::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  transform: translateX(-80%) translateY(-155%);
+  background-color: var(--tab-hover-color);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 7px;
+  padding-right: 7px;
+  border-radius: 5px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: 1px solid #d9d9d9;
+  font-size: 1em;
+  z-index: 1;
+}
+.tab_button.active::after {
+  background-color: var(--content-bg-color);
+}
 
+.status-icon {
+  width: 1.3em;
+  background-color: transparent;
+  margin-bottom: -0.2em;
+  margin-right: 0.3em;
+  margin-left: 0.3em;
+  stroke-width: 1px;
+}
 
 .overlay {
-    background: rgba(0,0,0,0.7);
-    display: none;
+    background: rgba(0,0,0,0.25);
     position: fixed;
     width: 100%;
     height: 100%;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    top: 0; right: 0; bottom: 0; left: 0;
     z-index: 2;
-    overflow: scroll;
+    overflow-y: auto;
 }
-.options {
-    text-align: right;
-}
+
 .overlay_top {
     position: relative;
-    max-width: 540px;
-    margin: 100px auto;
-    background: rgba(50,50,50,0.7);
-    border: 2px solid;
-    color: white;
+    max-width: 580px;
+    margin: 80px auto;
+    background: var(--content-bg-color);
+    color: var(--text-color);
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.16);
+    padding: 8px;
+}
+
+#saves_table {
+    width: 100%;
+    font-size: 1em;
+    border-spacing: 0px;
+}
+
+#saves_table tr {
+  border-radius: 8px;
+  height: 2em;
+}
+
+#saves_table tr:hover {
+  border-radius: 8px;
+  background: var(--tab-hover-color);
+}
+
+#saves_table td {
+    padding: 10px;
+    vertical-align: middle;
+    border-radius: 8px;
+    word-break: break-word;
+    border: none;
+    width: auto;
 }
 .save_info {
-    min-width: 10em;
+  min-width: 15em;
+  font-size: 0.8em;
+  color: var(--unavailable-color);
+  font-style: italic;
+  line-height: 1.25em;
+  white-space: pre-line;
 }
+.save_info .paren {
+  display: block;
+}
+#saves_table td.saveclose {
+  margin-top: -1em;
+  padding: 0px 0px 10px 10px;
+}
+#saves_table tr.saveclose:hover {
+  background: none;
+}
+
+
+.b {
+    background: var(--tab-hover-color);
+    border: 1px solid var(--card-border-color);
+    border-radius: 5px;
+    color: var(--text-color);
+    padding: 7px 10px;
+    cursor: pointer;
+    transition: background-color 0.22s;
+    font-size: 0.9em;
+    word-break: normal;
+}
+
+.b:hover, .b:focus {
+    background: var(--tab-bg-color);
+    outline: none;
+}
+
+.export_button {
+    font-family: 'UbuntuCustom', system-ui, -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, sans-serif;
+    min-width: 70px;
+}
+
+.b.saveclose {
+    font-family: 'UbuntuCustom', system-ui, -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, sans-serif;
+    min-width: 70px;
+}
+
+#saves_table input[type="file"] {
+    font-size: 0.9em;
+    padding: 4px 8px;
+}
+
 .background {
     position: fixed;
     width: 100%;
@@ -299,11 +475,19 @@ blockquote + blockquote.attribution {
 #bg1 {
     z-index: -99;
 }
-.b {
-}
+
 .save_button {
+  font-family: 'UbuntuCustom', system-ui, -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, sans-serif;
+  min-width: 70px;
 }
 .delete_button {
+  font-family: 'UbuntuCustom', system-ui, -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, sans-serif;
+  min-width: 70px;
+}
+.delete_button:hover {
+  background-color: var(--link-color);
+  border-color: var(--link-color);
+  color: white;
 }
 
 /*
@@ -317,15 +501,15 @@ ul.decks, ul.hand, ul.pinned-cards {
 }
 
 .hand {
-
+  margin-bottom: 0;
 }
 
 .pinned-cards {
-
+  margin-bottom: 0;
 }
 
-.deck {
-
+.decks {
+  margin-bottom: 0;
 }
 
 a.card {
@@ -333,9 +517,11 @@ a.card {
   width: 120px;
   height: 150px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-  border: 10px solid var(--card-border-color);
+  border: 5px solid var(--card-border-color);
   margin-bottom: 0.5em;
   position: relative;
+  border-radius: 7px;
+  transition: box-shadow 0.2s, left 0.2s, top 0.2s;
 }
 a.card:hover {
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
@@ -347,8 +533,9 @@ div.blank-card {
   width: 120px;
   height: 150px;
   background-color: var(--card-bg-color);
-  border: 10px solid var(--card-border-color);
-  margin-bottom: 0.5em;
+  border: 5px solid var(--card-border-color);
+  margin-bottom: 1.5em;
+  border-radius: 7px
 }
 
 .card-in-hand, .pinned-card, .deck {
@@ -356,6 +543,7 @@ div.blank-card {
   position: relative;
   max-width: 150px;
   margin-right: 1em;
+  margin-bottom: 1em;
   vertical-align: top;
 }
 
@@ -364,30 +552,50 @@ div.blank-card {
   color: var(--unavailable-color);
   background-color: var(--unavailable-bg-color) !important;
   cursor: default !important;
+  border-radius: 7px;
+  padding-bottom: 0.25em;
 }
 
 .card-caption {
   text-align: center;
   display: block;
   font-size: 1em;
+  max-width: 120px;
 }
 
 .card-tooltip {
   position: absolute;
   visibility: hidden;
-  width: 150px;
-  max-width: 200px;
+  opacity: 0;
+  width: calc(100% - 12px);
+  height: calc(100% - 10px);
   font-size: 0.9em;
+  font-weight: bold;
   z-index: 2;
-  padding: 0.2em;
-  border: 1px solid var(--border-color);
-  background-color: var(--content-bg-color);
-  left: 105%;
+  background-color: var(--tab-bg-color);
+  left: -5px;
+  top: -5px;
+  border-radius: inherit;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 12px;
+  padding-right: 12px;
+  text-wrap: auto;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
 }
+
+a.card:focus .card-tooltip,
+a.card:hover .card-tooltip {
+  visibility: visible;
+  opacity: 0.9;
+  position: absolute;
+}
+
 
 .card-img {
   height: 150px;
   width: 120px;
+  border-radius: 3px;
   object-fit: cover;
 }
 
@@ -480,6 +688,8 @@ img {
   }
   #qualities {
       font-size: 1em;
+      padding-left: 0.1em;
+      padding-right: 0.1em;
   }
   #tools_wrapper {
     position: static;
@@ -492,6 +702,7 @@ img {
   .tools.left {
       float: none;
       left: 0;
+      border-radius: 7px;
   }
   .tools.right {
       float: none;
@@ -561,7 +772,8 @@ table {
   --cecp: #be3882;
   --ecp: #6e236e;
   --vox: #63be21;
-  --ac: #064a81;
+  --pxc: #00FFFF;
+  --fnc: #55A0D9;
 }
 
 .seat.ciu {
@@ -618,8 +830,11 @@ table {
 .seat.vox {
     fill: var(--vox);
 }
-.seat.ac {
-    fill: var(--ac);
+.seat.fnc {
+    fill: var(--fnc);
+}
+.seat.pxc {
+    fill: var(--pxc);
 }
 
 /* boxes... */
@@ -677,8 +892,11 @@ table {
 .box.vox {
     background-color: var(--vox);
 }
-.box.ac {
-    background-color: var(--ac);
+.box.pxc {
+    background-color: var(--pxc);
+}
+.box.fnc {
+    background-color: var(--fnc);
 }
 
 .tooltip-text {

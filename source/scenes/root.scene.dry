@@ -13,12 +13,12 @@ go-to: start_menu_2
 
 @start_menu_2
 
-- @start: Start game
-- @election_simulation: Election simulation
-- @language: Language
-- @about: About - v1.0 (10.2025)
-- @credits: Credits
-- @game_over.achievements
+- @start: <span style="font-size: 1.1em;">Start game</span>
+- @election_simulation: <span style="font-size: 1.1em;">Election simulation</span>
+- @language: <span style="font-size: 1.1em;">Language</span>
+- @about: <span style="font-size: 1.1em;">About - v1.0 (10.2025)</span>
+- @credits: <span style="font-size: 1.1em;">Credits</span>
+- @game_over.achievements: <span style="font-size: 1.1em;">Achievements</span>
 
 
 @start
@@ -32,23 +32,16 @@ Q.week = 1;
 Q.rubicon = 0;
 
 // how many actions have been taken this week?
-Q.week_actions = 0; // FIXME: delete me
+Q.week_actions = 0; // FIXME: delete me?
 // how many actions have been taken this month?
 Q.month_actions = 0;
 
 // 0 = normal difficulty, 1 = hard mode, 2 = hard mode no saves
 Q.difficulty = 0;
 Q.historical_mode = 0;
-Q.player_party_name = "<span style='font-style: italic;'>Not yet chosen</span>";
+Q.player_party_name = "<span style='font-style: italic;'>Not party chosen</span>";
 Q.player_party = "";
-Q.position_disp = "";
-Q.party_name_map = {"erc": "<span style='color: #ff8000; font-weight: bold;'>ERC</span>",
-        "ciu": "<span style='color: #002782; font-weight: bold;'>CiU</span>",
-        "cdc": "<span style='color: #002782; font-weight: bold;'>CDC</span>",
-        "pdcat": "<span style='color: #0081c2; font-weight: bold;'>PDeCAT</span>",
-        "jxsi": "<span style='color: #3ab6a5; font-weight: bold;'>JxSí</span>",
-        "junts": "<span style='color: #20c0b2; font-weight: bold;'>Junts</span>",
-        "cup": "<span style='color: #ffed00; font-weight: bold;'>CUP</span>"};
+Q.position_disp = "??";
 
 Q.erc_dissent_percent = 10;
 Q.ciu_dissent_percent = 15;
@@ -59,7 +52,7 @@ Q.jxsi_dissent_percent = 25;
 // start situation
 Q.president = "Artur Mas";
 Q.president_party = "ciu";
-Q.president_party_disp = Q.party_name_map[Q.president_party];
+Q.president_party_disp = "<span style='color: #002782; font-weight: bold;'>CiU</span>";
 Q.president_disp = "<span style='color: #002782;'>Artur Mas</span>";
 Q.cat_coalition_disp = "<span style='color: #002782;'>CiU minority government</span>";
 
@@ -75,8 +68,15 @@ Q.next_election_year = 2014;
 Q.next_spanish_election_month = 12;
 Q.next_spanish_election_year = 2015;
 
+Q.independence_trust = 28;
 Q.independence_movement = 65;
+Q.social_dissent_trust = 20;
 Q.social_dissent = 55;
+Q.cat_spa_relations = 38;
+Q.gdp_growth = -3.1; // annual, percent
+Q.gdp_growth_change = '<img src="img/arrowdown.png"> ';
+Q.generalitat_surplus = -2.3; //percent
+Q.generalitat_surplus_change = '<img src="img/arrowup.png""> ';
 Q.public_debt = 25;
 Q.public_debt_qualifier = "<span style='color: #ffa200ff;'>mediocre</span>";
 Q.unemployment = 22.5;
@@ -90,6 +90,7 @@ Q.parlament_seats = {
     "tarragona": 18
   }; // seats
 Q.parlament_constituencies = ["barcelona", "girona", "lleida", "tarragona"];
+Q.parlament_size = 135;
 
 Q.ciu_parlament_pv = 40;
 Q.ciu_parlament_s = 62;
@@ -126,9 +127,10 @@ Q.ecp_parlament_pv = 0.0;
 Q.ecp_parlament_s = 0;
 Q.vox_parlament_pv = 0.0;
 Q.vox_parlament_s = 0;
-Q.ac_parlament_pv = 0.0;
-Q.ac_parlament_s = 0;
-
+Q.pxc_parlament_pv = 0.0;
+Q.pxc_parlament_s = 0;
+Q.fnc_parlament_pv = 0.0;
+Q.fnc_parlament_s = 0;
 
 // Demographics
 Q.parlament_demographics = ["buss", "ind", "middle", "young", "retired", "rural", "unemployed"]
@@ -162,15 +164,13 @@ Q.parlament_tarragona_rural_pop = 1445;
 Q.parlament_tarragona_ind_pop = 1236;
 
 // Parties and initial party support
-Q.parties = ['ciu', 'erc', 'psc', 'ppc', 'icv', 'cs', 'cup', 'si', 'cdc', 'unio', 'jxsi', 'junts', 'pdcat', 'csqp', 'cecp', 'ecp', 'vox', 'ac'];
+Q.parties = ['ciu', 'erc', 'psc', 'ppc', 'icv', 'cs', 'cup', 'si', 'cdc', 'unio', 'jxsi', 'junts', 'pdcat', 'csqp', 'cecp', 'ecp', 'vox', 'pxc', 'fnc'];
 
 // TODO: add the weights
 
 // Congreso:
 Q.ciu_congreso_s = 16;
 Q.erc_congreso_s = 3;
-Q.cup_congreso_s = 0;
-Q.jxsi_congreso_s = 0;
 
 // TODO: add the rest lol
 
@@ -180,6 +180,35 @@ Q.congreso_seats = {
 };
 Q.congreso_constituencies = ["catalunya", "rest_of_spain"];
 
+
+// Initial party positions
+Q.ciu_ideology = "Centre-right Liberalism, Pact-Pragmatic";
+Q.ciu_leader = "Artur Mas";
+
+Q.erc_ideology = "Left Social Democracy, Republican";
+Q.erc_leader = "Oriol Junqueras";
+
+Q.cup_ideology = "Anticapitalism, Unilateralist";
+Q.cup_leader = "David Fernàndez";
+
+Q.cs_leader = "Albert Rivera";
+Q.cs_ideology = "Liberal-Centrism, Centralist";
+
+Q.si_leader = "Alfons López Tena";
+Q.si_ideology = "Centrist regeneration, Unilateralist";
+
+Q.psc_leader = "Pere Navarro";
+Q.psc_ideology = "Social Democracy, Federalist";
+
+Q.ppc_leader = "Alícia Sánchez-Camacho";
+Q.ppc_ideology = "Conservatism, Centralist";
+
+Q.icv_leader = "Joan Herrera";
+Q.icv_ideology = "Green Left, Right to Decide";
+
+
+// International opinions
+Q.international_eu_opinion = 1;
 
 
 
@@ -999,139 +1028,56 @@ Q.m_petrograd = 20;
 Q.sr_petrograd = 20;
 
 
-// Advisors/Leaders
-Q.m_n_advisors = 3;
-Q.b_n_advisors = 3;
-Q.sr_n_advisors = 2;
-Q.k_n_advisors = 5;
+
+
+
+/////////////////////// Timers
+Q.n_advisors = 3;
+
 // timer - this decrements by 1 every turn, and is set to 5 whenever an advisor action is used, so that you can only use one advisor action every 5 months.
 // let's just put all of the timers here...
 // most party affairs and government affairs cards are on a timer.
-Q.timers = [//m_party
-            'm_enemies', 'm_fundraising', 'm_ideology',
-            'm_inter_party_relationships', 'm_media',
-            'm_organizing', 'm_party_disunity', 'm_shuffle_leadership',
-            'm_reunify',
-            'm_prov_gov_policy', 'm_industrial_policy',
-            'm_war_policy',
-            //sr_party
-            'sr_enemies', 'sr_fundraising', 'sr_ideology',
-            'sr_prov_gov_policy', 'sr_industrial_policy',
-            'sr_war_policy', 'sr_rural_policy',
-            'sr_inter_party_relationships', 'sr_media',
-            'sr_organizing', 'sr_party_disunity', 'sr_shuffle_leadership',
-            //b_party
-            'b_enemies', 'b_fundraising', 'b_ideology',
-            'b_inter_party_relationships', 'b_media',
-            'b_organizing', 'b_party_unity', 'b_shuffle_leadership',
-            'b_reunify', 'b_workers_militias',
-            //k_party
-            'k_enemies', 'k_fundraising', 'k_ideology',
-            'k_inter_party_relationships', 'k_media',
-            'k_organizing', 'k_party_unity', 'k_shuffle_leadership',
-            'k_international', 'k_war_policy', 'k_industrial_policy',
-            // prov_gov
-            'agricultural_policy', 'food_policy', 'fiscal_policy',
-            'foreign_policy', 'judiciary', 'labor_affairs',
-            'military_policy', 'education_policy',
-            'internal_security', 'transportation_policy',
-            'industrial_policy', 'civil_rights',
-            'shuffle_cabinet', 'social_policy',
-            'education_policy', 'economic_policy', 'coalition_affairs',
-            'womens_rights', 'offensive',
-            // soviet
-            'food_soviet', 'labor_soviet', 'militias', 'prov_gov_relations',
-            'nationalities_soviet', 'war_soviet', 'land_soviet',
-            'organization_soviet', 'minority_party_soviet',
-            // events
-            'food_shortages', 'high_inflation',
-            'prov_gov_policies', 'land_seizures',
-            'labor_unrest', 'mrc', 'bolshevik_coup',
-            'capital_flight', 'offensive_demand',
-            'june_offensive_conclusion',
-            'war_or_peace',
-            'bolshevik_soviet',
-            'advisor_action',
-            'constituent_assembly',
-            'military_disorder',
-            'crime_wave',
-            'enemy_reinforcements',
-            'german_offensive',
+Q.timers = [//erc_party
+            'erc_media',
+            'erc_fundraising',
+            'erc_campaigning',
             ];
+Q.rubicon_timers = []; // FIXME! Is this needed?
 Q.advisor_action_timer = 0;
 
-Q.prov_gov_policies_timer = 3;
-Q.food_shortages_timer = 2;
-Q.high_inflation_timer = 2;
-Q.land_seizures_timer = 4;
-Q.military_disorder_timer = 3;
-Q.crime_wave_timer = 5;
-Q.enemy_reinforcements_timer = 0
+// ERC Timers
+Q.erc_shuffle_leadership_timer = 0;
+Q.erc_media_timer = 0;
+Q.erc_fundraising_timer = 0;
+Q.erc_campaigning_timer = 0;
 
-// menshevik advisors
-// defensists
-Q.chkheidze_advisor = 1; // Nikolai Chkheidze
-Q.tsereteli_advisor = 0; // Irakli Tsereteli - arrive March week 3
-Q.plekhanov_advisor = 0; // Georgi Plekhanov - arrive March week 3
-Q.dan_advisor = 0; // Fyodor Dan - Arrive March week 3
-Q.broido_advisor = 0; // Eva Broido
-Q.liber_advisor = 0; // Mikhail Liber (Bundist)
-Q.zasulich_advisor = 0; // Vera Zasulich
-// center/non-aligned
-Q.groman_advisor = 0; // Vladimir Groman - economist
-Q.skobelev_advisor = 1; // Matvei Skobelev
-Q.voitinsky_advisor = 0; // Vladimir Voitinsky - arrive March week 3 (defensist-leaning)
-// internationalists
-Q.martov_advisor = 0; // Julius Martov - arrive April week 4
-Q.axelrod_advisor = 0; // Pavel Axelrod
-Q.sukhanov_advisor = 1; // Nikolai Sukhanov
-
-Q.sukhanov_available = 1;
-
-
-// sr advisors
-// right-sr
-Q.avksentiev_advisor = 0; // Nikolai Avksentiev
-Q.savinkov_advisor = 0; // Boris Savinkov
-Q.kondratiev_advisor = 0; // Nikolai Kondratiev
-Q.breshkovskaya_advisor = 0; //Catherine Breshko-Breshkovskaya
-// center-sr
-Q.chernov_advisor = 0; // Viktor Chernov - April week 1
-Q.gots_advisor = 0; // Abram Gots
-Q.zenzinov_advisor = 1; // Vladimir Zenzinov
-// left-sr
-Q.spiridonova_advisor = 0; // Maria Spiridonova
-Q.natanson_advisor = 0; // Mark Natanson
-Q.kamkov_advisor = 0; // Boris Kamkov
-// popular socialists, trudoviks, and other right-SR-aligned figures
-Q.kerensky_advisor = 1;
-
-
-// kadet advisors
-// right-kadet
-Q.milyukov_advisor = 1; // Pavel Milyukov
-Q.panina_advisor = 1; // Sofia Panina
-Q.shingarev_advisor = 1; // Andrey Shingarev
-// left-kadet
-Q.nekrasov_advisor = 1; // Nikolai Nekrasov
-Q.oldenburg_advisor = 0; // Sergey Oldenburg
-// Kadet-aligned liberals
-Q.lvov_advisor = 0; // Prince Georgy Lvov
-Q.tereshchenko_advisor = 1; // Mikhail Tereshchenko
-// Kadet-aligned conservatives
-Q.rodzianko_advisor = 0; // Mikhail Rodzianko
-
-
-// bolshevik advisors
-Q.stasova_advisor = 1; // Elena Stasova
-Q.shliapnikov_advisor = 1; // Alexander Shliapnikov
-Q.lenin_advisor = 0; // Vladimir Lenin - April week 1
-Q.stalin_advisor = 0; // Josef Stalin - April week 1
-Q.kamenev_advisor = 0; // Lev Kamenev - April week 1
-Q.zinoviev_advisor = 0; // Grigory Zinoviev - April week 1
-Q.sverdlov_advisor = 0; // Yakov Sverdlov - April week 1
-Q.kollontai_advisor = 0; // Alexandra Kollontai - April week 1
-Q.trotsky_advisor = 0;
+// ADVISOR LIST (note that they actually get initalized on chosing a party)
+// ERC Advisors
+// Social Left
+Q.dolors_bassa_advisor = 0;
+Q.joan_josep_nuet_advisor = 0; 
+Q.marta_rovira_advisor = 0;
+Q.teresa_jorda_advisor = 0;
+// Republican Core
+Q.oriol_junqueras_advisor = 0;
+Q.gabriel_rufian_advisor = 0;
+Q.joan_tarda_advisor = 0;
+Q.sergi_sabria_advisor = 0;
+Q.raul_romera_advisor = 0;
+// Institutional Pragmatics
+Q.pere_aragones_advisor = 0;
+Q.pere_aragones_advisor_available = 1;
+Q.roger_torrent_advisor = 0;
+Q.roger_torrent_advisor_available = 1;
+Q.alfred_bosch_advisor = 0;
+Q.alfred_bosch_advisor_available = 1;
+Q.ernest_maragall_advisor = 0;
+Q.ernest_maragall_advisor_available = 1;
+// Civic Nationalists
+Q.joan_laporta_advisor = 0;
+Q.carles_mundo_advisor = 0;
+Q.carme_forcadell_advisor = 0;
+Q.elisenda_paluzie_advisor = 0;
 
 !}
 set-bg: img/3rd_October_2017.jpg
@@ -1145,58 +1091,99 @@ This is a game of alternate history. While historical accuracy is a major concer
 
 For more information on the politics, government, and recent history of Catalonia, please see the Library page on the top left. If this is your first time playing the game, it is strongly recommended that you read at least some of this information.
 
-**If you are playing this mod via the Mod Loader in base game, you may be using a broken build. For the intended experience, please play using <a href="https://broken-arrows.github.io/route_to_itaca/" style="color: #0077FF">this</a> link.**
+**If you are playing this mod via the Mod Loader in base game, you may be using a broken build. For the intended experience, please play using <a class="link" href="https://broken-arrows.github.io/route_to_itaca/" style="color: #0077FF; text-de">this</a> link.**
 
-- @easy_mode : Begin - <span style="color: #5B9A8D;">Easy</span>
-- @normal_mode : Begin - <span style="color: #C4B156;">Normal</span>
-- @hard_mode : Begin - <span style="color: #943006ff;">Hard</span>
+- @easy_mode : Begin - <span style="color: #5B9A8D;font-weight: bold;">Easy</span>
+- @normal_mode : Begin - <span style="color: #C4B156;font-weight: bold;">Normal</span>
+- @hard_mode : Begin - <span style="color: #943006ff;font-weight: bold;">Hard</span>
 
 @easy_mode
 title: Begin - Easy
 on-arrival: difficulty = -1; erc_resources = 4; ciu_resources = 4; cup_resources = 5; b_resources = 4; m_dues = 3; sr_dues = 3; b_dues = 3; m_k_relation = 50; m_sr_relation = 62; sr_k_relation = 50; m_split_threshold = 65; sr_split_threshold = 65; m_support_change = 10; sr_support_change = 10; m_discipline_change = 8; sr_discipline_change = 8; max_advisors = 5; ipr_change = 8;
 go-to: party_selection
 
-Select a party:
+What party shall you lead?
 
 @normal_mode
 title: Begin - Normal
+on-arrival: difficulty = 0; erc_resources = 3; ciu_resources = 3; cup_resources = 3; b_resources = 2; m_dues = 2; sr_dues = 2; b_dues = 2; m_k_relation = 40; m_sr_relation = 55; sr_k_relation = 40; m_split_threshold = 60; sr_split_threshold = 60; m_support_change = 7; sr_support_change = 7; m_discipline_change = 6; sr_discipline_change = 6; max_advisors = 4; ipr_change = 6;
 go-to: party_selection
 
-Select a party:
+What party shall you lead?
 
 @hard_mode
 title: Begin - Hard
 on-arrival: difficulty = 1; m_resources = 2; sr_resources = 2; k_resources = 2; b_resources = 0; b_dues = 0; m_split_threshold = 50; sr_split_threshold = 50; m_support_change = 5; sr_support_change = 5; m_discipline_change = 4; sr_discipline_change = 4; max_advisors = 3; ipr_change = 5;
 go-to: party_selection
 
-Select a party:
+What party shall you lead?
 
 
 @party_selection
 
-- @esquerra: Republican Left of Catalonia (<span style='color: #ff8000; font-weight: bold;'>ERC</span>)
-- @ciu: Convergence and Union (<span style='color: #002782; font-weight: bold;'>CiU</span>)
-- @cup: Popular Unity Candidacy (<span style='color: #ffed00; font-weight: bold;'>CUP</span>)
-
+- @esquerra: Republican Left of Catalonia - <span style='color: #ff8000; font-weight: bold;'>ERC</span>
+- @cup: Popular Unity Candidacy - <span style='color: #C4B156; font-weight: bold;'>CUP</span>
+- @ciu: Convergence and Union - <span style='color: #002782; font-weight: bold;'>CiU</span>
 
 @esquerra
 title: Republican Left of Catalonia (ERC)
 
-**Republican Left of Catalonia (ERC)** - A description WIP!
+**Republican Left of Catalonia - <span style='color: #ff8000; font-weight: bold;'>ERC</span>**
+The left-wing republican party advocates for Catalan independence, socialism, and anti-austerity measures. Formed in 1931, it endured Franco's dictatorship and re-emerged post-1975; pre-2012, it governed in a 2003-2010 tripartite coalition, but lost support after compromising for governance, poor economic leadership, and the failed new charter of autonomy. Now in 2012 is seems to be the main beneficiary of the growing independence sentiment, pushing for a referendum on self-determination.
 
 - @esquerra_2: Yes, we'll be the left of a new country!
 - @party_selection: No, select a different party.
 
 
 @esquerra_2
-on-arrival: player_party = "erc"; player_party_name = "<span style='color: #ff8000; font-weight: bold;'>ERC</span>"; position_disp = "<span style='font-style: italic;'>opposition</span>";
+on-arrival: {!
+Q.player_party = "erc";
+Q.player_party_name = "<span style='color: #ff8000; font-weight: bold;'>ERC</span>";
+Q.position_disp = "<span style='font-style: italic;'>opposition</span>"; 
+
+Q.ciu_relations = 55;
+Q.cup_relations = 70;
+Q.cs_relations = 3;
+Q.psc_relations = 25;
+Q.ppc_relations = 2;
+Q.si_relations = 68;
+Q.icv_relations = 60;
+Q.vox_relations = 0;
+Q.pxc_relations = 1;
+
+
+// ERC Advisors
+// Social Left
+Q.dolors_bassa_advisor_available = 1;
+Q.marta_rovira_advisor = 1;
+Q.marta_rovira_advisor_available = 1;
+Q.teresa_jorda_advisor_available = 1;
+// Republican Core
+Q.oriol_junqueras_advisor = 1;
+Q.oriol_junqueras_advisor_available = 1;
+Q.gabriel_rufian_advisor = 0; // Only post 2014?
+Q.joan_tarda_advisor = 1;
+Q.joan_tarda_advisor_available = 1;
+Q.sergi_sabria_advisor_available = 1;
+Q.raul_romera_advisor = 0;
+// Institutional Pragmatics
+Q.pere_aragones_advisor_available = 0; // Post referendum?
+Q.roger_torrent_advisor_available = 1;
+Q.alfred_bosch_advisor_available = 1;
+Q.ernest_maragall_advisor_available = 1;
+// Civic Nationalists
+Q.joan_laporta_advisor_available = 1; // locked post 2012? 2015?
+Q.carles_mundo_advisor_available = 1;
+Q.elisenda_paluzie_advisor_available = 1;
+!}
 go-to: intros
 
 
 @ciu
 title: Convergence and Union (CiU)
 
-**Convergence and Union (CiU)** - A description WIP!
+**Convergence and Union - <span style='color: #002782; font-weight: bold;'>CiU</span>**
+The center-right nationalist federation of the liberal Democratic Convergence of Catalonia (<span style="color: #002782; font-weight: bold;">CDC</span>) and the christian Democratic Union of Catalonia (<span style="color: #0052a3; font-weight: bold;">UDC</span>) has positioned itself as the moderately autonomist with pro-business policies force. It governed Catalonia almost undisputed in the post-Franco autonomy era, and has come back again in 2010 under <span style="color: #002782; font-weight: bold;">Artur Mas</span>, who has long championed fiscal autonomy. Nonetheless, the statute reform's partial rollback fueled internal debates on independence. In 2012, it faces strong austerity backlash and a voter shift to harder-line pro-independence options.
 
 - @ciu_2: Yes, I am a convergent!
 - @party_selection: No, select a different party.
@@ -1211,7 +1198,8 @@ go-to: intros
 @cup
 title: Popular Unity Candidacy (CUP)
 
-**Popular Unity Candidacy (CUP)** - A description WIP!
+**Popular Unity Candidacy - <span style='color: #C4B156; font-weight: bold;'>CUP</span>**
+The far-left, anti-capitalist, eco-socialist platform demands direct democracy, independence, and municipalism. Emerging from 1980s local assemblies, until recently it had a strong grassroots focus and avoided institutions. In 2012, it is getting ready for its first elections, posing as the "left alternative" and pledging one-term mandates and anti-austerity. How much it is able to scale nationally may very well depend on its ability to remain internally coherent and united.
 
 - @cup_2: Yes, it's the time of the peoples!
 - @party_selection: No, select a different party.
@@ -1220,6 +1208,6 @@ title: Popular Unity Candidacy (CUP)
 @cup_2
 choose-if: 1==0
 unavailable-subtitle: Work in progress...
-on-arrival: player_party = "cup"; player_party_name = "<span style='color: #ffed00; font-weight: bold;'>CUP</span>"; position_disp = "Non-existence";
+on-arrival: player_party = "cup"; player_party_name = "<span style='color: #C4B156; font-weight: bold;'>CUP</span>"; position_disp = "Non-existence";
 go-to: intros
 

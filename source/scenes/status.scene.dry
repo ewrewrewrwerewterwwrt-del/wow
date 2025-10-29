@@ -7,47 +7,15 @@ if (Q.spain_is_republic) {
 } else {
     Q.spanish_seal_img = "img/esp_seal.svg";
 }
-
-Q.parlament_size = 0;
-for (var constituency of Q.parlament_constituencies) {
-    Q.parlament_size += Q.parlament_seats[constituency];
-}
-if (Q.parlament_size == 0){
-    Q.parlament_size = 135; // default size
-}
-Q.congreso_size = 0;
-for (var constituency of Q.congreso_constituencies) {
-    Q.congreso_size += Q.congreso_seats[constituency];
-}
-if (Q.congreso_size == 0){
-    Q.congreso_size = 350; // default size
-}
-
-if(Q.player_party == "erc") {
-    Q.status_parlament_control_disp = Q.erc_parlament_s / Q.parlament_size * 60;
-    Q.status_congreso_control_disp = Q.erc_congreso_s / 350 * 60;
-}
-if(Q.player_party == "jxsi") {
-    Q.status_parlament_control_disp = Q.jxsi_parlament_s / Q.parlament_size * 60;
-    Q.status_congreso_control_disp = Q.jxsi_congreso_s / 350 * 60;
-}
-if(Q.player_party == "ciu") {
-    Q.status_parlament_control_disp = Q.ciu_parlament_s / Q.parlament_size * 60;
-    Q.status_congreso_control_disp = Q.ciu_congreso_s / 350 * 60;
-}
-if(Q.player_party == "cup") {
-    Q.status_parlament_control_disp = Q.cup_parlament_s / Q.parlament_size * 60;
-    Q.status_congreso_control_disp = Q.cup_congreso_s / 350 * 60;
-}
-
 Q.unemployed_disp = Q.unemployed.toFixed(1);
 !}
 
 = Status
 
-[? if rubicon: Week [+ week +] ,?][+ month : month +] [+ year +]
+[? if rubicon: Week [+ week +] ,?][? if started : [+ month : month +] [+ year +] ?]
 
-[+ player_party_name +] position: [+ position_disp +]
+[? if started != 1: **Game not started** ?]
+[? if started : [+ player_party_name +] position: [+ position_disp +] ?]
 
 [? if player_party == "erc": Party resources: [+ erc_resources +] ?]
 [? if player_party == "jxsi": Party resources: [+ jxsi_resources +] ?]
@@ -59,31 +27,27 @@ Q.unemployed_disp = Q.unemployed.toFixed(1);
 [? if player_party == "ciu": Internal dissent: [+ ciu_dissent_percent : dissent +] ?]
 [? if player_party == "cup": Internal dissent: [+ cup_dissent_percent : dissent +] ?]
 
-
-[? if player_party == "erc": <div style="display: flex; align-items:center;gap:0.71em;"><div>Congreso: </div><div style="border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #ff8000;overflow:visible;width:[+ status_congreso_control_disp +]%">[+ erc_congreso_s +]/350</div></div></div> ?]
-[? if player_party == "jxsi": <div style="display: flex; align-items:center;gap:0.71em;"><div>Congreso: </div><div style="border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #20c0b2;overflow:visible;width:[+ status_congreso_control_disp +]%">[+ jxsi_congreso_s +]/350</div></div></div> ?]
-[? if player_party == "ciu": <div style="display: flex; align-items:center;gap:0.71em;"><div>Congreso: </div><div style="border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #002782;overflow:visible;width:[+ status_congreso_control_disp +]%">[+ ciu_congreso_s +]/350</div></div></div> ?]
-[? if player_party == "cup": <div style="display: flex; align-items:center;gap:0.71em;"><div>Congreso: </div><div style="border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #ffed00;overflow:visible;width:[+ status_congreso_control_disp +]%">[+ cup_congreso_s +]/350</div></div></div> ?]
+[? if player_party == "erc": <div style="display: flex; align-items:center;gap:0.6em;"><div>Parlament: </div><div style="height:1.25em;margin-left:0.1em; border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #ff8000;overflow:visible;height:1.25em;width:calc([+ erc_parlament_s +] / [+ parlament_size +] * 100%)"></div></div><p style="margin-bottom:0em;transform: translateX(-135%);font-size:0.8em;">[+ erc_parlament_s +]/[+ parlament_size +]</p></div> ?]
+[? if player_party == "jxsi": <div style="display: flex; align-items:center;gap:0.6em;"><div>Parlament: </div><div style="height:1.25em;margin-left:0.1em; border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #3ab6a5;overflow:visible;height:1.25em;width:calc([+ jxsi_parlament_s +] / [+ parlament_size +] * 100%)"></div></div><p style="margin-bottom:0em;transform: translateX(-135%);font-size:0.8em;">[+ jxsi_parlament_s +]/[+ parlament_size +]</p></div> ?]
+[? if player_party == "ciu": <div style="display: flex; align-items:center;gap:0.6em;"><div>Parlament: </div><div style="height:1.25em;margin-left:0.1em; border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #002782;overflow:visible;height:1.25em;width:calc([+ ciu_parlament_s +] / [+ parlament_size +] * 100%)"></div></div><p style="margin-bottom:0em;transform: translateX(-135%);font-size:0.8em;">[+ ciu_parlament_s +]/[+ parlament_size +]</p></div> ?]
+[? if player_party == "cup": <div style="display: flex; align-items:center;gap:0.6em;"><div>Parlament: </div><div style="height:1.25em;margin-left:0.1em; border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #ffed00;overflow:visible;height:1.25em;width:calc([+ cup_parlament_s +] / [+ parlament_size +] * 100%)"></div></div><p style="margin-bottom:0em;transform: translateX(-135%);font-size:0.8em;">[+ cup_parlament_s +]/[+ parlament_size +]</p></div> ?]
 
 = Government
 
-<div style="display: flex; gap: 0.62em;margin-bottom: -1.25em;"><div style="flex: 0 0 15%;padding-left:0.2em"><img src="img/cat_seal.svg"></div><div style="flex: 1 1 84%;"><p style="font-weight:bold; margin-top:-0.25em; margin-bottom:0.25em;">Generalitat</p><p style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;max-width:100%;">[+ cat_coalition_disp +]</p></div></div>
+<div style="display: flex; gap: 0.62em;margin-bottom: -0.75em;"><div style="flex: 0 0 15%;padding-left:0.2em"><img src="img/cat_seal.svg"></div><div style="flex: 1 1 84%;"><p style="font-weight:bold; margin-top:-0.25em; margin-bottom:0.25em;">Generalitat</p><p style="white-space:nowrap; overflow:clip; text-overflow:ellipsis;max-width:100%;">[+ cat_coalition_disp +]</p></div></div>
 
 President [+ president_disp +] ([+ president_party_disp +])
-
-[? if player_party == "erc": <div style="display: flex; align-items:center;gap:0.25em;"><div>Parlament: </div><div style="border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #ff8000;overflow:visible;width:[+ status_parlament_control_disp +]%">[+ erc_parlament_s +]/[+ parlament_size +]</div></div></div> ?]
-[? if player_party == "jxsi": <div style="display: flex; align-items:center;gap:0.25em;"><div>Parlament: </div><div style="border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #20c0b2;overflow:visible;width:[+ status_parlament_control_disp +]%">[+ jxsi_parlament_s +]/[+ parlament_size +]</div></div></div> ?]
-[? if player_party == "ciu": <div style="display: flex; align-items:center;gap:0.25em;"><div>Parlament: </div><div style="border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #002782;overflow:visible;width:[+ status_parlament_control_disp +]%">[+ ciu_parlament_s +]/[+ parlament_size +]</div></div></div> ?]
-[? if player_party == "cup": <div style="display: flex; align-items:center;gap:0.25em;"><div>Parlament: </div><div style="border-radius:3px;min-width:60%; background-color: #dedede;"><div style="padding-left:0.2em;border-radius:3px;background-color: #ffed00;overflow:visible;width:[+ status_parlament_control_disp +]%">[+ cup_parlament_s +]/[+ parlament_size +]</div></div></div> ?]
 
 Next election: [+ next_election_month : month +] [+ next_election_year +]
 
 
-<div style="display: flex; gap: 0.5em;margin-top:1.1em;margin-bottom: -1.25em;"><div style="flex: 0 0 18%;"><img src="[+spanish_seal_img+]"></div><div style="flex: 1 1 82%;"><p style="font-weight:bold; margin-top:-0.1em; margin-bottom:0.25em;">Gobierno</p><p style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;max-width:100%;">[+ spanish_coalition_disp +]</p></div></div>
+<div style="display: flex; gap: 0.5em;margin-top:1.1em;margin-bottom: -0.75em;"><div style="flex: 0 0 18%;"><img src="[+spanish_seal_img+]"></div><div style="flex: 1 1 82%;"><p style="font-weight:bold; margin-top:-0.1em; margin-bottom:0.25em;">Gobierno</p><p style="white-space:nowrap; overflow:clip; text-overflow:ellipsis;max-width:100%;">[+ spanish_coalition_disp +]</p></div></div>
 
 Presidente [+ spanish_pm_disp +] ([+ spanish_pm_party_disp +])
 
 Next election: [+ next_spanish_election_month : month +] [+ next_spanish_election_year +]
+
+Tensions: [+ cat_spa_relations : social_dissent +]
 
 = Economy and Society
 
@@ -99,28 +63,112 @@ Social dissent: [+ social_dissent : social_dissent +]
 @politics
 title: Politics
 on-arrival: {!
+var parlament_size = 0;
+for (var constituency of Q.parlament_constituencies) {
+    parlament_size += Q.parlament_seats[constituency];
+}
+Q.parlament_s_majority = Math.floor(parlament_size/2) + 1;
+
+Q.parlament_max_seats = 0;
+for (var party of Q.parties) {
+    var party_seats = Q[party + "_parlament_s"];
+    if (party_seats > Q.parlament_max_seats) {
+        Q.parlament_max_seats = party_seats;
+    }
+}
 !}
-
-= Inter-party Relationships
-
-= Party Positions
 
 = [+ player_party_name +] Factions
 
 # Roadmap to Independence: [? if player_party = "erc": [+ erc_roadmap : roadmap +]?][? if player_party = "jxsi": [+ jxsi_roadmap : roadmap +]?][? if player_party = "ciu": [+ ciu_roadmap : roadmap +]?][? if player_party = "cup": [+ cup_roadmap : roadmap +]?]
 
+= PARLAMENT
+<div style="margin-top:1.5em;">
+[? if jxsi_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #3ab6a5; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> JxSí </div><div style='height:1.1em; background-color: #3ab6a5; width:calc([+ jsxi_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+jsxi_parlament_s+]</div>?]
+[? if ciu_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #002782; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> CiU </div><div style='height:1.1em; background-color: #002782; width:calc([+ ciu_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+ciu_parlament_s+]</div>?]
+[? if cdc_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #002782; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> CDC </div><div style='height:1.1em; background-color: #002782; width:calc([+ cdc_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+cdc_parlament_s+]</div>?]
+[? if pdcat_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #0081c2; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> PdCat </div><div style='height:1.1em; background-color: #0081c2; width:calc([+ pdcat_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+pdcat_parlament_s+]</div>?]
+[? if erc_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #ffcc00; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> ERC </div><div style='height:1.1em; background-color: #ffcc00; width:calc([+ erc_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+erc_parlament_s+]</div>?]
+[? if cs_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #f6c300; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> Cs </div><div style='height:1.1em;background-color: #f6c300; width:calc([+ cs_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+cs_parlament_s+]</div>?]
+[? if psc_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #e73b39; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> PSC </div><div style='height:1.1em;background-color: #e73b39; width:calc([+ psc_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+psc_parlament_s+]</div>?]
+[? if ppc_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #007fff; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> PPC </div><div style='height:1.1em;background-color: #007fff; width:calc([+ ppc_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+ppc_parlament_s+]</div>?]
+[? if vox_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #63be21; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> VOX </div><div style='height:1.1em;background-color: #63be21; width:calc([+ vox_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+vox_parlament_s+]</div>?]
+[? if icv_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #67af2f; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> ICV-EUiA </div><div style='height:1.1em;background-color: #67af2f; width:calc([+ icv_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+icv_parlament_s+]</div>?]
+[? if csqp_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #c3113b; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> CSQP </div><div style='height:1.1em;background-color: #c3113b; width:calc([+ csqp_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+csqp_parlament_s+]</div>?]
+[? if cecp_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #be3882; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> CeCP </div><div style='height:1.1em;background-color: #be3882; width:calc([+ cecp_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+cecp_parlament_s+]</div>?]
+[? if ecp_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #6e236e; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> eCP </div><div style='height:1.1em;background-color: #6e236e; width:calc([+ ecp_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+ecp_parlament_s+]</div>?]
+[? if cup_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #C4B156; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> CUP </div><div style='height:1.1em;background-color: #ffed00; width:calc([+ cup_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+cup_parlament_s+]</div>?]
+[? if unio_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #0052a3; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> UDC </div><div style='height:1.1em;background-color: #0052a3; width:calc([+ unio_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+unio_parlament_s+]</div>?]
+[? if pxc_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #00FFFF; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> PxC </div><div style='height:1.1em;background-color: #00FFFF; width:calc([+ pxc_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+pxc_parlament_s+]</div>?]
+[? if fnc_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #55A0D9; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> FNC </div><div style='height:1.1em;background-color: #55A0D9; width:calc([+ fnc_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+fnc_parlament_s+]</div>?]
+[? if si_parlament_s > 0: <div style="font-size:0.9em; margin-top:-1em; display: flex; align-items:center;gap:0em;width:100%;"> <div style='color: #000000; font-weight:bold;width:3em; text-wrap: nowrap; text-overflow: ellipsis;  overflow: clip;'> SI </div><div style='height:1.1em;background-color: #000000; width:calc([+ si_parlament_s +] * 65% / [+ parlament_max_seats +]);margin-right:0.5em;border-radius: 0px 3px 3px 0px;'></div>[+si_parlament_s+]</div>?]
+[? if parlament_s_majority > 0 : <p style="text-align:right;font-style:italic;font-size:0.8em;margin-top:-2em;margin-right:0.5em;">Majority: [+ parlament_s_majority +]</p> ?]
+</div>
 
-@attitudes
-title: Attitudes
+[? if (player_party != "jxsi") and (jxsi_parlament_s > 0): <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="width:fit-content; border-radius: 5px;" src="img/parties/logo_jxsi.png"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #20c0b2; font-weight: bold;">JxSí</span> - [+ jxsi_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ jxsi_leader +] <span style="font-style:italic;">([+ jxsi_ideology +])</span></p></div></div> ?]
+[? if (ciu_parlament_s > 0) and (player_party != "ciu"): <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="width:fit-content;" src="img/parties/logo_ciu.png"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #002782; font-weight: bold;">CiU</span> - [+ ciu_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ ciu_leader +] <span style="font-style:italic;">([+ ciu_ideology +])</span></p></div></div> ?]
+[? if (player_party != "cdc") and (cdc_parlament_s > 0): <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="width:fit-content;" src="img/parties/logo_cdc.png"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #002782; font-weight: bold;">CDC</span> - [+ cdc_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ cdc_leader +] <span style="font-style:italic;">([+ cdc_ideology +])</span></p></div></div> ?]
+[? if (player_party != "pdcat") and (pdcat_parlament_s > 0): <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="width:fit-content;" src="img/parties/logo_pdecat.svg"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #0081c2; font-weight: bold;">PDeCAT</span> - [+ pdcat_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ pdcat_leader +] <span style="font-style:italic;">([+ pdcat_ideology +])</span></p></div></div> ?]
+[? if (erc_parlament_s > 0) and (player_party != "erc"): <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="width:fit-content;" src="img/parties/logo_erc.svg"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #ff8000; font-weight: bold;">ERC</span> - [+ erc_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ erc_leader +] <span style="font-style:italic;">([+ erc_ideology +])</span></p></div></div> ?]
+[? if cs_parlament_s > 0 : <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="width:fit-content;" src="img/parties/logo_cs.svg"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #f6c300; font-weight: bold;">Cs</span> - [+ cs_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ cs_leader +] <span style="font-style:italic;">([+ cs_ideology +])</span></p></div></div> ?]
+[? if psc_parlament_s > 0 : <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img src="img/parties/logo_psc.svg"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #e73b39; font-weight: bold;">PSC</span> - [+ psc_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ psc_leader +] <span style="font-style:italic;">([+ psc_ideology +])</span></p></div></div> ?]
+[? if ppc_parlament_s > 0 : <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="max-width:200%;margin-left:-50%" src="img/parties/logo_pp.png"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #007fff; font-weight: bold;">PPC</span> - [+ ppc_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ ppc_leader +] <span style="font-style:italic;">([+ ppc_ideology +])</span></p></div></div> ?]
+[? if vox_parlament_s > 0 : <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="width:fit-content;" src="img/parties/logo_vox.svg"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #63be21; font-weight: bold;">VOX</span> - [+ vox_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ vox_leader +] <span style="font-style:italic;">([+ vox_ideology +])</span></p></div></div> ?]
+[? if icv_parlament_s > 0 : <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="width:fit-content;" src="img/parties/logo_icv.svg"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #67af2f; font-weight: bold;">ICV-EUiA</span> - [+ icv_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ icv_leader +] <span style="font-style:italic;">([+ icv_ideology +])</span></p></div></div> ?]
+[? if csqp_parlament_s > 0 : <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="width:fit-content;" src="img/parties/logo_csqp.png"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #c3113b; font-weight: bold;">CSQP</span> - [+ csqp_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ csqp_leader +] <span style="font-style:italic;">([+ csqp_ideology +])</span></p></div></div> ?]
+[? if cecp_parlament_s > 0 : <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img src="img/parties/logo_cecp.svg"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #be3882; font-weight: bold;">CECP</span> - [+ cecp_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ cecp_leader +] <span style="font-style:italic;">([+ cecp_ideology +])</span></p></div></div> ?]
+[? if ecp_parlament_s > 0 : <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img src="img/parties/logo_ecp.svg"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #6e236e; font-weight: bold;">ECP</span> - [+ ecp_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ ecp_leader +] <span style="font-style:italic;">([+ ecp_ideology +])</span></p></div></div> ?]
+[? if (player_party != "cup") and (cup_parlament_s > 0): <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="width:fit-content; border-radius: 5px;" src="img/parties/logo_cup.svg"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #C4B156; font-weight: bold;">CUP</span> - [+ cup_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ cup_leader +] <span style="font-style:italic;">([+ cup_ideology +])</span></p></div></div> ?]
+[? if unio_parlament_s > 0 : <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="width:fit-content;" src="img/parties/logo_unio.png"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #0052a3; font-weight: bold;">UDC</span> - [+ unio_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ unio_leader +] <span style="font-style:italic;">([+ unio_ideology +])</span></p></div></div> ?]
+[? if pxc_parlament_s > 0 : <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="width:fit-content; border: 1px solid black; border-radius: 5px;" src="img/parties/logo_pxc.gif"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #00FFFF; font-weight: bold;">PxC</span> - [+ pxc_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ pxc_leader +] <span style="font-style:italic;">([+ pxc_ideology +])</span></p></div></div> ?]
+[? if fnc_parlament_s > 0 : <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="width:fit-content;" src="img/parties/logo_fnc.png"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #55A0D9; font-weight: bold;">FNC</span> - [+ fnc_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ fnc_leader +] <span style="font-style:italic;">([+ fnc_ideology +])</span></p></div></div> ?]
+[? if si_parlament_s > 0 : <div style="display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="width:fit-content; border: 1px solid black; border-radius: 5px;" src="img/parties/logo_si.jpg"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"><span style="color: #000000; font-weight: bold;">SI</span> - [+ si_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ si_leader +] <span style="font-style:italic;">([+ si_ideology +])</span></p></div></div> ?]
+
+
+@international
+title: International Relations
 on-arrival: {!
 !}
 
-= ATTITUDES
+= INTERNATIONAL RELATIONS
+
+<div style="display: flex; gap: 0.5em;font-size:0.9em;"><div style="flex: 0 0 20%;padding-left:0.2em;padding-top:0.2em;align-content:center;"><img style="width:fit-content;border-radius: 3px;" src="img/flags/eu.svg"></div><div style="flex: 0 0 80%;"><p style="font-weight: bold;margin-bottom:0em;">European Union</p>[+ international_eu_opinion : international_opinion +]</div></div>
+<div style="display: flex; gap: 0.5em;margin-top:1em;font-size:0.9em;"><div style="flex: 0 0 20%;padding-left:0.2em;padding-top:0.2em;align-content:center;"><img style="width:fit-content;border-radius: 3px;" src="img/flags/russia.svg"></div><div style="flex: 0 0 80%;"><p style="font-weight: bold;margin-bottom:0em;">Russia</p>[+ international_russia_opinion : international_opinion +]</div></div>
+<div style="display: flex; gap: 0.5em;margin-top:1em;font-size:0.9em;"><div style="flex: 0 0 20%;padding-left:0.2em;padding-top:0.2em;align-content:center;"><img style="width:fit-content;border-radius: 3px;" src="img/flags/usa.svg"></div><div style="flex: 0 0 80%;"><p style="font-weight: bold;margin-bottom:0em;">United States</p>[+ international_usa_opinion : international_opinion +]</div></div>
+<div style="display: flex; gap: 0.5em;margin-top:1em;font-size:0.9em;"><div style="flex: 0 0 20%;padding-left:0.2em;padding-top:0.2em;align-content:center;"><img style="width:fit-content;border-radius: 3px;" src="img/flags/prc.svg"></div><div style="flex: 0 0 80%;"><p style="font-weight: bold;margin-bottom:0em;">P.R. China</p>[+ international_china_opinion : international_opinion +]</div></div>
+
+
+@economy
+title: Economy
+on-arrival: {!
+!}
+
+= ECONOMY
+
+Generalitat surplus: [+ generalitat_surplus +]% [+ generalitat_surplus_change +]
+
+GDP growth: [+ gdp_growth +]% [+ gdp_growth_change +]
+
+Debt status: [+ public_debt_qualifier +]
+
+Unemployment: [+ unemployment +]% [+ unemployment_change +]
 
 @polls
 title: Polls
 on-arrival: {!
 !}
 
+<div style="display: flex; height: 0em; margin-top:-0.75em;"></div>
+
+Independence movement momentum: [+ independence_movement : independence_movement +]
+
+<div style="font-size:0.85em; margin-top:-0.8em;">Pro-independence movements are [+ independence_trust : politics_trust +] the parties **in government** regarding independece.</div>
+
+Social dissent: [+ social_dissent : social_dissent +] 
+
+<div style="font-size:0.85em; margin-top:-0.8em;">The general population is [+ social_dissent_trust : politics_trust +] the parties **in government** regarding social issues.</div>
+
+
 = Polls
 
+Blah blah

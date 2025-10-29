@@ -9,39 +9,96 @@ Herein you may find all varieties of information pertaining to Catalonia.
 
 @menu
 
-- @government: Dump
-- @timeline: Timeline of recent Catalan history
-- @backSpecialScene: Exit library.
+- @catalan_system_lib: Catalan Political System
+- @catalan_parties_lib: Political Parties
+- @timeline_lib: Timeline of recent Catalan history
+- @backSpecialScene: Exit library
 
-@government
+# - @spanish_parties_lib: Spanish Political Parties
+
+@catalan_system_lib
 go-to: menu
 
-= The Provisional Government
+= Catalan Political System
+As of 2012, Catalonia enjoys a relatively high degree of self-government as one of the 17 Autonomous Communities of the Kingdom of Spain. Its political system is defined by the Statute of Autonomy of Catalonia, which was first approved in 1979 after the end of Franco's dictatorship, and partially reformed in 2006. The **Generalitat de Catalunya** is the institution governing it. Dating as far back as 1359 AD, it is nowadays formed by two main bodies, executive and legislative, with a separate judicial system under the Spanish courts.
+
+The **Parlament** is the unicameral legislative body, made up of 135 members elected every four years through proportional representation. Catalonia does not have its own electoral law, which means deputies are elected based on the Spanish provincial system, following the D'Hondt method for seat allocation with a provincial threshold of 3%.
+
+The (Most Honourable) **President** is the head of government, elected by the Parlament from among its members. The president appoints its executive council, which is made up of various ministers responsible for different policy areas.
+
+The Generalitat's framework tilts slightly toward executive strength. No-confidence votes require an alternative candidate to be proposed, and the president can dissolve the Parlament and call for early elections. However, the legislative body has the power to approve or reject the budget, and to propose laws and reforms.
+
+Catalonia has no special fiscal status as a Spanish Autonomous Community. Unlike the Basque Country or Navarre, Catalonia does not collect its own taxes. Instead, all taxes are collected by the Spanish government and then redistributed to the Autonomous Communities through a complex funding formula. This has always resulted in an acute deficit for Catalonia, with estimates at around €20 billion, close to 8-10% of Catalonia's GDP, or almost half of the Generalitat's annual budget.
+
+With this budget, the Generalitat does have to manage its many areas it does control. These include education, health, transportation, urban planning, ecology, language and culture, agriculture, tourism, social services, and many aspects of civil law. It also has some control over internal security through the Mossos d'Esquadra, its regional police force, and its own prisons, with the Spanish police forces retaining fairly limited competences, at least on paper.
 
 
-
-@government
-go-to: menu
-
-= INFODUMP
-
-Pushed forward by the left tri-partite government of <span style='color: #e73b39'>PSC</span>, <span style='color: #ff8000; font-weight: bold;'>ERC</span>, and <span style='color: #67af2f'>ICV-EUiA</span>, the charter of autonomy represented a great expansion of Catalonia's self governing capacities and a broader recognition of its distinct national identity, culture, and language. Approved by more than 70% of the Catalan population, it also counted with the wider support of the Spanish socialist party, <span style='color: #e73b39'>PSOE</span>, who had agreed to support it in the Congreso.
-
-The Congreso, nonetheless, ended up modifying more than half of the articles before its approval. Yet still, the biggest blow came from the conservative <span style='color: #1785cf'>PP</span>, who challenged the charter in the Constitutional Court. In 2010, the court struck down or reinterpreted 14 articles, including the recognition of Catalonia as a nation, linguistic rights and protections, and wider legislative and fiscal powers.
-
-Now, many Catalans feel betrayed, which has fueled a never-before-seen rise in support for self-determination and independence. Each September 11th, the National Day of Catalonia, the strength of the independence movement is made visible in the streets, and it only seems to grow stronger.
-
-Currently, Catalonia has no special fiscal status as a Spanish Autonomous Community. Unlike the Basque Country or Navarre, Catalonia does not collect its own taxes. Instead, all taxes are collected by the Spanish government and then redistributed to the Autonomous Communities through a complex funding formula. Estimates put this redistribution deficit at around €20 billion, close to 8-10% of Catalonia's GDP, or almost half of the Generalitat's annual budget.
-
-<span style='color: #002782; font-weight: bold;'>CiU</span> has already dedicated much of its political capital in trying to negotiate at least a partial fiscal agreement, where by at least some reduction of this deficit could be achieved. However, it seems unlikely that the Spanish Gobierno presided by <span style='color: #1d84ce;'>Mariano Rajoy</span> will agree to such deal, and much less in times of hardship also for the wider Spanish and European economies.
-
-
-
-
-
-@timeline
+@timeline_lib
 go-to: menu
 
 = Timeline of recent Catalan history
+
+# **1714** - The War of Spanish Succession ends
+
+# **1931-1939** - The Second Spanish Republic
+
+**1939-1975** - Franco's dictatorship
+Francisco Franco's victory in the Spanish Civil War brought about a brutal fascist national-catholic dictatorship that lasted until his death in 1975. Its repression hits particularly hard on political dissent, and specially that coming from the "peripheral nationalities" of Spain, including Catalonia. The dictatorship imposes cultural and linguistic repression, banning Catalan language teaching, writing and speaking; and executing or exiling leaders like the republican President <span style="color: #ff8000; font-weight: bold;">Lluís Companys</span>.
+
+**1978** - Spain's transition
+After Franco's death, Spain transitioned to a constitutional monarchy  with the approval of a new constitution in 1978. The document recognized the existence of "nationalities and regions" within Spain, paving the way for the creation of Autonomous Communities, including Catalonia. The exiled Generalitat is restored in Barcelona.
+
+**1992** - Barcelona Olympics
+The 1992 Summer Olympics in Barcelona represent the peak of Catalonia's post-Franco era. Under undisputed President <span style='color: #002782; font-weight: bold;'>Jordi Pujol</span> (<span style='color: #002782; font-weight: bold;'>CiU</span>), the Generalitat has consolidated policies on language, education, and liberal economic reforms. The games showcase Spain's new post-dictatorship image to the world, and Barcelona becomes a new buzzing and popular global city.
+
+**2006** - A new Statute of Autonomy
+Pushed forward by the left tri-partite government of <span style='color: #e73b39; font-weight: bold;'>PSC</span>, <span style='color: #ff8000; font-weight: bold;'>ERC</span>, and <span style='color: #67af2f; font-weight: bold;'>ICV-EUiA</span>, the charter of autonomy represented a great expansion of Catalonia's self governing capacities and a broader recognition of its distinct national identity, culture, and language. Approved by more than 70% of the Catalan population, it also counted with the wider support of the Spanish Socialist-Workers Party, <span style='color: #e73b39; font-weight: bold;'>PSOE</span>, who had agreed to support it in the Congreso.
+
+**2008** - Global Financial Crisis
+The 2008 global financial crisis hit Spain particularly hard as it burst its property bubble. The resulting economic recession led to soaring unemployment rates, raising debt, and exacerbated the Catalan "fiscal deficit". The crisis exposed structural weaknesses in Spain's economy and led to severe austerity measures imposed by the national government, which further fueled discontent in Catalonia.
+
+**2010** - A Statute struck down
+Despite the <span style='color: #e73b39; font-weight: bold;'>PSOE</span>'s earlier promises, the Congreso ended up modifying more than half of the articles before the approval of the new Statute. Yet still, the biggest blow came from the conservative <span style='color: #1785cf; font-weight: bold;'>PP</span>, who challenged the charter in the Constitutional Court. In 2010, the court struck down or reinterpreted 14 articles, including the recognition of Catalonia as a nation, linguistic rights and protections, and wider legislative and fiscal powers. This left many Catalans feel betrayed, which fueled a never-before-seen rise in support for self-determination and independence. Re-gaining strength in 2010 under the motto "We are a nation. We decide.", each September 11th, the National Day of Catalonia, the strength of the independence movement is made visible in the streets, and it only seems to grow stronger.
+
+**2011** - The 15-M anti-austerity movement
+The anti-austerity movements that expanded through Europe in the 2010's reach the Iberian peninsula in May 2011 as a series of protests against cuts, political corruption, and economic inequality. In Catalonia, the movement resonated strongly, intertwining with the growing independence sentiment. It led to the formation of new political platforms and grassroots organizations advocating for social justice, participatory democracy, and Catalan sovereignty.
+
+@catalan_parties_lib
+go-to: menu
+
+= Political Parties
+
+The Catalan Parlament is a multi-party mix where, with rising polarization, clear majorities are set to be the exception rather than the rule. The number of parties is higher than in most legislatures of this size mainly due to the dual polarization of Catalan politics: on one hand, the traditional left-right economic axis, and on the other, the union-independence national identity axis.
+
+<span style="color: #002782; font-weight: bold;">CiU</span> - **Convergence and Union**
+The center-right nationalist federation of the liberal Democratic Convergence of Catalonia (<span style="color: #002782; font-weight: bold;">CDC</span>) and the christian Democratic Union of Catalonia (<span style="color: #0052a3; font-weight: bold;">UDC</span>) has positioned itself as the moderately autonomist with pro-business policies force. It governed Catalonia almost undisputed in the post-Franco autonomy era, and has come back again in 2010 under <span style="color: #002782; font-weight: bold;">Artur Mas</span>, who has long championed fiscal autonomy. Nonetheless, the statute reform's partial rollback fueled internal debates on independence. In 2012, it faces strong austerity backlash and a voter shift to harder-line pro-independece options.
+
+<span style="color: #ff8000; font-weight: bold;">ERC</span> - **Republican Left of Catalonia**
+The left-wing republican party advocates for Catalan independence, socialism, and anti-austerity measures. Formed in 1931, it endured Franco's dictatorship and re-emerged post-1975; pre-2012, it governed in a 2003-2010 tripartite coalition with <span style="color: #e73b39; font-weight: bold;">PSC</span> and <span style="color: #67af2f; font-weight: bold;">ICV-EUiA</span> but lost support after compromising for governance, poor economic leadership, and the failed new charter of autonomy. Now in 2012 is seems to be the main beneficiary of the growing independence sentiment, pushing for a referendum on self-determination.
+
+<span style="color: #f6c300; font-weight: bold;">Cs</span> - **Citizens** (Party of the Citizenry)
+The centre-right party is the most vocal force on unionism. Founded in 2006 from anti-statute intellectuals, it grew pre-2012 from Barcelona localism to regional lists. With a platform on anti-corruption, liberal economics, and a position against "ethnic" Catalanism, in 2012 it thrives on polarization and backlash against traditional parties.
+
+<span style="color: #e73b39; font-weight: bold;">PSC</span> - **Socialist Party of Catalonia**
+The Catalan branch of the Spanish Socialist-Workers Party (<span style="color: #e73b39; font-weight: bold;">PSOE</span>) holds a center-left social democratic stance favoring federalism over separation. Despite dominating the post-Franco era as the big alternative to <span style="color: #002782; font-weight: bold;">CiU</span>, its leadership in the 2003-2010 tripartite coalition with <span style="color: #ff8000; font-weight: bold;">ERC</span> and <span style="color: #67af2f; font-weight: bold;">ICV-EUiA</span> led to voter disillusionment due to poor economic management and the failed autonomy reform. In 2012, it struggles to retain relevance as the independence movement surges and its Spanish counterpart distance itself from any sort of further devolution.
+
+<span style="color: #007fff; font-weight: bold;">PPC</span> - (Catalan) **People's Party**
+The Catalan division of Spain's conservative People's Party (<span style="color: #1785cf; font-weight: bold;">PP</span>) opposes Catalan separatism and favores recentralization with free-market economics. Historically weak in Catalonia, it does have a chance to gain from anti-independence backlash, yet it is heavily hindered by the very unpopular austerity campaigns being carried by its own national leadership under Presidente <span style="color: #1785cf; font-weight: bold;">Mariano Rajoy</span>.
+
+<span style="color: #67af2f; font-weight: bold;">ICV-EUiA</span> - **Initiative for Catalonia Greens - United and Alternative Left**
+The green coalition supports left-wing policies, environmentalism, and a federal "right to decide" without explicitly endorsing independence. Formed in 1987 from communist roots, it joined tripartite governments pre-2010, gaining from 1990s green shifts. With vocal support for social justice and anti-austerity, its 2012 prospects are complex, as its pro-referendum yet not-explicitly-positioned on nationalism stance limits its appeal to both extremes of the national axis.
+
+<span style="color: #C4B156; font-weight: bold;">CUP</span> - **Popular Unity Candidacy**
+The far-left, anti-capitalist, eco-socialist platform demands direct democracy, independence, and municipalism. Emerging from 1980s local assemblies, until recently it had a strong grassroots focus and avoided institutions. In 2012, it is getting ready for its first elections, posing as the "left alternative" and pledging one-term mandates and anti-austerity. How much it is able to scale nationally may very well depend on its ability to remain internally coherent and united.
+
+<span style="color: #000000; font-weight: bold;">SI</span> - **Solidarity for Independence**
+The pro-independence transversal coalition sought sovereignty with progressive pluralism. Launched in 2010 by ex-FCB president <span style="color: #000000; font-weight: bold;">Joan Laporta</span>, it won 4 seats pre-2012 from anti-autonomist surge. In 2012, however, it is set to struggle against <span style="color: #002782; font-weight: bold;">CiU</span>/<span style="color: #ff8000; font-weight: bold;">ERC</span> dominance and internal fragmentation.
+
+
+@spanish_parties_lib
+go-to: menu
+
+= Spanish Political Parties
+
 
 

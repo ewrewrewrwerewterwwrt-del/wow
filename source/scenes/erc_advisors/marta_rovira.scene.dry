@@ -1,0 +1,12 @@
+title: Marta Rovira
+is-pinned-card: true
+tags: advisor, erc_left
+card-image: img/erc/martarovira.jpg
+view-if: marta_rovira_advisor = 1
+new-page: true
+
+= Marta Rovira i Vergés
+
+something
+
+- @root: Return to main

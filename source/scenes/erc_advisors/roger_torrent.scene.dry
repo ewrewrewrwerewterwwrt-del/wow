@@ -1,0 +1,12 @@
+title: Roger Torrent
+is-pinned-card: true
+tags: advisor, erc_pragmatic
+card-image: img/erc/rogertorrent.jpg
+view-if: roger_torrent_advisor = 1
+new-page: true
+
+= Roger Torrent i Ramió
+
+something
+
+- @root: Return to main
