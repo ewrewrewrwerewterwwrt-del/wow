@@ -1,13 +1,14 @@
 title: Gabriel Rufián
 is-pinned-card: true
-tags: advisor, erc_republican
+tags: advisor
 card-image: img/erc/rufian.png
+face-image: img/erc/rufian.jpg
 view-if: gabriel_rufian_advisor = 1
 new-page: true
 
 = Gabriel Rufián i Romero
 
-something
+Of Andalusian descent, Gabriel Rufián has a strong tie to the industrial hinterlands of Barcelona and a strong combative communication style.
 
 
 - @root: Return to main

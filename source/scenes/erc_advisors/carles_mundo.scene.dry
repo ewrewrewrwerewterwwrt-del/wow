@@ -1,12 +1,13 @@
 title: Carles Mundó
 is-pinned-card: true
-tags: advisor, erc_civil
+tags: advisor
 card-image: img/erc/carlesmundo.jpg
+face-image: img/erc/carlesmundo.jpg
 view-if: carles_mundo_advisor = 1
 new-page: true
 
 = Carles Mundó i Blanch
 
-something
+Carles Mundó is a lawyer with a strong background in linguistic and cultural rights.
 
 - @root: Return to main

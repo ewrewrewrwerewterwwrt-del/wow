@@ -1,12 +1,13 @@
 title: Elisenda Paluzie
 is-pinned-card: true
-tags: advisor, erc_civil
+tags: advisor
 card-image: img/erc/paluzie.jpg
+face-image: img/erc/paluzie.jpg
 view-if: elisenda_paluzie_advisor = 1
 new-page: true
 
 = Elisenda Paluzie i Hernández
 
-something
+Elisenda Paluzie is a prominent economist with a very combative style and a strong background in civic activism.
 
 - @root: Return to main

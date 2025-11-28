@@ -1,12 +1,13 @@
 title: Sergi Sabrià
 is-pinned-card: true
-tags: advisor, erc_republican
+tags: advisor
 card-image: img/erc/sergisabria.jpg
+face-image: img/erc/sergisabria.jpg
 view-if: sergi_sabria_advisor = 1
 new-page: true
 
 = Sergi Sabrià i Benito
 
-something
+Sergi Sabrià is a rising strategist with a strong background in communications.
 
 - @root: Return to main

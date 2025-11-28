@@ -1,12 +1,13 @@
 title: Pere Aragonès
 is-pinned-card: true
-tags: advisor, erc_pragmatic
+tags: advisor
 card-image: img/erc/aragones.jpg
+face-image: img/erc/aragones.jpg
 view-if: pere_aragones_advisor = 1
 new-page: true
 
 = Pere Aragonès i Garcia
 
-something
+Pere Aragonès is an economist with family ties to the services and industrial sectors.
 
 - @root: Return to main

@@ -3,7 +3,7 @@ new-page: true
 on-arrival: {!
 Q.last_advisor_action = 0;
 Q.last_cabinet_action = 0;
-// make sure no stat is below 0.
+// make sure no stat is below 0. FIXME!
 for (var c of Q.classes) {
     for (var party of Q.parties) {
         if (Q[c+'_'+party] < 0) {
@@ -12,21 +12,25 @@ for (var c of Q.classes) {
     }
 }
 
-if (Q.prov_gov_legitimacy < 1) Q.prov_gov_legitimacy = 1;
-if (Q.prov_gov_legitimacy > 100) Q.prov_gov_legitimacy = 100;
-if (Q.soviet_cooperation < 0.01) Q.soviet_cooperation = 0.01;
-if (Q.soviet_cooperation > 1) Q.soviet_cooperation = 1;
-if (Q.prov_gov_efficacy < 0.01) Q.prov_gov_efficacy = 0.01;
-if (Q.prov_gov_efficacy > 1) Q.prov_gov_efficacy = 1;
-if (Q.soviet_efficacy < 0.01) Q.soviet_efficacy = 0.01;
-if (Q.soviet_efficacy > 1) Q.soviet_efficacy = 1;
-if (Q.war_weariness < 0) Q.war_weariness = 0;
-if (Q.war_weariness > 99) Q.war_weariness = 99;
+// clamp variables to their ranges
+if (Q.public_debt < 0) Q.public_debt = 0;
+if (Q.public_debt > 100) Q.public_debt = 100;
+if (Q.unemployment < 0) Q.unemployment = 0;
+if (Q.unemployment > 100) Q.unemployment = 100;
+if (Q.social_dissent < 0) Q.social_dissent = 0;
+if (Q.social_dissent > 100) Q.social_dissent = 100;
+if (Q.independence_movement < 0) Q.independence_movement = 0;
+if (Q.independence_movement > 100) Q.independence_movement = 100;
+if (Q.independence_trust < 0) Q.independence_trust = 0;
+if (Q.independence_trust > 100) Q.independence_trust = 100;
+if (Q.social_dissent_trust < 0) Q.social_dissent_trust = 0;
+if (Q.social_dissent_trust > 100) Q.social_dissent_trust = 100;
+if (Q.cat_spa_relations < 0) Q.cat_spa_relations = 0;
+if (Q.cat_spa_relations > 100) Q.cat_spa_relations = 100;
 
-// round to integers...
-Q.train_capacity = Math.round(Q.train_capacity);
+// round to integers... (if needed??)
 
-// re-calculate party support
+// re-calculate party support FIXME!
 // calculate normalized class voting for the achievements
 for (var c of Q.classes) {
     var class_votes = 0;
@@ -91,404 +95,42 @@ for (var p of Q.parties) {
     }
 }
 
-// should we normalize militia/defense force support levels? Or should they be treated like demographic supports? Normalizing would make support changes more dramatic.
-// Normalize them, so that they're dramatic.
-var total_workers_militia_loyalty = Q.workers_militia_independent;
-for (var p of Q.workers_militia_parties) {
-    total_workers_militia_loyalty += Q['workers_militia_' + p + '_loyalty'];
-}
-for (var p of Q.workers_militia_parties) {
-    Q['workers_militia_' + p + '_loyalty'] = 100*Q['workers_militia_' + p + '_loyalty']/total_workers_militia_loyalty;
-}
-Q.workers_militia_independent = 100*Q.workers_militia_independent/total_workers_militia_loyalty;
-// normalize city militia loyalty
-var total_city_militia_loyalty = Q.city_militia_independent;
-for (var p of Q.city_militia_parties) {
-    total_city_militia_loyalty += Q['city_militia_' + p + '_loyalty'];
-}
-for (var p of Q.city_militia_parties) {
-    Q['city_militia_' + p + '_loyalty'] = 100*Q['city_militia_' + p + '_loyalty']/total_city_militia_loyalty;
-}
-Q.city_militia_independent = 100*Q.city_militia_independent/total_city_militia_loyalty;
-
-// Garrison loyalty is the same as that for the soldiers demographic as a whole.
-var total_garrison_loyalty = 0;
-for (var p of Q.parties) {
-    total_garrison_loyalty += Q['soldiers_' + p];
-}
-non_independent = 0;
-for (var p of Q.garrison_parties) {
-    Q['garrison_' + p + '_loyalty'] = 100*Q['soldiers_' + p]/total_garrison_loyalty;
-    non_independent += Q['garrison_' + p + '_loyalty'];
-}
-Q.garrison_independent = 100*(100-non_independent)/total_garrison_loyalty;
-
-if (Q.unemployed <= 1) {
-    Q.unemployed = 1;
-}
-
-
-// inflation
-Q.inflation = Math.pow(1+0.01*Q.monthly_inflation, 12);
-Q.inflation = Math.round(1000*(Q.inflation - 1))/10;
-
-// food production and distribution
-// food demand
-Q.urban_population = 145000000*(Q.workers)/100;
-Q.rural_population = 145000000*(100 - Q.workers - Q.soldiers)/100;
-Q.soldiers_population = 145000000*(Q.soldiers)/100;
-// These are basic demands
-Q.food_demand_urban = Q.urban_population*500/1000000;// in million kg/year
-Q.food_demand_rural = Q.rural_population*500/1000000; // million kg/year - minimal demand; lower than this would provoke famine/violence
-Q.food_demand_military = Q.soldiers_population*700/1000000; // million kg/year
-
-// hunger
-Q.food_supply_urban = Q.food_production*Q.food_sold;
-// food transport is 15% of civilian supply trains (arbitrary number)
-Q.food_transport_capacity = Q.train_capacity*Q.civilian_trains*0.15/100;
-// food transport capacity is an upper bound on food supply
-if (Q.food_supply_urban > Q.food_transport_capacity) {
-    Q.food_supply_urban = Q.food_transport_capacity;
-}
-Q.hunger = 100*(Q.food_demand_urban - Q.food_supply_urban)/Q.food_demand_urban;
-if (Q.hunger < 0) {
-    Q.hunger = 0;
-}
-Q.food_demand_urban = Math.round(Q.food_demand_urban);
-Q.food_supply_urban = Math.round(Q.food_supply_urban);
-Q.hunger = Math.round(Q.hunger); 
-// rural hunger 
-Q.food_supply_rural = Q.food_production*(1 - Q.food_sold)*(1 - Q.food_requisitioned); 
-Q.rural_hunger = 100*(Q.food_demand_rural - Q.food_supply_rural)/Q.food_demand_rural;
-if (Q.rural_hunger < 0) {
-    Q.rural_hunger = 0;
-}
-// soldier hunger
-Q.food_supply_soldier = Q.food_production*Q.food_requisitioned;
-// again, 15% of military trains are for food
-Q.food_transport_capacity_soldier = Q.train_capacity*Q.military_trains*0.15/100;
-if (Q.food_supply_soldier > Q.food_transport_capacity_soldier) {
-    Q.food_supply_soldier = Q.food_transport_capacity_soldier; 
-}
-Q.soldier_hunger = 100*(Q.food_demand_military - Q.food_supply_soldier)/
-Q.food_demand_military;
-if (Q.soldier_hunger < 0) {
-    Q.soldier_hunger = 0; 
-}
-
-
 // 1. update dates
-if (Q.week_actions >= 1) {
-    Q.week_actions = 0;
-    Q.time += 1;
-    Q.week += 1;
+var has_time_passed = 0;
+if (Q.rubicon) {
+    if (Q.week_actions > 0) {
+        has_time_passed = 1;
+        Q.time += 1;
+        Q.week_actions = 0;
+        Q.week += 1;
+    }
     if (Q.week >= 5) {
         Q.month += 1;
         Q.week = 1;
-
     }
     if (Q.month >= 13) {
         Q.month = 1;
         Q.year += 1;
     }
-    // Update Soviet representation on every new week
-    var petrograd_classes = ["workers", "soldiers"];
-
-    for (var c of petrograd_classes) {
-        var class_votes = 0;
-        for (var party of Q.parties) {
-            if (party == "none") {
-                continue;
-            }
-            if (!Q[c+'_'+party] || Q[c+'_'+party] < 0) {
-                Q[c+'_'+party] = 0;
-            }
-            class_votes += Q[c+'_'+party];
-        }
-        for (var party of Q.parties) {
-            Q[c + '_' + party + '_normalized'] = 100*Q[c+'_'+party]/class_votes;
-            Q[c + '_' + party + '_display'] = Math.round(100*Q[c+'_'+party]/class_votes);
-        }
+} else {
+    if (Q.month_actions > 0) {
+        has_time_passed = 1;
+        Q.month_actions = 0;
+        Q.time += 1;
+        Q.month += 1;
     }
-    // 1. calculate support for each of the parties
-    var total_support = 0;
-    for (var party of Q.parties) {
-        if (party == "none") {
-            continue;
-        }
-        var party_support = 0;
-        for (var c of petrograd_classes) {
-            party_support += Q[c + '_petrograd']*Q[c+'_'+party+'_normalized'];
-        }
-        if (Q[party + '_soviet_bonus']) {
-          party_support += Q[party + '_soviet_bonus'];
-        }
-        Q[party + '_support'] = party_support;
-        total_support += party_support;
+    if (Q.week >= 5) {
+        Q.month += 1;
+        Q.week = 1;
     }
-    // 2. normalize support (fraction)
-    // 3. Round to integers
-    // round to 1 decimal instead of rounding to integers
-    // to do that, we multiply party_normalized*1000 and divide the rounded number by 10.
-    for (var party of Q.parties) {
-        if (party == "none") {
-            continue;
-        }
-        Q[party+'_soviet_normalized'] = Q[party + '_support']/total_support;
-        Q[party+'_soviet_votes_dec'] = Math.round(Q[party+'_soviet_normalized']*1000)/10;
-        Q[party+'_soviet_votes'] = Math.round(Q[party+'_soviet_normalized']*100);
-        Q[party + '_soviet_votes_disp'] = Q[party+'_soviet_votes_dec'].toFixed(1);
+    if (Q.month >= 13) {
+        Q.month = 1;
+        Q.year += 1;
     }
-    Q.m_soviet = Q.m_soviet_votes_dec;
-    Q.sr_soviet = Q.sr_soviet_votes_dec;
-    Q.b_soviet = Q.b_soviet_votes_dec;
-    Q.anarchist_soviet = Q.anarchist_soviet_votes_dec;
-    Q.other_soviet = Math.round(10*(Q.popular_socialist_soviet_votes_dec + Q.other_soviet_votes_dec + Q.k_soviet_votes_dec + Q.conservative_soviet_votes_dec))/10;
-
-    // decrement timers
-    for (var timer of Q.timers) {
-        if (Q[timer+'_timer'] && Q[timer+'_timer'] > 0) {
-            Q[timer+'_timer'] -= 1;
-        }
-    }
-
-    // military movement capacity
-    Q.movement_capacity = Math.round(0.001*Q.military_trains*Q.train_capacity/100);
-    Q.soldiers_moved = 0;
-
-    // industrial changes
-    Q.industrial_changes = 0;
-
-    // industrial production ////////////////////////////////////////
-    Q.military_production = Q.military_industry*Q.industry/100;
-    Q.civilian_production = Q.civilian_industry*Q.industry/100;
-    Q.agricultural_industry_production = Q.agricultural_industry*Q.industry/100;
-    Q.transportation_production = Q.transportation_industry*Q.industry/100;
-    Q.capital_production = Q.capital_industry*Q.industry/100;
-    // military production -> supply quality (maybe this should be more sophisticated? nah)
-    Q.supply_quality = Q.military_production/100;
-    // agricultural industry effects on food acquisition
-    if (Q.agricultural_industry_production >= 5) {
-        Q.food_production *= 1.001;
-        if (Q.agricultural_industry_production >= 10) {
-            Q.food_production *= 1.003;
-        }
-        if (Q.food_sold < 0.07 + (Q.agricultural_industry_production - 3)/100 && Q.rural_hunger <= 0) {
-            Q.food_sold += 0.002;
-        }
-    } else {
-        if (Q.food_sold > 0.07 + (Q.agricultural_industry_production - 1)/100) {
-            Q.food_sold -= 0.002;
-        }
-    }
-    if (Q.rural_hunger > 0) {
-        Q.food_sold -= 0.01;
-    }
-
-    // civilian production effects on inflation and food_sold /////////
-    if (Q.civilian_production >= 80) {
-        if (Q.monthly_inflation >= 1) Q.monthly_inflation -= 0.1;
-        if (Q.rural_hunger <= 0 && Q.food_sold <= 0.2) {
-            Q.food_sold += 0.002;
-        }
-    }
-    if (Q.civilian_production >= 70) {
-        if (Q.monthly_inflation >= 2) Q.monthly_inflation -= 0.1;
-        if (Q.rural_hunger <= 0 && Q.food_sold <= 0.15) {
-            Q.food_sold += 0.002;
-        }
-    }
-    if (Q.civilian_production >= 60) {
-        if (Q.monthly_inflation >= 3.5) Q.monthly_inflation -= 0.1;
-        if (Q.rural_hunger <= 0 && Q.food_sold <= 0.1) {
-            Q.food_sold += 0.001;
-        }
-    }
-    if (Q.civilian_production >= 50) {
-        if (Q.monthly_inflation >= 4.5) Q.monthly_inflation -= 0.1;
-        if (Q.rural_hunger <= 0 && Q.food_sold <= 0.08) {
-            Q.food_sold += 0.001;
-        }
-    }
-    if (Q.civilian_production < 40 && Q.monthly_inflation <= 6.5) {
-        Q.monthly_inflation += 0.1;
-    }
-    // capital production can either lower or raise total capacity
-    if (Q.capital_production < 0.01*Q.industry) {
-        Q.industry *= 0.995;
-    }
-    if (Q.capital_production > 0.05*Q.industry) {
-        if (Q.industry < 100) {
-            Q.industry *= 1.007;
-        } else {
-            Q.industry *= 1.001;
-        }
-    }
-    // transport capacity can be expanded with transport industry (but degrades under some circumstances)
-    if (Q.transportation_production < 1) {
-        Q.train_capacity *= 0.995;
-    }
-    if (Q.transportation_production >= 5) {
-        if (Q.train_capcity < 140000) {
-            Q.train_capacity *= 1.005;
-        } else {
-            Q.train_capacity *= 1.001;
-        }
-    }
-
-    // Effects of hunger, inflation, and war exhaustion on party support /////////////////////////////////////////////////
-    // This changes based on which party is in opposition/government
-    if (Q.hunger >= 10 && (Q.war_weariness >= 60 || Q.monthly_inflation >= 6.5)) {
-        if (!Q.b_in_gov) {
-            Q.workers_b += 0.3;
-            Q.soldiers_b += 0.5;
-        }
-        if (Q.m_in_gov) {
-            Q.workers_m -= 0.4;
-            Q.soldiers_m -= 0.4;
-        }
-        if (Q.sr_in_gov) {
-            Q.workers_sr -= 0.3;
-            Q.soldiers_sr -= 0.2;
-        }
-    }
-    if (Q.hunger >= 20 && (Q.war_weariness >= 50 || Q.monthly_inflation >= 5.5)) {
-        Q.prov_gov_legitimacy -= 0.5;
-        if (!Q.b_in_gov) {
-            Q.workers_b += 0.3;
-            Q.soldiers_b += 0.5;
-        }
-        if (Q.m_in_gov) {
-            Q.workers_m -= 0.4;
-            Q.soldiers_m -= 0.4;
-        }
-        if (Q.sr_in_gov) {
-            Q.workers_sr -= 0.3;
-            Q.soldiers_sr -= 0.2;
-        }
-    }
-    if (Q.hunger >= 30 && (Q.war_weariness >= 40 || Q.monthly_inflation >= 5)) {
-        Q.prov_gov_legitimacy -= 0.5;
-        if (!Q.b_in_gov) {
-            Q.workers_b += 0.3;
-            Q.soldiers_b += 0.5;
-        }
-        if (Q.b_in_gov) {
-            Q.workers_b -= 0.3;
-            Q.soldiers_b -= 0.5;
-            Q.workers_anarchist += 0.1;
-            Q.soldiers_anarchist += 0.2;
-            if (!Q.m_in_gov) {
-                Q.workers_m += 0.1;
-                Q.soldiers_m += 0.1;
-            }
-        }
-        if (Q.m_in_gov) {
-            Q.workers_m -= 0.4;
-            Q.soldiers_m -= 0.4;
-        }
-        if (Q.sr_in_gov) {
-            Q.workers_sr -= 0.3;
-            Q.soldiers_sr -= 0.2;
-        }
-    }
-    if (Q.hunger >= 40 && (Q.war_weariness >= 30 || Q.monthly_inflation >= 4)) {
-        Q.prov_gov_legitimacy -= 0.5;
-        if (!Q.b_in_gov) {
-            Q.workers_b += 0.3;
-            Q.soldiers_b += 0.5;
-        }
-        if (Q.b_in_gov) {
-            Q.workers_b -= 0.3;
-            Q.soldiers_b -= 0.5;
-            Q.workers_anarchist += 0.1;
-            Q.soldiers_anarchist += 0.2;
-            if (!Q.m_in_gov) {
-                Q.workers_m += 0.1;
-                Q.soldiers_m += 0.1;
-            }
-        }
-        if (Q.m_in_gov) {
-            Q.workers_m -= 0.4;
-            Q.soldiers_m -= 0.4;
-        }
-        if (Q.sr_in_gov) {
-            Q.workers_sr -= 0.3;
-            Q.soldiers_sr -= 0.2;
-        }
-    }
-    if (Q.hunger >= 50) {
-        Q.prov_gov_legitimacy -= 1;
-        if (!Q.b_in_gov) {
-            Q.workers_b += 0.3;
-            Q.soldiers_b += 0.5;
-        }
-        if (Q.b_in_gov) {
-            Q.workers_b -= 0.3;
-            Q.soldiers_b -= 0.5;
-            Q.workers_anarchist += 0.1;
-            Q.soldiers_anarchist += 0.2;
-            if (!Q.m_in_gov) {
-                Q.workers_m += 0.1;
-                Q.soldiers_m += 0.1;
-            }
-        }
-        if (Q.m_in_gov) {
-            Q.workers_m -= 0.4;
-            Q.soldiers_m -= 0.4;
-        }
-        if (Q.sr_in_gov) {
-            Q.workers_sr -= 0.3;
-            Q.soldiers_sr -= 0.2;
-        }
-    }
-
-    // militia loyalties are affected by support... /////////
-    if (Q.workers_m_normalized < Q.workers_militia_m_loyalty) {
-        Q.workers_militia_m_loyalty -= 1;
-    }
-    if (Q.workers_b_normalized < Q.workers_militia_b_loyalty) {
-        Q.workers_militia_b_loyalty -= 1;
-    }
-    if (Q.workers_sr_normalized < Q.workers_militia_sr_loyalty) {
-        Q.workers_militia_sr_loyalty -= 1;
-    }
-    // War exhaustion changes - increase by 1 every week
-    if (!Q.is_armistice && !Q.is_peace && Q.month >= 4) {
-        Q.war_weariness += 1;
-    }
-
-    // Calculate strengths on each of the enemy fronts - just in case the enemy might want to attack!!!
-    for (var ef of Q.enemy_fronts) {
-        var attacking_soldiers = Q[ef + '_enemy_soldiers'];
-        var attacking_morale = Q[ef + '_enemy_morale'];
-        var attacking_discipline = Q[ef + '_enemy_discipline'];
-        var attacking_supply = Q[ef + '_enemy_supply_quality'];
-        Q[ef + '_attack_strength'] = attacking_soldiers*attacking_morale*attacking_discipline*Math.pow(attacking_supply, 1.5);
-        console.log(Q[ef + '_attack_strength']);
-    }
-    for (var front of Q.fronts) {
-        var defending_soldiers = Q[front + '_front_soldiers'];
-        Q[front+'_defense_strength'] = defending_soldiers*Q.morale*Q.morale*Math.pow(Q.supply_quality, 1.5)*(1+Q.defense_bonus/2);
-    }
-    Q.northern_ratio = Q.northwestern_attack_strength/Q.northern_defense_strength;
-    Q.western_ratio = Q.northwestern_attack_strength/Q.western_defense_strength;
-    Q.southwestern_ratio = Q.southwestern_attack_strength/Q.southwestern_defense_strength;
-    Q.romanian_ratio = Q.southwestern_attack_strength/Q.romanian_defense_strength;
-    Q.caucasus_ratio = Q.caucasus_attack_strength/Q.caucasus_front_defense_strength;
-    // find the highest ratio of attack power to defensive power
-    Q.best_front = "northern";
-    Q.best_enemy_front = "northwestern";
-    Q.best_front_ratio = 0;
-    for (var front of Q.fronts) {
-        if (Q[front + "_ratio"] > Q.best_front_ratio) {
-            Q.best_front = front;
-            Q.best_enemy_front = Q.fronts_to_enemy[front];
-            Q.best_front_ratio = Q[front + "_ratio"];
-        }
-    }
-    console.log("best attacking front:", Q.best_front, Q.best_front_ratio);
-
+} 
+if (has_time_passed) {
+    // TODO: trigger monthly timers
+    console.log("Time passed!");
 }
 
 
@@ -499,48 +141,36 @@ var scene = this.game.scenes['post_event.events_choice'];
 var choices = this._compileChoices(scene);
 if (choices && choices[0].title != "Continue...") {
     Q.has_event = 1;
-} else {
-    has_event = 0;
 }
 
-Q.war_progress = Q.northern_progress + Q.western_progress + Q.southwestern_progress + Q.romanian_progress + Q.caucasus_progress;
-
-// update player details
-if (Q.player_party == "m") {
-    Q.player_in_exco = Q.m_in_exco;
-    Q.player_in_gov = Q.m_in_gov;
-    Q.player_in_soviet = Q.m_in_soviet;
-} else if (Q.player_party == "b") {
-    Q.player_in_exco = Q.b_in_exco;
-    Q.player_in_gov = Q.b_in_gov;
-    Q.player_in_soviet = Q.b_in_soviet;
-} else if (Q.player_party == "sr") {
-    Q.player_in_exco = Q.sr_in_exco;
-    Q.player_in_gov = Q.sr_in_gov;
-    Q.player_in_soviet = Q.sr_in_soviet;
-} else if (Q.player_party == "k") {
-    Q.player_in_exco = Q.k_in_exco;
-    Q.player_in_gov = Q.k_in_gov;
-    Q.player_in_soviet = Q.k_in_soviet;
+Q.has_election = 0;
+// check if there are any cards in #election, and then go to main if not.
+var scene = this.game.scenes['post_event.elections_choice'];
+var choices = this._compileChoices(scene);
+if (choices && choices[0].title != "Continue...") {
+    Q.has_election = 1;
 }
 !}
 on-departure: {!
 // TODO: set historical/international events
-if (Q.month == 4 && Q.week == 1) {
-    Q.historical_event = "Formation of the USPD - The venerable Social Democratic Party of Germany has split, with the anti-war grouping forming the Independent Social Democratic Party of Germany, or USPD. Some in this faction are urging revolutionary action to overthrow the Kaiser and end the war.";
-} else if (Q.month == 4 && Q.week == 3) {
-    Q.historical_event = "The Nivelle Offensive - French commander-in-chief Robert Nivelle has ordered a large-scale offensive against German lines in Belgium. The offensive has been a disaster for the Entente, and French troops are on the verge of mutiny.";
+if (Q.year == 2012 && Q.month == 10) {
+    Q.historical_event = "Elections have been scheduled for November.";
 } else {
     Q.historical_event = 0;
 }
 !}
-go-to: events_choice if has_event = 1; main if has_event = 0 and difficulty = 0; main.main_easy if has_event = 0 and difficulty < 0; main.main_hard if has_event = 0 and difficulty > 0
+go-to: events_choice if has_event = 1; elections_choice if has_election = 1; main if has_event = 0 and has_election = 0 and difficulty = 0; main.main_easy if has_event = 0 and has_election = 0 and difficulty < 0; main.main_hard if has_event = 0 and has_election = 0 and difficulty > 0
 
 = [+ month : month +] [+ year +][? if rubicon:, Week [+ week +]?]
 
 @events_choice
 
 - #event
+
+@elections_choice
+go-to: main
+
+# - #election
 
 # go-to: main
 

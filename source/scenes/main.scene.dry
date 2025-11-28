@@ -17,9 +17,11 @@ max-cards: 5
 
 
 - @party_erc
+- @party_cup
 - @cat_gov
 - #advisor
 - @erc_shuffle_leadership_pinned
+- @cup_shuffle_leadership_pinned
 
 @main_easy
 set-bg: img/parlament_de_catalunya.jpg
@@ -38,10 +40,11 @@ max-cards: 6
 #Here, the main deck will be displayed. Clicking on the deck draws a card into your hand. Clicking on a card activates that card.
 
 - @party_erc
+- @party_cup
 - @cat_gov
 - #advisor
 - @erc_shuffle_leadership_pinned
-- @m_shuffle_leadership_pinned
+- @cup_shuffle_leadership_pinned
 
 
 @main_hard
@@ -61,6 +64,7 @@ max-cards: 3
 #Here, the main deck will be displayed. Clicking on the deck draws a card into your hand. Clicking on a card activates that card.
 
 - @party_erc
+- @party_cup
 - @cat_gov
 - #advisor
 
@@ -73,8 +77,16 @@ view-if: player_party = "erc"
 
 - #erc_party
 
+@party_cup
+title: Party Affairs
+card-image: img/cup/seunacional.jpg
+is-deck: true
+view-if: player_party = "cup"
+
+- #cup_party
+
 @cat_gov
 title: Generalitat
 view-if: (player_party = "erc" and erc_in_gov)
-card-image: img/prov_gov_1.jpg
+card-image: img/generalitat.jpg
 is-deck: true

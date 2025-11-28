@@ -245,8 +245,6 @@ Q.sr_support_change = 6;
 // dissent reduction on party_disunity
 Q.m_discipline_change = 5;
 Q.sr_discipline_change = 5;
-// maximum numbers of advisors
-Q.max_advisors = 4;
 // inter-party relations changes
 Q.ipr_change = 6;
 
@@ -1079,6 +1077,27 @@ Q.carles_mundo_advisor = 0;
 Q.carme_forcadell_advisor = 0;
 Q.elisenda_paluzie_advisor = 0;
 
+
+// CUP Advisors
+// Radical Anticapitalists
+Q.anna_gabriel_advisor = 0;
+Q.carles_riera_advisor = 0;
+Q.mireia_vehi_advisor = 0;
+Q.vidal_aragones_advisor = 0;
+Q.natalia_sanchez_advisor = 0;
+// Institutionalists
+Q.quim_arrufat_advisor = 0;
+Q.eulalia_reguant_advisor = 0;
+Q.benet_salellas_advisor = 0;
+Q.albert_botran_advisor = 0;
+Q.antonio_banos_advisor = 0;
+// Municipalists, Assamblearies, and the Third Sector
+Q.david_fernandez_advisor = 0;
+Q.mireia_boya_advisor = 0;
+Q.dolors_sabater_advisor = 0;
+Q.gabriela_serra_advisor = 0;
+Q.pau_juvilla_advisor = 0;
+
 !}
 set-bg: img/3rd_October_2017.jpg
 new-page: true
@@ -1127,9 +1146,10 @@ What party shall you lead?
 
 @esquerra
 title: Republican Left of Catalonia (ERC)
+face-image: img/parties/logo_erc.svg
 
 **Republican Left of Catalonia - <span style='color: #ff8000; font-weight: bold;'>ERC</span>**
-The left-wing republican party advocates for Catalan independence, socialism, and anti-austerity measures. Formed in 1931, it endured Franco's dictatorship and re-emerged post-1975; pre-2012, it governed in a 2003-2010 tripartite coalition, but lost support after compromising for governance, poor economic leadership, and the failed new charter of autonomy. Now in 2012 is seems to be the main beneficiary of the growing independence sentiment, pushing for a referendum on self-determination.
+The left-wing republican party advocates for Catalan independence, socialism, and anti-austerity measures. Formed in 1931, it endured Franco's dictatorship and re-emerged post-1975. It governed in as part of the 2003-2010 tripartite coalition with <span style="color: #e73b39; font-weight: bold;">PSC</span> and <span style="color: #67af2f; font-weight: bold;">ICV-EUiA</span> but lost support after compromising for governance, poor economic leadership, and the failed new charter of autonomy. Now in 2012 is seems to be the main beneficiary of the growing independence sentiment, pushing for a referendum on self-determination.
 
 - @esquerra_2: Yes, we'll be the left of a new country!
 - @party_selection: No, select a different party.
@@ -1181,6 +1201,7 @@ go-to: intros
 
 @ciu
 title: Convergence and Union (CiU)
+face-image: img/parties/logo_ciu.png
 
 **Convergence and Union - <span style='color: #002782; font-weight: bold;'>CiU</span>**
 The center-right nationalist federation of the liberal Democratic Convergence of Catalonia (<span style="color: #002782; font-weight: bold;">CDC</span>) and the christian Democratic Union of Catalonia (<span style="color: #0052a3; font-weight: bold;">UDC</span>) has positioned itself as the moderately autonomist with pro-business policies force. It governed Catalonia almost undisputed in the post-Franco autonomy era, and has come back again in 2010 under <span style="color: #002782; font-weight: bold;">Artur Mas</span>, who has long championed fiscal autonomy. Nonetheless, the statute reform's partial rollback fueled internal debates on independence. In 2012, it faces strong austerity backlash and a voter shift to harder-line pro-independence options.
@@ -1197,6 +1218,7 @@ go-to: intros
 
 @cup
 title: Popular Unity Candidacy (CUP)
+face-image: img/parties/logo_cup.svg
 
 **Popular Unity Candidacy - <span style='color: #C4B156; font-weight: bold;'>CUP</span>**
 The far-left, anti-capitalist, eco-socialist platform demands direct democracy, independence, and municipalism. Emerging from 1980s local assemblies, until recently it had a strong grassroots focus and avoided institutions. In 2012, it is getting ready for its first elections, posing as the "left alternative" and pledging one-term mandates and anti-austerity. How much it is able to scale nationally may very well depend on its ability to remain internally coherent and united.
@@ -1206,8 +1228,45 @@ The far-left, anti-capitalist, eco-socialist platform demands direct democracy, 
 
 
 @cup_2
-choose-if: 1==0
-unavailable-subtitle: Work in progress...
-on-arrival: player_party = "cup"; player_party_name = "<span style='color: #C4B156; font-weight: bold;'>CUP</span>"; position_disp = "Non-existence";
+on-arrival: {!
+Q.player_party = "cup";
+Q.player_party_name = "<span style='color: #C4B156; font-weight: bold;'>CUP</span>";
+Q.position_disp = "Non-existence";
+
+Q.ciu_relations = 15;
+Q.erc_relations = 65;
+Q.cs_relations = 0;
+Q.psc_relations = 10;
+Q.ppc_relations = 0;
+Q.si_relations = 45;
+Q.icv_relations = 30;
+Q.vox_relations = 0;
+Q.pxc_relations = 0;
+
+// CUP Advisors
+// Radical Anticapitalists
+Q.anna_gabriel_advisor = 1;
+Q.anna_gabriel_advisor_available = 1;
+Q.carles_riera_advisor_available = 1;
+Q.mireia_vehi_advisor_available = 1;
+Q.vidal_aragones_advisor_available = 1;
+Q.natalia_sanchez_advisor_available = 1;
+// Institutionalists
+Q.quim_arrufat_advisor = 1;
+Q.quim_arrufat_advisor_available = 1;
+Q.eulalia_reguant_advisor_available = 1;
+Q.benet_salellas_advisor_available = 1;
+Q.albert_botran_advisor_available = 1;
+Q.antonio_banos_advisor_available = 1;
+// Municipalists, Assamblearies, and the Third Sector
+Q.david_fernandez_advisor = 1;
+Q.david_fernandez_advisor_available = 1;
+Q.mireia_boya_advisor_available = 1;
+Q.dolors_sabater_advisor_available = 1;
+Q.gabriela_serra_advisor_available = 1;
+Q.pau_juvilla_advisor_available = 1;
+
+
+!}
 go-to: intros
 

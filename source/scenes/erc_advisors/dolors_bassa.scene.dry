@@ -1,12 +1,13 @@
 title: Dolors Bassa
 is-pinned-card: true
-tags: advisor, erc_left
+tags: advisor
 card-image: img/erc/bassa.jpg
+face-image: img/erc/bassa.jpg
 view-if: dolors_bassa_advisor = 1
 new-page: true
 
 = Dolors Bassa i Coll
 
-something
+Dolors Bassa is the Secretary General of the UGT syndicate in Girona, and thus has a strong link with many progressive social movements.
 
 - @root: Return to main

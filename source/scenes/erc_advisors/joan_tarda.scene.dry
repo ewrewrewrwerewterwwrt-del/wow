@@ -1,12 +1,13 @@
 title: Joan Tardà
 is-pinned-card: true
-tags: advisor, erc_republican
+tags: advisor
 card-image: img/erc/joantarda.jpg
+face-image: img/erc/joantarda.jpg
 view-if: joan_tarda_advisor = 1
 new-page: true
 
 = Joan Tardà i Comas
 
-something
+Joan Tardà is one of the longest-serving <span style='color: #ffcc00; font-weight:bold;'>ERC</span> deputies in the Congreso.
 
 - @root: Return to main

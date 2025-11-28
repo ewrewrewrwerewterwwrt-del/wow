@@ -1,12 +1,13 @@
 title: Joan Josep Nuet
 is-pinned-card: true
-tags: advisor, erc_left
+tags: advisor
 card-image: img/erc/joanjosepnuet.jpg
+face-image: img/erc/joanjosepnuet.jpg
 view-if: joan_josep_nuet_advisor = 1
 new-page: true
 
 = Joan Josep Nuet i Pujals
 
-something
+Joan Josep Nuet was a member of <span style='color: #67af2f; font-weight:bold'>ICV-EUiA</span>, until he left the <span style='color: #c3113b; font-weight:bold;'>CSQP</span> during its crisis.
 
 - @root: Return to main

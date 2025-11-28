@@ -1,12 +1,13 @@
 title: Teresa Jordà
 is-pinned-card: true
-tags: advisor, erc_left
+tags: advisor
 card-image: img/erc/jorda.jpg
+face-image: img/erc/jorda.jpg
 view-if: teresa_jorda_advisor = 1
 new-page: true
 
 = Teresa Jordà i Roura
 
-something
+Teresa Jordà was the Mayor of Ripoll, and can count on a strong background in agricultural and rural issues.
 
 - @root: Return to main

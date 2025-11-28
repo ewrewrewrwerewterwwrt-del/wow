@@ -1,12 +1,13 @@
 title: Marta Rovira
 is-pinned-card: true
-tags: advisor, erc_left
+tags: advisor
 card-image: img/erc/martarovira.jpg
+face-image: img/erc/martarovira.jpg
 view-if: marta_rovira_advisor = 1
 new-page: true
 
 = Marta Rovira i Vergés
 
-something
+A lawyer by profession, Marta Rovira has been <span style='color: #ffcc00; font-weight:bold;'>ERC</span>'s secretary general since 2011.
 
 - @root: Return to main

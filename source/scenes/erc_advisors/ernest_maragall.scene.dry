@@ -1,12 +1,13 @@
 title: Ernest Maragall
 is-pinned-card: true
-tags: advisor, erc_pragmatic
+tags: advisor
 card-image: img/erc/ernestmaragall.jpg
+face-image: img/erc/ernestmaragall.jpg
 view-if: ernest_maragall_advisor = 1
 new-page: true
 
 = Ernest Maragall i Mira
 
-something
+With a strong history in antifascist activism and local politics, Ernest Maragall is a historic figure of <span style='color: #ffcc00; font-weight:bold;'>ERC</span>.
 
 - @root: Return to main

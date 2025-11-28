@@ -1,12 +1,13 @@
 title: Carme Forcadell
 is-pinned-card: true
-tags: advisor, erc_civil
+tags: advisor
 card-image: img/erc/forcadell.jpg
+face-image: img/erc/forcadell.jpg
 view-if: carme_forcadell_advisor = 1
 new-page: true
 
 = Carme Forcadell i Lluís
 
-something
+Carme Forcadell was, until recently, the president of the ANC, and has a strong background in civic activism.
 
 - @root: Return to main

@@ -1,0 +1,419 @@
+title: Shuffle Leadership
+new-page: true
+view-if: cup_shuffle_leadership_timer <= 0  and player_party = "cup" and difficulty > 0
+on-arrival: cup_shuffle_leadership_timer += 4; month_actions += 1 if difficulty > 0
+frequency: 100
+is-card: true
+card-image: img/cup/congres.jpg
+tags: cup_party
+
+= Shuffle Leadership
+
+Changing the leadership of the party might be necessary to adapt to the changing circumstances.
+
+Removing advisors will increase dissent from their faction of the party, while selecting advisors will increase a faction's strength.
+
+- @rm_main: Remove advisors
+- @add_advisors: Add advisors
+- @root: Don't change the party leadership
+- @easy_discard
+
+@rm_main
+title: Remove advisors
+tags: cup_endavant, cup_institutional, cup_municipalism
+frequency: 1
+
+- #cup_rm_advisor
+- @add_advisors: Add advisors
+
+@remove_none
+title: Stop changing advisors
+go-to: root
+tags: cup_rm_advisor
+
+@add_advisors
+title: Add advisors
+unavailable-subtitle: Maximum of [+ max_advisors +] advisors.
+choose-if: n_advisors < max_advisors
+go-to: cup_advisor_menu
+
+@cup_advisor_menu
+title: Add advisors
+tags: cup_endavant, cup_institutional, cup_municipalism
+frequency: 1
+
+- @cup_endavant: Add from Radical Anticapitalists
+- @cup_institutional: Add from Institutional Fighters
+- @cup_municipalism: Add from Municipalists, Assamblearies, and the Third Sector
+- @rm_main: Remove advisors instead
+- @remove_none: Stop changing advisors
+
+@cup_endavant
+subtitle: The historical roots of the party come from the fight in the streets, workplaces, and local towns and neighborhoods. Some defend that it is there where it should remain in force.
+view-if: n_advisors < max_advisors
+
+- #cup_endavant
+
+@cup_institutional
+subtitle: Certain groups maintain the position that the fight must be brought to the institutions, even if it means making compromises to be there.
+view-if: n_advisors < max_advisors
+
+- #cup_institutional
+
+@cup_municipalism
+subtitle: Others have not taken a strong stance, plus there's always non-partisan "Third sector" personalities that have a lot to contribute to the party.
+view-if: n_advisors < max_advisors
+
+- #cup_municipalism
+
+########################################## adding advisors
+
+@add_anna_gabriel
+title: Anna Gabriel i Sabaté
+subtitle: From a mining family, she is a syndicalist CGT member with a strong background in feminisms and antifascism.
+choose-if: anna_gabriel_advisor = 0
+unavailable-subtitle: Already an advisor
+view-if: n_advisors < max_advisors and anna_gabriel_advisor_available = 1
+on-arrival: anna_gabriel_advisor = 1; n_advisors += 1;
+tags: cup_advisor, cup_endavant
+go-to: cup_advisor_menu
+
+Anna Gabriel has been added as an advisor.
+
+@add_carles_riera
+title: Carles Riera i Albert
+subtitle: A sociologist and long-time activist with strong points on geopolitics, civil disobedience, and open confrontation with the state.
+choose-if: carles_riera_advisor = 0
+unavailable-subtitle: Already an advisor
+view-if: n_advisors < max_advisors and carles_riera_advisor_available = 1
+on-arrival: carles_riera_advisor = 1; n_advisors += 1;
+tags: cup_advisor, cup_endavant
+go-to: cup_advisor_menu
+
+Carles Riera has been added as an advisor.
+
+@add_mireia_vehi
+title: Mireia Vehí i Cantenys
+subtitle: With a long background in social movements for international solidarity and housing rights, she is a strong voice on anti-racism and feminisms.
+choose-if: mireia_vehi_advisor = 0
+unavailable-subtitle: Already an advisor
+view-if: n_advisors < max_advisors and mireia_vehi_advisor_available = 1
+on-arrival: mireia_vehi_advisor = 1; n_advisors += 1;
+tags: cup_advisor, cup_endavant
+go-to: cup_advisor_menu
+
+Mireia Vehí has been added as an advisor.
+
+@add_vidal_aragones
+title: Vidal Aragonés i Chicharro
+subtitle: A lawyer and workers' rights activist from a industrial working class background, he's a leading voice on syndicalism, labor rights, and independence as a revolutionary process.
+choose-if: vidal_aragones_advisor = 0
+unavailable-subtitle: Already an advisor
+view-if: n_advisors < max_advisors and vidal_aragones_advisor_available = 1
+on-arrival: vidal_aragones_advisor = 1; n_advisors += 1;
+tags: cup_advisor, cup_endavant
+go-to: cup_advisor_menu
+
+Vidal Aragonés has been added as an advisor.
+
+@add_natalia_sanchez
+title: Natàlia Sànchez i Dipp
+subtitle: A historian and cultural communicator, her fights focus on truth, transparency, and historical memory and justice.
+choose-if: natalia_sanchez_advisor = 0
+unavailable-subtitle: Already an advisor
+view-if: n_advisors < max_advisors and natalia_sanchez_advisor_available = 1
+on-arrival: natalia_sanchez_advisor = 1; n_advisors += 1;
+tags: cup_advisor, cup_endavant
+go-to: cup_advisor_menu
+
+Natàlia Sànchez has been added as an advisor.
+
+@add_quim_arrufat
+title: Quim Arrufat i Ibáñez
+subtitle: A political scientist with long experience in internatonalism, human and housing rights.
+choose-if: quim_arrufat_advisor = 0
+unavailable-subtitle: Already an advisor
+view-if: n_advisors < max_advisors and quim_arrufat_advisor_available = 1
+on-arrival: quim_arrufat_advisor = 1; n_advisors += 1;
+tags: cup_advisor, cup_institutional
+go-to: cup_advisor_menu
+
+Quim Arrufat has been added as an advisor.
+
+@add_eulalia_reguant
+title: Eulàlia Reguant i Cura
+subtitle: A mathematician with a trajectory of work on social organizations, ethical finances, global justice, and antifascism.
+choose-if: eulalia_reguant_advisor = 0
+unavailable-subtitle: Already an advisor
+view-if: n_advisors < max_advisors and eulalia_reguant_advisor_available = 1
+on-arrival: eulalia_reguant_advisor = 1; n_advisors += 1;
+tags: cup_advisor, cup_institutional
+go-to: cup_advisor_menu
+
+Eulàlia Reguant has been added as an advisor.
+
+@add_benet_salellas
+title: Benet Salellas i Vilar
+subtitle: A lawer and philologyst, he is a specialist in penal law and defence of political persecution. 
+choose-if: benet_salellas_advisor = 0
+unavailable-subtitle: Already an advisor
+view-if: n_advisors < max_advisors and benet_salellas_advisor_available = 1
+on-arrival: benet_salellas_advisor = 1; n_advisors += 1;
+tags: cup_advisor, cup_institutional
+go-to: cup_advisor_menu
+
+Benet Salellas has been added as an advisor.
+
+@add_albert_botran
+title: Albert Botran i Pahissa
+subtitle: A historian and political scientist who has become one of the leading theorists on independence as a revolutionary process.
+choose-if: albert_botran_advisor = 0
+unavailable-subtitle: Already an advisor
+view-if: n_advisors < max_advisors and albert_botran_advisor_available = 1
+on-arrival: albert_botran_advisor = 1; n_advisors += 1;
+tags: cup_advisor, cup_institutional
+go-to: cup_advisor_menu
+
+Albert Botran has been added as an advisor.
+
+@add_antonio_banos
+title: Antonio Baños i Boncompain
+subtitle: A journalist with a strong communications background, he's a leading voice for practical politics for achieving independence.
+choose-if: antonio_banos_advisor = 0
+unavailable-subtitle: Already an advisor
+view-if: n_advisors < max_advisors and antonio_banos_advisor_available = 1
+on-arrival: antonio_banos_advisor = 1; n_advisors += 1;
+tags: cup_advisor, cup_institutional
+go-to: cup_advisor_menu
+
+Antonio Baños has been added as an advisor.
+
+@add_david_fernandez
+title: David Fernàndez i Ramos
+subtitle: A journalist with a diverse background in social movements, he's one of the most charismatic figures in the party with strong points on corruption fight and civil disobedience.
+choose-if: david_fernandez_advisor = 0
+unavailable-subtitle: Already an advisor
+view-if: n_advisors < max_advisors and david_fernandez_advisor_available = 1
+on-arrival: david_fernandez_advisor = 1; n_advisors += 1;
+tags: cup_advisor, cup_municipalism
+go-to: cup_advisor_menu
+
+David Fernàndez has been added as an advisor.
+
+@add_mieria_boya
+title: Mireia Boya e Busquet
+subtitle: An ambientologist, she represents the Aranese-Occitan minority of Catalonia and leads fights on environmentalism, territorial defence, minority rights.
+choose-if: mieria_boya_advisor = 0
+unavailable-subtitle: Already an advisor
+view-if: n_advisors < max_advisors and mieria_boya_advisor_available = 1
+on-arrival: mieria_boya_advisor = 1; n_advisors += 1;
+tags: cup_advisor, cup_municipalism
+go-to: cup_advisor_menu
+
+Mireia Boya has been added as an advisor.
+
+@add_dolors_sabater
+title: Dolors Sabater i Puig
+subtitle: A teacher with an incredibly long story on social movements ranging from ecologism to antimilitarism, she is an icon of worker-class fight in the industrial hinterland of Barcelona.
+choose-if: dolors_sabater_advisor = 0
+unavailable-subtitle: Already an advisor
+view-if: n_advisors < max_advisors and dolors_sabater_advisor_available = 1
+on-arrival: dolors_sabater_advisor = 1; n_advisors += 1;
+tags: cup_advisor, cup_municipalism
+go-to: cup_advisor_menu
+
+Dolors Sabater has been added as an advisor.
+
+@add_gabriela_serra
+title: Gabriela Serra i Frediani
+subtitle: A pedagogist from an old-school comunist background, she was part of the International Brigades for Peace in Guatemala and was critically vocal against NATO membership and presence.
+choose-if: gabriela_serra_advisor = 0
+unavailable-subtitle: Already an advisor
+view-if: n_advisors < max_advisors and gabriela_serra_advisor_available = 1
+on-arrival: gabriela_serra_advisor = 1; n_advisors += 1;
+tags: cup_advisor, cup_municipalism
+go-to: cup_advisor_menu
+
+Gabriela Serra has been added as an advisor.
+
+@add_pau_juvilla
+title: Pau Juvillà i Ballester
+subtitle: A biologist, writer and CGT syndicalist who was trialed for draft evasion, he's a strong voice on ecologism, antimilitarism, and civil disobedience.
+choose-if: pau_juvilla_advisor = 0
+unavailable-subtitle: Already an advisor
+view-if: n_advisors < max_advisors and pau_juvilla_advisor_available = 1
+on-arrival: pau_juvilla_advisor = 1; n_advisors += 1;
+tags: cup_advisor, cup_municipalism
+go-to: cup_advisor_menu
+
+Pau Juvillà has been added as an advisor.
+
+
+#################################### removing advisors
+@remove_anna_gabriel
+title: Remove Anna Gabriel
+view-if: anna_gabriel_advisor = 1
+on-arrival: anna_gabriel_advisor = 0; n_advisors -= 1;
+tags: cup_rm_advisor
+go-to: rm_main
+
+Anna Gabriel has been removed as an advisor.
+
+@remove_carles_riera
+title: Remove Carles Riera
+view-if: carles_riera_advisor = 1
+on-arrival: carles_riera_advisor = 0; n_advisors -= 1;
+tags: cup_rm_advisor
+go-to: rm_main
+
+Carles Riera has been removed as an advisor.
+
+@remove_mireia_vehi
+title: Remove Mireia Vehí
+view-if: mireia_vehi_advisor = 1
+on-arrival: mireia_vehi_advisor = 0; n_advisors -= 1;
+tags: cup_rm_advisor
+go-to: rm_main
+
+Mireia Vehí has been removed as an advisor.
+
+@remove_vidal_aragones
+title: Remove Vidal Aragonés
+view-if: vidal_aragones_advisor = 1
+on-arrival: vidal_aragones_advisor = 0; n_advisors -= 1;
+tags: cup_rm_advisor
+go-to: rm_main
+
+Vidal Aragonés has been removed as an advisor.
+
+@remove_natalia_sanchez
+title: Remove Natalia Sànchez
+view-if: natalia_sanchez_advisor = 1
+on-arrival: natalia_sanchez_advisor = 0; n_advisors -= 1;
+tags: cup_rm_advisor
+go-to: rm_main
+
+Natalia Sànchez has been removed as an advisor.
+
+@remove_quim_arrufat
+title: Remove Quim Arrufat
+view-if: quim_arrufat_advisor = 1
+on-arrival: quim_arrufat_advisor = 0; n_advisors -= 1;
+tags: cup_rm_advisor
+go-to: rm_main
+
+Quim Arrufat has been removed as an advisor.
+
+@remove_eulalia_reguant
+title: Remove Eulàlia Reguant
+view-if: eulalia_reguant_advisor = 1
+on-arrival: eulalia_reguant_advisor = 0; n_advisors -= 1;
+tags: cup_rm_advisor
+go-to: rm_main
+
+Eulàlia Reguant has been removed as an advisor.
+
+@remove_benet_salellas
+title: Remove Benet Salellas
+view-if: benet_salellas_advisor = 1
+on-arrival: benet_salellas_advisor = 0; n_advisors -= 1;
+tags: cup_rm_advisor
+go-to: rm_main
+
+Benet Salellas has been removed as an advisor.
+
+@remove_albert_botran
+title: Remove Albert Botran
+view-if: albert_botran_advisor = 1
+on-arrival: albert_botran_advisor = 0; n_advisors -= 1;
+tags: cup_rm_advisor
+go-to: rm_main
+
+Albert Botran has been removed as an advisor.
+
+@remove_antonio_banos
+title: Remove Antonio Baños
+view-if: antonio_banos_advisor = 1
+on-arrival: antonio_banos_advisor = 0; n_advisors -= 1;
+tags: cup_rm_advisor
+go-to: rm_main
+
+Antonio Baños has been removed as an advisor.
+
+@remove_david_fernandez
+title: Remove David Fernàndez
+view-if: david_fernandez_advisor = 1
+on-arrival: david_fernandez_advisor = 0; n_advisors -= 1;
+tags: cup_rm_advisor
+go-to: rm_main
+
+David Fernàndez has been removed as an advisor.
+
+@remove_mieria_boya
+title: Remove Mireia Boya
+view-if: mieria_boya_advisor = 1
+on-arrival: mieria_boya_advisor = 0; n_advisors -= 1;
+tags: cup_rm_advisor
+go-to: rm_main
+
+Mireia Boya has been removed as an advisor.
+
+@remove_dolors_sabater
+title: Remove Dolors Sabater
+view-if: dolors_sabater_advisor = 1
+on-arrival: dolors_sabater_advisor = 0; n_advisors -= 1;
+tags: cup_rm_advisor
+go-to: rm_main
+
+Dolors Sabater has been removed as an advisor.
+
+@remove_gabriela_serra
+title: Remove Gabriela Serra
+view-if: gabriela_serra_advisor = 1
+on-arrival: gabriela_serra_advisor = 0; n_advisors -= 1;
+tags: cup_rm_advisor
+go-to: rm_main
+
+Gabriela Serra has been removed as an advisor.
+
+@remove_pau_juvilla
+title: Remove Pau Juvillà
+view-if: pau_juvilla_advisor = 1
+on-arrival: pau_juvilla_advisor = 0; n_advisors -= 1;
+tags: cup_rm_advisor
+go-to: rm_main
+
+Pau Juvillà has been removed as an advisor.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

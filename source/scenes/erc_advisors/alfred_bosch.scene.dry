@@ -1,12 +1,13 @@
 title: Alfred Bosch
 is-pinned-card: true
-tags: advisor, erc_pragmatic
+tags: advisor
 card-image: img/erc/alfredbosch.jpg
+face-image: img/erc/alfredbosch.jpg
 view-if: alfred_bosch_advisor = 1
 new-page: true
 
 = Alfred Bosch i García
 
-something
+Alfred Bosch is a university professor and former diplomat, with a strong background in cultural affairs.
 
 - @root: Return to main
