@@ -1,7 +1,0 @@
-title: Shuffle Leadership
-view-if: difficulty <= 0 and player_party = "sr"
-new-page: true
-is-card: true
-is-pinned-card: true
-card-image: img/sr_poster_2.jpg
-go-to: sr_shuffle_leadership

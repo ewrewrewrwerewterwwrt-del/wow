@@ -12,7 +12,17 @@ if (Q.advisor_action_timer <= 0) {
 !}
 max-cards: 5
 
-#[? if historical_event : [+ historical_event +] ?]
+[? if rubicon = 1 and event_rubicon : [+ event_rubicon +] ?]
+
+[? if year = 2012 : [+ month : events2012 +] ?]
+[? if year = 2013 : [+ month : events2013 +] ?]
+[? if year = 2014 : [+ month : events2014 +] ?]
+[? if year = 2015 : [+ month : events2015 +] ?]
+[? if year = 2016 : [+ month : events2016 +] ?]
+[? if year = 2017 : [+ month : events2017 +] ?]
+[? if year = 2018 : [+ month : events2018 +] ?]
+[? if year = 2019 : [+ month : events2019 +] ?]
+
 #Here, the main deck will be displayed. Clicking on the deck draws a card into your hand. Clicking on a card activates that card.
 
 
@@ -37,6 +47,17 @@ if (Q.advisor_action_timer <= 0) {
 !}
 max-cards: 6
 
+[? if rubicon = 1 and event_rubicon : [+ event_rubicon +] ?]
+
+[? if year = 2012 : [+ month : events2012 +] ?]
+[? if year = 2013 : [+ month : events2013 +] ?]
+[? if year = 2014 : [+ month : events2014 +] ?]
+[? if year = 2015 : [+ month : events2015 +] ?]
+[? if year = 2016 : [+ month : events2016 +] ?]
+[? if year = 2017 : [+ month : events2017 +] ?]
+[? if year = 2018 : [+ month : events2018 +] ?]
+[? if year = 2019 : [+ month : events2019 +] ?]
+
 #Here, the main deck will be displayed. Clicking on the deck draws a card into your hand. Clicking on a card activates that card.
 
 - @party_erc
@@ -60,6 +81,17 @@ if (Q.advisor_action_timer <= 0) {
 }
 !}
 max-cards: 3
+
+[? if rubicon = 1 and event_rubicon : [+ event_rubicon +] ?]
+
+[? if year = 2012 : [+ month : events2012 +] ?]
+[? if year = 2013 : [+ month : events2013 +] ?]
+[? if year = 2014 : [+ month : events2014 +] ?]
+[? if year = 2015 : [+ month : events2015 +] ?]
+[? if year = 2016 : [+ month : events2016 +] ?]
+[? if year = 2017 : [+ month : events2017 +] ?]
+[? if year = 2018 : [+ month : events2018 +] ?]
+[? if year = 2019 : [+ month : events2019 +] ?]
 
 #Here, the main deck will be displayed. Clicking on the deck draws a card into your hand. Clicking on a card activates that card.
 

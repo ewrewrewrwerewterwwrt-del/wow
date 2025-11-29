@@ -1,7 +1,0 @@
-title: Left-SRs split!
-subtitle: The left-wing Socialist-Revolutionaries are splitting off to form a new party.
-view-if: left_sr_dissent > sr_split_threshold and not left_sr_split
-max-visits: 1
-go-to: sr_left_split
-new-page: True
-tags: event

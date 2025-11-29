@@ -1,5 +1,0 @@
-title: Kadets Resign From Government
-subtitle: Due to policy disagreements, the Kadets have resigned from the coalition government.
-new-page: true
-view-if: ((player_party = "m" and m_in_gov) or (player_party = "m" and m_in_gov)) and (k_in_gov and k_coalition_dissent >= 3)
-on-arrival: k_in_gov = 0; prov_gov_legitimacy -= 6

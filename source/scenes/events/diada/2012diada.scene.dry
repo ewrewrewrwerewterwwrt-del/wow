@@ -1,0 +1,27 @@
+title: National Day of Catalonia
+subtitle: More than a million people take to the streets of Barcelona.
+set-bg: img/diada/2010.jpg
+face-image: img/diada/2012.jpg
+new-page: true
+tags: event
+view-if: year = 2012 and month = 9
+max-visits: 1
+
+= Catalonia, new state of Europe?
+On September 11, the National Day of Catalonia, more than 1.5 million people took to the streets of Barcelona to demand independence. The peaceful and festive demonstration, of a size never seen before in Catalonia, was organized by the Catalan National Assembly (ANC), the main civil society organization pushing for independence, and supported by many other groups, from cultural and language focused Omnium Cultural to unions and the pro-independence parties of <span style="color: #ff8000; font-weight: bold;">ERC</span>, <span style="color: #000000; font-weight: bold;">SI</span>, <span style="color: #C4B156; font-weight: bold;">CUP</span>, as well as not-explicitly pro-independence parties, like <span style="color: #67af2f; font-weight: bold;">ICV-EUiA</span> and the ruling <span style="color: #002782; font-weight: bold;">CiU</span>.
+
+Many government officials, including President <span style="color: #002782; font-weight: bold;">Artur Mas</span>, confirmed their support and attendance almost last minute, raising eyebrows amongst the most hardliners in the independence movement regarding oportunism versus actual commitment. Nonetheless, the massive turnout may very well represent the turning point that makes the independence movement no longer a fringe one, but a mainstream political force that can no longer be ignored.
+
+- @2012diada_erc
+- @2012diada_cup
+
+@2012diada_erc
+view-if: player_party = "erc"
+title: We are finally being heard!
+go-to: post_event
+
+
+@2012diada_cup
+view-if: player_party = "cup"
+title: We are finally being heard!
+go-to: post_event

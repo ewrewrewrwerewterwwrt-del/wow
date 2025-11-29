@@ -176,4 +176,3 @@ go-to: main
 
 # This scene is solely for updating numbers after events, and routing to special events.
 
-# TODO: don't have to do event dispatch here - we can just have a tag with a maximum number

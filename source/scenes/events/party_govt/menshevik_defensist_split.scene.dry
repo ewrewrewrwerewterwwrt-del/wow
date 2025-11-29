@@ -1,7 +1,0 @@
-title: Menshevik-Defensists split!
-subtitle: The more right-leaning Mensheviks are splitting off to form a new party.
-view-if: defensist_dissent > m_split_threshold and not defensist_split
-max-visits: 1
-go-to: m_defensist_split
-new-page: True
-tags: event

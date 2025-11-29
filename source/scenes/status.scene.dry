@@ -34,14 +34,14 @@ Q.unemployed_disp = Q.unemployed.toFixed(1);
 
 = Government
 
-<div style="display: flex; gap: 0.62em;margin-bottom: -0.75em;"><div style="flex: 0 0 15%;padding-left:0.2em"><img src="img/cat_seal.svg"></div><div style="flex: 1 1 84%;"><p style="font-weight:bold; margin-top:-0.25em; margin-bottom:0.25em;">Generalitat</p><p style="white-space:nowrap; overflow:clip; text-overflow:ellipsis;max-width:100%;">[+ cat_coalition_disp +]</p></div></div>
+<div style="display: flex; gap: 0.62em;margin-bottom: -0.75em;"><div style="flex: 0 0 15%;padding-left:0.2em"><img src="img/cat_seal.svg"></div><div style="flex: 1 1 84%;"><p style="font-weight:bold; margin-top:-0.25em; margin-bottom:0.25em;">Generalitat</p><p style="white-space:nowrap; overflow:clip; text-overflow:ellipsis;max-width:95%;">[+ cat_coalition_disp +]</p></div></div>
 
 President [+ president_disp +] ([+ president_party_disp +])
 
 Next election: [+ next_election_month : month +] [+ next_election_year +]
 
 
-<div style="display: flex; gap: 0.5em;margin-top:1.1em;margin-bottom: -0.75em;"><div style="flex: 0 0 18%;"><img src="[+spanish_seal_img+]"></div><div style="flex: 1 1 82%;"><p style="font-weight:bold; margin-top:-0.1em; margin-bottom:0.25em;">Gobierno</p><p style="white-space:nowrap; overflow:clip; text-overflow:ellipsis;max-width:100%;">[+ spanish_coalition_disp +]</p></div></div>
+<div style="display: flex; gap: 0.5em;margin-top:1.1em;margin-bottom: -0.75em;"><div style="flex: 0 0 18%;"><img src="[+spanish_seal_img+]"></div><div style="flex: 1 1 82%;"><p style="font-weight:bold; margin-top:-0.1em; margin-bottom:0.25em;">Gobierno</p><p style="white-space:nowrap; overflow:clip; text-overflow:ellipsis;max-width:95%;">[+ spanish_coalition_disp +]</p></div></div>
 
 Presidente [+ spanish_pm_disp +] ([+ spanish_pm_party_disp +])
 

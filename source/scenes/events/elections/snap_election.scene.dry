@@ -1,0 +1,27 @@
+title: New Parlament elections called!
+subtitle: President [+ president_disp +] sets the new election date for two months from now.
+face-image: img/events/snapelection.jpg
+new-page: true
+tags: event
+view-if: parlament_snap_election = 1
+on-arrival: {!
+Q.parlament_snap_election = 0;
+Q.next_election_week = Q.week;
+Q.next_election_month = Q.month + 2;
+if (Q.next_election_month >= 13) {
+    Q.next_election_month = Q.next_election_month % 12;
+    Q.next_election_year = Q.year + 1;
+} else {
+    Q.next_election_year = Q.year;
+}
+Q.cat_coalition_disp_old = Q.cat_coalition_disp;
+Q.cat_coalition_disp = Q.president_party_disp + "<span style=\"font-style:italic;\"> caretaker government</span>";
+!}
+
+= New Parlament elections called!
+
+President [+ president_disp +] seems to have run out of options, and the current [+ cat_coalition_disp_old +] will be no more. The Parlament has now been disolved, and the next elections will be held in two months time, on [+ next_election_month : month +], [+ next_election_year +].
+
+Until then, the funcitons of the Generalitat will be limitted, and handled by a [+ cat_coalition_disp +].
+
+- @post_event: May this be our chance!
