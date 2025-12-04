@@ -4,14 +4,15 @@ go-to: force_new_page_about
 @force_new_page_about
 new-page: true
 
-= Route to Ítaca - An Alternate Procés
+= Route to Ítaca - An Alternate History
 
 It's hard to classify this work. What am I modding from? Formally it is a fork from <a class="link" href="https://red-autumn.itch.io/petrograd-1917">Petrograd 1917</a>, but it clearly takes a lot form the  <a class="link" href="https://originn0.github.io/dynamic_social_democracy/">Dynamic Social Democracy</a> mod and, by extension, from the original <a class="link" href="https://red-autumn.itch.io/social-democracy">Social Democracy, an Alternate History</a> game. It could have been a fork from that amazing mod for all that matters.
 
 In any case, if you're lost or confused on what's this about, do check the info here.
 
-- @route_to_itaca: Route to Ítaca
+- @route_to_itaca: Route to Ítaca - AAH
 - @frequent_questions: Frequently Asked Questions
+- @election_simulation: Election Simulation
 - @bug_report: Bug Reporting
 - @changelog: Changelog & Future Updates
 - @credits: Credits

@@ -761,6 +761,7 @@ table {
   --erc: #ff8000;
   --cup: #ffed00;
   --jxsi: #3ab6a5;
+  --jxcat: #ed5975;
   --pdcat: #0081c2;
   --junts: #20c0b2;
   --cs: #f6c300;
@@ -774,6 +775,29 @@ table {
   --vox: #63be21;
   --pxc: #00FFFF;
   --fnc: #55A0D9;
+  --pp: #1d84ce;
+  --psoe:#da291c;
+  --podemos: #9269f5;
+  --iu: #732021;
+  --dil:#292a6b;
+  --pnv: #4aae4a;
+  --ehbildu: #00c19f;
+  --cc:#ffd700;
+  --compromis: #ec8953;
+  --mes: #d8de40;
+  --bng: #a2c7e4;
+  --nos: #ed1c24;
+  --amaiur: #0198b3;
+  --upyd: #e9008c;
+  --mpais: #027665;
+  --fasturias: #0082ca;
+  --prc: #b7bf10;
+  --sumar: #ef4b91;
+  --up: #5a205a;
+  --fr: #0a0a0a;
+  --gbai: #f75e42;
+  --upn: #00599b;
+  --nsuma: #2a52be;
 }
 
 .seat.ciu {
@@ -793,6 +817,9 @@ table {
 }
 .seat.fr {
     fill: var(--fr);
+}
+.seat.jxcat {
+    fill: var(--jxcat);
 }
 .seat.jxsi {
     fill: var(--jxsi);
@@ -856,6 +883,9 @@ table {
 .box.fr {
     background-color: var(--fr);
 }
+.box.jxcat {
+    background-color: var(--jxcat);
+}
 .box.jxsi {
     background-color: var(--jxsi);
 }
@@ -897,6 +927,146 @@ table {
 }
 .box.fnc {
     background-color: var(--fnc);
+}
+
+/* same, but the extras for the congreso */
+.seat.pp {
+    fill: var(--pp);
+}
+.box.pp {
+    background-color: var(--pp);
+}
+.seat.psoe {
+    fill: var(--psoe);
+}
+.box.psoe {
+    background-color: var(--psoe);
+}
+.seat.podemos {
+    fill: var(--podemos);
+}
+.box.podemos {
+    background-color: var(--podemos);
+}
+.seat.iu {
+    fill: var(--iu);
+}
+.box.iu {
+    background-color: var(--iu);
+}
+.seat.dil {
+    fill: var(--dil);
+}
+.box.dil {
+    background-color: var(--dil);
+}
+.seat.pnv {
+    fill: var(--pnv);
+}
+.box.pnv {
+    background-color: var(--pnv);
+}
+.seat.ehbildu {
+    fill: var(--ehbildu);
+}
+.box.ehbildu {
+    background-color: var(--ehbildu);
+}
+.seat.cc {
+    fill: var(--cc);
+}
+.box.cc {
+    background-color: var(--cc);
+}
+.seat.compromis {
+    fill: var(--compromis);
+}
+.box.compromis {
+    background-color: var(--compromis);
+}
+.seat.mes {
+    fill: var(--mes);
+}
+.box.mes {
+    background-color: var(--mes);
+}
+.seat.bng {
+    fill: var(--bng);
+}
+.box.bng {
+    background-color: var(--bng);
+}
+.seat.nos {
+    fill: var(--nos);
+}
+.box.nos {
+    background-color: var(--nos);
+}
+.seat.amaiur {
+    fill: var(--amaiur);
+}
+.box.amaiur {
+    background-color: var(--amaiur);
+}
+.seat.upyd {
+    fill: var(--upyd);
+}
+.box.upyd {
+    background-color: var(--upyd);
+}
+.seat.mpais {
+    fill: var(--mpais);
+}
+.box.mpais {
+    background-color: var(--mpais);
+}
+.seat.fasturias {
+    fill: var(--fasturias);
+}
+.box.fasturias {
+    background-color: var(--fasturias);
+}
+.seat.prc {
+    fill: var(--prc);
+}
+.box.prc {
+    background-color: var(--prc);
+}
+.seat.sumar {
+    fill: var(--sumar);
+}
+.box.sumar {
+    background-color: var(--sumar);
+}
+.seat.up {
+    fill: var(--up);
+}
+.box.up {
+    background-color: var(--up);
+}
+.seat.fr {
+    fill: var(--fr);
+}
+.box.fr {
+    background-color: var(--fr);
+}
+.seat.gbai {
+    fill: var(--gbai);
+}
+.box.gbai {
+    background-color: var(--gbai);
+}
+.seat.upn {
+    fill: var(--upn);
+}
+.box.upn {
+    background-color: var(--upn);
+}
+.seat.nsuma {
+    fill: var(--nsuma);
+}
+.box.nsuma {
+    background-color: var(--nsuma);
 }
 
 .tooltip-text {

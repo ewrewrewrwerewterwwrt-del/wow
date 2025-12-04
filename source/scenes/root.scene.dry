@@ -2,52 +2,17 @@ title: Root Scene
 new-page: true
 go-to: post_event if started = 1; start_menu if started = 0
 
-# TODO: do that thing that we did before...
-
 @start_menu
 new-page: true
-go-to: start_menu_2
-
-
-= Route to Ítaca - An Alternate Procés
-
-@start_menu_2
-
-- @start: <span style="font-size: 1.1em;">Start game</span>
-- @election_simulation: <span style="font-size: 1.1em;">Election simulation</span>
-- @language: <span style="font-size: 1.1em;">Language</span>
-- @about: <span style="font-size: 1.1em;">About - v1.0 (10.2025)</span>
-- @credits: <span style="font-size: 1.1em;">Credits</span>
-- @game_over.achievements: <span style="font-size: 1.1em;">Achievements</span>
-
-
-@start
+set-bg: img/3rd_October_2017.jpg
 on-arrival: {!
-Q.started = 1;
-// time elapsed (in months)
-Q.time = 1;
 Q.year = 2012;
 Q.month = 8;
 Q.week = 1;
 Q.rubicon = 0;
-
-// how many actions have been taken this week?
-Q.week_actions = 0; // FIXME: delete me?
-// how many actions have been taken this month?
-Q.month_actions = 0;
-
-// 0 = normal difficulty, 1 = hard mode, 2 = hard mode no saves
-Q.difficulty = 0;
-Q.historical_mode = 0;
 Q.player_party_name = "<span style='font-style: italic;'>Not party chosen</span>";
 Q.player_party = "";
 Q.position_disp = "??";
-
-Q.erc_dissent_percent = 10;
-Q.ciu_dissent_percent = 15;
-Q.cup_dissent_percent = 15;
-Q.jxsi_dissent_percent = 25;
-
 
 // start situation
 Q.president = "Artur Mas";
@@ -67,6 +32,8 @@ Q.next_election_month = 12;
 Q.next_election_year = 2014;
 Q.next_spanish_election_month = 12;
 Q.next_spanish_election_year = 2015;
+Q.next_local_election_month = 5;
+Q.next_local_election_year = 2015;
 
 Q.independence_trust = 28;
 Q.independence_movement = 65;
@@ -91,6 +58,8 @@ Q.parlament_seats = {
   }; // seats
 Q.parlament_constituencies = ["barcelona", "girona", "lleida", "tarragona"];
 Q.parlament_size = 135;
+
+Q.parties = ['ciu', 'erc', 'psc', 'ppc', 'icv', 'cs', 'cup', 'si', 'cdc', 'unio', 'jxsi', 'junts', 'jxcat', 'pdcat', 'csqp', 'cecp', 'ecp', 'vox', 'fnc', 'pxc'];
 
 Q.ciu_parlament_pv = 40;
 Q.ciu_parlament_s = 62;
@@ -132,6 +101,71 @@ Q.pxc_parlament_s = 0;
 Q.fnc_parlament_pv = 0.0;
 Q.fnc_parlament_s = 0;
 
+// Initial party positions
+Q.ciu_ideology = "Centre-right Liberalism, Pact-Pragmatic";
+Q.ciu_leader = "Artur Mas";
+
+Q.erc_ideology = "Left Social Democracy, Republican";
+Q.erc_leader = "Oriol Junqueras";
+
+Q.cup_ideology = "Anticapitalism, Unilateralist";
+Q.cup_leader = "David Fernàndez";
+
+Q.cs_leader = "Albert Rivera";
+Q.cs_ideology = "Liberal-Centrism, Centralist";
+
+Q.si_leader = "Alfons López Tena";
+Q.si_ideology = "Centrist regeneration, Unilateralist";
+
+Q.psc_leader = "Pere Navarro";
+Q.psc_ideology = "Social Democracy, Federalist";
+
+Q.ppc_leader = "Alícia Sánchez-Camacho";
+Q.ppc_ideology = "Conservatism, Centralist";
+
+Q.icv_leader = "Joan Herrera";
+Q.icv_ideology = "Green Left, Right to Decide";
+
+
+// International opinions
+Q.international_eu_opinion = 1;
+
+!}
+go-to: start_menu_2
+
+
+= Route to Ítaca - An Alternate History
+
+@start_menu_2
+
+- @start: <span style="font-size: 1.1em;">Start game</span>
+- @game_over.achievements: <span style="font-size: 1.1em;">Achievements</span>
+- @language: <span style="font-size: 1.1em;">Language</span>
+- @about: <span style="font-size: 1.1em;">About - v1.0 (1.2025)</span>
+- @credits: <span style="font-size: 1.1em;">Credits</span>
+
+
+@start
+on-arrival: {!
+Q.started = 1;
+// time elapsed (in months)
+Q.time = 1;
+
+// how many actions have been taken this week?
+Q.week_actions = 0; // FIXME: delete me?
+// how many actions have been taken this month?
+Q.month_actions = 0;
+
+// 0 = normal difficulty, 1 = hard mode, 2 = hard mode no saves
+Q.difficulty = 0;
+Q.historical_mode = 0;
+
+Q.erc_dissent_percent = 10;
+Q.ciu_dissent_percent = 15;
+Q.cup_dissent_percent = 15;
+Q.jxsi_dissent_percent = 25;
+
+
 // Demographics
 Q.parlament_demographics = ["buss", "ind", "middle", "young", "retired", "rural", "unemployed"]
 Q.parlament_barcelona_middle_pop = 1246;
@@ -164,391 +198,384 @@ Q.parlament_tarragona_rural_pop = 1445;
 Q.parlament_tarragona_ind_pop = 1236;
 
 // Parties and initial party support
-Q.parties = ['ciu', 'erc', 'psc', 'ppc', 'icv', 'cs', 'cup', 'si', 'cdc', 'unio', 'jxsi', 'junts', 'pdcat', 'csqp', 'cecp', 'ecp', 'vox', 'pxc', 'fnc'];
 
-// TODO: add the weights
+
+// TODO: tweak initial party weights
+
+Q.unio_parlament_barcelona_buss_support = 0;
+Q.csqp_parlament_barcelona_buss_support = 0;
+Q.jxsi_parlament_barcelona_buss_support = 0;
+Q.ciu_parlament_barcelona_buss_support = 23.5;
+Q.abstain_parlament_barcelona_buss_support = 25.4;
+Q.erc_parlament_barcelona_buss_support = 7.2;
+Q.icv_parlament_barcelona_buss_support = 7.9;
+Q.psc_parlament_barcelona_buss_support = 6.8;
+Q.cs_parlament_barcelona_buss_support = 11.0;
+Q.cup_parlament_barcelona_buss_support = 2.2;
+Q.si_parlament_barcelona_buss_support = 1.1;
+Q.ppc_parlament_barcelona_buss_support = 14.9;
+
+Q.jxsi_parlament_barcelona_ind_support = 0;
+Q.csqp_parlament_barcelona_ind_support = 0;
+Q.unio_parlament_barcelona_ind_support = 0;
+Q.abstain_parlament_barcelona_ind_support = 32.42;
+Q.psc_parlament_barcelona_ind_support = 13.64;
+Q.ciu_parlament_barcelona_ind_support = 19.19;
+Q.icv_parlament_barcelona_ind_support = 10.71;
+Q.erc_parlament_barcelona_ind_support = 8.28;
+Q.cs_parlament_barcelona_ind_support = 4.85;
+Q.ppc_parlament_barcelona_ind_support = 9.09;
+Q.cup_parlament_barcelona_ind_support = 1.82;
+Q.ciu_parlament_barcelona_middle_support = 17.54;
+
+Q.unio_parlament_barcelona_middle_support = 0;
+Q.csqp_parlament_barcelona_middle_support = 0;
+Q.jxsi_parlament_barcelona_middle_support = 0;
+Q.abstain_parlament_barcelona_middle_support = 27.66;
+Q.erc_parlament_barcelona_middle_support = 7.52;
+Q.icv_parlament_barcelona_middle_support = 10.02;
+Q.psc_parlament_barcelona_middle_support = 6.31;
+Q.ppc_parlament_barcelona_middle_support = 13.83;
+Q.cs_parlament_barcelona_middle_support = 14.03;
+Q.cup_parlament_barcelona_middle_support = 1.9;
+Q.si_parlament_barcelona_middle_support = 1.2;
+Q.ciu_parlament_barcelona_retired_support = 29.35;
+
+Q.unio_parlament_barcelona_retired_support = 0;
+Q.csqp_parlament_barcelona_retired_support = 0;
+Q.jxsi_parlament_barcelona_retired_support = 0;
+Q.abstain_parlament_barcelona_retired_support = 24.29;
+Q.cup_parlament_barcelona_retired_support = 0;
+Q.psc_parlament_barcelona_retired_support = 15.99;
+Q.erc_parlament_barcelona_retired_support = 8.3;
+Q.ppc_parlament_barcelona_retired_support = 17.21;
+Q.icv_parlament_barcelona_retired_support = 3.34;
+Q.cs_parlament_barcelona_retired_support = 1.52;
+
+Q.unio_parlament_barcelona_rural_support = 0;
+Q.csqp_parlament_barcelona_rural_support = 0;
+Q.jxsi_parlament_barcelona_rural_support = 0;
+Q.erc_parlament_barcelona_rural_support = 26.5;
+Q.ciu_parlament_barcelona_rural_support = 25.0;
+Q.psc_parlament_barcelona_rural_support = 23.0;
+Q.abstain_parlament_barcelona_rural_support = 16.0;
+Q.cup_parlament_barcelona_rural_support = 9.5;
+
+Q.unio_parlament_barcelona_unemployed_support = 0;
+Q.csqp_parlament_barcelona_unemployed_support = 0;
+Q.jxsi_parlament_barcelona_unemployed_support = 0;
+Q.abstain_parlament_barcelona_unemployed_support = 42.08;
+Q.ciu_parlament_barcelona_unemployed_support = 14.53;
+Q.erc_parlament_barcelona_unemployed_support = 8.92;
+Q.psc_parlament_barcelona_unemployed_support = 8.42;
+Q.icv_parlament_barcelona_unemployed_support = 14.53;
+Q.ppc_parlament_barcelona_unemployed_support = 4.11;
+Q.cs_parlament_barcelona_unemployed_support = 4.91;
+Q.si_parlament_barcelona_unemployed_support = 1.2;
+Q.cup_parlament_barcelona_unemployed_support = 1.3;
+
+Q.unio_parlament_barcelona_young_support = 0;
+Q.csqp_parlament_barcelona_young_support = 0;
+Q.jxsi_parlament_barcelona_young_support = 0;
+Q.abstain_parlament_barcelona_young_support = 44.33;
+Q.ciu_parlament_barcelona_young_support = 12.54;
+Q.erc_parlament_barcelona_young_support = 6.92;
+Q.icv_parlament_barcelona_young_support = 10.03;
+Q.psc_parlament_barcelona_young_support = 5.02;
+Q.cup_parlament_barcelona_young_support = 6.02;
+Q.ppc_parlament_barcelona_young_support = 3.81;
+Q.cs_parlament_barcelona_young_support = 9.33;
+Q.si_parlament_barcelona_young_support = 2.01;
+Q.ciu_parlament_girona_buss_support = 31.43;
+
+Q.unio_parlament_girona_buss_support = 0;
+Q.csqp_parlament_girona_buss_support = 0;
+Q.jxsi_parlament_girona_buss_support = 0;
+Q.abstain_parlament_girona_buss_support = 24.2;
+Q.erc_parlament_girona_buss_support = 17.1;
+Q.psc_parlament_girona_buss_support = 7.73;
+Q.ppc_parlament_girona_buss_support = 8.83;
+Q.icv_parlament_girona_buss_support = 4.12;
+Q.si_parlament_girona_buss_support = 1.23;
+Q.cup_parlament_girona_buss_support = 2.79;
+Q.cs_parlament_girona_buss_support = 2.57;
+Q.ciu_parlament_girona_ind_support = 24.19;
+
+Q.unio_parlament_girona_ind_support = 0;
+Q.csqp_parlament_girona_ind_support = 0;
+Q.jxsi_parlament_girona_ind_support = 0;
+Q.abstain_parlament_girona_ind_support = 28.45;
+Q.erc_parlament_girona_ind_support = 16.72;
+Q.psc_parlament_girona_ind_support = 11.66;
+Q.ppc_parlament_girona_ind_support = 8.83;
+Q.icv_parlament_girona_ind_support = 4.66;
+Q.cs_parlament_girona_ind_support = 2.33;
+Q.cup_parlament_girona_ind_support = 2.03;
+Q.si_parlament_girona_ind_support = 1.12;
+Q.ciu_parlament_girona_middle_support = 28.12;
+
+Q.unio_parlament_girona_middle_support = 0;
+Q.csqp_parlament_girona_middle_support = 0;
+Q.jxsi_parlament_girona_middle_support = 0;
+Q.abstain_parlament_girona_middle_support = 24.48;
+Q.erc_parlament_girona_middle_support = 15.62;
+Q.icv_parlament_girona_middle_support = 7.81;
+Q.psc_parlament_girona_middle_support = 6.77;
+Q.cup_parlament_girona_middle_support = 2.85;
+Q.cs_parlament_girona_middle_support = 3.12;
+Q.si_parlament_girona_middle_support = 1.04;
+Q.ppc_parlament_girona_middle_support = 10.18;
+Q.ciu_parlament_girona_retired_support = 44.6;
+
+Q.unio_parlament_girona_retired_support = 0;
+Q.csqp_parlament_girona_retired_support = 0;
+Q.jxsi_parlament_girona_retired_support = 0;
+Q.abstain_parlament_girona_retired_support = 25.39;
+Q.erc_parlament_girona_retired_support = 8.29;
+Q.psc_parlament_girona_retired_support = 7.77;
+Q.ppc_parlament_girona_retired_support = 9.05;
+Q.icv_parlament_girona_retired_support = 2.07;
+Q.cs_parlament_girona_retired_support = 1.04;
+Q.si_parlament_girona_retired_support = 1.55;
+Q.cup_parlament_girona_retired_support = 0.24;
+Q.ciu_parlament_girona_rural_support = 29.14;
+
+Q.unio_parlament_girona_rural_support = 0;
+Q.csqp_parlament_girona_rural_support = 0;
+Q.jxsi_parlament_girona_rural_support = 0;
+Q.abstain_parlament_girona_rural_support = 32.66;
+Q.erc_parlament_girona_rural_support = 16.08;
+Q.cup_parlament_girona_rural_support = 5.74;
+Q.psc_parlament_girona_rural_support = 5.53;
+Q.si_parlament_girona_rural_support = 2.01;
+Q.icv_parlament_girona_rural_support = 3.01;
+Q.ppc_parlament_girona_rural_support = 3.81;
+Q.cs_parlament_girona_rural_support = 2.01;
+Q.ciu_parlament_girona_unemployed_support = 31.62;
+
+Q.unio_parlament_girona_unemployed_support = 0;
+Q.csqp_parlament_girona_unemployed_support = 0;
+Q.jxsi_parlament_girona_unemployed_support = 0;
+Q.abstain_parlament_girona_unemployed_support = 29.5;
+Q.psc_parlament_girona_unemployed_support = 8.81;
+Q.erc_parlament_girona_unemployed_support = 8.83;
+Q.icv_parlament_girona_unemployed_support = 6.74;
+Q.cs_parlament_girona_unemployed_support = 3.63;
+Q.ppc_parlament_girona_unemployed_support = 6.48;
+Q.cup_parlament_girona_unemployed_support = 2.33;
+Q.si_parlament_girona_unemployed_support = 2.07;
+Q.ciu_parlament_girona_young_support = 27.58;
+
+Q.unio_parlament_girona_young_support = 0;
+Q.csqp_parlament_girona_young_support = 0;
+Q.jxsi_parlament_girona_young_support = 0;
+Q.abstain_parlament_girona_young_support = 28.05;
+Q.erc_parlament_girona_young_support = 14.81;
+Q.psc_parlament_girona_young_support = 11.11;
+Q.si_parlament_girona_young_support = 1.06;
+Q.cs_parlament_girona_young_support = 3.7;
+Q.icv_parlament_girona_young_support = 4.76;
+Q.ppc_parlament_girona_young_support = 4.53;
+Q.cup_parlament_girona_young_support = 4.4;
+Q.ciu_parlament_lleida_buss_support = 30.92;
+
+Q.unio_parlament_lleida_buss_support = 0;
+Q.csqp_parlament_lleida_buss_support = 0;
+Q.jxsi_parlament_lleida_buss_support = 0;
+Q.abstain_parlament_lleida_buss_support = 33.33;
+Q.erc_parlament_lleida_buss_support = 10.94;
+Q.psc_parlament_lleida_buss_support = 4.69;
+Q.icv_parlament_lleida_buss_support = 5.21;
+Q.cup_parlament_lleida_buss_support = 0;
+Q.ppc_parlament_lleida_buss_support = 12.83;
+Q.si_parlament_lleida_buss_support = 2.08;
+Q.ciu_parlament_lleida_ind_support = 25.77;
+
+Q.unio_parlament_lleida_ind_support = 0;
+Q.csqp_parlament_lleida_ind_support = 0;
+Q.jxsi_parlament_lleida_ind_support = 0;
+Q.abstain_parlament_lleida_ind_support = 31.31;
+Q.erc_parlament_lleida_ind_support = 18.18;
+Q.icv_parlament_lleida_ind_support = 5.56;
+Q.psc_parlament_lleida_ind_support = 6.57;
+Q.cup_parlament_lleida_ind_support =  0;
+Q.ppc_parlament_lleida_ind_support = 7.56;
+Q.cs_parlament_lleida_ind_support = 3.03;
+Q.si_parlament_lleida_ind_support = 2.02;
+Q.ciu_parlament_lleida_middle_support = 28.32;
+
+Q.unio_parlament_lleida_middle_support = 0;
+Q.csqp_parlament_lleida_middle_support = 0;
+Q.jxsi_parlament_lleida_middle_support = 0;
+Q.abstain_parlament_lleida_middle_support = 28.42;
+Q.erc_parlament_lleida_middle_support = 18.95;
+Q.psc_parlament_lleida_middle_support = 4.21;
+Q.ppc_parlament_lleida_middle_support = 7.99;
+Q.icv_parlament_lleida_middle_support = 7.89;
+Q.cup_parlament_lleida_middle_support = 0;
+Q.cs_parlament_lleida_middle_support = 3.16;
+Q.si_parlament_lleida_middle_support = 1.05;
+Q.ciu_parlament_lleida_retired_support = 40.68;
+
+Q.unio_parlament_lleida_retired_support = 0;
+Q.csqp_parlament_lleida_retired_support = 0;
+Q.jxsi_parlament_lleida_retired_support = 0;
+Q.abstain_parlament_lleida_retired_support = 29.47;
+Q.erc_parlament_lleida_retired_support = 8.42;
+Q.psc_parlament_lleida_retired_support = 6.32;
+Q.ppc_parlament_lleida_retired_support = 13.0;
+Q.icv_parlament_lleida_retired_support = 2.11;
+Q.cup_parlament_lleida_retired_support = 0;
+Q.ciu_parlament_lleida_rural_support = 33.82;
+
+Q.unio_parlament_lleida_rural_support = 0;
+Q.csqp_parlament_lleida_rural_support = 0;
+Q.jxsi_parlament_lleida_rural_support = 0;
+Q.abstain_parlament_lleida_rural_support = 26.8;
+Q.erc_parlament_lleida_rural_support = 15.46;
+Q.icv_parlament_lleida_rural_support = 4.12;
+Q.psc_parlament_lleida_rural_support = 4.64;
+Q.ppc_parlament_lleida_rural_support = 4.84;
+Q.si_parlament_lleida_rural_support = 2.06;
+Q.cs_parlament_lleida_rural_support = 3.61;
+Q.cup_parlament_lleida_rural_support = 4.64;
+
+Q.unio_parlament_lleida_unemployed_support = 0;
+Q.csqp_parlament_lleida_unemployed_support = 0;
+Q.jxsi_parlament_lleida_unemployed_support = 0;
+Q.abstain_parlament_lleida_unemployed_support = 38.65;
+Q.ciu_parlament_lleida_unemployed_support = 22.09;
+Q.erc_parlament_lleida_unemployed_support = 12.56;
+Q.psc_parlament_lleida_unemployed_support = 7.73;
+Q.icv_parlament_lleida_unemployed_support = 6.28;
+Q.si_parlament_lleida_unemployed_support = 1.93;
+Q.cs_parlament_lleida_unemployed_support = 3.38;
+Q.cup_parlament_lleida_unemployed_support = 3.38;
+Q.ppc_parlament_lleida_unemployed_support = 4.0;
+
+Q.unio_parlament_lleida_young_support = 0;
+Q.csqp_parlament_lleida_young_support = 0;
+Q.jxsi_parlament_lleida_young_support = 0;
+Q.abstain_parlament_lleida_young_support = 33.82;
+Q.erc_parlament_lleida_young_support = 16.43;
+Q.ciu_parlament_lleida_young_support = 24.05;
+Q.cup_parlament_lleida_young_support = 2.9;
+Q.icv_parlament_lleida_young_support = 5.8;
+Q.si_parlament_lleida_young_support = 0.97;
+Q.psc_parlament_lleida_young_support = 9.18;
+Q.ppc_parlament_lleida_young_support = 3.96;
+Q.cs_parlament_lleida_young_support = 2.9;
+Q.ciu_parlament_tarragona_buss_support = 25.58;
+Q.erc_parlament_tarragona_buss_support = 22.31;
+
+Q.unio_parlament_tarragona_buss_support = 0;
+Q.csqp_parlament_tarragona_buss_support = 0;
+Q.jxsi_parlament_tarragona_buss_support = 0;
+Q.abstain_parlament_tarragona_buss_support = 27.18;
+Q.icv_parlament_tarragona_buss_support = 2.02;
+Q.cs_parlament_tarragona_buss_support = 7.05;
+Q.ppc_parlament_tarragona_buss_support = 12.92;
+Q.cup_parlament_tarragona_buss_support = 2.94;
+Q.ciu_parlament_tarragona_ind_support = 28.64;
+
+Q.unio_parlament_tarragona_ind_support = 0;
+Q.csqp_parlament_tarragona_ind_support = 0;
+Q.jxsi_parlament_tarragona_ind_support = 0;
+Q.abstain_parlament_tarragona_ind_support = 34.17;
+Q.psc_parlament_tarragona_ind_support = 11.06;
+Q.icv_parlament_tarragona_ind_support = 7.04;
+Q.erc_parlament_tarragona_ind_support = 6.03;
+Q.cs_parlament_tarragona_ind_support = 7.54;
+Q.ppc_parlament_tarragona_ind_support = 5.53;
+Q.cup_parlament_tarragona_ind_support = 3.52;
+Q.ciu_parlament_tarragona_middle_support = 22.61;
+
+Q.unio_parlament_tarragona_middle_support = 0;
+Q.csqp_parlament_tarragona_middle_support = 0;
+Q.jxsi_parlament_tarragona_middle_support = 0;
+Q.abstain_parlament_tarragona_middle_support = 29.15;
+Q.erc_parlament_tarragona_middle_support = 10.05;
+Q.icv_parlament_tarragona_middle_support = 6.53;
+Q.psc_parlament_tarragona_middle_support = 11.06;
+Q.cup_parlament_tarragona_middle_support = 5.03;
+Q.ppc_parlament_tarragona_middle_support = 6.53;
+Q.si_parlament_tarragona_middle_support = 1.01;
+Q.cs_parlament_tarragona_middle_support = 8.04;
+Q.ciu_parlament_tarragona_retired_support = 35.72;
+
+Q.unio_parlament_tarragona_retired_support = 0;
+Q.csqp_parlament_tarragona_retired_support = 0;
+Q.jxsi_parlament_tarragona_retired_support = 0;
+Q.abstain_parlament_tarragona_retired_support = 30.62;
+Q.erc_parlament_tarragona_retired_support = 9.18;
+Q.ppc_parlament_tarragona_retired_support = 11.22;
+Q.psc_parlament_tarragona_retired_support = 7.14;
+Q.cs_parlament_tarragona_retired_support = 3.06;
+Q.icv_parlament_tarragona_retired_support = 3.06;
+Q.cup_parlament_tarragona_retired_support = 0;
+
+Q.unio_parlament_tarragona_rural_support = 0;
+Q.csqp_parlament_tarragona_rural_support = 0;
+Q.jxsi_parlament_tarragona_rural_support = 0;
+Q.abstain_parlament_tarragona_rural_support = 39.55;
+Q.erc_parlament_tarragona_rural_support = 21.47;
+Q.icv_parlament_tarragona_rural_support = 6.21;
+Q.ciu_parlament_tarragona_rural_support = 9.6;
+Q.psc_parlament_tarragona_rural_support = 12.43;
+Q.ppc_parlament_tarragona_rural_support = 10.73;
+Q.cup_parlament_tarragona_rural_support = 0;
+
+Q.unio_parlament_tarragona_unemployed_support = 0;
+Q.csqp_parlament_tarragona_unemployed_support = 0;
+Q.jxsi_parlament_tarragona_unemployed_support = 0;
+Q.abstain_parlament_tarragona_unemployed_support = 37.62;
+Q.ciu_parlament_tarragona_unemployed_support = 20.79;
+Q.erc_parlament_tarragona_unemployed_support = 7.92;
+Q.psc_parlament_tarragona_unemployed_support = 12.87;
+Q.icv_parlament_tarragona_unemployed_support = 5.94;
+Q.cs_parlament_tarragona_unemployed_support = 6.93;
+Q.ppc_parlament_tarragona_unemployed_support = 4.95;
+Q.cup_parlament_tarragona_unemployed_support = 2.97;
+
+Q.unio_parlament_tarragona_young_support = 0;
+Q.csqp_parlament_tarragona_young_support = 0;
+Q.jxsi_parlament_tarragona_young_support = 0;
+Q.abstain_parlament_tarragona_young_support = 31.53;
+Q.ciu_parlament_tarragona_young_support = 18.72;
+Q.erc_parlament_tarragona_young_support = 8.87;
+Q.icv_parlament_tarragona_young_support = 4.92;
+Q.ppc_parlament_tarragona_young_support = 9.85;
+Q.psc_parlament_tarragona_young_support = 9.85;
+Q.cup_parlament_tarragona_young_support = 5.91;
+Q.cs_parlament_tarragona_young_support = 8.38;
+Q.si_parlament_tarragona_young_support = 1.97;
 
 // Congreso:
+Q.congreso_seats = {
+    "catalunya": 47,
+    "valencia": 32,
+    "balears": 8,
+    "navarra": 5,
+    "euskadi": 18,
+    "galicia": 23,
+    "rest": 217
+};
+Q.congreso_constituencies = ["catalunya", "valencia", "balears", "navarra", "euskadi", "galicia", "rest"];
+Q.congreso_size = 350;
+
 Q.ciu_congreso_s = 16;
 Q.erc_congreso_s = 3;
 
-// TODO: add the rest lol
 
-Q.congreso_seats = {
-    "catalunya": 47,
-    "rest_of_spain": 303
-};
-Q.congreso_constituencies = ["catalunya", "rest_of_spain"];
+Q.congreso_parties = ['ciu', 'erc', 'psoe', 'pp', 'iu', 'cs', 'cup', 'fr', 'cdc', 'unio', 'jxsi', 'junts', 'pdcat', 'dil', 'up', 'podemos', 'mpais', 'vox', 'upyd', 'pnv', 'bng', 'bildu', 'amaiur', 'cc', 'compromis', 'fasturias', 'prc', 'gbai', 'sumar', 'mes'];
 
-
-// Initial party positions
-Q.ciu_ideology = "Centre-right Liberalism, Pact-Pragmatic";
-Q.ciu_leader = "Artur Mas";
-
-Q.erc_ideology = "Left Social Democracy, Republican";
-Q.erc_leader = "Oriol Junqueras";
-
-Q.cup_ideology = "Anticapitalism, Unilateralist";
-Q.cup_leader = "David Fernàndez";
-
-Q.cs_leader = "Albert Rivera";
-Q.cs_ideology = "Liberal-Centrism, Centralist";
-
-Q.si_leader = "Alfons López Tena";
-Q.si_ideology = "Centrist regeneration, Unilateralist";
-
-Q.psc_leader = "Pere Navarro";
-Q.psc_ideology = "Social Democracy, Federalist";
-
-Q.ppc_leader = "Alícia Sánchez-Camacho";
-Q.ppc_ideology = "Conservatism, Centralist";
-
-Q.icv_leader = "Joan Herrera";
-Q.icv_ideology = "Green Left, Right to Decide";
-
-
-// International opinions
-Q.international_eu_opinion = 1;
-
+Q.ciu_congreso_catalunya_support = 29.35;
+Q.erc_congreso_catalunya_support = 7.06;
+Q.cup_congreso_catalunya_support = 0;
 
 
 
 //////////////////////// Soviet stuff
-Q.m_is_player = 1;
-Q.sr_is_player = 0;
-Q.b_is_player = 0;
-Q.k_is_player = 0;
-
-Q.player_in_exco = 1;
-Q.player_in_gov = 0;
-Q.player_in_soviet = 1;
-
-// party resources
-Q.b_resources = 2;
-Q.m_resources = 2;
-Q.k_resources = 3;
-Q.sr_resources = 2;
-// party dues
-Q.b_dues = 2;
-Q.m_dues = 2;
-Q.k_dues = 3;
-Q.sr_dues = 2;
-
-// difficulty-affected modifiers
-// dissent thresholds for party split
-// (this could be different between left and right factions, which will be done in the individual scenes)
-Q.m_split_threshold = 55;
-Q.sr_split_threshold = 55;
-// strength changes on supporting internationalist/defensist
-Q.m_support_change = 6;
-Q.sr_support_change = 6;
-// dissent reduction on party_disunity
-Q.m_discipline_change = 5;
-Q.sr_discipline_change = 5;
-// inter-party relations changes
-Q.ipr_change = 6;
-
-// the state of the party
-// overall dissent reduces every increase in party support.
-Q.b_dissent = 0.05;
-Q.b_dissent_percent = 5;
-Q.m_dissent = 0.1;
-Q.m_dissent_percent = 10;
-Q.kadet_dissent = 0.05;
-Q.kadet_dissent_percent = 5;
-Q.sr_dissent = 0.15;
-Q.sr_dissent_percent = 15;
-
-// factions
-// bolshevik internals
-// leadership: 1 = moderate internationalists, 2 = leninists
-Q.b_leadership = 1;
-Q.b_factions = ['leninist', 'center', 'moderate'];
-Q.leninist_strength = 20;
-Q.leninist_dissent = 10;
-Q.center_strength = 60;
-Q.center_dissent = 0;
-Q.moderate_strength = 20;
-Q.moderate_dissent = 10;
-Q.moderate_split = 0;
-Q.leninist_split = 0;
-// moderates can't split unless Menshevik-Internationalists are leading, but Leninists can split to become the Communist Party.
-Q.b_war_policy = 2;
-Q.b_industrial_policy = 1;
-Q.b_prov_gov_policy = 3;
-Q.b_land_policy = 2;
-Q.b_agricultural_policy = 2;
-Q.b_nationality_policy = 2;
-// organizations among the workers and soldiers...
-Q.b_workers_org = 1;
-Q.b_soldiers_org = 1;
-
-// menshevik internals
-Q.m_factions = ['social_patriot', 'defensist', 'internationalist'];
-// unity is the group led by Plekhanov, the "social patriots"
-// leadership for all soviet parties can be either internationalist or defensist.
-// defensist = 0, internationalist = 1
-Q.m_leadership = 0;
-// taking a nonaligned position...
-Q.m_independent = 0;
-Q.social_patriot_strength = 20;
-Q.social_patriot_dissent = 30;
-Q.defensist_strength = 80;
-Q.defensist_dissent = 10;
-Q.internationalist_strength = 30;
-Q.internationalist_dissent = 35;
-Q.defensist_split = 0;
-Q.internationalist_split = 0;
-// -1 = expansionist, 0 = social patriot, 1 = revolutionary defensist, 2 = internationalist, 3 = revolutionary defeatist
-// less is more pro-war
-Q.m_war_policy = 1;
-// rural policy is actually two different things: how farming should be done (communal, private, collective, state-owned) and what should be done with large estates/state property (no change, voluntary sale, compensated seizures, uncompensated seizures)
-// agricultural policy: -1 = Stolypin privatization, 0 = voluntary privatization, 1 = communal farming, 2 = state farming, 3 = collective farming
-// land policy: -2 = no policy, -1 = no change, 0 = voluntary sales, 1 = compensated seizures, 2 = uncompensated seizures
-Q.m_land_policy = -2;
-Q.m_agricultural_policy = -2;
-// nationality policies:
-// 0 = russian unity, 1 = national personal autonomy, 2 = federalism, 3 = self-determination
-Q.m_nationality_policy = 1;
-// -1 = laissez-faire, 0 = trade unions, 1 = worker supervision, 2 = syndicalism, 3 = state ownership
-// more is more left-wing
-Q.m_industrial_policy = 0;
-// -1 = liberal coalition, 0 = democratic coalition, 1 = external support, 2 = opposition, 3 = socialist coalition, 4 = armed overthrow
-Q.m_prov_gov_policy = 1;
-Q.m_workers_org = 1;
-Q.m_soldiers_org = 0;
-
-// sr internals
-// sr leadership is defensist
-Q.sr_leadership = 0;
-// taking a nonaligned position...
-Q.sr_independent = 0;
-Q.sr_factions = ['left_sr', 'center_sr', 'right_sr'];
-Q.left_sr_strength = 20;
-Q.left_sr_dissent = 40;
-Q.center_sr_strength = 30;
-Q.center_sr_dissent = 20;
-Q.right_sr_strength = 50;
-Q.right_sr_dissent = 10;
-Q.left_sr_split = 0;
-Q.right_sr_split = 0;
-// policies
-Q.sr_war_policy = 1;
-Q.sr_land_policy = 2;
-Q.sr_agricultural_policy = 1;
-Q.sr_nationality_policy = 2;
-Q.sr_prov_gov_policy = 1;
-Q.sr_industrial_policy = 0;
-Q.sr_workers_org = 0;
-Q.sr_soldiers_org = 1;
-Q.sr_rural_org = 1;
-
-// kadet internals
-// 0 = National liberal, 1 = Left-liberal
-Q.k_leadership = 0;
-Q.k_factions = ['left_kadet', 'right_kadet'];
-Q.left_kadet_strength = 50;
-Q.left_kadet_dissent = 5;
-Q.right_kadet_strength = 50;
-Q.right_kadet_dissent = 5;
-// 3 = expansionist/annexationist
-Q.k_war_policy = -1;
-Q.k_industrial_policy = -1;
-Q.k_prov_gov_policy = -1;
-Q.k_land_policy = 0;
-Q.k_agricultural_policy = 0;
-Q.k_nationality_policy = 0;
-
-
-// inter-party relations
-// triangle:
-// m -> b -> sr -> k
-Q.m_b_relation = 40;
-Q.m_sr_relation = 55;
-Q.m_k_relation = 40;
-Q.b_sr_relation = 35;
-Q.b_k_relation = 20;
-Q.sr_k_relation = 40;
-
-// only kadets have relations with the conservative factions
-Q.k_conservative_relation = 50;
-
-// minor parties: popular_socialists, trudoviks, octobrists, 
-
-// The state of Russia/////////////////////////////////
-
-// government
-// The form of government: Prov Gov, Sov Gov, Constituent Assembly, Dictatorship
-// 0 = Provisional Government, 1 = Soviet Government, 2 = Constitutional Government, 3 = Directorate, 4 = Dictatorship, 5 = One-Party Soviet Government
-Q.government_form = 0;
-
-
-// Provisional government budget
-// each budget unit is ~= 1% of national income or about 120 million 1913 rubles (or about 800 million 1917 rubles)
-Q.budget = 0;
-// debt as % of GDP - based on 1913 rubles income (table A3 of Markevich and Harrison), plus debt statistics from Table 6.4 of Gatrell Russia's First World War
-// income = 12033
-// long-term domestic debt from 1914-1916 = 7762 million rubles
-Q.domestic_debt = 65;
-// foreign debt from 1914-1916 = 5887 million rubles
-Q.foreign_debt = 49;
-// how much bonding capacity is left...
-Q.bonding_capacity = 4;
-
-// military are already incorporated into the budget balance (1200 million rubles/month at start, increasing with increased salaries (see table 6.4)) 
-
-
-
-// social and economic circumstances
-
-// Economic and social quality of life
-
-// 96% inflation 
-// source for inflation number: table 2 of https://warwick.ac.uk/fac/soc/economics/staff/mharrison/public/rgwr_postprint.pdf
-// annualized from a 5.8% montly inflation rate
-Q.monthly_inflation = 5.8;
-Q.inflation = Math.pow(1+0.01*Q.monthly_inflation, 12);
-Q.inflation = Math.round(1000*(Q.inflation - 1))/10;
-
-// nationalization + syndicalization of industries
-// percentage of industries nationalized
-Q.industries_nationalized = 10;
-// percentage of industries controlled by workers
-Q.industries_syndicalized = 1;
-
-// availability of consumer goods (out of 100 - pre-war levels)
-// TODO: this is currently unused
-Q.consumer_goods = 5;
-// I can't find hard statistics on the prevalence of undernourishment; just fudging things for now
-// source: https://encyclopedia.1914-1918-online.net/article/food-and-nutrition-russian-empire/
-// availability of food in urban areas
-// this is just fudged - Food production declined by 20% by 1917 from 1913 (as did real incomes)
-
-// Income as a percent of 1913
-// source: https://warwick.ac.uk/fac/soc/economics/staff/mharrison/public/rgwr_postprint.pdf
-Q.income = 79;
-
-// given the massive labor shortages due to millions of people being conscripted for the war, there is effectively no unemployment.
-Q.unemployed = 2;
-
-// Industries
-// This is all fudged; I don't have actual stats
-// loosely based on https://warwick.ac.uk/fac/soc/economics/staff/mharrison/data/greatwar/appendix.pdf
-// percent allocated to military production
-Q.military_industry = 50;
-// percent allocated to civilian production
-Q.civilian_industry = 45;
-// percent allocated to production of agricultural equipment, etc. (can increase food production)
-Q.agricultural_industry = 1;
-// production of train locomotives, cars, and rails
-Q.transportation_industry = 1;
-// industrial capacity allocated to industrial expansion and replacing capital depreciation (if this is below 3% of total industrial capacity, then industry declines)
-Q.capital_industry = 3;
-// only used for allocation...
-Q.unused_industry = 0;
-// industrial changes limit is the amount of production that can be retooled per week.
-Q.industrial_changes_limit = 5;
-// total industrial production (multiple of Jan 1917 - this is affected by industrial policy.)
-Q.industry = 100;
-
-
-/////////////////////// transportation
-// percentage of trains allocated to military, food, and all other civilian uses
-// source: https://encyclopedia.1914-1918-online.net/article/railways-russian-empire/ (for the 40% of railroad capacity for military)
-// preparing for the 1917 offensive, train usage would dlikely be higher for the military
-Q.military_trains = 40;
-// civilians should be divided into industrial ,passenger, etc.
-Q.civilian_trains = 60;
-// total train capacity in 1916: 17.23 billion poods of cargo (cite: above)
-// 1 pood = 16.38 kg
-// = 282 billion kg = 0.282 billion tons of freight
-// = 282,000 million kg
-// compared to the food production...
-// but there's also waste?
-// 145.7 billion ton-km in 1916 (source: https://nyuad.nyu.edu/content/dam/nyuad/academics/divisions/social-science/working-papers/2017/0003.pdf table A17)
-// what's the average distance food has to travel???
-// 72 million km of rail
-
-// train capacity in million kg/year
-// I just halved the above number bc of round trips lol
-Q.train_capacity = 140000;
-
-
-Q.land_reform = 0;
-Q.land_reform_progress = 0;
-
-// agricultural production
-// source: https://encyclopedia.1914-1918-online.net/article/food-and-nutrition-russian-empire/ Table 3
-// See also: https://warwick.ac.uk/fac/soc/economics/staff/mharrison/data/greatwar/appendix.pdf Table A22, A11
-// according to A22: 80,912,000 tons of grain in 1917, 26,000,000 tons of potatoes
-// (some of this grain is probably feed but I don't have a sense of how much...)
-// = 80 million tons = 80000 million kg of grain
-// = 26000 million kg of potatoes
-// = 106000 million kg of grain + potatoes
-// extremely unrealistic but maybe we should divide it by 12 for gameplay's sake... or divide it by 52 for even more unrealistic gameplay's sake
-// 
-// grain: 51%, potatoes: 14%, cattle, sheep/goats, pigs: 7% each
-// 86% of agriculture goes to food crops..., 51% of all agriculture is grain
-// = 134,902 million kg
-// fudge factor for feed/meat conversions lol
-Q.food_production = 134000; // in millions of kg of grain-equivalent
-// source: https://encyclopedia.1914-1918-online.net/article/food-and-nutrition-russian-empire/ - "7.4%" of grain and fodder crops reached the market
-Q.food_sold = 0.08; // fraction of food production that reaches the civilian population in the cities
-// food consumed by the military
-Q.food_requisitioned = 0.08;
-// millions of kg consumed by civilians per year (TODO)
-// population: 145,449,000 (Table A8, Column M of https://warwick.ac.uk/fac/soc/economics/staff/mharrison/data/greatwar/appendix.pdf)
-// estimate: 1 urban civilian requires 1 kg of grain-equivalent/day (ration is 1 kg of bread according to various sources) - minimal sustenance
-// round up to 500 kg/year for "demand"
-// 500 jin/year for china (see sources for Shanxi People's War)
-// 20% urbanity estimate
-// 10% military estimate
-// if 1 urban civilian requires 500 kg/year: food required is 14500 million kg
-// assume higher demands for the military (active soldiering, also bc of horses and stuff) - let's say 700 kg/year
-Q.urban_population = 145000000*(20)/100;
-Q.rural_population = 145000000*(72)/100;
-Q.soldiers_population = 145000000*(8)/100;
-// These are basic demands
-Q.food_demand_urban = Q.urban_population*500/1000000;// in million kg/year
-Q.food_demand_rural = Q.rural_population*500/1000000; // million kg/year - minimal demand; lower than this would provoke famine/violence
-Q.food_demand_military = Q.soldiers_population*700/1000000; // million kg/year
-// if food demand is higher than food_production*food_sold, then there will be an urban famine/urban hunger.
-
-// hunger is the % of food consumption that isn't satisfied.
-Q.food_supply_urban = Q.food_production*Q.food_sold;
-Q.food_transport_capacity = Q.train_capacity*Q.civilian_trains*0.15/100;
-// food transport capacity is an upper bound on food supply
-if (Q.food_supply_urban > Q.food_transport_capacity) {
-    Q.food_supply_urban = Q.food_transport_capacity;
-}
-Q.hunger = 100*(Q.food_demand_urban - Q.food_supply_urban)/Q.food_demand_urban; 
-if (Q.hunger < 0) {
-    Q.hunger = 0; 
-}
-Q.food_demand_urban = Math.round(Q.food_demand_urban);
-Q.food_supply_urban = Math.round(Q.food_supply_urban);
-Q.hunger = Math.round(Q.hunger);
-// rural hunger
-Q.food_supply_rural = Q.food_production*(1 - Q.food_sold)*(1 - Q.food_requisitioned);
-Q.rural_hunger = 100*(Q.food_demand_rural - Q.food_supply_rural)/Q.food_demand_rural;
-if (Q.rural_hunger < 0) {
-    Q.rural_hunger = 0;
-}
-// soldier hunger
-Q.food_supply_soldier = Q.food_production*Q.food_requisitioned;
-Q.food_transport_capacity_soldier = Q.train_capacity*Q.military_trains*0.15/100;
-if (Q.food_supply_soldier > Q.food_transport_capacity_soldier) {
-    Q.food_supply_soldier = Q.food_transport_capacity_soldier;
-}
-Q.soldier_hunger = 100*(Q.food_demand_military - Q.food_supply_soldier)/Q.food_demand_military;
-if (Q.soldier_hunger < 0) {
-    Q.soldier_hunger = 0;
-}
-
-// military goods production = Q.industry * Q.military_industry/100
-
-
-////////////////////// Provisional government
 // party names are shortened in these variables solely for convenience (bc they show up everywhere)
 // governments don't necessarily have to be the provisional government
 Q.k_in_gov = 1;
@@ -638,395 +665,6 @@ Q.soviet_efficacy = 0.5;
 
 // cooperation between the soviet and the provisional government
 Q.soviet_cooperation = 0.7;
-
-
-
-//////////////////////// War and defense //////////////////////////
-
-// approximate count (in thousands - 10 million soldiers and sailors)
-// approx. 8 million in 1917
-Q.soldiers_count = 8000;
-// Materiel supply - 50 consumed per million soldiers per week, more during operations
-// this is kinda fudge; I don't have solid numbers
-Q.materiel = 200;
-// military discipline - used in offense
-Q.discipline = 0.5;
-// military leadership
-Q.leadership = 0.6;
-// War weariness is between 0 and 100
-Q.war_weariness = 40;
-// supply quality is based on military industry
-Q.supply_quality = 0.5;
-// morale is used in defense. between 0 and 1
-Q.morale = 0.5;
-// defensive bonus is added...
-Q.defense_bonus = 1;
-
-// The war has 5 fronts, plus a bunch of reserves
-Q.fronts = ['northern', 'western', 'southwestern', 'romanian', 'caucasus'];
-// numbers mostly from wikipedia, with some making stuff up
-// numbers are the number of divisions
-// (also based on the number of votes in the Constituent Assembly elections)
-Q.northern_front_soldiers = 100;
-Q.western_front_soldiers = 100;
-Q.southwestern_front_soldiers = 200;
-Q.romanian_front_soldiers = 100;
-Q.caucasus_front_soldiers = 50;
-Q.reserve_soldiers = 100;
-
-// movement_capacity is the number of divisions that can be moved per action
-// This is rather arbitrary...
-Q.movement_capacity = Math.round(0.001*Q.military_trains*Q.train_capacity/100);
-Q.soldiers_moved = 0;
-
-Q.fronts_to_enemy = {'northern': 'northwestern', 'western': 'northwestern', 'southwestern': 'southwestern', 'romanian': 'southwestern', 'caucasus': 'caucasus'};
-Q.enemy_fronts = ['northwestern', 'southwestern'];
-// The opposing side
-Q.northwestern_enemy_soldiers = 80;
-Q.northwestern_enemy_morale = 0.75;
-Q.northwestern_enemy_discipline = 0.9;
-Q.northwestern_enemy_supply_quality = 0.9;
-Q.northwestern_enemy_defense_bonus = 0.3;
-Q.southwestern_enemy_soldiers = 80;
-Q.southwestern_enemy_morale = 0.75;
-Q.southwestern_enemy_discipline = 0.9;
-Q.southwestern_enemy_supply_quality = 0.9;
-Q.southwestern_enemy_defense_bonus = 0.3;
-Q.caucasus_enemy_soldiers = 50;
-Q.caucasus_enemy_morale = 0.5;
-Q.caucasus_enemy_discipline = 0.5;
-Q.caucasus_enemy_supply_quality = 0.5;
-Q.caucasus_enemy_defense_bonus = 8;
-
-Q.total_enemy_reinforcements = 0;
-
-Q.enemy_war_weariness = 30;
-
-// Variables for the battle
-// attacking front
-Q.front = "northern";
-Q.enemy_front = "northwestern";
-// attacking is either 1 or 0 - if Russia is on the offense.
-Q.attacking = 1;
-// are we currently in an offensive or defensive battle?
-Q.in_offensive_battle = 0;
-Q.in_defensive_battle = 0;
-// special case for the Kerensky offensive/June offensive
-Q.in_june_offensive = 0;
-
-// battle outcomes: 1 = victory, -1 = defeat, -2 = major defeat
-Q.battle_outcome = 0;
-// number of battles
-Q.battle_count = 0;
-Q.victory_count = 0;
-Q.defeat_count = 0;
-
-// war progress/frontline
-// -1 = minor Central Powers gains
-// -2 = gains
-// -3 = major gains
-// -4 = very major gains
-Q.northern_progress = -1;
-Q.western_progress = -2;
-Q.southwestern_progress = 1;
-Q.romanian_progress = -1;
-Q.caucasus_progress = 1;
-Q.war_progress = Q.northern_progress + Q.western_progress + Q.southwestern_progress + Q.romanian_progress + Q.caucasus_progress;
-// Militias
-
-// 100k
-Q.workers_militia_parties = ['m', 'b', 'sr'];
-Q.workers_militia_strength = 20;
-Q.workers_militia_militancy = 0.5;
-// soviet loyalty, prov gov loyalty, menshevik loyalty, bolshevik loyalty, sr loyalty, left-sr loyalty
-Q.workers_militia_m_loyalty = 25;
-Q.workers_militia_b_loyalty = 25;
-Q.workers_militia_sr_loyalty = 25;
-Q.workers_militia_soviet_loyalty = 50;
-Q.workers_militia_prov_gov_loyalty = 20;
-Q.workers_militia_independent = 25;
-
-// petrograd garrison
-Q.garrison_parties = ['m', 'b', 'k', 'sr'];
-Q.garrison_strength = 100;
-Q.garrison_militancy = 2;
-Q.garrison_m_loyalty = 20;
-Q.garrison_b_loyalty = 20;
-Q.garrison_k_loyalty = 0;
-Q.garrison_sr_loyalty = 20;
-Q.garrison_soviet_loyalty = 20;
-Q.garrison_prov_gov_loyalty = 20;
-Q.garrison_independent = 30;
-
-Q.city_militia_parties = ['m', 'k', 'sr'];
-Q.city_militia_strength = 20;
-Q.city_militia_militancy = 0.5;
-Q.city_militia_m_loyalty = 20;
-Q.city_militia_k_loyalty = 30;
-Q.city_militia_sr_loyalty = 20;
-Q.city_militia_soviet_loyalty = 0;
-Q.city_militia_prov_gov_loyalty = 50;
-Q.city_militia_independent = 20;
-
-// rural militia...
-Q.rural_militia_strength = 0;
-Q.rural_militia_militancy = 0;
-Q.rural_militia_loyalty = 0;
-
-// loyal troops will always be loyal to the provisional government.
-Q.loyal_troops_strength = 0;
-Q.loyal_troops_militancy = 0;
-
-
-// crime and punishment
-// somewhat arbitrary number...
-Q.crime = 10;
-
-// bolshevik threat
-Q.b_threat = 0;
-// coup progress basically determines whether the Kornilov affair is a fake coup or a real coup attempt.
-Q.coup_progress = 0;
-
-// revolutionary preparations...
-Q.rev_progress = 0;
-
-
-// Foreign relations ////////////////////////////////
-
-Q.west_relation = 60;
-Q.usa_relation = 60;
-Q.west_loan_cap = 10;
-Q.west_loans = 5;
-Q.usa_loans = 1;
-Q.usa_loan_cap = 5;
-
-// negotiations for a general peace
-Q.general_negotiations = 0;
-// negotiations for a separate peace with the Central Powers
-Q.central_negotiations = 0;
-Q.armistice_progress = 0;
-// has an armistice been signed?
-Q.is_armistice = 0;
-// has a peace treaty been signed?
-Q.is_peace = 0;
-
-// Demographics ////////////////////////////////////
-
-
-// Proportion of different social groups nationally (based mostly on the 1897 Russian census with some fudging)
-Q.workers = 20; // 
-Q.middle = 8; //
-Q.peasants = 60; // 
-Q.soldiers = 8; //
-Q.underclass = 6;
-Q.elites = 2;
-
-// ethnic demographics nationally - loosely based on 1897 census, but most Polish are in German-occupied territories
-// sources: https://stat1897.histcensus.asu.ru/en/data/
-/*
-1897 (native language):
-Russian 44.31
-Ukrainian 17.81
-Polish 6.31
-Belarusian 4.68
-Jewish 4.03
-Kyrgyz-Kazakh 3.25
-Tatar 2.97
-German 1.43
-Latvian 1.14
-Bashkir 1.05
-Lithuanian 0.96
-Armenian 0.93
-Romanian 0.89
-Mordovian 0.81
-Estonian 0.80
-Sartic 0.77
-Chuvash 0.67
-Georgian 0.66
-Uzbek 0.58
-*/
-/*
-Updated with polish reduced:
-Russian 50
-Ukrainian 20
-Belarusian 5.7
-Jewish 4.5
-Kyrgyz-Kazakh 3.4
-Tatar 3.4
-German 1.6
-Latvian 1.14
-Bashkir 1.3
-Lithuanian 0.96
-Armenian 1.1
-Romanian 1
-Mordovian 1
-Estonian 1
-Sartic 1
-Chuvash 1
-Georgian 1
-Uzbek 1
-*/
-Q.russians = 50;
-Q.ukrainians = 20;
-Q.jews = 4.5;
-Q.kyrgyz_kazakh = 3.4;
-Q.tatar = 3.4;
-Q.other_turkic = 3;
-Q.latvians = 1;
-Q.estonians = 1;
-Q.georgians = 1;
-Q.armenians = 1;
-Q.germans = 1;
-Q.others= 5;
-Q.chinese = 0.1;
-
-// social groups proportion in Petrograd
-Q.workers_petrograd = 55;
-Q.middle_petrograd = 20;
-Q.peasants_petrograd = 2;
-Q.soldiers_petrograd = 8;
-Q.underclass_petrograd = 10;
-Q.elites_petrograd = 5;
-
-// quality of life (currently unused)
-Q.workers_qol = 100;
-Q.peasants = 100;
-
-Q.classes = ['workers', 'middle', 'elites', 'peasants', 'soldiers', 'underclass'];
-Q.minorities = ['ukrainians', 'kyrgyz_kazakh', 'tatar', 'other_turkic', 'jews', 'latvians', 'estonians', 'georgians', 'armenians', 'others'];
-Q.major_parties = ['m', 'b', 'sr', 'k'];
-// parties represented in the soviets
-Q.soviet_parties = ['m', 'b', 'sr', 'anarchist', 'other'];
-// Q.parties = ['m', 'b', 'sr', 'k', 'popular_socialist', 'conservative', 'other', 'anarchist', 'none'];
-Q.minority_parties = ['ukrainian_sr', 'alash', 'musavat', 'dashnak', 'jewish_socialists', 'jewish_national_list', 'muslim_socialists', 'turkic_muslim_parties', 'cossacks'];
-
-// Support for party by social group
-// they don't have to sum to 100 since the electoral calculations will be normalized.
-Q.workers_b = 10;
-Q.workers_m = 50;
-Q.workers_sr = 30;
-Q.workers_k = 2;
-Q.workers_conservative = 1;
-Q.workers_popular_socialist = 2;
-Q.workers_anarchist = 5;
-Q.workers_other = 3;
-Q.workers_none = 10;
-
-Q.workers_pro_prov_gov = 85;
-Q.workers_pro_soviet = 95;
-Q.labor_unrest = 10;
-
-Q.middle_b = 5;
-Q.middle_m = 10;
-Q.middle_sr = 10;
-Q.middle_k = 40;
-Q.middle_conservative = 10;
-Q.middle_popular_socialist = 5;
-Q.middle_anarchist = 1;
-Q.middle_other = 15;
-Q.middle_none = 10;
-
-Q.middle_pro_prov_gov = 85;
-Q.middle_pro_soviet = 40;
-
-Q.peasants_b = 5;
-Q.peasants_m = 5;
-Q.peasants_sr = 55;
-Q.peasants_k= 5;
-Q.peasants_conservative = 10;
-Q.peasants_popular_socialist = 10;
-Q.peasants_anarchist = 5;
-Q.peasants_other = 10;
-Q.peasants_none = 10;
-
-Q.peasants_pro_prov_gov = 65;
-Q.peasants_pro_soviet = 70;
-Q.peasant_unrest = 10;
-
-Q.underclass_b = 15;
-Q.underclass_m = 5;
-Q.underclass_sr = 15;
-Q.underclass_k = 0;
-Q.underclass_conservative = 0;
-Q.underclass_popular_socialist = 5;
-Q.underclass_anarchist = 15;
-Q.underclass_other = 5;
-Q.underclass_none = 30;
-
-Q.underclass_pro_prov_gov = 60;
-Q.underclass_pro_soviet = 70;
-
-Q.soldiers_b = 10;
-Q.soldiers_m = 20;
-Q.soldiers_sr = 40;
-Q.soldiers_k = 5;
-Q.soldiers_conservative = 2;
-Q.soldiers_popular_socialist = 5;
-Q.soldiers_anarchist = 6;
-Q.soldiers_other = 10;
-Q.soldiers_none = 10;
-
-// this rises a lot due to Order Number 1
-Q.soldiers_pro_prov_gov = 50;
-Q.soldiers_pro_soviet = 60;
-Q.soldier_unrest = 10;
-
-Q.elites_b = 0;
-Q.elites_m = 2;
-Q.elites_sr = 2;
-Q.elites_k = 40;
-Q.elites_conservative = 25;
-Q.elites_popular_socialist = 5;
-Q.elites_anarchist = 0;
-Q.elites_other = 12;
-Q.elites_none = 10;
-
-Q.elites_pro_prov_gov = 70;
-Q.elites_pro_soviet = 10;
-
-// minority party support:
-// based on the numbers
-Q.ukrainians_ukrainian_sr = 75;
-Q.georgians_m = 80;
-Q.latvians_b = 75;
-Q.armenians_m = 25;
-Q.armenians_dashnak = 50;
-Q.jews_jewish_national_list = 40;
-Q.jews_m = 20;
-Q.kyrgyz_kazakh_alash = 50;
-Q.tatar_musavat = 30;
-Q.kyrgyz_kazakh_muslim_socialists = 20;
-Q.kyrgyz_kazakh_turkic_muslim_parties = 20;
-Q.tatar_muslim_socialists = 20;
-Q.tatar_turkic_muslim_parties = 20;
-Q.others_turkic_turkic_muslim_parties = 30;
-Q.others_turkic_muslim_socialists = 20;
-Q.others_cossacks = 20;
-
-Q.minorities_pro_prov_gov = 80;
-Q.minorities_pro_soviet = 60;
-
-// Provisional government
-
-// Petrograd Soviet compositions
-// I can't find hard numbers
-Q.b_soviet = 9;
-Q.m_soviet = 40;
-Q.sr_soviet = 33;
-Q.other_soviet = 18;
-
-// Soviet electoral bonuses
-Q.m_soviet_bonus = 1;
-Q.sr_soviet_bonus = 1;
-Q.b_soviet_bonus = 0;
-
-// Petrograd City Duma
-Q.b_petrograd = 10;
-Q.m_petrograd = 20;
-Q.sr_petrograd = 20;
-
-
-
 
 
 /////////////////////// Timers

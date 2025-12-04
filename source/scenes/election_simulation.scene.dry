@@ -1,16 +1,18 @@
 title: Election Simulation
-set-jump: post_election
+new-page: true
+set-jump: post_election_sim
 
+The Election Simulation system is an in-game tool used for debugging and testing. Do play around with historic election results and see how the game handles them!
 
-- @2012_11: Catalan Parliament (November 2012)
-- @2015_9: Catalan Parliament (September 2015)
-- @root: Back
-# - @2017_12: Catalan Parliament (December 2017)
+- @2012_11: Catalan Parlament (November 2012)
+- @2015_9: Catalan Parlament (September 2015)
+- @2015_12: Spanish Congreso (December 2015)
+- @about: Back
+# - @2017_12: Catalan Parlament (December 2017)
 
 @2012_11
 on-arrival: {!
-Q.election_type="cat";
-Q.parties = ['ciu', 'erc', 'psc', 'ppc', 'icv', 'cs', 'cup', 'si', 'cdc', 'unio', 'jxsi', 'junts', 'pdcat', 'csqp', 'cecp', 'ecp', 'vox', 'ac'];
+Q.parties = ['ciu', 'erc', 'psc', 'ppc', 'icv', 'cs', 'cup', 'si', 'cdc', 'unio', 'jxsi', 'junts', 'jxcat', 'pdcat', 'csqp', 'cecp', 'ecp', 'vox', 'fnc', 'pxc'];
 
 Q.parlament_constituencies = ["barcelona", "girona", "lleida", "tarragona"];
 Q.parlament_seats = {
@@ -428,15 +430,13 @@ Q.si_parlament_tarragona_young_support = 1.97;
 
 !}
 go-to: election_algorithm.cat_parlament
-set-jump: post_election
+set-jump: post_election_sim
 
 
 
 @2015_9
 on-arrival: {!
-Q.election_type="cat";
-
-Q.parties = ['ciu', 'erc', 'psc', 'ppc', 'icv', 'cs', 'cup', 'si', 'cdc', 'unio', 'jxsi', 'junts', 'pdcat', 'csqp', 'cecp', 'ecp', 'vox', 'ac'];
+Q.parties = ['ciu', 'erc', 'psc', 'ppc', 'icv', 'cs', 'cup', 'si', 'cdc', 'unio', 'jxsi', 'junts', 'jxcat', 'pdcat', 'csqp', 'cecp', 'ecp', 'vox', 'fnc', 'pxc'];
 
 Q.parlament_constituencies = ["barcelona", "girona", "lleida", "tarragona"];
 Q.parlament_seats = {
@@ -449,7 +449,7 @@ Q.parlament_seats = {
 Q.parlament_demographics = ["buss", "ind", "middle", "young", "retired", "rural", "unemployed"];
 
 // Previous parlament control
-// Previous election results (2012-ish)
+// Previous election results (2012)
 Q.jxsi_parlament_pv = 46;
 Q.jxsi_parlament_s = 62; // cdc + erc!
 Q.ciu_parlament_pv = 0;
@@ -909,133 +909,74 @@ Q.ppc_parlament_tarragona_young_support = 5.49;
 Q.unio_parlament_tarragona_young_support = 0.89;
 !}
 go-to: election_algorithm.cat_parlament
-set-jump: post_election
+set-jump: post_election_sim
 
-@ps_1917_8
+
+@2015_12
 on-arrival: {!
-Q.election_type = "soviet";
-Q.workers = 20; // 
-Q.middle = 8; //
-Q.peasants = 60; // 
-Q.soldiers = 8; //
-Q.underclass = 6;
-Q.elites = 2;
+Q.congreso_seats = {
+    "catalunya": 47,
+    "valencia": 32,
+    "balears": 8,
+    "navarra": 5,
+    "euskadi": 18,
+    "galicia": 23,
+    "rest": 217
+};
+Q.congreso_constituencies = ["catalunya", "valencia", "balears", "navarra", "euskadi", "galicia", "rest"];
 
-Q.russians = 50;
-Q.ukrainians = 20;
-Q.jews = 4.5;
-Q.kyrgyz_kazakh = 3.4;
-Q.tatar = 3.4;
-Q.other_turkic = 3;
-Q.latvians = 1;
-Q.estonians = 1;
-Q.georgians = 1;
-Q.armenians = 1;
-Q.germans = 1;
-Q.others= 5;
-Q.chinese = 0.1;
+Q.congreso_parties_catalunya = ["ciu", "psoe", "erc", "pp", "cs", "podemos", "iu", "cup", "fr", "dil", "pdcat", "jxsi", "cdc", "unio", "junts", "upyd", "vox", "mpais", "up", "sumar", "jxcat"];
+Q.congreso_parties_valencia = ["pp", "psoe", "podemos", "cs", "iu", "compromis", "vox", "up", "sumar", "upyd", "mpais"];
+Q.congreso_parties_balears = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "mes"];
+Q.congreso_parties_navarra = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "amaiur", "nsuma", "ehbildu", "upn", "gbai"];
+Q.congreso_parties_euskadi = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "ehbildu", "pnv", "amaiur"];
+Q.congreso_parties_galicia = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "bng", "nos"];
+Q.congreso_parties_rest = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "cc", "fasturias", "prc"];
 
-// social groups proportion in Petrograd
-Q.workers_petrograd = 55;
-Q.middle_petrograd = 20;
-Q.peasants_petrograd = 2;
-Q.soldiers_petrograd = 8;
-Q.underclass_petrograd = 10;
-Q.elites_petrograd = 5;
+// Previous congreso control
+// Previous election results (2011)
+Q.ciu_congreso_s = 16;
+Q.ciu_congreso_pv = 4.17;
+Q.ciu_congreso_pv_cat = 29.35;
+Q.erc_congreso_s = 3;
+Q.erc_congreso_pv = 1.05;
+Q.erc_congreso_pv_cat = 7.06;
+Q.pp_congreso_s = 186;
+Q.pp_congreso_pv = 44.63;
+Q.pp_congreso_pv_cat = 20.71;
+Q.psoe_congreso_s = 110;
+Q.psoe_congreso_pv = 28.76;
+Q.psoe_congreso_pv_cat = 26.63;
+Q.iu_congreso_s = 11;
+Q.iu_congreso_pv = 6.92;
+Q.iu_congreso_pv_cat = 8.09;
+Q.upyd_congreso_s = 5;
+Q.upyd_congreso_pv = 4.7;
+Q.upyd_congreso_pv_cat = 1.14;
+Q.pnv_congreso_s = 5;
+Q.pnv_congreso_pv = 1.33;
+Q.bng_congreso_s = 2;
+Q.bng_congreso_pv = 0.75;
+Q.bng_congreso_pv_true = 11.18;
+Q.cc_congreso_s = 2;
+Q.cc_congreso_pv = 0.59;
+Q.compromis_congreso_s = 1;
+Q.compromis_congreso_pv = 0.51;
+Q.fasturias_congreso_s = 1;
+Q.fasturias_congreso_pv = 0.41;
+Q.prc_congreso_s = 0;
+Q.prc_congreso_pv = 0.18;
+Q.gbai_congreso_s = 1;
+Q.gbai_congreso_pv = 0.17;
+Q.amaiur_congreso_s = 7;
+Q.amaiur_congreso_pv = 1.37;
 
-Q.classes = ['workers', 'middle', 'elites', 'peasants', 'soldiers', 'underclass'];
-Q.minorities = ['ukrainians', 'kyrgyz_kazakh', 'tatar', 'other_turkic', 'jews', 'latvians', 'estonians', 'georgians', 'armenians', 'others'];
-Q.parties = ['b', 'm', 'sr', 'k', 'popular_socialist', 'conservative', 'other', 'anarchist', 'none'];
-Q.minority_parties = ['ukrainian_sr', 'alash', 'musavat', 'dashnak', 'jewish_socialists', 'jewish_national_list', 'muslim_socialists', 'turkic_muslim_parties', 'cossacks'];
-
-// Support for party by social group
-// they don't have to sum to 100 since the electoral calculations will be normalized.
-Q.workers_b = 50;
-Q.workers_m = 10;
-Q.workers_sr = 30;
-Q.workers_k = 0;
-Q.workers_conservative = 0;
-Q.workers_popular_socialist = 0;
-Q.workers_anarchist = 5;
-Q.workers_other = 5;
-Q.workers_none = 20;
-
-Q.middle_b = 5;
-Q.middle_m = 10;
-Q.middle_sr = 10;
-Q.middle_k = 40;
-Q.middle_conservative = 10;
-Q.middle_popular_socialist = 10;
-Q.middle_anarchist = 1;
-Q.middle_other = 15;
-Q.middle_none = 5;
-
-Q.peasants_b = 5;
-Q.peasants_m = 5;
-Q.peasants_sr = 55;
-Q.peasants_k= 5;
-Q.peasants_conservative = 10;
-Q.peasants_popular_socialist = 10;
-Q.peasants_anarchist = 5;
-Q.peasants_other = 10;
-Q.peasants_none = 10;
-
-Q.underclass_b = 15;
-Q.underclass_m = 5;
-Q.underclass_sr = 15;
-Q.underclass_k = 0;
-Q.underclass_conservative = 0;
-Q.underclass_popular_socialist = 5;
-Q.underclass_anarchist = 15;
-Q.underclass_other = 5;
-Q.underclass_none = 30;
-
-Q.soldiers_b = 50;
-Q.soldiers_m = 10;
-Q.soldiers_sr = 20;
-Q.soldiers_k = 0;
-Q.soldiers_conservative = 0;
-Q.soldiers_popular_socialist = 2;
-Q.soldiers_anarchist = 6;
-Q.soldiers_other = 10;
-Q.soldiers_none = 20;
-
-Q.elites_b = 0;
-Q.elites_m = 2;
-Q.elites_sr = 2;
-Q.elites_k = 40;
-Q.elites_conservative = 25;
-Q.elites_popular_socialist = 5;
-Q.elites_anarchist = 0;
-Q.elites_other = 12;
-Q.elites_none = 10;
-
-// minority party support:
-// based on the numbers
-Q.ukrainians_ukrainian_sr = 75;
-Q.georgians_m = 80;
-Q.latvians_b = 75;
-Q.armenians_m = 25;
-Q.armenians_dashnak = 50;
-Q.jews_jewish_national_list = 40;
-Q.jews_jewish_socialists = 25;
-Q.jews_m = 20;
-Q.kyrgyz_kazakh_alash = 50;
-Q.tatar_musavat = 30;
-Q.kyrgyz_kazakh_muslim_socialists = 20;
-Q.kyrgyz_kazakh_turkic_muslim_parties = 20;
-Q.tatar_muslim_socialists = 20;
-Q.tatar_turkic_muslim_parties = 20;
-Q.other_turkic_turkic_muslim_parties = 30;
-Q.other_turkic_muslim_socialists = 20;
-Q.others_cossacks = 20;
 !}
-go-to: election_algorithm.petrograd_soviet
-set-jump: post_election_soviet
+go-to: election_algorithm.esp_congreso
+set-jump: post_election_sim_congreso
 
 
-
-@post_election
+@post_election_sim
 on-arrival: {!
 var parlament_size = 0;
 for (var constituency of Q.parlament_constituencies) {
@@ -1126,6 +1067,15 @@ if (Q.psc_parlament_s) {
         "legend": "PSC",
         "name": "PSC",
         "seats": Q.psc_parlament_s,
+    });
+}
+
+if (Q.jxcat_parlament_s) {
+    data.push({
+        "id": "jxcat",
+        "legend": "JxCat",
+        "name": "JxCat",
+        "seats": Q.jxcat_parlament_s,
     });
 }
 
@@ -1241,10 +1191,12 @@ if (window && d3) {
 {!<svg id="parlament" style="width: 500px; height: 250px;"> </svg>!}
 {!<div style='margin-top: -2em; width: 500px; font-style: italic; text-align: center'>!} Majority: [+ parlament_s_majority +]{!</div>!}
 
-{!<table style='margin-left: 0.5em;'>!}
-{!<tr><td style='min-width: 7em'>Party</td><td style='width: 5em'>Popular Vote</td><td style='width: 6em'>Change</td><td style='width: 3em'>Seats</td><td style='width: 3em'>Change</td></tr>!}
+{!<table style='margin-left: 0.5em; display:table; width: 95%;'>!}
+{!<tr><td style='min-width: 7em'>Party</td><td style='width: 6em'>Popular Vote</td><td style='width: 7em'>Change</td><td style='width: 3em'>Seats</td><td style='width: 3em'>Change</td></tr>!}
 [? if jxsi_parlament_showviz: {!<tr><td><div class="box" style='background-color: #3ab6a5; font-weight:bold;'> </div> !} JxSí {!</td><td>!}[+ jxsi_parlament_pv +]% {!</td><td>!} [+ jxsi_parlament_pv_delta +] {!</td><td>!} [+ jxsi_parlament_s +] {!</td><td>!} [+ jxsi_parlament_s_delta +] {!</td>!}?]
 [? if ciu_parlament_showviz: {!<tr><td><div class="box" style='background-color: #002782'> </div> !} CiU {!</td><td>!}[+ ciu_parlament_pv +]% {!</td><td>!} [+ ciu_parlament_pv_delta +] {!</td><td>!} [+ ciu_parlament_s +] {!</td><td>!} [+ ciu_parlament_s_delta +] {!</td>!}?]
+[? if jxcat_parlament_showviz: {!<tr><td><div class="box" style='background-color: #ed5975; font-weight:bold;'> </div> !} JxCat {!</td><td>!}[+ jxcat_parlament_pv +]% {!</td><td>!} [+ jxcat_parlament_pv_delta +] {!</td><td>!} [+ jxcat_parlament_s +] {!</td><td>!} [+ jxcat_parlament_s_delta +] {!</td>!}?]
+[? if junts_parlament_showviz: {!<tr><td><div class="box" style='background-color: #20c0b2; font-weight:bold;'> </div> !} Junts {!</td><td>!}[+ junts_parlament_pv +]% {!</td><td>!} [+ junts_parlament_pv_delta +] {!</td><td>!} [+ junts_parlament_s +] {!</td><td>!} [+ junts_parlament_s_delta +] {!</td>!}?]
 [? if cdc_parlament_showviz: {!<tr><td><div class="box" style='background-color: #002782'> </div> !} CDC {!</td><td>!}[+ cdc_parlament_pv +]% {!</td><td>!} [+ cdc_parlament_pv_delta +] {!</td><td>!} [+ cdc_parlament_s +] {!</td><td>!} [+ cdc_parlament_s_delta +] {!</td>!}?]
 [? if pdcat_parlament_showviz: {!<tr><td><div class="box" style='background-color: #0081c2'> </div> !} PDeCAT {!</td><td>!}[+ pdcat_parlament_pv +]% {!</td><td>!} [+ pdcat_parlament_pv_delta +] {!</td><td>!} [+ pdcat_parlament_s +] {!</td><td>!} [+ pdcat_parlament_s_delta +] {!</td>!}?]
 [? if erc_parlament_showviz: {!<tr><td><div class="box" style='background-color: #ff8000'> </div> !} ERC {!</td><td>!}[+ erc_parlament_pv +]% {!</td><td>!} [+ erc_parlament_pv_delta +] {!</td><td>!} [+ erc_parlament_s +] {!</td><td>!} [+ erc_parlament_s_delta +] {!</td>!}?]
@@ -1265,19 +1217,18 @@ if (window && d3) {
 
 
 **Block results**
-{!<table style='border-spacing: 0px; margin-right: 1em; margin-left: 1em;'>!}
+{!<table style='border-spacing: 0px; margin-right: 1em; margin-left: 1em; width:95%; table-layout: fixed;'>!}
 {!<tr><td style='width: !}[+ independence_parlament_pv +]{!%'>Independence</td>!}{!<td style='text-align: center; width: !}[+ nonaligned_parlament_pv +]{!%'>Unaligned</td><td style='text-align: right; width: !}[+ unionist_parlament_pv +]{!%'>Union</td></tr>!}
-{!<tr><td style='height: 2em; background-color: #008000; color: white; text-align: center'>!}**[+ independence_parlament_pv +]%**{!</td><td style='background-color: #b1b0aeff; color: black; text-align: center'>!}**[+ nonaligned_parlament_pv +]%**{!</td><td style='background-color: #fe0101; color: white; text-align: center'>!}**[+ unionist_parlament_pv +]%**{!</td></tr>!}
+{!<tr><td style='height: 2em; background-color: #008000; color: white; text-align: center; border-radius: 3px 0 0 3px;'>!}**[+ independence_parlament_pv +]%**{!</td><td style='background-color: #b1b0aeff; color: black; text-align: center'>!}**[+ nonaligned_parlament_pv +]%**{!</td><td style='background-color: #fe0101; color: white; text-align: center; border-radius: 0 3px 3px 0;'>!}**[+ unionist_parlament_pv +]%**{!</td></tr>!}
 {!</table>!}
 {!<div style="font-style: italic; margin-top: -1em; margin-left: 3em">Popular vote</div>!}
 
-{!<table style='border-spacing: 0px; margin-right: 1em; margin-left: 1em;'>!}
-{!<tr><td style='width: !}[+ independence_parlament_spc +]{!%'>Independence</td><td style='text-align: center; width: !}[+ nonaligned_parlament_spc +]{!%'>Unaligned</td><td style='text-align: right; width: !}[+ unionist_parlament_spc +]{!%'>Union</td></tr>!}
-{!<tr><td style='height: 2em; background-color: #008000; color: white; text-align: center'>!}**[+ independence_parlament_s+]** ([+ independence_parlament_spc +]%) {!</td><td style='background-color: #b1b0aeff; color: black; text-align: center'>!}**[+ nonaligned_parlament_s+]** ([+ nonaligned_parlament_spc +]%) {!</td><td style='background-color: #fe0101; color: white; text-align: center'>!}**[+ unionist_parlament_s+]** ([+ unionist_parlament_spc +]%) {!</td></tr>!}
+{!<table style='border-spacing: 0px; margin-right: 1em; margin-left: 1em; width:95%; table-layout: fixed; margin-top:-0.75em;'>!}
+{!<tr><td style='overflow:hidden; white-space: nowrap; width: !}[+ independence_parlament_spc +]{!%; height: 2em; background-color: #008000; color: white; text-align: center; border-radius: 3px 0 0 3px;'>!}**[+ independence_parlament_s+]** ([+ independence_parlament_spc +]%) {!</td><td style='overflow:hidden; white-space: nowrap; width: !}[+ nonaligned_parlament_spc +]{!%; background-color: #b1b0aeff; color: black; text-align: center'>!}**[+ nonaligned_parlament_s+]** ([+ nonaligned_parlament_spc +]%) {!</td><td style='overflow:hidden; white-space: nowrap; width: !}[+ unionist_parlament_spc +]{!%; background-color: #fe0101; color: white; text-align: center; border-radius: 0 3px 3px 0;'>!}**[+ unionist_parlament_s+]** ([+ unionist_parlament_spc +]%) {!</td></tr>!}
 {!</table>!}
 {!<div style="font-style: italic; margin-top: -1em; margin-left: 3em">Parlament control</div>!}
 
-[? if ciu_parlament_s > 0 : Note: <span style='color: #002782; font-weight: bold;'>CiU</span> has been unclear about their position on independence, so it is counted as unaligned. ?]
+[? if ciu_parlament_s > 0 : Note: <span style='color: #002782; font-weight: bold;width:95%;'>CiU</span> has been unclear about their position on independence, so it is counted as unaligned. ?]
 [? if jxsi_parlament_s > 0 : Author's note: I am aware that in this simulation the pro-independence parties get a majority of the votes instead of a plurality. I do not know if I'll fix it, because I only used the weights as a rough guide, not as something set in stone. ?]
 
 **Government Formation**
@@ -1291,30 +1242,356 @@ if (window && d3) {
 
 [? if not (ciu_parlament_showviz or jxsi_parlament_showviz or junts_parlament_showviz): How did we get here??? ?]
 
-@post_election_soviet
+- @election_simulation: Reset simulation
+
+@post_election_sim_congreso
 on-arrival: {!
-// set congress proportion to votes
-Q.k_r = Q.k_soviet_votes_dec;
-Q.b_r = Q.b_soviet_votes_dec;
-Q.m_r = Q.m_soviet_votes_dec;
-Q.sr_r = Q.sr_soviet_votes_dec;
-Q.popular_socialist_r = Q.popular_socialist_soviet_votes_dec;
-Q.anarchist_r = Q.anarchist_soviet_votes_dec;
-Q.conservative_r = Q.conservative_soviet_votes_dec;
-Q.other_r = Q.other_soviet_votes_dec + Q.k_soviet_votes_dec + Q.conservative_soviet_votes_dec;
-// minority parties
+var congreso_size = 0;
+for (var constituency of Q.congreso_constituencies) {
+    congreso_size += Q.congreso_seats[constituency];
+}
+Q.congreso_s_majority = Math.floor(congreso_size/2) + 1;
+
+console.log("Total seats: " + congreso_size + ", majority: " + Q.congreso_s_majority);
+!}
+on-display: {!
+const data = [];
+
+if (Q.cup_congreso_s) {
+    data.push({
+        "id": "cup",
+        "legend": "CUP",
+        "name": "CUP",
+        "seats": Q.cup_congreso_s,
+    });
+}
+if (Q.fr_congreso_s) {
+    data.push({
+        "id": "fr",
+        "legend": "FR",
+        "name": "FR",
+        "seats": Q.fr_congreso_s,
+    });
+}
+if (Q.ehbildu_congreso_s) {
+    data.push({
+        "id": "ehbildu",
+        "legend": "EH Bildu",
+        "name": "EH Bildu",
+        "seats": Q.ehbildu_congreso_s,
+    });
+}
+if (Q.amaiur_congreso_s) {
+    data.push({
+        "id": "amaiur",
+        "legend": "Amaiur",
+        "name": "Amaiur",
+        "seats": Q.amaiur_congreso_s,
+    });
+}
+if (Q.nos_congreso_s) {
+    data.push({
+        "id": "nos",
+        "legend": "NÓS",
+        "name": "NÓS",
+        "seats": Q.nos_congreso_s,
+    });
+}
+if (Q.bng_congreso_s) {
+    data.push({
+        "id": "bng",
+        "legend": "BNG",
+        "name": "BNG",
+        "seats": Q.bng_congreso_s,
+    });
+}
+if (Q.mes_congreso_s) {
+    data.push({
+        "id": "mes",
+        "legend": "MES",
+        "name": "MES",
+        "seats": Q.mes_congreso_s,
+    });
+}
+
+if (Q.iu_congreso_s) {
+    data.push({
+        "id": "iu",
+        "legend": "IU",
+        "name": "IU",
+        "seats": Q.iu_congreso_s,
+    });
+}
+if (Q.up_congreso_s) {
+    data.push({
+        "id": "up",
+        "legend": "UP",
+        "name": "UP",
+        "seats": Q.up_congreso_s,
+    });
+}
+if (Q.sumar_congreso_s) {
+    data.push({
+        "id": "sumar",
+        "legend": "Sumar",
+        "name": "Sumar",
+        "seats": Q.sumar_congreso_s,
+    });
+}
+if (Q.gbai_congreso_s) {
+    data.push({
+        "id": "gbai",
+        "legend": "GBAI",
+        "name": "GBAI",
+        "seats": Q.gbai_congreso_s,
+    });
+}
+if (Q.compromis_congreso_s) {
+    data.push({
+        "id": "compromis",
+        "legend": "Compromís",
+        "name": "Compromís",
+        "seats": Q.compromis_congreso_s,
+    });
+}
+if (Q.erc_congreso_s) {
+    data.push({
+        "id": "erc",
+        "legend": "ERC",
+        "name": "ERC",
+        "seats": Q.erc_congreso_s,
+    });
+}
+if (Q.mpais_congreso_s) {
+    data.push({
+        "id": "mpais",
+        "legend": "Más País",
+        "name": "Más País",
+        "seats": Q.mpais_congreso_s,
+    });
+}
+if (Q.podemos_congreso_s) {
+    data.push({
+        "id": "podemos",
+        "legend": "Podemos",
+        "name": "Podemos",
+        "seats": Q.podemos_congreso_s,
+    });
+}
+if (Q.psoe_congreso_s) {
+    data.push({
+        "id": "psoe",
+        "legend": "PSOE",
+        "name": "PSOE",
+        "seats": Q.psoe_congreso_s,
+    });
+}
+if (Q.upyd_congreso_s) {
+    data.push({
+        "id": "upyd",
+        "legend": "UPyD",
+        "name": "UPyD",
+        "seats": Q.upyd_congreso_s,
+    });
+}
+
+if (Q.cc_congreso_s) {
+    data.push({
+        "id": "cc",
+        "legend": "CC-PNC",
+        "name": "CC-PNC",
+        "seats": Q.cc_congreso_s,
+    });
+}
+
+if (Q.prc_congreso_s) {
+    data.push({
+        "id": "prc",
+        "legend": "PRC",
+        "name": "PRC",
+        "seats": Q.prc_congreso_s,
+    });
+}
+
+if (Q.pnv_congreso_s) {
+    data.push({
+        "id": "pnv",
+        "legend": "PNV",
+        "name": "PNV",
+        "seats": Q.pnv_congreso_s,
+    });
+}
+if (Q.upn_congreso_s) {
+    data.push({
+        "id": "upn",
+        "legend": "UPN",
+        "name": "UPN",
+        "seats": Q.upn_congreso_s,
+    });
+}
+if (Q.jxsi_congreso_s) {
+    data.push({
+        "id": "jxsi",
+        "legend": "JxSí",
+        "name": "JxSí",
+        "seats": Q.jxsi_congreso_s,
+    });
+}
+if (Q.junts_congreso_s) {
+    data.push({
+        "id": "junts",
+        "legend": "Junts",
+        "name": "Junts",
+        "seats": Q.junts_congreso_s,
+    });
+}
+if (Q.dil_congreso_s) {
+    data.push({
+        "id": "dil",
+        "legend": "DiL",
+        "name": "DiL",
+        "seats": Q.dil_congreso_s,
+    });
+}
+if (Q.cdc_congreso_s) {
+    data.push({
+        "id": "cdc",
+        "legend": "CDC",
+        "name": "CDC",
+        "seats": Q.cdc_congreso_s,
+    });
+}
+if (Q.ciu_congreso_s) {
+    data.push({
+        "id": "ciu",
+        "legend": "CiU",
+        "name": "CiU",
+        "seats": Q.ciu_congreso_s,
+    });
+}
+if (Q.pdcat_congreso_s) {
+    data.push({
+        "id": "pdcat",
+        "legend": "PDeCAT",
+        "name": "PDeCAT",
+        "seats": Q.pdcat_congreso_s,
+    });
+}
+if (Q.unio_congreso_s) {
+    data.push({
+        "id": "unio",
+        "legend": "UDC",
+        "name": "UDC",
+        "seats": Q.unio_congreso_s,
+    });
+}
+
+if (Q.cs_congreso_s) {
+    data.push({
+        "id": "cs",
+        "legend": "Cs",
+        "name": "Cs",
+        "seats": Q.cs_congreso_s,
+    });
+}
+
+if (Q.nsuma_congreso_s) {
+    data.push({
+        "id": "nsuma",
+        "legend": "NA+",
+        "name": "NA+",
+        "seats": Q.nsuma_congreso_s,
+    });
+}
+if (Q.pp_congreso_s) {
+    data.push({
+        "id": "pp",
+        "legend": "PP",
+        "name": "PP",
+        "seats": Q.pp_congreso_s,
+    });
+}
+if (Q.fasturias_congreso_s) {
+    data.push({
+        "id": "fasturias",
+        "legend": "FAC",
+        "name": "FAC",
+        "seats": Q.fasturias_congreso_s,
+    });
+}
+if (Q.vox_congreso_s) {
+    data.push({
+        "id": "vox",
+        "legend": "Vox",
+        "name": "Vox",
+        "seats": Q.vox_congreso_s,
+    });
+}
+
+
+if (window && d3) {
+    var width = 500;
+    var height = 500;
+    var screenWidth =  document.getElementById('content').offsetWidth;
+    if (screenWidth < width - 50) {
+        width = screenWidth - 50;
+        height = width;
+        document.getElementById("congreso").style.height = screenWidth/2 + "px";
+    }
+    var parliament = d3.parliament();
+    parliament.width(width).height(height).innerRadiusCoef(0.4);
+    parliament.enter.fromCenter(true).smallToBig(true);
+    parliament.exit.toCenter(false).bigToSmall(true);
+    d3.select("#congreso").datum(data).call(parliament);
+}
+
 !}
 
-**Election results:**
+= Election results
 
-SR: [+ sr_r +]
+{!<svg id="congreso" style="width: 500px; height: 250px;"> </svg>!}
+{!<div style='margin-top: -2em; width: 100%; font-style: italic; text-align: center'>!} Majority: [+ congreso_s_majority +]{!</div>!}
 
-Mensheviks: [+ m_r +]
+{!<table style='margin-left: 0.5em; display:table; width: 95%;'>!}
+{!<tr><td style='min-width: 6em'>Party</td><td style='width: 7em'>Popular Vote (Cat.)</td><td style='width: 7em'>Change</td><td style='width: 3em'>Seats</td><td style='width: 3em'>Change</td></tr>!}
+[? if jxsi_congreso_showviz: {!<tr><td><div class="box" style='background-color: #3ab6a5; font-weight:bold;'> </div> !} JxSí {!</td><td>!}[+ jxsi_congreso_pv +] ([+ jxsi_congreso_pv_cat +]%) {!</td><td>!} [+ jxsi_congreso_pv_delta +] {!</td><td>!} [+ jxsi_congreso_s +] {!</td><td>!} [+ jxsi_congreso_s_delta +] {!</td>!}?]
+[? if ciu_congreso_showviz: {!<tr><td><div class="box" style='background-color: #002782'> </div> !} CiU {!</td><td>!}[+ ciu_congreso_pv +] ([+ ciu_congreso_pv_cat +]%) {!</td><td>!} [+ ciu_congreso_pv_delta +] {!</td><td>!} [+ ciu_congreso_s +] {!</td><td>!} [+ ciu_congreso_s_delta +] {!</td>!}?]
+[? if jxcat_congreso_showviz: {!<tr><td><div class="box" style='background-color: #ed5975; font-weight:bold;'> </div> !} JxCat {!</td><td>!}[+ jxcat_congreso_pv +] ([+ jxcat_congreso_pv_cat +]%) {!</td><td>!} [+ jxcat_congreso_pv_delta +] {!</td><td>!} [+ jxcat_congreso_s +] {!</td><td>!} [+ jxcat_congreso_s_delta +] {!</td>!}?]
+[? if cdc_congreso_showviz: {!<tr><td><div class="box" style='background-color: #002782'> </div> !} CDC {!</td><td>!}[+ cdc_congreso_pv +] ([+ cdc_congreso_pv_cat +]%) {!</td><td>!} [+ cdc_congreso_pv_delta +] {!</td><td>!} [+ cdc_congreso_s +] {!</td><td>!} [+ cdc_congreso_s_delta +] {!</td>!}?]
+[? if dil_congreso_showviz: {!<tr><td><div class="box" style='background-color: #292a6b'> </div> !} DiL {!</td><td>!}[+ dil_congreso_pv +] ([+ dil_congreso_pv_cat +]%) {!</td><td>!} [+ dil_congreso_pv_delta +] {!</td><td>!} [+ dil_congreso_s +] {!</td><td>!} [+ dil_congreso_s_delta +] {!</td>!}?]
+[? if pdcat_congreso_showviz: {!<tr><td><div class="box" style='background-color: #0081c2'> </div> !} PDeCAT {!</td><td>!}[+ pdcat_congreso_pv +] ([+ pdcat_congreso_pv_cat +]%) {!</td><td>!} [+ pdcat_congreso_pv_delta +] {!</td><td>!} [+ pdcat_congreso_s +] {!</td><td>!} [+ pdcat_congreso_s_delta +] {!</td>!}?]
+[? if unio_congreso_showviz: {!<tr><td><div class="box" style='background-color: #0052a3'> </div> !} UDC {!</td><td>!}[+ unio_congreso_pv +] ([+ unio_congreso_pv_cat +]%) {!</td><td>!} [+ unio_congreso_pv_delta +] {!</td><td>!} [+ unio_congreso_s +] {!</td><td>!} [+ unio_congreso_s_delta +] {!</td>!}?]
+[? if junts_congreso_showviz: {!<tr><td><div class="box" style='background-color: #20c0b2; font-weight:bold;'> </div> !} Junts {!</td><td>!}[+ junts_congreso_pv +] ([+ junts_congreso_pv_cat +]%) {!</td><td>!} [+ junts_congreso_pv_delta +] {!</td><td>!} [+ junts_congreso_s +] {!</td><td>!} [+ junts_congreso_s_delta +] {!</td>!}?]
+[? if erc_congreso_showviz: {!<tr><td><div class="box" style='background-color: #ff8000'> </div> !} ERC {!</td><td>!}[+ erc_congreso_pv +] ([+ erc_congreso_pv_cat +]%) {!</td><td>!} [+ erc_congreso_pv_delta +] {!</td><td>!} [+ erc_congreso_s +] {!</td><td>!} [+ erc_congreso_s_delta +] {!</td>!}?]
+[? if cup_congreso_showviz: {!<tr><td><div class="box" style='background-color: #ffed00'> </div> !} CUP {!</td><td>!}[+ cup_congreso_pv +] ([+ cup_congreso_pv_cat +]%) {!</td><td>!} [+ cup_congreso_pv_delta +] {!</td><td>!} [+ cup_congreso_s +] {!</td><td>!} [+ cup_congreso_s_delta +] {!</td>!}?]
+[? if fr_congreso_showviz: {!<tr><td><div class="box" style='background-color: #0a0a0a'> </div> !} FR {!</td><td>!}[+ fr_congreso_pv +] ([+ fr_congreso_pv_cat +]%) {!</td><td>!} [+ fr_congreso_pv_delta +] {!</td><td>!} [+ fr_congreso_s +] {!</td><td>!} [+ fr_congreso_s_delta +] {!</td>!}?]
+[? if psoe_congreso_showviz: {!<tr><td><div class="box" style='background-color: #da291c'> </div> !} PSOE {!</td><td>!}[+ psoe_congreso_pv +] ([+ psoe_congreso_pv_cat +]%) {!</td><td>!} [+ psoe_congreso_pv_delta +] {!</td><td>!} [+ psoe_congreso_s +] {!</td><td>!} [+ psoe_congreso_s_delta +] {!</td>!}?]
+[? if pp_congreso_showviz: {!<tr><td><div class="box" style='background-color: #1d84ce'> </div> !} PP {!</td><td>!}[+ pp_congreso_pv +] ([+ pp_congreso_pv_cat +]%) {!</td><td>!} [+ pp_congreso_pv_delta +] {!</td><td>!} [+ pp_congreso_s +] {!</td><td>!} [+ pp_congreso_s_delta +] {!</td>!}?]
+[? if up_congreso_showviz: {!<tr><td><div class="box" style='background-color: #5a205a'> </div> !} UP {!</td><td>!}[+ up_congreso_pv +] ([+ up_congreso_pv_cat +]%) {!</td><td>!} [+ up_congreso_pv_delta +] {!</td><td>!} [+ up_congreso_s +] {!</td><td>!} [+ up_congreso_s_delta +] {!</td>!}?]
+[? if cs_congreso_showviz: {!<tr><td><div class="box" style='background-color: #f6c300'> </div> !} Cs {!</td><td>!}[+ cs_congreso_pv +] ([+ cs_congreso_pv_cat +]%) {!</td><td>!} [+ cs_congreso_pv_delta +] {!</td><td>!} [+ cs_congreso_s +] {!</td><td>!} [+ cs_congreso_s_delta +] {!</td>!}?]
+[? if vox_congreso_showviz: {!<tr><td><div class="box" style='background-color: #63be21'> </div> !} Vox {!</td><td>!}[+ vox_congreso_pv +] ([+ vox_congreso_pv_cat +]%) {!</td><td>!} [+ vox_congreso_pv_delta +] {!</td><td>!} [+ vox_congreso_s +] {!</td><td>!} [+ vox_congreso_s_delta +] {!</td>!}?]
+[? if podemos_congreso_showviz: {!<tr><td><div class="box" style='background-color: #9269f5'> </div> !} Podemos {!</td><td>!}[+ podemos_congreso_pv +] ([+ podemos_congreso_pv_cat +]%) {!</td><td>!} [+ podemos_congreso_pv_delta +] {!</td><td>!} [+ podemos_congreso_s +] {!</td><td>!} [+ podemos_congreso_s_delta +] {!</td>!}?]
+[? if mpais_congreso_showviz: {!<tr><td><div class="box" style='background-color: #027665'> </div> !} Más País {!</td><td>!}[+ mpais_congreso_pv +] ([+ mpais_congreso_pv_cat +]%) {!</td><td>!} [+ mpais_congreso_pv_delta +] {!</td><td>!} [+ mpais_congreso_s +] {!</td><td>!} [+ mpais_congreso_s_delta +] {!</td>!}?]
+[? if sumar_congreso_showviz: {!<tr><td><div class="box" style='background-color: #ef4b91'> </div> !} Sumar {!</td><td>!}[+ sumar_congreso_pv +] ([+ sumar_congreso_pv_cat +]%) {!</td><td>!} [+ sumar_congreso_pv_delta +] {!</td><td>!} [+ sumar_congreso_s +] {!</td><td>!} [+ sumar_congreso_s_delta +] {!</td>!}?]
+[? if iu_congreso_showviz: {!<tr><td><div class="box" style='background-color: #732021'> </div> !} IU {!</td><td>!}[+ iu_congreso_pv +] ([+ iu_congreso_pv_cat +]%) {!</td><td>!} [+ iu_congreso_pv_delta +] {!</td><td>!} [+ iu_congreso_s +] {!</td><td>!} [+ iu_congreso_s_delta +] {!</td>!}?]
+[? if upyd_congreso_showviz: {!<tr><td><div class="box" style='background-color: #e9008c'> </div> !} UPyD {!</td><td>!}[+ upyd_congreso_pv +] ([+ upyd_congreso_pv_cat +]%) {!</td><td>!} [+ upyd_congreso_pv_delta +] {!</td><td>!} [+ upyd_congreso_s +] {!</td><td>!} [+ upyd_congreso_s_delta +] {!</td>!}?]
+[? if pnv_congreso_showviz: {!<tr><td><div class="box" style='background-color: #4aae4a; color: black'> </div> !} EAJ-PNV {!</td><td>!}[+ pnv_congreso_pv +]% {!</td><td>!} {!</td><td>!} [+ pnv_congreso_s +] {!</td><td>!} [+ pnv_congreso_s_delta +] {!</td>!}?]
+[? if ehbildu_congreso_showviz: {!<tr><td><div class="box" style='background-color: #00c19f'> </div> !} EH Bildu {!</td><td>!}[+ ehbildu_congreso_pv +]% {!</td><td>!} [+ ehbildu_congreso_pv_delta +] {!</td><td>!} [+ ehbildu_congreso_s +] {!</td><td>!} [+ ehbildu_congreso_s_delta +] {!</td>!}?]
+[? if amaiur_congres_showviz: {!<tr><td><div class="box" style='background-color: #0198b3'> </div> !} Amaiur {!</td><td>!}[+ amaiur_congreso_pv +]% {!</td><td>!} [+ amaiur_congreso_pv_delta +] {!</td><td>!} [+ amaiur_congreso_s +] {!</td><td>!} [+ amaiur_congreso_s_delta +] {!</td>!}?]
+[? if cc_congreso_showviz: {!<tr><td><div class="box" style='background-color: #ffcc00; color: black'> </div> !} CC-PNC {!</td><td>!}[+ cc_congreso_pv +]% {!</td><td>!} [+ cc_congreso_pv_delta +] {!</td><td>!} [+ cc_congreso_s +] {!</td><td>!} [+ cc_congreso_s_delta +] {!</td>!}?]
+[? if bng_congreso_showviz: {!<tr><td><div class="box" style='background-color: #a2c7e4; color: white'> </div> !} BNG {!</td><td>!}[+ bng_congreso_pv +]% {!</td><td>!} [+ bng_congreso_pv_delta +] {!</td><td>!} [+ bng_congreso_s +] {!</td><td>!} [+ bng_congreso_s_delta +] {!</td>!}?]
+[? if nos_congreso_showviz: {!<tr><td><div class="box" style='background-color: #ed1c24'> </div> !} NÓS {!</td><td>!}[+ nos_congreso_pv +]% {!</td><td>!} [+ nos_congreso_pv_delta +] {!</td><td>!} [+ nos_congreso_s +] {!</td><td>!} [+ nos_congreso_s_delta +] {!</td>!}?]
+[? if nsuma_congreso_showviz: {!<tr><td><div class="box" style='background-color: #2a52be'> </div> !} NA+ {!</td><td>!}[+ nsuma_congreso_pv +]% {!</td><td>!} [+ nsuma_congreso_pv_delta +] {!</td><td>!} [+ nsuma_congreso_s +] {!</td><td>!} [+ nsuma_congreso_s_delta +] {!</td>!}?]
+[? if prc_congreso_showviz: {!<tr><td><div class="box" style='background-color: #b7bf10'> </div> !} PRC {!</td><td>!}[+ prc_congreso_pv +]% {!</td><td>!} [+ prc_congreso_pv_delta +] {!</td><td>!} [+ prc_congreso_s +] {!</td><td>!} [+ prc_congreso_s_delta +] {!</td>!}?]
+[? if fasturias_congreso_showviz: {!<tr><td><div class="box" style='background-color: #0082ca'> </div> !} F. Asturias {!</td><td>!}[+ fasturias_congreso_pv +]% {!</td><td>!} [+ fasturias_congreso_pv_delta +] {!</td><td>!} [+ fasturias_congreso_s +] {!</td><td>!} [+ fasturias_congreso_s_delta +] {!</td>!}?]
+[? if gbai_congreso_showviz: {!<tr><td><div class="box" style='background-color: #f75e42'> </div> !} G-Bai {!</td><td>!}[+ gbai_congreso_pv +]% {!</td><td>!} [+ gbai_congreso_pv_delta +] {!</td><td>!} [+ gbai_congreso_s +] {!</td><td>!} [+ gbai_congreso_s_delta +] {!</td>!}?]
+[? if mes_congreso_showviz: {!<tr><td><div class="box" style='background-color: #d8de40; color: black'> </div> !} MÉS {!</td><td>!}[+ mes_congreso_pv +]% {!</td><td>!} [+ mes_congreso_pv_delta +] {!</td><td>!} [+ mes_congreso_s +] {!</td><td>!} [+ mes_congreso_s_delta +] {!</td>!}?]
+{!</table>!}
 
-Bolsheviks: [+ b_r +]
+**Government Formation**
+# yeah this is hardcoded because its only the simulation scenes
+[? if dil_congreso_showviz: No candidacy has been able to secure enough support to form a new government. New elections will happen in **June 2016**. ?]
 
-Popular Socialists: [+ popular_socialist_r +]
+[? if not (dil_congreso_showviz): How did we get here??? ?]
 
-Anarchists: [+ anarchist_r +]
-
-Other: [+ other_r +]
+- @election_simulation: Reset simulation

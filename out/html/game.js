@@ -19,7 +19,7 @@
   };
 
   var TITLE =
-    "Route to Ítaca - An Alternate Procés" +
+    "Route to Ítaca - An Alternate History" +
     "_" +
     "BrokenArrow, modded from Autumn Chen's work";
 

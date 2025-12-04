@@ -1,81 +1,9 @@
 title: Election
 on-arrival: {!
-// TODO: this is only for the national constituent assembly election. Petrograd elections will be different.
-// calculate normalized class voting amounts (0 to 100)
+// TODO: Proper normalization of party support within each class
 
-for (var c of Q.classes) {
-    var class_votes = 0;
-    for (var party of Q.parties) {
-        if (party == "none") {
-            continue;
-        }
-        if (!Q[c+'_'+party] || Q[c+'_'+party] < 0) {
-            Q[c+'_'+party] = 0;
-        }
-        class_votes += Q[c+'_'+party];
-    }
-    for (var party of Q.parties) {
-        Q[c + '_' + party + '_normalized'] = 100*Q[c+'_'+party]/class_votes;
-        Q[c + '_' + party + '_display'] = Math.round(100*Q[c+'_'+party]/class_votes);
-    }
-}
-
-// 1. calculate support for each of the parties
-var total_support = 0;
-for (var party of Q.parties) {
-    if (party == "none" || party == "anarchist") {
-        continue;
-    }
-    var party_support = 0;
-    for (var c of Q.classes) {
-        party_support += Q[c]*Q[c+'_'+party+'_normalized'];
-    }
-    for (var c of Q.minorities) {
-        if (Q[c + '_' + party]) {
-            party_support += Q[c]*Q[c + '_' + party];
-        }
-    }
-    Q[party + '_support'] = party_support;
-    total_support += party_support;
-}
-// Calculate support for minority parties
-for (var party of Q.minority_parties) {
-    var m_party_support = 0;
-    for (var c of Q.minorities) {
-        if (Q[c + '_' + party]) {
-            m_party_support += Q[c]*Q[c + '_' + party];
-        }
-    }
-    Q[party + '_support'] = m_party_support;
-    total_support += m_party_support;
-}
-// 2. normalize support (fraction)
-// 3. Round to integers
-// TODO: round to 1 decimal instead of rounding to integers
-// to do that, we multiply party_normalized*1000 and divide the rounded number by 10.
-for (var party of Q.parties) {
-    if (party == "none" || party == "anarchist") {
-        continue;
-    }
-    Q[party+'_assembly_normalized'] = Q[party + '_support']/total_support;
-    Q[party+'_assembly_votes_dec'] = Math.round(Q[party+'_assembly_normalized']*1000)/10;
-    Q[party+'_assembly_votes'] = Math.round(Q[party+'_assembly_normalized']*100);
-    //Q[party+'_votes'] = Q[party+'_votes_dec'];
-    // display
-    Q[party + '_assembly_votes_disp'] = Q[party+'_assembly_votes_dec'].toFixed(1);
-}
-for (var party of Q.minority_parties) {
-    Q[party+'_assembly_normalized'] = Q[party + '_support']/total_support;
-    Q[party+'_assembly_votes_dec'] = Math.round(Q[party+'_assembly_normalized']*1000)/10;
-    Q[party+'_assembly_votes'] = Math.round(Q[party+'_assembly_normalized']*100);
-    //Q[party+'_votes'] = Q[party+'_votes_dec'];
-    // display
-    Q[party + '_assembly_votes_disp'] = Q[party+'_assembly_votes_dec'].toFixed(1);
-}
 !}
 go-to: jumpScene
-
-# note: this is a helpful utility to deal with elections and so on.
 
 
 ######################################## Parlament de Catalunya
@@ -127,7 +55,7 @@ for (var constituency of Q.parlament_constituencies) {
         Q['parlament_' + constituency + '_totalabstention'] += Q['parlament_' + constituency + '_' + demographic + '_pop']*Q['abstain_parlament_' + constituency + '_' + demographic + '_support']/100;
         for (var party of Q.parties) {
             if (!Q[party + '_parlament_' + constituency + '_' + demographic + '_support'] || Q[party + '_parlament_' + constituency + '_' + demographic + '_support'] <= 0) {
-                continue;
+                Q[party + '_parlament_' + constituency + '_' + demographic + '_support'] = 0;
             }
             Q['parlament_' + constituency + '_' + party + '_votes'] += Q['parlament_' + constituency + '_' + demographic + '_pop'] * Q[party + '_parlament_' + constituency + '_' + demographic +'_support'] / 100;
             Q['parlament_' + constituency + '_totalvotes'] += Q['parlament_' + constituency + '_' + demographic + '_pop'] * Q[party + '_parlament_' + constituency + '_' + demographic +'_support'] / 100;
@@ -235,173 +163,16 @@ Q.nonaligned_parlament_pv = Math.abs(Q.ciu_parlament_pv + Q.unio_parlament_pv + 
 Q.nonaligned_parlament_s = Math.abs(Q.ciu_parlament_s + Q.unio_parlament_s + Q.icv_parlament_s + Q.csqp_parlament_s + Q.cecp_parlament_s);
 Q.nonaligned_parlament_spc = Math.abs(Math.round(Q.nonaligned_parlament_s / parlament_size * 1000) / 10).toFixed(1);
 
-
 !}
 go-to: jumpScene
 
-######################################### Petrograd Soviet
-@petrograd_soviet
-title: Petrograd Soviet Elections
+
+######################################## Congreso de los Diputados
+@esp_congreso
+title: Spanish General Election
 on-arrival: {!
-var petrograd_classes = ["workers", "soldiers"];
+// Careful! Here, different constituencies have different parties!
 
-for (var c of petrograd_classes) {
-    var class_votes = 0;
-    for (var party of Q.parties) {
-        if (party == "none") {
-            continue;
-        }
-        if (!Q[c+'_'+party] || Q[c+'_'+party] < 0) {
-            Q[c+'_'+party] = 0;
-        }
-        class_votes += Q[c+'_'+party];
-    }
-    for (var party of Q.parties) {
-        Q[c + '_' + party + '_normalized'] = 100*Q[c+'_'+party]/class_votes;
-        Q[c + '_' + party + '_display'] = Math.round(100*Q[c+'_'+party]/class_votes);
-    }
-}
 
-// 1. calculate support for each of the parties
-var total_support = 0;
-for (var party of Q.parties) {
-    if (party == "none") {
-        continue;
-    }
-
-    var party_support = 0;
-    for (var c of petrograd_classes) {
-        party_support += Q[c + '_petrograd']*Q[c+'_'+party+'_normalized'];
-    }
-    if (Q[party + '_soviet_bonus']) {
-      party_support += Q[party + '_soviet_bonus'];
-    }
-    Q[party + '_support'] = party_support;
-    total_support += party_support;
-}
-// 2. normalize support (fraction)
-// 3. Round to integers
-// TODO: round to 1 decimal instead of rounding to integers
-// to do that, we multiply party_normalized*1000 and divide the rounded number by 10.
-for (var party of Q.parties) {
-    if (party == "none") {
-        continue;
-    }
-    Q[party+'_soviet_normalized'] = Q[party + '_support']/total_support;
-    Q[party+'_soviet_votes_dec'] = Math.round(Q[party+'_soviet_normalized']*1000)/10;
-    Q[party+'_soviet_votes'] = Math.round(Q[party+'_soviet_normalized']*100);
-    Q[party + '_soviet_votes_disp'] = Q[party+'_soviet_votes_dec'].toFixed(1);
-}
 !}
 go-to: jumpScene
-
-
-######################################### All-Russian Soviet
-@all_russian_soviet
-title: All-Russian Soviet Elections
-on-arrival: {!
-var soviet_classes = ["workers", "soldiers"];
-
-for (var c of soviet_classes) {
-    var class_votes = 0;
-    for (var party of Q.parties) {
-    if (party == "none") {
-        continue;
-    }
-
-        if (!Q[c+'_'+party] || Q[c+'_'+party] < 0) {
-            Q[c+'_'+party] = 0;
-        }
-        class_votes += Q[c+'_'+party];
-    }
-    for (var party of Q.parties) {
-        Q[c + '_' + party + '_normalized'] = 100*Q[c+'_'+party]/class_votes;
-        Q[c + '_' + party + '_display'] = Math.round(100*Q[c+'_'+party]/class_votes);
-    }
-}
-
-// 1. calculate support for each of the parties
-var total_support = 0;
-for (var party of Q.parties) {
-    if (party == "none") {
-        continue;
-    }
-
-    var party_support = 0;
-    for (var c of soviet_classes) {
-        party_support += Q[c]*Q[c+'_'+party+'_normalized'];
-    }
-    Q[party + '_support'] = party_support;
-    total_support += party_support;
-}
-// 2. normalize support (fraction)
-// 3. Round to integers
-// TODO: round to 1 decimal instead of rounding to integers
-// to do that, we multiply party_normalized*1000 and divide the rounded number by 10.
-for (var party of Q.parties) {
-    if (party == "none") {
-        continue;
-    }
-
-    Q[party+'_soviet_normalized'] = Q[party + '_support']/total_support;
-    Q[party+'_soviet_votes_dec'] = Math.round(Q[party+'_soviet_normalized']*1000)/10;
-    Q[party+'_soviet_votes'] = Math.round(Q[party+'_soviet_normalized']*100);
-    Q[party + '_soviet_votes_disp'] = Q[party+'_soviet_votes_dec'].toFixed(1);
-}
-!}
-go-to: jumpScene
-
-######################################### Petrograd City Duma
-@petrograd_duma
-title: Petrograd Duma Elections
-on-arrival: {!
-
-for (var c of Q.classes) {
-    var class_votes = 0;
-    for (var party of Q.parties) {
-    if (party == "none") {
-        continue;
-    }
-
-        if (!Q[c+'_'+party] || Q[c+'_'+party] < 0) {
-            Q[c+'_'+party] = 0;
-        }
-        class_votes += Q[c+'_'+party];
-    }
-    for (var party of Q.parties) {
-        Q[c + '_' + party + '_normalized'] = 100*Q[c+'_'+party]/class_votes;
-        Q[c + '_' + party + '_display'] = Math.round(100*Q[c+'_'+party]/class_votes);
-    }
-}
-
-// 1. calculate support for each of the parties
-var total_support = 0;
-for (var party of Q.parties) {
-    if (party == "none" || party == "anarchist") {
-        continue;
-    }
-
-    var party_support = 0;
-    for (var c of Q.classes) {
-        party_support += Q[c + '_petrograd']*Q[c+'_'+party+'_normalized'];
-    }
-    Q[party + '_support'] = party_support;
-    total_support += party_support;
-}
-// 2. normalize support (fraction)
-// 3. Round to integers
-// TODO: round to 1 decimal instead of rounding to integers
-// to do that, we multiply party_normalized*1000 and divide the rounded number by 10.
-for (var party of Q.parties) {
-    if (party == "none" || party == "anarchist") {
-        continue;
-    }
-
-    Q[party+'_city_duma_normalized'] = Q[party + '_support']/total_support;
-    Q[party+'_city_duma_votes_dec'] = Math.round(Q[party+'_city_duma_normalized']*1000)/10;
-    Q[party+'_city_duma_votes'] = Math.round(Q[party+'_city_duma_normalized']*100);
-    Q[party + '_city_duma_votes_disp'] = Q[party+'_city_duma_votes_dec'].toFixed(1);
-}
-!}
-go-to: jumpScene
-
