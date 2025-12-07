@@ -3,6 +3,22 @@
 
 Welcome, curious and probably unprepared complainer, to the `demographics_data` folder. The kitchen where the numbers used for "Route to Ítaca" were cooked. Statistical purity MAY be a distant memory, but some decisions had to be made. And hey, it's a game after all, so some sacrifices were unavoidable.
 
+## Folder Structure
+
+- `auto_balancer.py`: Helps a ton for cooking the data. Ensures that your percentages always properly add up to 100.
+- `adjust_unemployment.py`: Rebalances unemployment rates according to unemployment evolution over the years, folowing the criteria explained in the assumptions bit (trasnfers between unemployed, middle, ind, buss). For when you want your simulated misery to be a bit more statistically accurate.
+- `cat_ceo_process.py`: Wrestles raw CEO survey data into something the simulation can actually use. Manual cooking is needed after that.
+- `cat_pop_weights.py`: Turns IDESCAT data into population weights. Manual cooking is also needed but to a much lesser extent.
+- `cat_simulation.py`: Runs the actual election simulations
+- `ceo_raw/`: All the raw CEO survey CSVs (e.g., `cat_data_2012.csv`).
+- `idescat_raw/`: Raw IDESCAT data (age, education, urbanization, etc.).
+- `clean/`: Where cleaned, cooked, and processed data ends up (population weights, vote intentions, etc.). Files starting with `ok_` are the result of manual cooking.
+- `simulation_results/`: Results from running the simulations.
+- `spa_votes_raw/`: Subfolders are used to group by year, contains all raw voting data in `XML` fomrat.
+- `.temp/`: Temporary files. Ignore unless you are debugging at 3am.
+
+## Parlament Elections
+
 ### Data Sources (or the quesionable quality of the ingredients we have to deal with)
 
 **Centre d'Estudis d'Opinio (CEO)**
@@ -41,26 +57,40 @@ Is this perfect? Absolutely not. Is it good enough for a simulation? Hopefully.
 
 The election simulation bit is actually the most realistic part. Voting intention is paired with demographic weights, and then real seat allocation using both the 3% electoral threshold and d'Hont law is used. Provincial seats are spread like IRL, so there's nothing else to say.
 
-### Folder Structure
+### How-to - Parlament
 
-- `auto_balancer.py`: Helps a ton for cooking the data. Ensures that your percentages always properly add up to 100.
-- `adjust_unemployment.py`: Rebalances unemployment rates according to unemployment evolution over the years, folowing the criteria explained before (trasnfers between unemployed, middle, ind, buss). For when you want your simulated misery to be a bit more statistically accurate.
-- `cat_ceo_process.py`: Wrestles raw CEO survey data into something the simulation can actually use. Manual cooking is needed after that.
-- `cat_pop_weights.py`: Turns IDESCAT data into population weights. Manual cooking is also needed but to a much lesser extent.
-- `cat_simulation.py`: Runs the actual election simulations
-- `ceo_raw/`: All the raw CEO survey CSVs (e.g., `cat_data_2012.csv`).
-- `idescat_raw/`: Raw IDESCAT data (age, education, urbanization, etc.).
-- `clean/`: Where cleaned, cooked, and processed data ends up (population weights, vote intentions, etc.). Files starting with `ok_` are the result of manual cooking.
-- `simulation_results/`: Results from running the simulations.
-- `.temp/`: Temporary files. Ignore unless you are debugging at 3am.
-
-### How to Use This
-
-1. **Prepare Data:** Drop new raw files into `ceo_raw/` or `idescat_raw/` as needed. Optional: pray.
+1. **Prepare Data:** Drop new raw files into `ceo_raw/` or `idescat_raw/` as needed, assuming you don't like what's already there.
 2. **Run the Scripts:** Fire up the Python scripts to process and clean the data. Outputs land in `clean/`. If something breaks, blame the CEO or IDESCAT.
 3. **Simulate:** Pókemon-go-to-the-polls with `cat_simulation.py`. Results go to `simulation_results/`.
 
-### Final Notes
+## Congreso Elections
+
+In the Congreso election simulation, things are easier because I'm not bothering with demographic data as detailed as in the Parlament. Instead, let's just worry about total votes and abstentions per party, for the relevant demographics.
+Voting results from **El País Election results (Congreso)**. The fact that El País published the results in relatively-easy-to-process XML helps out here.
+
+### The enormous (over)simplifications
+
+- As mentioned, no demographics classes are really used.
+- Circumscriptions are very over-simplified. The simulation only on an Autonomous Comunity level, and only for relevant communities that truly have distinct votting patterns that may be relevant game-wise. These are: Catalunya (duh), València, Balears, Navarra, Euskadi, and Galicia. The rest is bunched together as "rest".
+- This, of course, means that *some* small regional parties need special attention to get their seats. These are assigned based on fixed percentages based on their total share of "rest" votes.
+        - D'Hont Law is still applied as it yields the most realistic results. However, the provincial threshold step is skipped not only because it is non-sensical for the scale the simulation is running, but also because historically it has not mattered (it has only once denied a party its otherwise assigned seat).
+        - Bundling stuff up into one giant "rest" province is not great for d'Hont law, so instead there's a virtual simulation of smaller provinces to ensure the system still favours larger parties as if it was the real thing.
+        - Since that virtualization is actually not enough to still have pp/psoe dominance boost, a penalty/boost for rural/cities virtual provinces is needed, which actually does help reflect general "tactical voting" tendencies in rural Spain.
+        - Minor parties in the "rest" bundle (CC, PRC, ¡TE!) also need special reservation of seats to ensure they do have a chance of getting theirs.
+        - Having single-division for the actual communities that are tracked is also not great, as it makes things like BNG and ERC get *some* seats easier. In the grand scheme of things, though, I've decided it's kinda fine.
+- Regional versions of the party (PSOE variants), and whatever Podemos was doing with presenting a thousand different parties is simplified into block parties.
+
+### How-to - Congreso
+
+1. **Prepare Data:** Again, assuming you don't like the collected data, drop the new one in `spa_votes_raw/[relevant_year]/`
+2. **Run the Scripts:**  Use `spa_preprocess.py`, which drops new stuff into `clean/`.
+3. **Simulate:** Use `spa_simulation.py`. Results (you guessed it) go to `simulation_results/`.
+
+### Future?
+
+One probably wants to re-use the complex demographic build-up we did for the Parlament but here. Not aiming to do it for all cases, but at least for Catalunya we COULD have separate voting weights for each demographic, in each province. I do welcome any PR related to this, but at the moment I will **not** be even thinking about this.
+
+## Final Notes
 
 - All scripts are Python, and you’ll need the usual suspects (pandas, numpy, matplotlib, etc.).
 - Note that no library installation system or virtual environments are included because I was too lazy to create them. For reference I am using Python 3.12.

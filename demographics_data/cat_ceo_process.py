@@ -400,7 +400,6 @@ if __name__ == "__main__":
 
     sys_args_len = 4  # script name + 3 arguments
 
-    print(f"sys.argv: {len(sys.argv)}")
     if len(sys.argv) != sys_args_len and len(sys.argv) != 1:
         raise ValueError("Please provide both input CSV file path and output CSV file path as arguments.")
 

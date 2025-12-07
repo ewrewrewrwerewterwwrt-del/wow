@@ -1,11 +1,11 @@
 @font-face {
-  font-family: 'UbuntuCustom';
-  src: url('fonts/ubuntu-custom.ttf') format('truetype');
+  font-family: "UbuntuCustom";
+  src: url("fonts/ubuntu-custom.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'HkGroteskRegular';
-  src: url('fonts/hk-grotesk-regular.ttf') format('truetype');
+  font-family: "HkGroteskRegular";
+  src: url("fonts/hk-grotesk-regular.ttf") format("truetype");
 }
 
 body {
@@ -20,9 +20,9 @@ body {
   --tab-bg-color: #dedede;
   --tab-color: #ddd;
   --tab-hover-color: #ececec;
-  --card-border-color: #ccc; 
-  --card-bg-color: #ddd; 
-  font-family: 'HkGroteskRegular', serif;
+  --card-border-color: #ccc;
+  --card-bg-color: #ddd;
+  font-family: "HkGroteskRegular", serif;
   background-color: var(--bg-color);
   padding: 0;
   line-height: 135%;
@@ -51,7 +51,9 @@ body.dark-mode .tools {
   border-width: 4px;
   border-color: #888;
 }
-header, #content, footer {
+header,
+#content,
+footer {
   color: var(--text-color);
   max-width: 540px;
   border-radius: 7px;
@@ -74,7 +76,7 @@ footer a {
   padding-right: 1em;
 }
 header {
-  text-align: right
+  text-align: right;
 }
 #header-links {
   text-align: left;
@@ -105,7 +107,8 @@ header {
 #header-links a:hover {
   background-color: var(--link-hover-color);
 }
-header h1, header h2 {
+header h1,
+header h2 {
   display: inline-block;
   font-weight: normal;
   margin: 0;
@@ -126,7 +129,8 @@ header h1 {
   margin-top: 0.5em;
 }
 #content h1 {
-  font-family: 'UbuntuCustom', system-ui, -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, sans-serif;
+  font-family: "UbuntuCustom", system-ui, -apple-system, BlinkMacSystemFont,
+    Ubuntu, Cantarell, sans-serif;
   margin: 2em 0 1em 0;
   font-size: 1.35em;
   font-weight: normal;
@@ -134,7 +138,7 @@ header h1 {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   text-shadow: rgba(255, 255, 255, 0.75) 2px 2px 2px,
-               rgba(0, 0, 0, 0.1) -1px -1px 2px;
+    rgba(0, 0, 0, 0.1) -1px -1px 2px;
 }
 a {
   color: var(--link-color);
@@ -155,7 +159,7 @@ a.link::after {
   width: 0;
   height: 1.5px;
   background: var(--link-color);
-  transition: width 0.3s cubic-bezier(0.4,0,0.2,1);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 a.link:hover::after {
   width: 100%;
@@ -182,7 +186,7 @@ ul.choices {
   clear: left;
 }
 ul.choices li {
-  font-size:1em;
+  font-size: 1em;
   border-bottom: 1px solid #876;
   padding: 0.5em;
   background: none;
@@ -199,7 +203,7 @@ ul.choices li::before {
   width: 0;
   background: var(--link-hover-color);
   z-index: 0;
-  transition: width 0.3s cubic-bezier(0.4,0,0.2,1);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 ul.choices li:hover::before {
   width: 100%;
@@ -279,43 +283,43 @@ blockquote + blockquote.attribution {
   margin-bottom: 0.75em;
 }
 #qualities h1 {
-  font-family: 'UbuntuCustom', system-ui, -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, sans-serif;
+  font-family: "UbuntuCustom", system-ui, -apple-system, BlinkMacSystemFont,
+    Ubuntu, Cantarell, sans-serif;
   font-size: 1.1em;
   font-weight: normal;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   text-shadow: rgba(255, 255, 255, 0.75) 2px 2px 2px,
-               rgba(0, 0, 0, 0.1) -1px -1px 2px;
+    rgba(0, 0, 0, 0.1) -1px -1px 2px;
 }
 #qualities h1 + p:first-line {
   font-weight: normal;
 }
 
-
 /* tabs */
 .tab_container {
-    background-color: var(--tab-bg-color);
-    margin-top: -0.6em;
-    margin-left: -0.6em;
-    margin-right: -0.6em;
-    border-radius: 7px 7px 0 0;
+  background-color: var(--tab-bg-color);
+  margin-top: -0.6em;
+  margin-left: -0.6em;
+  margin-right: -0.6em;
+  border-radius: 7px 7px 0 0;
 }
 .tab_button {
-    font-family: 'HkGroteskRegular', serif;
-    background-color: var(--tab-color);
-    color: var(--text-color);
-    /*float: left;*/
-    border: none;
-    outline: none;
-    padding: 10px;
-    border-radius: 7px 7px 0 0;
+  font-family: "HkGroteskRegular", serif;
+  background-color: var(--tab-color);
+  color: var(--text-color);
+  /*float: left;*/
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: 7px 7px 0 0;
 }
 .tab_button.active {
-    background-color: var(--content-bg-color);
+  background-color: var(--content-bg-color);
 }
 .tab_button:not(.active):hover {
-    background-color: var(--tab-hover-color);
+  background-color: var(--tab-hover-color);
 }
 .tab_button:hover::after {
   opacity: 1;
@@ -354,30 +358,33 @@ blockquote + blockquote.attribution {
 }
 
 .overlay {
-    background: rgba(0,0,0,0.25);
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0; right: 0; bottom: 0; left: 0;
-    z-index: 2;
-    overflow-y: auto;
+  background: rgba(0, 0, 0, 0.25);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  overflow-y: auto;
 }
 
 .overlay_top {
-    position: relative;
-    max-width: 580px;
-    margin: 80px auto;
-    background: var(--content-bg-color);
-    color: var(--text-color);
-    border-radius: 8px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.16);
-    padding: 8px;
+  position: relative;
+  max-width: 580px;
+  margin: 80px auto;
+  background: var(--content-bg-color);
+  color: var(--text-color);
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.16);
+  padding: 8px;
 }
 
 #saves_table {
-    width: 100%;
-    font-size: 1em;
-    border-spacing: 0px;
+  width: 100%;
+  font-size: 1em;
+  border-spacing: 0px;
 }
 
 #saves_table tr {
@@ -391,12 +398,12 @@ blockquote + blockquote.attribution {
 }
 
 #saves_table td {
-    padding: 10px;
-    vertical-align: middle;
-    border-radius: 8px;
-    word-break: break-word;
-    border: none;
-    width: auto;
+  padding: 10px;
+  vertical-align: middle;
+  border-radius: 8px;
+  word-break: break-word;
+  border: none;
+  width: auto;
 }
 .save_info {
   min-width: 15em;
@@ -417,71 +424,75 @@ blockquote + blockquote.attribution {
   background: none;
 }
 
-
 .b {
-    background: var(--tab-hover-color);
-    border: 1px solid var(--card-border-color);
-    border-radius: 5px;
-    color: var(--text-color);
-    padding: 7px 10px;
-    cursor: pointer;
-    transition: background-color 0.22s;
-    font-size: 0.9em;
-    word-break: normal;
+  background: var(--tab-hover-color);
+  border: 1px solid var(--card-border-color);
+  border-radius: 5px;
+  color: var(--text-color);
+  padding: 7px 10px;
+  cursor: pointer;
+  transition: background-color 0.22s;
+  font-size: 0.9em;
+  word-break: normal;
 }
 
-.b:hover, .b:focus {
-    background: var(--tab-bg-color);
-    outline: none;
+.b:hover,
+.b:focus {
+  background: var(--tab-bg-color);
+  outline: none;
 }
 
 .export_button {
-    font-family: 'UbuntuCustom', system-ui, -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, sans-serif;
-    min-width: 70px;
+  font-family: "UbuntuCustom", system-ui, -apple-system, BlinkMacSystemFont,
+    Ubuntu, Cantarell, sans-serif;
+  min-width: 70px;
 }
 
 .b.saveclose {
-    font-family: 'UbuntuCustom', system-ui, -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, sans-serif;
-    min-width: 70px;
+  font-family: "UbuntuCustom", system-ui, -apple-system, BlinkMacSystemFont,
+    Ubuntu, Cantarell, sans-serif;
+  min-width: 70px;
 }
 
 #saves_table input[type="file"] {
-    font-size: 0.9em;
-    padding: 4px 8px;
+  font-size: 0.9em;
+  padding: 4px 8px;
 }
 
 .background {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: var(--bg-color);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: center center;
-    overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--bg-color);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+  overflow: hidden;
 }
 /*
  * This is used for overlaying transparencies
  * only transition on fade-in
  * */
 #bg2 {
-    z-index: -100;
+  z-index: -100;
 }
 #bg1 {
-    z-index: -99;
+  z-index: -99;
 }
 
 .save_button {
-  font-family: 'UbuntuCustom', system-ui, -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, sans-serif;
+  font-family: "UbuntuCustom", system-ui, -apple-system, BlinkMacSystemFont,
+    Ubuntu, Cantarell, sans-serif;
   min-width: 70px;
 }
 .delete_button {
-  font-family: 'UbuntuCustom', system-ui, -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, sans-serif;
+  font-family: "UbuntuCustom", system-ui, -apple-system, BlinkMacSystemFont,
+    Ubuntu, Cantarell, sans-serif;
   min-width: 70px;
 }
 .delete_button:hover {
@@ -495,7 +506,9 @@ blockquote + blockquote.attribution {
  * 
  */
 
-ul.decks, ul.hand, ul.pinned-cards {
+ul.decks,
+ul.hand,
+ul.pinned-cards {
   list-style: none;
   padding-left: 0;
 }
@@ -535,10 +548,12 @@ div.blank-card {
   background-color: var(--card-bg-color);
   border: 5px solid var(--card-border-color);
   margin-bottom: 1.5em;
-  border-radius: 7px
+  border-radius: 7px;
 }
 
-.card-in-hand, .pinned-card, .deck {
+.card-in-hand,
+.pinned-card,
+.deck {
   display: inline-block;
   position: relative;
   max-width: 150px;
@@ -591,7 +606,6 @@ a.card:hover .card-tooltip {
   position: absolute;
 }
 
-
 .card-img {
   height: 150px;
   width: 120px;
@@ -599,7 +613,8 @@ a.card:hover .card-tooltip {
   object-fit: cover;
 }
 
-a.card:focus .card-tooltip, a.card:hover .card-tooltip {
+a.card:focus .card-tooltip,
+a.card:hover .card-tooltip {
   visibility: visible;
   position: absolute;
 }
@@ -626,8 +641,8 @@ a.card:focus .card-tooltip, a.card:hover .card-tooltip {
  * sprite stuff- feel free to comment out/remove if not using
  */
 img {
-    max-width: 100%;
-    max-height: 100%;
+  max-width: 100%;
+  max-height: 100%;
 }
 #contentSpriteContainer {
   position: fixed;
@@ -640,76 +655,76 @@ img {
   z-index: -97;
 }
 .sprite {
-    position: absolute;
-    width: 180px;
+  position: absolute;
+  width: 180px;
 }
 #topLeftSprite {
-    float: left;
-    top: -1em;
-    left: 0.4em;
+  float: left;
+  top: -1em;
+  left: 0.4em;
 }
 #topRightSprite {
-    float: right;
-    top: -1em;
-    right: 0.4em;
+  float: right;
+  top: -1em;
+  right: 0.4em;
 }
 #bottomLeftSprite {
-    float: left;
-    left: 0.4em;
-    top: 50%;
+  float: left;
+  left: 0.4em;
+  top: 50%;
 }
 #bottomRightSprite {
-    float: right;
-    right: 0.4em;
-    top: 50%;
+  float: right;
+  right: 0.4em;
+  top: 50%;
 }
 
 /* smaller screens: hide left margin */
 @media screen and (max-width: 1200px) {
   .tools {
-      margin-right: 0.4em;
-      margin-left: 0.4em;
+    margin-right: 0.4em;
+    margin-left: 0.4em;
   }
   #mid_panel {
-      margin-right: 0.4em;
+    margin-right: 0.4em;
   }
 }
 /* mobile: move the stat box to the top if the screen is too small,
  * and reduce font size slightly. */
 @media screen and (max-width: 560px) {
   #page {
-      position: static;
+    position: static;
   }
   #content {
-      position: static;
-      font-size: 1em;
-      line-height: 160%;
-      padding: 1em 1em 1.5em 1em;
+    position: static;
+    font-size: 1em;
+    line-height: 160%;
+    padding: 1em 1em 1.5em 1em;
   }
   #qualities {
-      font-size: 1em;
-      padding-left: 0.1em;
-      padding-right: 0.1em;
+    font-size: 1em;
+    padding-left: 0.1em;
+    padding-right: 0.1em;
   }
   #tools_wrapper {
     position: static;
   }
   .tools {
-      width: 90%;
-      margin: 2em 0 1em 0;
-      margin: 0.4em;
+    width: 90%;
+    margin: 2em 0 1em 0;
+    margin: 0.4em;
   }
   .tools.left {
-      float: none;
-      left: 0;
-      border-radius: 7px;
+    float: none;
+    left: 0;
+    border-radius: 7px;
   }
   .tools.right {
-      float: none;
-      right: 0;
+    float: none;
+    right: 0;
   }
   #mid_panel {
-      margin: 0 auto;
+    margin: 0 auto;
   }
 
   /* cards are smaller on mobile */
@@ -730,13 +745,14 @@ img {
     border: 8px solid var(--card-border-color);
     margin-bottom: 0.5em;
   }
-  .card-in-hand, .pinned-card, .deck {
+  .card-in-hand,
+  .pinned-card,
+  .deck {
     max-width: 120px;
     margin-right: 1em;
     vertical-align: top;
   }
 }
-
 
 /* New stuff just for this game */
 
@@ -748,14 +764,13 @@ img {
 }
 
 table {
-    border-spacing: 0.5em;
+  border-spacing: 0.5em;
 }
-
 
 /* Styles for parties - TODO: have the player party be highlighted. */
 /* Use CSS variables for the colors... */
 :root {
-  --ciu: #002782; 
+  --ciu: #002782;
   --cdc: #002782;
   --unio: #0052a3;
   --erc: #ff8000;
@@ -765,7 +780,7 @@ table {
   --pdcat: #0081c2;
   --junts: #20c0b2;
   --cs: #f6c300;
-  --ppc:#007fff;
+  --ppc: #007fff;
   --psc: #e73b39;
   --icv: #67af2f;
   --si: #000000;
@@ -773,16 +788,16 @@ table {
   --cecp: #be3882;
   --ecp: #6e236e;
   --vox: #63be21;
-  --pxc: #00FFFF;
-  --fnc: #55A0D9;
+  --pxc: #00ffff;
+  --fnc: #55a0d9;
   --pp: #1d84ce;
-  --psoe:#da291c;
+  --psoe: #da291c;
   --podemos: #9269f5;
   --iu: #732021;
-  --dil:#292a6b;
+  --dl: #292a6b;
   --pnv: #4aae4a;
   --ehbildu: #00c19f;
-  --cc:#ffd700;
+  --cc: #ffd700;
   --compromis: #ec8953;
   --mes: #d8de40;
   --bng: #a2c7e4;
@@ -790,7 +805,7 @@ table {
   --amaiur: #0198b3;
   --upyd: #e9008c;
   --mpais: #027665;
-  --fasturias: #0082ca;
+  --fac: #0082ca;
   --prc: #b7bf10;
   --sumar: #ef4b91;
   --up: #5a205a;
@@ -798,278 +813,285 @@ table {
   --gbai: #f75e42;
   --upn: #00599b;
   --nsuma: #2a52be;
+  --te: #007351;
 }
 
 .seat.ciu {
-    fill: var(--ciu);
+  fill: var(--ciu);
 }
 .seat.cdc {
-    fill: var(--cdc);
+  fill: var(--cdc);
 }
 .seat.unio {
-    fill: var(--unio);
+  fill: var(--unio);
 }
 .seat.erc {
-    fill: var(--erc);
+  fill: var(--erc);
 }
 .seat.cup {
-    fill: var(--cup);
+  fill: var(--cup);
 }
 .seat.fr {
-    fill: var(--fr);
+  fill: var(--fr);
 }
 .seat.jxcat {
-    fill: var(--jxcat);
+  fill: var(--jxcat);
 }
 .seat.jxsi {
-    fill: var(--jxsi);
+  fill: var(--jxsi);
 }
 .seat.pdcat {
-    fill: var(--pdcat);
+  fill: var(--pdcat);
 }
 .seat.junts {
-    fill: var(--junts);
+  fill: var(--junts);
 }
 .seat.cs {
-    fill: var(--cs);
+  fill: var(--cs);
 }
 .seat.ppc {
-    fill: var(--ppc);
+  fill: var(--ppc);
 }
 .seat.psc {
-    fill: var(--psc);
+  fill: var(--psc);
 }
 .seat.icv {
-    fill: var(--icv);
+  fill: var(--icv);
 }
 .seat.si {
-    fill: var(--si);
+  fill: var(--si);
 }
 .seat.csqp {
-    fill: var(--csqp);
+  fill: var(--csqp);
 }
 .seat.cecp {
-    fill: var(--cecp);
+  fill: var(--cecp);
 }
 .seat.ecp {
-    fill: var(--ecp);
+  fill: var(--ecp);
 }
 .seat.vox {
-    fill: var(--vox);
+  fill: var(--vox);
 }
 .seat.fnc {
-    fill: var(--fnc);
+  fill: var(--fnc);
 }
 .seat.pxc {
-    fill: var(--pxc);
+  fill: var(--pxc);
 }
 
 /* boxes... */
 .box.ciu {
-    background-color: var(--ciu);
+  background-color: var(--ciu);
 }
 .box.cdc {
-    background-color: var(--cdc);
+  background-color: var(--cdc);
 }
 .box.unio {
-    background-color: var(--unio);
+  background-color: var(--unio);
 }
 .box.erc {
-    background-color: var(--erc);
+  background-color: var(--erc);
 }
 .box.cup {
-    background-color: var(--cup);
+  background-color: var(--cup);
 }
 .box.fr {
-    background-color: var(--fr);
+  background-color: var(--fr);
 }
 .box.jxcat {
-    background-color: var(--jxcat);
+  background-color: var(--jxcat);
 }
 .box.jxsi {
-    background-color: var(--jxsi);
+  background-color: var(--jxsi);
 }
 .box.pdcat {
-    background-color: var(--pdcat);
+  background-color: var(--pdcat);
 }
 .box.junts {
-    background-color: var(--junts);
+  background-color: var(--junts);
 }
 .box.cs {
-    background-color: var(--cs);
+  background-color: var(--cs);
 }
 .box.ppc {
-    background-color: var(--ppc);
+  background-color: var(--ppc);
 }
 .box.psc {
-    background-color: var(--psc);
+  background-color: var(--psc);
 }
 .box.icv {
-    background-color: var(--icv);
+  background-color: var(--icv);
 }
 .box.si {
-    background-color: var(--si);
+  background-color: var(--si);
 }
 .box.csqp {
-    background-color: var(--csqp);
+  background-color: var(--csqp);
 }
 .box.cecp {
-    background-color: var(--cecp);
+  background-color: var(--cecp);
 }
 .box.ecp {
-    background-color: var(--ecp);
+  background-color: var(--ecp);
 }
 .box.vox {
-    background-color: var(--vox);
+  background-color: var(--vox);
 }
 .box.pxc {
-    background-color: var(--pxc);
+  background-color: var(--pxc);
 }
 .box.fnc {
-    background-color: var(--fnc);
+  background-color: var(--fnc);
 }
 
 /* same, but the extras for the congreso */
 .seat.pp {
-    fill: var(--pp);
+  fill: var(--pp);
 }
 .box.pp {
-    background-color: var(--pp);
+  background-color: var(--pp);
 }
 .seat.psoe {
-    fill: var(--psoe);
+  fill: var(--psoe);
 }
 .box.psoe {
-    background-color: var(--psoe);
+  background-color: var(--psoe);
 }
 .seat.podemos {
-    fill: var(--podemos);
+  fill: var(--podemos);
 }
 .box.podemos {
-    background-color: var(--podemos);
+  background-color: var(--podemos);
 }
 .seat.iu {
-    fill: var(--iu);
+  fill: var(--iu);
 }
 .box.iu {
-    background-color: var(--iu);
+  background-color: var(--iu);
 }
-.seat.dil {
-    fill: var(--dil);
+.seat.dl {
+  fill: var(--dl);
 }
-.box.dil {
-    background-color: var(--dil);
+.box.dl {
+  background-color: var(--dl);
 }
 .seat.pnv {
-    fill: var(--pnv);
+  fill: var(--pnv);
 }
 .box.pnv {
-    background-color: var(--pnv);
+  background-color: var(--pnv);
 }
 .seat.ehbildu {
-    fill: var(--ehbildu);
+  fill: var(--ehbildu);
 }
 .box.ehbildu {
-    background-color: var(--ehbildu);
+  background-color: var(--ehbildu);
 }
 .seat.cc {
-    fill: var(--cc);
+  fill: var(--cc);
 }
 .box.cc {
-    background-color: var(--cc);
+  background-color: var(--cc);
 }
 .seat.compromis {
-    fill: var(--compromis);
+  fill: var(--compromis);
 }
 .box.compromis {
-    background-color: var(--compromis);
+  background-color: var(--compromis);
 }
 .seat.mes {
-    fill: var(--mes);
+  fill: var(--mes);
 }
 .box.mes {
-    background-color: var(--mes);
+  background-color: var(--mes);
 }
 .seat.bng {
-    fill: var(--bng);
+  fill: var(--bng);
 }
 .box.bng {
-    background-color: var(--bng);
+  background-color: var(--bng);
 }
 .seat.nos {
-    fill: var(--nos);
+  fill: var(--nos);
 }
 .box.nos {
-    background-color: var(--nos);
+  background-color: var(--nos);
 }
 .seat.amaiur {
-    fill: var(--amaiur);
+  fill: var(--amaiur);
 }
 .box.amaiur {
-    background-color: var(--amaiur);
+  background-color: var(--amaiur);
 }
 .seat.upyd {
-    fill: var(--upyd);
+  fill: var(--upyd);
 }
 .box.upyd {
-    background-color: var(--upyd);
+  background-color: var(--upyd);
 }
 .seat.mpais {
-    fill: var(--mpais);
+  fill: var(--mpais);
 }
 .box.mpais {
-    background-color: var(--mpais);
+  background-color: var(--mpais);
 }
-.seat.fasturias {
-    fill: var(--fasturias);
+.seat.fac {
+  fill: var(--fac);
 }
-.box.fasturias {
-    background-color: var(--fasturias);
+.box.fac {
+  background-color: var(--fac);
 }
 .seat.prc {
-    fill: var(--prc);
+  fill: var(--prc);
 }
 .box.prc {
-    background-color: var(--prc);
+  background-color: var(--prc);
 }
 .seat.sumar {
-    fill: var(--sumar);
+  fill: var(--sumar);
 }
 .box.sumar {
-    background-color: var(--sumar);
+  background-color: var(--sumar);
 }
 .seat.up {
-    fill: var(--up);
+  fill: var(--up);
 }
 .box.up {
-    background-color: var(--up);
+  background-color: var(--up);
 }
 .seat.fr {
-    fill: var(--fr);
+  fill: var(--fr);
 }
 .box.fr {
-    background-color: var(--fr);
+  background-color: var(--fr);
 }
 .seat.gbai {
-    fill: var(--gbai);
+  fill: var(--gbai);
 }
 .box.gbai {
-    background-color: var(--gbai);
+  background-color: var(--gbai);
 }
 .seat.upn {
-    fill: var(--upn);
+  fill: var(--upn);
 }
 .box.upn {
-    background-color: var(--upn);
+  background-color: var(--upn);
 }
 .seat.nsuma {
-    fill: var(--nsuma);
+  fill: var(--nsuma);
 }
 .box.nsuma {
-    background-color: var(--nsuma);
+  background-color: var(--nsuma);
+}
+.seat.te {
+  fill: var(--te);
+}
+.box.te {
+  background-color: var(--te);
 }
 
 .tooltip-text {
-    text-decoration: underline;
-    text-decoration-style: dotted;
+  text-decoration: underline;
+  text-decoration-style: dotted;
 }

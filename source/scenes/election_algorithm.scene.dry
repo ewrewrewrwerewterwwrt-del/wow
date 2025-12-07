@@ -28,6 +28,7 @@ for (var p of Q.parties) {
     Q[p+'_parlament_s_old'] = Q[p+'_parlament_s'];
     console.log(`Party ${p} old seats: ${Q[p+'_parlament_s']}`);
 }
+Q.abstain_parlament_pv_old = Q.abstain_parlament_pv;
 
 // 0. Initialize/reset vote and seat counts
 for (var party of Q.parties) {
@@ -39,8 +40,8 @@ for (var party of Q.parties) {
     Q[party+'_parlament_pv'] = 0;
     Q[party+'_parlament_s'] = 0;
 }
-Q.abstention_parlament_totalvotes = 0;
-Q.abstention_parlament_pv = 0;
+Q.abstain_parlament_totalvotes = 0;
+Q.abstain_parlament_pv = 0;
 
 // 1. Calculate demographic weighted support for each party, per province
 Q.parlament_totalpop = 0;
@@ -48,11 +49,11 @@ Q.parlament_totalvotes = 0;
 for (var constituency of Q.parlament_constituencies) {
     Q['parlament_' + constituency + '_totalpop'] = 0;
     Q['parlament_' + constituency + '_totalvotes'] = 0;
-    Q['parlament_' + constituency + '_totalabstention'] = 0;
+    Q['parlament_' + constituency + '_totalabstain'] = 0;
     for (var demographic of Q.parlament_demographics) {
         Q.parlament_totalpop += Q['parlament_' + constituency + '_' + demographic + '_pop'];
         Q['parlament_' + constituency + '_totalpop'] += Q['parlament_' + constituency + '_' + demographic + '_pop'];
-        Q['parlament_' + constituency + '_totalabstention'] += Q['parlament_' + constituency + '_' + demographic + '_pop']*Q['abstain_parlament_' + constituency + '_' + demographic + '_support']/100;
+        Q['parlament_' + constituency + '_totalabstain'] += Q['parlament_' + constituency + '_' + demographic + '_pop']*Q['abstain_parlament_' + constituency + '_' + demographic + '_support']/100;
         for (var party of Q.parties) {
             if (!Q[party + '_parlament_' + constituency + '_' + demographic + '_support'] || Q[party + '_parlament_' + constituency + '_' + demographic + '_support'] <= 0) {
                 Q[party + '_parlament_' + constituency + '_' + demographic + '_support'] = 0;
@@ -63,17 +64,17 @@ for (var constituency of Q.parlament_constituencies) {
     }
 }
 
-// 2. Calculate popular vote percentages and abstention
+// 2. Calculate popular vote percentages and abstain
 for (var constituency of Q.parlament_constituencies) {
     for (var party of Q.parties) {
         Q[party+'_parlament_totalvotes'] += Q['parlament_' + constituency + '_' + party + '_votes'];
     }
     Q.parlament_totalvotes += Q['parlament_' + constituency + '_totalvotes'];
-    Q.abstention_parlament_totalvotes += Q['parlament_' + constituency + '_totalabstention'];
+    Q.abstain_parlament_totalvotes += Q['parlament_' + constituency + '_totalabstain'];
 }
-Q.abstention_parlament_pv = Math.round(Q.abstention_parlament_totalvotes / Q.parlament_totalpop * 1000) / 10;
+Q.abstain_parlament_pv = Math.round(Q.abstain_parlament_totalvotes / Q.parlament_totalpop * 1000) / 10;
 for (var party of Q.parties) {
-    Q[party+'_parlament_pv'] = Math.round(Q[party+'_parlament_totalvotes'] / (Q.parlament_totalvotes) * 1000) / 10;
+    Q[party+'_parlament_pv'] = Math.round(Q[party+'_parlament_totalvotes'] / (Q.parlament_totalvotes) * 10000) / 100;
 }
 
 // 3. Apply 3% provincial thresholds
@@ -146,9 +147,21 @@ for (var p of Q.parties) {
             '<img src="img/arrowup.png"> ' :
             Q[p+'_parlament_pv_delta'] < 0 ? '<img src="img/arrowdown.png"> ' :
             '<img src="img/steady.png"> ';
-        Q[p+'_parlament_pv_delta'] = sign2 + Math.abs(Q[p+'_parlament_pv_delta']).toFixed(1) + '%';
+        Q[p+'_parlament_pv_delta'] = sign2 + Math.abs(Q[p+'_parlament_pv_delta']).toFixed(2) + '%';
     }
 }
+
+console.log(`Abstention: old ${Q.abstain_parlament_pv_old} new ${Q.abstain_parlament_pv}`);
+
+Q.parlament_participation_pc = (100 - Q.abstain_parlament_pv).toFixed(1);
+if (Q.abstain_parlament_pv_old > Q.abstain_parlament_pv) {
+    Q.parlament_participation_delta = '<img src="img/arrowup.png"> ' + (Q.abstain_parlament_pv_old - Q.abstain_parlament_pv).toFixed(1) + '%';
+} else if (Q.abstain_parlament_pv_old < Q.abstain_parlament_pv) {
+    Q.parlament_participation_delta = '<img src="img/arrowdown.png"> ' + (Q.abstain_parlament_pv - Q.abstain_parlament_pv_old).toFixed(1) + '%';
+} else {
+    Q.parlament_participation_delta = '<img src="img/steady.png"> 0.0%';
+}
+
 
 // 5.2 Calculate block votes
 Q.independence_parlament_pv = Math.abs(Q.erc_parlament_pv + Q.cup_parlament_pv + Q.junts_parlament_pv + Q.cdc_parlament_pv + Q.pdcat_parlament_pv + Q.jxsi_parlament_pv + Q.fnc_parlament_pv + Q.si_parlament_pv).toFixed(1);
@@ -172,6 +185,286 @@ go-to: jumpScene
 title: Spanish General Election
 on-arrival: {!
 // Careful! Here, different constituencies have different parties!
+
+var VIRTUAL_REST_STRUCTURE = {
+    36: 1,  // Madrid
+    12: 1,  // Seville
+    11: 1,  // Malaga
+    10: 1,  // Murcia
+    9: 1,   // Cadiz
+    8: 2,   // Las Palmas, Asturias
+    7: 3,   // Granada, Zaragoza, Tenerife
+    6: 4,   // Cordoba, Almeria, Toledo, Badajoz
+    5: 5,   // Jaen, Huelva, Valladolid, Ciudad Real, Cantabria
+    4: 6,   // Leon, Burgos, Salamanca, Albacete, Caceres, La Rioja
+    3: 8,   // Avila, Palencia, Segovia, Zamora, Guadalajara, Cuenca, Huesca, Teruel
+    2: 1,   // Soria
+    1: 2    // Ceuta, Melilla
+};
+
+var PROTECTED_MINORS = {
+    'cc': 0.3,   // Coalicion Canaria
+    'prc': 0.25,  // Partido Regionalista de Cantabria
+    'te': 0.22,   // Teruel Existe
+};
+
+// 00. Store old results and get a list of all possible parties involved
+var CONGRESO_PARTIES = [];
+
+for (var constituency of Q.congreso_constituencies) {
+    CONGRESO_PARTIES = [
+        ...CONGRESO_PARTIES,
+        ...Q['congreso_parties_' + constituency]
+    ];
+    for (var p of Q['congreso_parties_' + constituency]) {
+        // I.e. we show the party in the results table also if they HAD seats in the previous election
+
+        if (Q[p+'_congreso_s'] > 0) {
+            Q[p+'_congreso_showviz'] = 1;
+        } else {
+            Q[p+'_congreso_showviz'] = 0;
+        }
+        Q[p+'_congreso_pv_old'] = Q[p+'_congreso_pv'];
+        Q[p+'_congreso_s_old'] = Q[p+'_congreso_s'];
+
+        if (constituency == 'catalunya') {
+            // In Catalunya we also want the delta for popular vote
+            Q[p+'_congreso_pv_old_cat'] = Q[p+'_congreso_pv_cat'];
+            Q[p+'_congreso_pv_cat'] = 0;
+        }
+
+        console.log(`Party ${p} old seats: ${Q[p+'_congreso_s']}`);
+    }
+}
+Q.abstain_congreso_pv_old = Q.abstain_congreso_pv;
+
+// 01. Initialize Global Counters
+var total_national_valid_votes = 0; // For Party PV (excludes abstain)
+var total_national_census = 0;      // For Turnout/abstain stats
+var total_party_votes = {};
+var total_party_seats = {};
+var total_abstain_raw = 0;
+var congreso_size = 350;
+
+// Initialize party totals to 0
+for (var p of CONGRESO_PARTIES) {
+    total_party_votes[p] = 0;
+    total_party_seats[p] = 0;
+    Q[p + '_congreso_s'] = 0;
+    Q[p + '_congreso_pv'] = 0;
+}
+
+// 02. Helper Function: D'Hondt Method
+function dhondt_method(votes_map, num_seats) {
+    var seats = {};
+    var quotients = [];
+
+    // Initialize
+    for (var party in votes_map) {
+        seats[party] = 0;
+        if (votes_map[party] > 0) {
+            quotients.push({
+                party: party,
+                val: votes_map[party],
+                original: votes_map[party],
+                seats: 0
+            });
+        }
+    }
+
+    // Allocate
+    for (var i = 0; i < num_seats; i++) {
+        if (quotients.length === 0) break;
+
+        // Sort descending
+        quotients.sort(function(a, b) {
+            return b.val - a.val;
+        });
+
+        var winner = quotients[0];
+        winner.seats++;
+        winner.val = winner.original / (winner.seats + 1);
+    }
+
+    // Update results
+    for (var q of quotients) {
+        seats[q.party] = q.seats;
+    }
+    return seats;
+}
+
+// 03. Main Simulation Loop 
+for (var constituency of Q.congreso_constituencies) {
+    
+    // Approximate Census Weights - losely based on 2016 data
+    var census_weights = {
+        "catalunya": 55000, 
+        "valencia": 36000,
+        "balears": 8000,
+        "navarra": 4800,
+        "euskadi": 17000,
+        "galicia": 22000,
+        "rest": 220000
+    };
+    
+    var region_census = census_weights[constituency] || 1000;
+    var region_votes_map = {}; // Valid votes for parties only
+    var region_abstain_raw = 0;
+    var region_valid_total = 0;
+
+    // 3.1. Process Parties (Valid Votes)
+    var local_parties = Q['congreso_parties_' + constituency];
+    for (var p of local_parties) {
+        var support_var = 'Q.' + p + '_congreso_' + constituency + '_support';
+        var support_pct = eval(support_var) || 0; // This % is of Census (from input)
+        
+        // Convert Census % to Raw Votes
+        var raw_votes = region_census * (support_pct / 100);
+        
+        region_votes_map[p] = raw_votes;
+        region_valid_total += raw_votes;
+        
+        // Add to Global Party Total
+        total_party_votes[p] += raw_votes;
+    }
+
+    // 3.2. Process abstain (separately)
+    var abst_var = 'Q.abstain_congreso_' + constituency + '_support';
+    var abst_pct = eval(abst_var) || 0;
+    var raw_abst = region_census * (abst_pct / 100);
+    
+    region_abstain_raw = raw_abst;
+    total_abstain_raw += raw_abst;
+
+    // 3.3. Update Global Counters
+    total_national_valid_votes += region_valid_total; // Only valid votes
+    total_national_census += (region_valid_total + raw_abst); // Census (Valid + Abst)
+
+    var seats_available = Q.congreso_seats[constituency];
+    var seat_results = {};
+
+    if (constituency === 'rest') {
+        // VIRTUAL REST LOGIC
+        var working_votes = Object.assign({}, region_votes_map);
+        var protected_seats_awarded = 0;
+        
+        // Protected Minors Check against VALID votes of the Rest region
+        for (var minor in PROTECTED_MINORS) {
+            if (working_votes[minor] !== undefined) {
+                var threshold = PROTECTED_MINORS[minor];
+                var share = (working_votes[minor] / region_valid_total) * 100;
+                
+                console.log(`Protected minor check for ${minor}: share ${share.toFixed(2)}% threshold ${threshold*100}%`);
+                while (share >= threshold) {
+                    total_party_seats[minor] += 1;
+                    protected_seats_awarded++;
+                    share -= threshold;
+                    console.log(`  -> Awarded protected seat to ${minor}, total now ${total_party_seats[minor]}, shares left ${share.toFixed(2)}%`);
+                    working_votes[minor] = 0; // Remove from main pool
+                }
+            }
+        }
+
+        var virtual_districts = [];
+        for (var size in VIRTUAL_REST_STRUCTURE) {
+            var count = VIRTUAL_REST_STRUCTURE[size];
+            for (var k = 0; k < count; k++) virtual_districts.push(parseInt(size));
+        }
+        virtual_districts.sort(function(a, b) { return a - b });
+
+        for (var k = 0; k < protected_seats_awarded; k++) {
+            for (var i = 0; i < virtual_districts.length; i++) {
+                if (virtual_districts[i] >= 5) { virtual_districts[i]--; break; }
+            }
+        }
+
+        for (var dist_size of virtual_districts) {
+            if (dist_size > 0) {
+                var biased_votes = {};
+                var bias_set = {};
+                if (dist_size <= 4) bias_set = Q.congreso_rural_bias;
+                if (dist_size >= 8) bias_set = Q.congreso_urban_bias;
+                
+                for (var p in working_votes) {
+                    var multiplier = bias_set[p] || 1.0;
+                    biased_votes[p] = working_votes[p] * multiplier;
+                }
+                var dist_res = dhondt_method(biased_votes, dist_size);
+                for (var p in dist_res) total_party_seats[p] += dist_res[p];
+            }
+        }
+
+    } else {
+        // STANDARD REGIONAL
+        seat_results = dhondt_method(region_votes_map, seats_available);
+        for (var p in seat_results) total_party_seats[p] += seat_results[p];
+    }
+    
+    // Regional PV Calculation (Valid Votes Only)
+    if (constituency === 'catalunya') {
+        for (var p of local_parties) {
+            // Divisor is region_valid_total, NOT census
+            Q[p + '_congreso_pv_cat'] = ((region_votes_map[p] / region_valid_total) * 100).toFixed(2);
+        }
+    }
+}
+
+// 04. Final Global Calculations
+for (var p in total_party_votes) {
+    if (total_national_valid_votes > 0) {
+        Q[p + '_congreso_pv'] = ((total_party_votes[p] / total_national_valid_votes) * 100).toFixed(2);
+    } else {
+        Q[p + '_congreso_pv'] = 0;
+    }
+}
+if (total_national_census > 0) {
+    Q.abstain_congreso_pv = ((total_abstain_raw / total_national_census) * 100).toFixed(2);
+} else {
+    Q.abstain_congreso_pv = 0;
+}
+
+for (var p in total_party_seats) {
+    Q[p + '_congreso_s'] = total_party_seats[p];
+}
+
+// 5. Post-process
+// 5.1 Calculate percent of congreso control and deltas
+for (var p of CONGRESO_PARTIES) {
+    if (Q[p+'_congreso_s'] > 0) {
+        Q[p+'_congreso_spc'] = Math.round(Q[p+'_congreso_s'] / congreso_size * 1000) / 10;
+        Q[p+'_congreso_showviz'] = 1;
+    } else {
+        Q[p+'_congreso_spc'] = 0;
+    }
+    if (Q[p+'_congreso_s_old'] == 0 || !Q[p+'_congreso_s_old']) {
+        Q[p+'_congreso_s_delta'] = '<div style="font-style: italic;">New!</div>';
+        Q[p+'_congreso_pv_delta'] = '<div style="font-style: italic;">New!</div>';
+    } else {
+        Q[p+'_congreso_s_delta'] = Q[p+'_congreso_s'] - Q[p+'_congreso_s_old'];
+        var sign1 = Q[p+'_congreso_s_delta'] > 0 ?
+            '<img src="img/arrowup.png"> ' :
+            Q[p+'_congreso_s_delta'] < 0 ? '<img src="img/arrowdown.png"> ' :
+            '<img src="img/steady.png"> ';
+        Q[p+'_congreso_s_delta'] = sign1 + Math.abs(Q[p+'_congreso_s_delta'])
+        Q[p+'_congreso_pv_delta'] = Q[p+'_congreso_pv'] - Q[p+'_congreso_pv_old'];
+        var sign2 = Q[p+'_congreso_pv_delta'] > 0 ?
+            '<img src="img/arrowup.png"> ' :
+            Q[p+'_congreso_pv_delta'] < 0 ? '<img src="img/arrowdown.png"> ' :
+            '<img src="img/steady.png"> ';
+        Q[p+'_congreso_pv_delta'] = sign2 + Math.abs(Q[p+'_congreso_pv_delta']).toFixed(1) + '%';
+    }
+}
+
+console.log(`Abstention: old ${Q.abstain_congreso_pv_old} new ${Q.abstain_congreso_pv}`);
+
+Q.congreso_participation_pc = (100 - Q.abstain_congreso_pv).toFixed(1);
+if (Q.abstain_congreso_pv_old > Q.abstain_congreso_pv) {
+    Q.congreso_participation_delta = '<img src="img/arrowup.png"> ' + (Q.abstain_congreso_pv_old - Q.abstain_congreso_pv).toFixed(1) + '%';
+} else if (Q.abstain_congreso_pv_old < Q.abstain_congreso_pv) {
+    Q.congreso_participation_delta = '<img src="img/arrowdown.png"> ' + (Q.abstain_congreso_pv - Q.abstain_congreso_pv_old).toFixed(1) + '%';
+} else {
+    Q.congreso_participation_delta = '<img src="img/steady.png"> 0.0%';
+}
 
 
 !}

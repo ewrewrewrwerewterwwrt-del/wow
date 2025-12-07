@@ -130,41 +130,6 @@ Q.icv_ideology = "Green Left, Right to Decide";
 // International opinions
 Q.international_eu_opinion = 1;
 
-!}
-go-to: start_menu_2
-
-
-= Route to Ítaca - An Alternate History
-
-@start_menu_2
-
-- @start: <span style="font-size: 1.1em;">Start game</span>
-- @game_over.achievements: <span style="font-size: 1.1em;">Achievements</span>
-- @language: <span style="font-size: 1.1em;">Language</span>
-- @about: <span style="font-size: 1.1em;">About - v1.0 (1.2025)</span>
-- @credits: <span style="font-size: 1.1em;">Credits</span>
-
-
-@start
-on-arrival: {!
-Q.started = 1;
-// time elapsed (in months)
-Q.time = 1;
-
-// how many actions have been taken this week?
-Q.week_actions = 0; // FIXME: delete me?
-// how many actions have been taken this month?
-Q.month_actions = 0;
-
-// 0 = normal difficulty, 1 = hard mode, 2 = hard mode no saves
-Q.difficulty = 0;
-Q.historical_mode = 0;
-
-Q.erc_dissent_percent = 10;
-Q.ciu_dissent_percent = 15;
-Q.cup_dissent_percent = 15;
-Q.jxsi_dissent_percent = 25;
-
 
 // Demographics
 Q.parlament_demographics = ["buss", "ind", "middle", "young", "retired", "rural", "unemployed"]
@@ -197,7 +162,84 @@ Q.parlament_tarragona_buss_pop = 547;
 Q.parlament_tarragona_rural_pop = 1445;
 Q.parlament_tarragona_ind_pop = 1236;
 
-// Parties and initial party support
+
+// Congreso situation
+Q.congreso_seats = {
+    "catalunya": 47,
+    "valencia": 33,
+    "balears": 8,
+    "navarra": 5,
+    "euskadi": 18,
+    "galicia": 23,
+    "rest": 216
+};
+Q.congreso_constituencies = ["catalunya", "valencia", "balears", "navarra", "euskadi", "galicia", "rest"];
+
+Q.congreso_parties_catalunya = ["ciu", "psoe", "erc", "pp", "cs", "podemos", "iu", "cup", "fr", "dl", "pdcat", "jxsi", "cdc", "unio", "junts", "upyd", "vox", "mpais", "up", "sumar", "jxcat"];
+Q.congreso_parties_valencia = ["pp", "psoe", "podemos", "cs", "iu", "compromis", "vox", "up", "sumar", "upyd", "mpais"];
+Q.congreso_parties_balears = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "mes"];
+Q.congreso_parties_navarra = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "amaiur", "nsuma", "ehbildu", "upn", "gbai"];
+Q.congreso_parties_euskadi = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "ehbildu", "pnv", "amaiur"];
+Q.congreso_parties_galicia = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "bng", "nos"];
+Q.congreso_parties_rest = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "cc", "fac", "prc", "te"];
+
+
+Q.congreso_rural_bias = {
+    'pp': 1.15,      // PP is dominant in rural Castilla
+    'psoe': 1.05,    // PSOE holds up well in rural South
+    'podemos': 0.75, // Podemos struggles significantly in rural areas
+    'cs': 0.85,      // Cs also struggles in rural areas
+};
+
+Q.congreso_urban_bias = {
+    'pp': 0.95,
+    'psoe': 0.95,
+    'podemos': 1.15,
+    'cs': 1.0
+};
+
+
+Q.ciu_congreso_s = 16;
+Q.erc_congreso_s = 3;
+
+
+!}
+go-to: start_menu_2
+
+
+= Route to Ítaca - An Alternate History
+
+@start_menu_2
+
+- @start: <span style="font-size: 1.1em;">Start game</span>
+- @election_simulation: <span style="font-size: 1.1em;">Election simulation</span>
+- @game_over.achievements: <span style="font-size: 1.1em;">Achievements</span>
+- @language: <span style="font-size: 1.1em;">Language</span>
+- @about: <span style="font-size: 1.1em;">About - v1.0 (1.2025)</span>
+- @credits: <span style="font-size: 1.1em;">Credits</span>
+
+
+@start
+on-arrival: {!
+Q.started = 1;
+// time elapsed (in months)
+Q.time = 1;
+
+// how many actions have been taken this week?
+Q.week_actions = 0; // FIXME: delete me?
+// how many actions have been taken this month?
+Q.month_actions = 0;
+
+// 0 = normal difficulty, 1 = hard mode, 2 = hard mode no saves
+Q.difficulty = 0;
+Q.historical_mode = 0;
+
+Q.erc_dissent_percent = 10;
+Q.ciu_dissent_percent = 15;
+Q.cup_dissent_percent = 15;
+Q.jxsi_dissent_percent = 25;
+
+
 
 
 // TODO: tweak initial party weights
@@ -550,24 +592,8 @@ Q.cup_parlament_tarragona_young_support = 5.91;
 Q.cs_parlament_tarragona_young_support = 8.38;
 Q.si_parlament_tarragona_young_support = 1.97;
 
-// Congreso:
-Q.congreso_seats = {
-    "catalunya": 47,
-    "valencia": 32,
-    "balears": 8,
-    "navarra": 5,
-    "euskadi": 18,
-    "galicia": 23,
-    "rest": 217
-};
-Q.congreso_constituencies = ["catalunya", "valencia", "balears", "navarra", "euskadi", "galicia", "rest"];
-Q.congreso_size = 350;
 
-Q.ciu_congreso_s = 16;
-Q.erc_congreso_s = 3;
-
-
-Q.congreso_parties = ['ciu', 'erc', 'psoe', 'pp', 'iu', 'cs', 'cup', 'fr', 'cdc', 'unio', 'jxsi', 'junts', 'pdcat', 'dil', 'up', 'podemos', 'mpais', 'vox', 'upyd', 'pnv', 'bng', 'bildu', 'amaiur', 'cc', 'compromis', 'fasturias', 'prc', 'gbai', 'sumar', 'mes'];
+// Congreso supports
 
 Q.ciu_congreso_catalunya_support = 29.35;
 Q.erc_congreso_catalunya_support = 7.06;
