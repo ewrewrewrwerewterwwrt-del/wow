@@ -13,9 +13,39 @@ Peak, fork, and play around with the code from <a class="link" href="https://git
 - @articles: Articles
 - @images: Images
 - @assets: Assets
+- @on_ai: On the use of AI
 # - @music: Music
 - @root: Back
 
+
+@on_ai
+
+Artificial Intelligence (AI) tools were used in the form of Large Language Models (LLMs), in limitted form and for very specific tasks, goals, and purposes. These are disclosed herein as an ethically indispensible exercice of transparency and integrity.
+
+OpenAI's GPT-4 and GPT-4.1 models were used as part of the integrated Copilot within Visual Studio Code as:
+- Tools for speeding up the programming process. 
+- Coding and debugging assistance.
+- Ortographic, grammatical, and typografic review of texts and code.
+
+Perplexity's AI framework (inlcuding the usage of the Claude, Gemini, GPT, and Grok model families) were used for:
+- Initial research and data gathering and exploration.
+- Boiler-plate code generation and iteration.
+- Data analysis, cleaning, processing, and transformation assistance.
+
+Applying to all of the above:
+- All code was human-reviewed, tested, and approved. No fully vibe-coded files exist in this project.
+- All (LLM-provided) sources of information were human-reviewed and cross-checked.
+
+**No AI tools were used for:**
+- Game Design
+- Storyline Development
+- UI/UX Design
+- Text generation
+- Image generation
+
+The author's stance on the use of AI tools is strictly against AI-generated "Art", including images, videos, text, music, videogames, and other creative works that may apply. Nonetheless, LLM tools can and do provide valuable assistance as specific tools for concrete tasks, and can undoubtedly help by speeding-up of many aspects of the development workflow. Its usage as a tool must be as responsible as it is transparent. If you feel like the usages descrived herein attempt against your intellectual property rights, contact me via <a class="link" href="https://www.reddit.com/user/_BrokenArrows/">Reddit DM</a>.
+
+- @credits: Back
 
 @articles
 
@@ -115,6 +145,8 @@ WIP
 
 = Artwork, Newspapers, and Posters
 
+tapies.jpg: By Antoni Tàpies, from Comissio Tàpies / Vegap. & Generalitat de Catalunya, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/w/index.php?curid=83711107">commons.wikimedia.org/w/index.php?curid=83711107</a> (2019)
+
 cup/cartellcup2012.jpg: By CUP via El Blog Insostenible, Public Domain, <a href="https://www.miguelgarciavega.com/25n-catalunya-carteles-electorales/">miguelgarciavega.com/25n-catalunya-carteles-electorales/</a> (2012)
 
 cup/escombremlos.jpg: By CUP via El Periódico, Public Domain, <a href="https://www.elperiodico.cat/ca/politica/20170810/inspiracion-leninista-cartell-campanya-independencia-cup-6217946">elperiodico.cat/ca/politica/20170810/inspiracion-leninista-cartell-campanya-independencia-cup-6217946</a> (2017)
@@ -152,7 +184,7 @@ erc/executiva.jpg: By Esquerra Republicana de Catalunya and VilaWeb, author unkn
 
 Arrow Up, Down, and Steady icons from Dynamic Social Democracy by originn0, MIT License <a class="link" href="https://github.com/originn0/dynamic_social_democracy">github.com/originn0/dynamic_social_democracy</a> (2025)
 
-Icons (home_icon.svg, politics_icon.svg, international_icon.svg, economy_icon.svg, polls_icon.svg) from RemixIcon, by Remix Design, under Apache License <a class="link" href="https://remixicon.com/">remixicon.com</a> (2025)
+Icons (home_icon.svg, politics_icon.svg, international_icon.svg, government_icon.svg, polls_icon.svg) from RemixIcon, by Remix Design, under Apache License <a class="link" href="https://remixicon.com/">remixicon.com</a> (2025)
 
 Logo of CDC (logo_cdc.png) - By CDC, Public Domain <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=41794132">commons.wikimedia.org/w/index.php?curid=41794132</a> (2015)
 

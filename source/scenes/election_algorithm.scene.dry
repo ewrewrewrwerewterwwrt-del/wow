@@ -164,8 +164,8 @@ if (Q.abstain_parlament_pv_old > Q.abstain_parlament_pv) {
 
 
 // 5.2 Calculate block votes
-Q.independence_parlament_pv = Math.abs(Q.erc_parlament_pv + Q.cup_parlament_pv + Q.junts_parlament_pv + Q.cdc_parlament_pv + Q.pdcat_parlament_pv + Q.jxsi_parlament_pv + Q.fnc_parlament_pv + Q.si_parlament_pv).toFixed(1);
-Q.independence_parlament_s = Q.erc_parlament_s + Q.cup_parlament_s + Q.junts_parlament_s + Q.cdc_parlament_s + Q.pdcat_parlament_s + Q.jxsi_parlament_s + Q.fnc_parlament_s + Q.si_parlament_s ;
+Q.independence_parlament_pv = Math.abs(Q.erc_parlament_pv + Q.cup_parlament_pv + Q.junts_parlament_pv + Q.cdc_parlament_pv + Q.pdcat_parlament_pv + Q.jxsi_parlament_pv + Q.jxcat_parlament_pv + Q.fnc_parlament_pv + Q.si_parlament_pv).toFixed(1);
+Q.independence_parlament_s = Q.erc_parlament_s + Q.cup_parlament_s + Q.junts_parlament_s + Q.cdc_parlament_s + Q.pdcat_parlament_s + Q.jxsi_parlament_s + Q.jxcat_parlament_s + Q.fnc_parlament_s + Q.si_parlament_s ;
 Q.independence_parlament_spc = Math.abs(Math.round(Q.independence_parlament_s / parlament_size * 1000) / 10).toFixed(1);
 
 Q.unionist_parlament_pv = Math.abs(Q.ppc_parlament_pv + Q.psc_parlament_pv + Q.cs_parlament_pv + Q.vox_parlament_pv + Q.ecp_parlament_pv + Q.pxc_parlament_pv).toFixed(1);

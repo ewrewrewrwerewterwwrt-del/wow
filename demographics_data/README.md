@@ -5,8 +5,9 @@ Welcome, curious and probably unprepared complainer, to the `demographics_data` 
 
 ## Folder Structure
 
-- `auto_balancer.py`: Helps a ton for cooking the data. Ensures that your percentages always properly add up to 100.
+- `adjust_population_weights.py`: Since IDESCAT population processing returns roughly 10K pops per province, we need to acutally balance those numbers to get the real votes per circumscription. Here we do that based on IDESCAT census data.
 - `adjust_unemployment.py`: Rebalances unemployment rates according to unemployment evolution over the years, folowing the criteria explained in the assumptions bit (trasnfers between unemployed, middle, ind, buss). For when you want your simulated misery to be a bit more statistically accurate.
+- `auto_balancer.py`: Helps a ton for cooking the data. Ensures that your percentages always properly add up to 100.
 - `cat_ceo_process.py`: Wrestles raw CEO survey data into something the simulation can actually use. Manual cooking is needed after that.
 - `cat_pop_weights.py`: Turns IDESCAT data into population weights. Manual cooking is also needed but to a much lesser extent.
 - `cat_simulation.py`: Runs the actual election simulations

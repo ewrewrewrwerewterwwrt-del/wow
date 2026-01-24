@@ -24,6 +24,10 @@ def main(input_file, output_file):
     df = pd.read_csv(input_file)
     if 'sample_size' in df.columns:
         df = df.drop(columns=['sample_size'])
+    if 'icv' in df['party'].unique():
+        df = df[df['party'] != 'icv']
+    if 'ciu' in df['party'].unique():
+        df = df[df['party'] != 'ciu']
     province_col = 'province'
     demographic_col = 'demographic_group'
     percentage_col = 'percentage'
@@ -36,13 +40,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "input_file",
         nargs="?",
-        default="demographics_data/clean/ok_vote_intention_2015.csv",
+        default="demographics_data/clean/ok_vote_intention_2017.csv",
         help="Path to input CSV file"
     )
     parser.add_argument(
         "output_file",
         nargs="?",
-        default="demographics_data/clean/ok_vote_intention_2015.csv",
+        default="demographics_data/clean/ok_vote_intention_2017.csv",
         help="Path to output CSV file"
     )
     args = parser.parse_args()

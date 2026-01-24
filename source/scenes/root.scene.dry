@@ -19,7 +19,42 @@ Q.president = "Artur Mas";
 Q.president_party = "ciu";
 Q.president_party_disp = "<span style='color: #002782; font-weight: bold;'>CiU</span>";
 Q.president_disp = "<span style='color: #002782;'>Artur Mas</span>";
+Q.president_gender = "m";
 Q.cat_coalition_disp = "<span style='color: #002782;'>CiU minority government</span>";
+Q.cat_coalition_dissent = 0;
+
+Q.vicepresident = "Joana Ortega";
+Q.vicepresident_party = "<span style='color: #002782; font-weight: bold;'>CiU</span>";
+Q.vicepresident_party_disp = "<span style='color: #002782; font-weight: bold;'>CiU</span>";
+Q.vicepresident_gender = "f";
+Q.economy_minister = "Andreu Mas-Colell";
+Q.economy_minister_party = "ciu";
+Q.economy_minister_party_disp = "<span style='color: #002782; font-weight: bold;'>CiU</span>";
+Q.economy_minister_gender = "m";
+Q.health_minister = "Boi Ruiz";
+Q.health_minister_party = "i";
+Q.health_minister_party_disp = "<span style='color: #464646; font-weight: bold;'>indp.</span>";
+Q.health_minister_gender = "m";
+Q.interior_minister = "Felip Puig";
+Q.interior_minister_party = "ciu";
+Q.interior_minister_party_disp = "<span style='color: #002782; font-weight: bold;'>CiU</span>";
+Q.interior_minister_gender = "m";
+Q.education_minister = "Irene Rigau";
+Q.education_minister_party = "ciu";
+Q.education_minister_party_disp = "<span style='color: #002782; font-weight: bold;'>CiU</span>";
+Q.education_minister_gender = "f";
+Q.foreign_minister = "Joana Ortega";
+Q.foreign_minister_party = "ciu";
+Q.foreign_minister_party_disp = "<span style='color: #002782; font-weight: bold;'>CiU</span>";
+Q.foreign_minister_gender = "f";
+Q.justice_minister = "Pilar Fernández";
+Q.justice_minister_party = "i";
+Q.justice_minister_party_disp = "<span style='color: #464646; font-weight: bold;'>indp.</span>";
+Q.justice_minister_gender = "f";
+Q.territory_minister = "Lluís Miquel Recoder";
+Q.territory_minister_party = "ciu";
+Q.territory_minister_party_disp = "<span style='color: #002782; font-weight: bold;'>CiU</span>";
+Q.territory_minister_gender = "m";
 
 Q.spanish_pm = "Mariano Rajoy";
 Q.spanish_pm_party = "pp";
@@ -45,7 +80,6 @@ Q.gdp_growth_change = '<img src="img/arrowdown.png"> ';
 Q.generalitat_surplus = -2.3; //percent
 Q.generalitat_surplus_change = '<img src="img/arrowup.png""> ';
 Q.public_debt = 25;
-Q.public_debt_qualifier = "<span style='color: #ffa200ff;'>mediocre</span>";
 Q.unemployment = 22.5;
 Q.unemployment_change = '<img src="img/arrowdown.png" style="transform: rotate(180deg);"> ';
 
@@ -133,34 +167,46 @@ Q.international_eu_opinion = 1;
 
 // Demographics
 Q.parlament_demographics = ["buss", "ind", "middle", "young", "retired", "rural", "unemployed"]
-Q.parlament_barcelona_middle_pop = 1246;
-Q.parlament_barcelona_retired_pop = 1830;
-Q.parlament_barcelona_young_pop = 1351;
-Q.parlament_barcelona_unemployed_pop = 847;
-Q.parlament_barcelona_buss_pop = 636;
-Q.parlament_barcelona_rural_pop = 699;
-Q.parlament_barcelona_ind_pop = 1525;
-Q.parlament_girona_middle_pop = 627;
-Q.parlament_girona_retired_pop = 1702;
-Q.parlament_girona_young_pop = 1395;
-Q.parlament_girona_unemployed_pop = 771;
-Q.parlament_girona_buss_pop = 744;
-Q.parlament_girona_rural_pop = 1891;
-Q.parlament_girona_ind_pop = 927;
-Q.parlament_lleida_middle_pop = 552;
-Q.parlament_lleida_retired_pop = 1867;
-Q.parlament_lleida_young_pop = 1386;
-Q.parlament_lleida_unemployed_pop = 556;
-Q.parlament_lleida_buss_pop = 468;
-Q.parlament_lleida_rural_pop = 2673;
-Q.parlament_lleida_ind_pop = 793;
-Q.parlament_tarragona_middle_pop = 809;
-Q.parlament_tarragona_retired_pop = 1777;
-Q.parlament_tarragona_young_pop = 1353;
-Q.parlament_tarragona_unemployed_pop = 858;
-Q.parlament_tarragona_buss_pop = 547;
-Q.parlament_tarragona_rural_pop = 1445;
-Q.parlament_tarragona_ind_pop = 1236;
+Q.parlament_barcelona_middle_pop = 135766667613.938;
+Q.parlament_barcelona_retired_pop = 199400482932.188;
+Q.parlament_barcelona_underage_pop = 199836330982.313;
+Q.parlament_barcelona_young_pop = 147207678929.719;
+Q.parlament_barcelona_unemployed_pop = 92290824613.969;
+Q.parlament_barcelona_buss_pop = 69299839969.875;
+Q.parlament_barcelona_rural_pop = 76164446759.344;
+Q.parlament_barcelona_ind_pop = 166167069110.156;
+Q.parlament_catalunya_middle_pop = 546063546875.0;
+Q.parlament_catalunya_retired_pop = 912957856250.0;
+Q.parlament_catalunya_underage_pop = 932585946875.0;
+Q.parlament_catalunya_young_pop = 683460181250.0;
+Q.parlament_catalunya_unemployed_pop = 412693187500.0;
+Q.parlament_catalunya_buss_pop = 320088862500.0;
+Q.parlament_catalunya_rural_pop = 501774521875.0;
+Q.parlament_catalunya_ind_pop = 708121115625.0;
+Q.parlament_girona_middle_pop = 3155593.031;
+Q.parlament_girona_retired_pop = 8565900.063;
+Q.parlament_girona_underage_pop = 9778815.406;
+Q.parlament_girona_young_pop = 7020817.031;
+Q.parlament_girona_unemployed_pop = 3880322.531;
+Q.parlament_girona_buss_pop = 3744435.75;
+Q.parlament_girona_rural_pop = 9517107.531;
+Q.parlament_girona_ind_pop = 4665446.156;
+Q.parlament_lleida_middle_pop = 185220.465;
+Q.parlament_lleida_retired_pop = 626461.245;
+Q.parlament_lleida_underage_pop = 605657.498;
+Q.parlament_lleida_young_pop = 465064.428;
+Q.parlament_lleida_unemployed_pop = 186562.642;
+Q.parlament_lleida_buss_pop = 157034.742;
+Q.parlament_lleida_rural_pop = 896909.967;
+Q.parlament_lleida_ind_pop = 266086.646;
+Q.parlament_tarragona_middle_pop = 4071570.594;
+Q.parlament_tarragona_retired_pop = 8943363.344;
+Q.parlament_tarragona_underage_pop = 9663060.0;
+Q.parlament_tarragona_young_pop = 6809437.594;
+Q.parlament_tarragona_unemployed_pop = 4318179.938;
+Q.parlament_tarragona_buss_pop = 2752965.531;
+Q.parlament_tarragona_rural_pop = 7272459.219;
+Q.parlament_tarragona_ind_pop = 6220594.875;
 
 
 // Congreso situation
@@ -213,13 +259,15 @@ go-to: start_menu_2
 
 - @start: <span style="font-size: 1.1em;">Start game</span>
 - @election_simulation: <span style="font-size: 1.1em;">Election simulation</span>
-- @game_over.achievements: <span style="font-size: 1.1em;">Achievements</span>
+# - @game_over.achievements: <span style="font-size: 1.1em;">Achievements</span>
 - @language: <span style="font-size: 1.1em;">Language</span>
-- @about: <span style="font-size: 1.1em;">About - v1.0 (1.2025)</span>
+- @about: <span style="font-size: 1.1em;">About</span> <span style="margin-left: 0.5em; font-style: italic; color: gray;">v0.1.0 (01.2026)</span>
 - @credits: <span style="font-size: 1.1em;">Credits</span>
 
 
 @start
+choose-if: 1==0
+unavailable-subtitle: Route to Ítaca is currently in its early development stages. Check back soon(-ish) for the full experience!
 on-arrival: {!
 Q.started = 1;
 // time elapsed (in months)
@@ -908,7 +956,7 @@ Q.vox_relations = 0;
 Q.pxc_relations = 0;
 
 // CUP Advisors
-// Radical Anticapitalists
+// Radicals
 Q.anna_gabriel_advisor = 1;
 Q.anna_gabriel_advisor_available = 1;
 Q.carles_riera_advisor_available = 1;

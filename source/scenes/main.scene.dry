@@ -1,5 +1,5 @@
 title: Next month
-set-bg: img/parlament_de_catalunya.jpg
+set-bg: img/tapies.jpg
 is-hand: true
 on-arrival: {!
 if (Q.advisor_action_timer <= 0) {
@@ -23,7 +23,7 @@ max-cards: 5
 [? if year = 2018 : [+ month : events2018 +] ?]
 [? if year = 2019 : [+ month : events2019 +] ?]
 
-#Here, the main deck will be displayed. Clicking on the deck draws a card into your hand. Clicking on a card activates that card.
+# Here, the main deck will be displayed. Clicking on the deck draws a card into your hand. Clicking on a card activates that card.
 
 
 - @party_erc
@@ -34,7 +34,7 @@ max-cards: 5
 - @cup_shuffle_leadership_pinned
 
 @main_easy
-set-bg: img/parlament_de_catalunya.jpg
+set-bg: img/tapies.jpg
 is-hand: true
 on-arrival: {!
 if (Q.advisor_action_timer <= 0) {
@@ -69,7 +69,7 @@ max-cards: 6
 
 
 @main_hard
-set-bg: img/parlament_de_catalunya.jpg
+set-bg: img/tapies.jpg
 is-hand: true
 on-arrival: {!
 if (Q.advisor_action_timer <= 0) {

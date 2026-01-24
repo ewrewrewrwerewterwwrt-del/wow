@@ -13,8 +13,13 @@ import matplotlib.pyplot as plt
 
 def load_ceo_data(filepath):
     """Load and preprocess the CEO data"""
-    df = pd.read_csv(filepath)
-    return df
+    try:
+        df = pd.read_csv(filepath)
+        return df
+    except Exception as e:
+        df = pd.read_csv(filepath, delimiter=';')
+        return df
+
 
 def classify_socioeconomic(df, current_year):
     """Classify respondents into socioeconomic categories"""
@@ -23,7 +28,7 @@ def classify_socioeconomic(df, current_year):
     def classify_habitat(habitat):
         if pd.isna(habitat):
             return 'middle'  # default
-        if '<2.000' in str(habitat) or 'De 2.001 a 10.000' in str(habitat) or '2.001-10.000' in str(habitat):
+        if '<2.000' in str(habitat) or 'De 2.001 a 10.000' in str(habitat) or '2.001-10.000' in str(habitat) or str(habitat).strip() == '1' or str(habitat).strip() == '2': # 2017 data again being an ass
             return 'rural'
         elif 'De 10.001 a 50.000' in str(habitat):
             return 'middle' 
@@ -85,6 +90,42 @@ def classify_socioeconomic(df, current_year):
             row.get('combined_employment'), row.get('C500'), row.get(edat_column_name, 0)
         ), axis=1)
     
+    elif current_year == 2017:
+        # The 2017 is the most cryptic of all, all with fuckass weird codes.
+        def employment_2017(row):
+            c401 = str(row.get('C401', '0')).strip()
+            if c401 == '2':
+                return 'atur'
+            c401a = str(row.get('C401A', '0')).strip()
+            if c401a == '1' or c401a == '3':
+                return 'jubilat'
+            elif c401a == '2' or c401a == '4':
+                return 'atur'
+            
+            c401b = str(row.get('C401B', '0')).strip()
+            if c401b == '1' or c401b == '2':
+                return 'compte propi'
+            return 'treballa'
+        
+        def education_2017(row):
+            c500 = str(row.get('C500', '')).strip()
+            # These distinctions then get further simplified, but at least we have some idea while debugging
+            if c500 in ['1', '2', '3', '4', '5']:
+                return 'ESO'
+            elif c500 in ['6', '7']:
+                return 'FP'
+            elif c500 in ['8', '9', '10', '11']:
+                return 'Universitari'
+            return None
+        
+        socio_class = df.apply(lambda row: classify_employment(
+            employment_2017(row), education_2017(row), row.get(edat_column_name, 0)
+        ), axis=1)
+
+    else:
+        raise ValueError("Unsupported analysis year for socioeconomic classification.")
+
+    
     # Override with habitat for rural
     socio_class = np.where(habitat_class == 'rural', 'rural', socio_class)
     
@@ -100,7 +141,11 @@ def classify_provinces(df):
         'Barcelona': 'barcelona',
         'Girona': 'girona', 
         'Lleida': 'lleida',
-        'Tarragona': 'tarragona'
+        'Tarragona': 'tarragona',
+        8: 'barcelona',
+        17: 'girona',
+        25: 'lleida',
+        43: 'tarragona',
     }
     return df['PROVI'].map(province_map)
 
@@ -159,6 +204,27 @@ def extract_vote_intention(df, analysis_year):
             'unio': 'unio',
         })
 
+    if analysis_year == 2017:
+        party_map.update({
+            '1': 'ppc',
+            '2': 'jxcat',
+            '3': 'erc',
+            '4': 'psc',
+            '5': 'icv',
+            '6': 'cs',
+            '8': 'si',
+            '9': 'ac',
+            '10': 'cup',
+            '12': 'cecp',
+            '13': 'cecp',
+            '14': 'jxcat',
+            '15': 'jxcat', # this answer is jxsi but by bundling it with jxcat we actually get closer to the real results
+            '16': 'cecp',
+            '17': 'jxcat',
+            '18': 'cecp',
+            '20': 'jxcat',
+        })
+
     def normalize_party(val):
         if pd.isna(val):
             return None
@@ -169,6 +235,10 @@ def extract_vote_intention(df, analysis_year):
         column_1 = 'P38B'
         column_2 = 'P37'
         column_3 = 'P24'
+    elif analysis_year == 2017:
+        column_1 = 'P37'
+        column_2 = 'P37_LITERALS' 
+        column_3 = 'P38B'
     else:
         column_1 = 'P21'
         column_2 = 'P32'
@@ -292,6 +362,7 @@ def visualize_results(province_breakdown):
         'erc': '#ff8000',
         'cup': '#ffed00',
         'jxsi': '#3ab6a5',
+        'jxcat': '#ed5975',
         'pdcat': '#0081c2',
         'junts': '#20c0b2',
         'cs': '#f6c300',
@@ -367,7 +438,7 @@ def visualize_results(province_breakdown):
     plt.show()
     
 
-def main(csv_filepath, out_filepath, analysis_year):
+def main(csv_filepath, out_filepath, analysis_year, visuals=False):
     """Main function to process CEO 2012/2015 data"""
     
     print("Loading CEO data...")
@@ -389,7 +460,8 @@ def main(csv_filepath, out_filepath, analysis_year):
     print(f"\nSaved province-class-party breakdown to {out_filepath}")
 
     # Visualize results (pass DataFrame)
-    visualize_results(province_breakdown)
+    if visuals:
+        visualize_results(province_breakdown)
     
     return results, province_breakdown
 
@@ -409,8 +481,8 @@ if __name__ == "__main__":
         analysis_year = sys.argv[3]
     else:
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        csv_file = os.path.join(script_dir, 'ceo_raw', 'cat_data_2015_2.csv') # For 2015 use _2 since its post-election!
-        out_filepath = os.path.join(script_dir, 'clean', 'vote_intention_2015_2.csv')
-        analysis_year = 2015
+        csv_file = os.path.join(script_dir, 'ceo_raw', 'cat_data_2017.csv') # For 2015 use _2 since its post-election!
+        out_filepath = os.path.join(script_dir, 'clean', 'vote_intention_2017.csv')
+        analysis_year = 2017
 
     results, breakdown = main(csv_file, out_filepath, analysis_year)

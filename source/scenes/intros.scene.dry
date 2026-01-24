@@ -57,6 +57,7 @@ go-to: 2012_main
 @2012_main
 new-page: true
 go-to: main if difficulty = 0; main.main_easy if difficulty < 0; main.main_hard if difficulty > 0
+set-bg: img/tapies.jpg
 
 = August 2012
 

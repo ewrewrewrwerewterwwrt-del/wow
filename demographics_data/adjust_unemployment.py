@@ -40,7 +40,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "output_file",
         nargs="?",
-        default="demographics_data/clean/ok_population_weights_2018.csv",
+        default="demographics_data/clean/ok_population_weights_2017.csv",
         help="Path to output CSV file"
     )
     parser.add_argument(
@@ -50,6 +50,8 @@ if __name__ == "__main__":
         help="Adjustment year"
     )
     args = parser.parse_args()
+
+
     
     if args.adjustment_year == "2015":
         real_unemployment = {
@@ -59,7 +61,7 @@ if __name__ == "__main__":
             'Lleida': 15.0,
             'Tarragona': 21.9,
         }
-    elif args.adjustment_year == "2018":
+    elif args.adjustment_year == "2018": # elections were in Dec 2017, data from early 2018
         real_unemployment = {
             'Catalunya': 11.5,
             'Barcelona': 11.1,

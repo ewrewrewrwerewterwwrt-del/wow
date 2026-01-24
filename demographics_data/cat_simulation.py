@@ -354,6 +354,7 @@ class CataloniaElectionSimulator:
             'erc': '#ff8000',
             'cup': '#ffed00',
             'jxsi': '#3ab6a5',
+            'jxcat': '#ed5975',
             'pdcat': '#0081c2',
             'junts': '#20c0b2',
             'cs': '#f6c300',
@@ -509,19 +510,19 @@ if __name__ == "__main__":
     parser.add_argument(
         "input_file",
         nargs="?",
-        default="demographics_data/clean/ok_population_weights_2015.csv",
+        default="demographics_data/clean/ok_population_weights_2017.csv",
         help="Path to input CSV file"
     )
     parser.add_argument(
         "votes_file",
         nargs="?",
-        default="demographics_data/clean/ok_vote_intention_2015.csv",
+        default="demographics_data/clean/ok_vote_intention_2017.csv",
         help="Path to output CSV file"
     )
     parser.add_argument(
         "output_file",
         nargs="?",
-        default="demographics_data/simulation_results/cat_2015_results.csv",
+        default="demographics_data/simulation_results/cat_2017_results.csv",
         help="Path to output CSV file"
     )
     args = parser.parse_args()

@@ -3,7 +3,6 @@ new-page: true
 on-arrival: {!
 Q.last_advisor_action = 0;
 Q.last_cabinet_action = 0;
-// make sure no stat is below 0. FIXME!
 
 // clamp variables to their ranges
 if (Q.public_debt < 0) Q.public_debt = 0;
@@ -22,10 +21,6 @@ if (Q.cat_spa_relations < 0) Q.cat_spa_relations = 0;
 if (Q.cat_spa_relations > 100) Q.cat_spa_relations = 100;
 
 // round to integers... (if needed??)
-
-// re-calculate party support FIXME!
-
-
 
 // set faction strength/dissent to 0
 // re-calculate dissent.

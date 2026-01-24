@@ -13,25 +13,25 @@ Changing the leadership of the party might be necessary to adapt to the changing
 
 Removing advisors will increase dissent from their faction of the party, while selecting advisors will increase a faction's strength.
 
-- @rm_main: Remove advisors
-- @add_advisors: Add advisors
+- @rm_main_cup: Remove advisors
+- @add_advisors_cup: Add advisors
 - @root: Don't change the party leadership
 - @easy_discard
 
-@rm_main
+@rm_main_cup
 title: Remove advisors
 tags: cup_endavant, cup_institutional, cup_municipalism
 frequency: 1
 
 - #cup_rm_advisor
-- @add_advisors: Add advisors
+- @add_advisors_cup: Add advisors
 
-@remove_none
+@remove_none_cup
 title: Stop changing advisors
 go-to: root
 tags: cup_rm_advisor
 
-@add_advisors
+@add_advisors_cup
 title: Add advisors
 unavailable-subtitle: Maximum of [+ max_advisors +] advisors.
 choose-if: n_advisors < max_advisors
@@ -45,8 +45,8 @@ frequency: 1
 - @cup_endavant: Add from Radical Anticapitalists
 - @cup_institutional: Add from Institutional Fighters
 - @cup_municipalism: Add from Municipalists, Assamblearies, and the Third Sector
-- @rm_main: Remove advisors instead
-- @remove_none: Stop changing advisors
+- @rm_main_cup: Remove advisors instead
+- @remove_none_cup: Stop changing advisors
 
 @cup_endavant
 subtitle: The historical roots of the party come from the fight in the streets, workplaces, and local towns and neighborhoods. Some defend that it is there where it should remain in force.
@@ -255,7 +255,7 @@ title: Remove Anna Gabriel
 view-if: anna_gabriel_advisor = 1
 on-arrival: anna_gabriel_advisor = 0; n_advisors -= 1;
 tags: cup_rm_advisor
-go-to: rm_main
+go-to: rm_main_cup
 
 Anna Gabriel has been removed as an advisor.
 
@@ -264,7 +264,7 @@ title: Remove Carles Riera
 view-if: carles_riera_advisor = 1
 on-arrival: carles_riera_advisor = 0; n_advisors -= 1;
 tags: cup_rm_advisor
-go-to: rm_main
+go-to: rm_main_cup
 
 Carles Riera has been removed as an advisor.
 
@@ -273,7 +273,7 @@ title: Remove Mireia Vehí
 view-if: mireia_vehi_advisor = 1
 on-arrival: mireia_vehi_advisor = 0; n_advisors -= 1;
 tags: cup_rm_advisor
-go-to: rm_main
+go-to: rm_main_cup
 
 Mireia Vehí has been removed as an advisor.
 
@@ -282,7 +282,7 @@ title: Remove Vidal Aragonés
 view-if: vidal_aragones_advisor = 1
 on-arrival: vidal_aragones_advisor = 0; n_advisors -= 1;
 tags: cup_rm_advisor
-go-to: rm_main
+go-to: rm_main_cup
 
 Vidal Aragonés has been removed as an advisor.
 
@@ -291,7 +291,7 @@ title: Remove Natalia Sànchez
 view-if: natalia_sanchez_advisor = 1
 on-arrival: natalia_sanchez_advisor = 0; n_advisors -= 1;
 tags: cup_rm_advisor
-go-to: rm_main
+go-to: rm_main_cup
 
 Natalia Sànchez has been removed as an advisor.
 
@@ -300,7 +300,7 @@ title: Remove Quim Arrufat
 view-if: quim_arrufat_advisor = 1
 on-arrival: quim_arrufat_advisor = 0; n_advisors -= 1;
 tags: cup_rm_advisor
-go-to: rm_main
+go-to: rm_main_cup
 
 Quim Arrufat has been removed as an advisor.
 
@@ -309,7 +309,7 @@ title: Remove Eulàlia Reguant
 view-if: eulalia_reguant_advisor = 1
 on-arrival: eulalia_reguant_advisor = 0; n_advisors -= 1;
 tags: cup_rm_advisor
-go-to: rm_main
+go-to: rm_main_cup
 
 Eulàlia Reguant has been removed as an advisor.
 
@@ -318,7 +318,7 @@ title: Remove Benet Salellas
 view-if: benet_salellas_advisor = 1
 on-arrival: benet_salellas_advisor = 0; n_advisors -= 1;
 tags: cup_rm_advisor
-go-to: rm_main
+go-to: rm_main_cup
 
 Benet Salellas has been removed as an advisor.
 
@@ -327,7 +327,7 @@ title: Remove Albert Botran
 view-if: albert_botran_advisor = 1
 on-arrival: albert_botran_advisor = 0; n_advisors -= 1;
 tags: cup_rm_advisor
-go-to: rm_main
+go-to: rm_main_cup
 
 Albert Botran has been removed as an advisor.
 
@@ -336,7 +336,7 @@ title: Remove Antonio Baños
 view-if: antonio_banos_advisor = 1
 on-arrival: antonio_banos_advisor = 0; n_advisors -= 1;
 tags: cup_rm_advisor
-go-to: rm_main
+go-to: rm_main_cup
 
 Antonio Baños has been removed as an advisor.
 
@@ -345,7 +345,7 @@ title: Remove David Fernàndez
 view-if: david_fernandez_advisor = 1
 on-arrival: david_fernandez_advisor = 0; n_advisors -= 1;
 tags: cup_rm_advisor
-go-to: rm_main
+go-to: rm_main_cup
 
 David Fernàndez has been removed as an advisor.
 
@@ -354,7 +354,7 @@ title: Remove Mireia Boya
 view-if: mieria_boya_advisor = 1
 on-arrival: mieria_boya_advisor = 0; n_advisors -= 1;
 tags: cup_rm_advisor
-go-to: rm_main
+go-to: rm_main_cup
 
 Mireia Boya has been removed as an advisor.
 
@@ -363,7 +363,7 @@ title: Remove Dolors Sabater
 view-if: dolors_sabater_advisor = 1
 on-arrival: dolors_sabater_advisor = 0; n_advisors -= 1;
 tags: cup_rm_advisor
-go-to: rm_main
+go-to: rm_main_cup
 
 Dolors Sabater has been removed as an advisor.
 
@@ -372,7 +372,7 @@ title: Remove Gabriela Serra
 view-if: gabriela_serra_advisor = 1
 on-arrival: gabriela_serra_advisor = 0; n_advisors -= 1;
 tags: cup_rm_advisor
-go-to: rm_main
+go-to: rm_main_cup
 
 Gabriela Serra has been removed as an advisor.
 
@@ -381,7 +381,7 @@ title: Remove Pau Juvillà
 view-if: pau_juvilla_advisor = 1
 on-arrival: pau_juvilla_advisor = 0; n_advisors -= 1;
 tags: cup_rm_advisor
-go-to: rm_main
+go-to: rm_main_cup
 
 Pau Juvillà has been removed as an advisor.
 
