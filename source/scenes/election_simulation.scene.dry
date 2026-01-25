@@ -2113,18 +2113,18 @@ if (window && d3) {
 {!</table>!}
 
 {!<div style="width: 95%;text-align: center; margin-top:-0.75em;">!} **Turnout:**  [+ parlament_participation_pc +]% ([+ parlament_participation_delta +]) {!</div>!}
-{!<div style="width: 95%; justify-content: center; margin-top:-1em; display:flex;"><div class="box" style="width: 70%; border-radius: 3px; background-color: #ccc"><div class="box" style="display: inline-block; height: 1em; background-color: dimgrey; margin-right: 0.5em; border-radius: 3px; width:!}[+ parlament_participation_pc+]{!%;"></div></div></div>!}
+{!<div style="width: 95%; justify-content: center; display:flex;"><div class="box" style="width: 70%; border-radius: 3px; background-color: #ccc"><div class="box" style=" height: 1em; background-color: dimgrey; margin-right: 0.5em; border-radius: 3px; width:!}[+ parlament_participation_pc+]{!%;"></div></div></div>!}
 
 {!<table style='border-spacing: 0px; margin-right: 1em; margin-left: 1em; width:95%; table-layout: fixed;'>!}
 {!<tr><td style='width: !}[+ independence_parlament_pv +]{!%'>Independence</td><td style='text-align: center; width: !}[+ nonaligned_parlament_pv +]{!%'>Unaligned</td><td style='text-align: right; width: !}[+ unionist_parlament_pv +]{!%'>Union</td></tr>!}
 {!<tr><td style='height: 2em; background-color: #008000; color: white; text-align: center; border-radius: 3px 0 0 3px;'>!}**[+ independence_parlament_pv +]%**{!</td><td style='background-color: #b1b0aeff; color: black; text-align: center'>!}**[+ nonaligned_parlament_pv +]%**{!</td><td style='background-color: #fe0101; color: white; text-align: center; border-radius: 0 3px 3px 0;'>!}**[+ unionist_parlament_pv +]%**{!</td></tr>!}
 {!</table>!}
-{!<div style="font-style: italic; margin-top: -1em; margin-left: 3em">Popular vote</div>!}
+{!<div style="font-style: italic; margin-left: 3em">Popular vote</div>!}
 
 {!<table style='border-spacing: 0px; margin-right: 1em; margin-left: 1em; width:95%; table-layout: fixed; margin-top:-0.75em;'>!}
 {!<tr><td style='overflow:hidden; white-space: nowrap; width: !}[+ independence_parlament_spc +]{!%; height: 2em; background-color: #008000; color: white; text-align: center; border-radius: 3px 0 0 3px;'>!}**[+ independence_parlament_s+]** ([+ independence_parlament_spc +]%) {!</td><td style='overflow:hidden; white-space: nowrap; width: !}[+ nonaligned_parlament_spc +]{!%; background-color: #b1b0aeff; color: black; text-align: center'>!}**[+ nonaligned_parlament_s+]** ([+ nonaligned_parlament_spc +]%) {!</td><td style='overflow:hidden; white-space: nowrap; width: !}[+ unionist_parlament_spc +]{!%; background-color: #fe0101; color: white; text-align: center; border-radius: 0 3px 3px 0;'>!}**[+ unionist_parlament_s+]** ([+ unionist_parlament_spc +]%) {!</td></tr>!}
 {!</table>!}
-{!<div style="font-style: italic; margin-top: -1em; margin-left: 3em">Parlament control</div>!}
+{!<div style="font-style: italic; margin-left: 3em">Parlament control</div>!}
 
 [? if ciu_parlament_s > 0 : Note: <span style='color: #002782; font-weight: bold;width:95%;'>CiU</span> has been unclear about their position on independence, so it is counted as unaligned. ?]
 
@@ -2504,7 +2504,7 @@ if (window && d3) {
 [? if te_congreso_showviz: {!<tr><td><div class="box" style='background-color: #007351'> </div> !} ¡TE! {!</td><td style='text-align: right;'>!}[+ te_congreso_pv +]% {!</td><td>!} [+ te_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ te_congreso_s +] {!</td><td>!} [+ te_congreso_s_delta +] {!</td>!}?]
 {!</table>!}
 {!<div style="width: 95%;text-align: center; margin-top:-0.75em;">!} **Turnout:**  [+ congreso_participation_pc +]% ([+ congreso_participation_delta +]) {!</div>!}
-{!<div style="width: 95%; justify-content: center; margin-top:-1em; display:flex;"><div class="box" style="width: 70%; border-radius: 3px; background-color: #ccc"><div class="box" style="display: inline-block; height: 1em; background-color: dimgrey; margin-right: 0.5em; border-radius: 3px; width:!}[+ congreso_participation_pc+]{!%;"></div></div></div>!}
+{!<div style="width: 95%; justify-content: center; display:flex;"><div class="box" style="width: 70%; border-radius: 3px; background-color: #ccc"><div class="box" style="height: 1em; background-color: dimgrey; margin-right: 0.5em; border-radius: 3px; width:!}[+ congreso_participation_pc+]{!%;"></div></div></div>!}
 
 Author's note: Congreso election simulations are more imperfect than Parlament ones, but the main goal of the in-game dynamic is to capture the general trends and the possible government formations, pacts, and deadlocks, which is mostly achieved.
 

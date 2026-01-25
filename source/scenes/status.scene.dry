@@ -145,20 +145,20 @@ title: Government
 on-arrival: {!
 !}
 
-= GOVERNMENT
-[+ cat_coalition_disp +]
+= [+ cat_coalition_disp +]
+
 Coalition dissent: [+ cat_coalition_dissent : dissent +]
 
 [? if president_gender = "m": President ?][? if president_gender = "f": Presidenta ?][+ president_disp +] ([+ president_party_disp +])
 [? if vicepresident_gender = "m": Vicepresident ?][? if vicepresident_gender = "f": Vicepresidenta ?][+ vicepresident +] ([+ vicepresident_party_disp +])
 Ministeries:
-<table style="width:110%;margin-left:-0.5em;display:block;">
+<table style="width:110%;margin-left:-0.5em;">
 <tr><td>Economy<br>([+ economy_minister_party_disp +])</td><td>[+ economy_minister +]</td></tr>
 <tr><td>Health<br>([+ health_minister_party_disp +])</td><td>[+ health_minister +]</td></tr>
 <tr><td>Education<br>([+ education_minister_party_disp +])</td><td>[+ education_minister +]</td></tr>
 <tr><td>Interior<br>([+ interior_minister_party_disp +])</td><td>[+ interior_minister +]</td></tr>
 <tr><td>Foreign Affairs<br>([+ foreign_minister_party_disp +])</td><td>[+ foreign_minister +]</td></tr>
-<tr><td>Justice<br>([+ justice_minister_party_disp +])</td><td>[+ justice_minister +]</td></tr>
+<tr><td>Business and Labour<br>([+ bnl_minister_party_disp +])</td><td>[+ bnl_minister +]</td></tr>
 <tr><td>Territory<br>([+ territory_minister_party_disp +])</td><td>[+ territory_minister +]</td></tr>
 </table>
 
