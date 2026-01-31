@@ -10,57 +10,47 @@ Q.year = 2012;
 Q.month = 8;
 Q.week = 1;
 Q.rubicon = 0;
-Q.player_party_name = "<span style='font-style: italic;'>Not party chosen</span>";
-Q.player_party = "";
-Q.position_disp = "??";
 
 // start situation
 Q.president = "Artur Mas";
 Q.president_party = "ciu";
-Q.president_party_disp = "<span style='color: #002782; font-weight: bold;'>CiU</span>";
-Q.president_disp = "<span style='color: #002782;'>Artur Mas</span>";
 Q.president_gender = "m";
-Q.cat_coalition_disp = "<span style='color: #002782;'>CiU minority government</span>";
+Q.cat_coalition_disp = "CiU <span style='color: var(--ciu);'>minority government</span>";
 Q.cat_coalition_dissent = 0;
 
+Q.speaker = "Núria de Gispert";
+Q.speaker_party = "ciu";
+Q.speaker_gender = "f";
+
 Q.vicepresident = "Joana Ortega";
-Q.vicepresident_party = "<span style='color: #002782; font-weight: bold;'>CiU</span>";
-Q.vicepresident_party_disp = "<span style='color: #002782; font-weight: bold;'>CiU</span>";
+Q.vicepresident_party = "ciu";
 Q.vicepresident_gender = "f";
 Q.economy_minister = "Andreu Mas-Colell";
 Q.economy_minister_party = "ciu";
-Q.economy_minister_party_disp = "<span style='color: #002782; font-weight: bold;'>CiU</span>";
 Q.economy_minister_gender = "m";
 Q.health_minister = "Boi Ruiz";
-Q.health_minister_party = "i";
-Q.health_minister_party_disp = "<span style='color: #464646; font-weight: bold;'>indp.</span>";
+Q.health_minister_party = "indp.";
 Q.health_minister_gender = "m";
 Q.interior_minister = "Felip Puig";
 Q.interior_minister_party = "ciu";
-Q.interior_minister_party_disp = "<span style='color: #002782; font-weight: bold;'>CiU</span>";
 Q.interior_minister_gender = "m";
 Q.education_minister = "Irene Rigau";
 Q.education_minister_party = "ciu";
-Q.education_minister_party_disp = "<span style='color: #002782; font-weight: bold;'>CiU</span>";
 Q.education_minister_gender = "f";
 Q.foreign_minister = "Joana Ortega";
 Q.foreign_minister_party = "ciu";
-Q.foreign_minister_party_disp = "<span style='color: #002782; font-weight: bold;'>CiU</span>";
 Q.foreign_minister_gender = "f";
-Q.justice_minister = "Pilar Fernández";
-Q.justice_minister_party = "i";
-Q.justice_minister_party_disp = "<span style='color: #464646; font-weight: bold;'>indp.</span>";
-Q.justice_minister_gender = "f";
 Q.territory_minister = "Lluís Miquel Recoder";
 Q.territory_minister_party = "ciu";
-Q.territory_minister_party_disp = "<span style='color: #002782; font-weight: bold;'>CiU</span>";
 Q.territory_minister_gender = "m";
+Q.bnl_minister = "Francesc Xavier Mena";
+Q.bnl_minister_party = "indp.";
+Q.bnl_minister_gender = "m";
 
 Q.spanish_pm = "Mariano Rajoy";
+Q.spanish_pm_gender = "m";
 Q.spanish_pm_party = "pp";
-Q.spanish_pm_party_disp = "<span style='color: #1d84ce; font-weight: bold;'>PP</span>";
-Q.spanish_pm_disp = "<span style='color: #1d84ce;'>Mariano Rajoy</span>";
-Q.spanish_coalition_disp = "<span style='color: #1d84ce;'>PP majority government</span>";
+Q.spanish_coalition_disp = "PP <span style='color: var(--pp);'>majority government</span>";
 Q.spain_is_republic = 0; // lol
 
 Q.next_election_month = 12;
@@ -136,29 +126,112 @@ Q.fnc_parlament_pv = 0.0;
 Q.fnc_parlament_s = 0;
 
 // Initial party positions
-Q.ciu_ideology = "Centre-right Liberalism, Pact-Pragmatic";
+Q.ciu_ideology = "Liberal-Conservatism, Pact-Pragmatism";
 Q.ciu_leader = "Artur Mas";
+Q.cdc_leader = "Artur Mas";
+Q.cdc_ideology = "Centre-right Liberalism, Pact-Pragmatism";
 
-Q.erc_ideology = "Left Social Democracy, Republican";
+Q.unio_leader = "Josep Antoni Duran i Lleida";
+Q.unio_ideology = "Christian Democracy, Pact-Pragmatism";
+
+Q.erc_ideology = "Social Democracy, Separatism";
 Q.erc_leader = "Oriol Junqueras";
 
-Q.cup_ideology = "Anticapitalism, Unilateralist";
+Q.cup_ideology = "Anticapitalism, Unilateralism";
 Q.cup_leader = "David Fernàndez";
 
 Q.cs_leader = "Albert Rivera";
-Q.cs_ideology = "Liberal-Centrism, Centralist";
+Q.cs_ideology = "Neo-liberalism, Centralism";
 
 Q.si_leader = "Alfons López Tena";
-Q.si_ideology = "Centrist regeneration, Unilateralist";
+Q.si_ideology = "Transversal single-issue, Unilateralism";
 
 Q.psc_leader = "Pere Navarro";
-Q.psc_ideology = "Social Democracy, Federalist";
+Q.psc_ideology = "Centrist Social Democracy, Federalism";
 
 Q.ppc_leader = "Alícia Sánchez-Camacho";
-Q.ppc_ideology = "Conservatism, Centralist";
+Q.ppc_ideology = "Conservatism, Centralism";
 
 Q.icv_leader = "Joan Herrera";
-Q.icv_ideology = "Green Left, Right to Decide";
+Q.icv_ideology = "Ecosocialism, Federalism";
+
+
+// Initial ideologies for all parties, also future ones, just in case
+Q.pdcat_leader = "Artur Mas";
+Q.pdcat_ideology = "Centre-right Liberalism, Separatism";
+Q.dl_leader = "Artur Mas";
+Q.dl_ideology = "Centre-right Liberalism, Separatism";
+Q.jxsi_leader = "Artur Mas";
+Q.jxsi_ideology = "National coalition, Separatism";
+Q.jxcat_leader = "Carles Puigdemont";
+Q.jxcat_ideology = "Center-right Liberalism, Unilateralism";
+Q.junts_leader = "Carles Puigdemont";
+Q.junts_ideology = "Center-right Liberalism, Unilateralism";
+
+Q.pxc_leader = "Josep Anglada";
+Q.pxc_ideology = "Far-right Nationalism, Centralism";
+Q.fnc_leader = "Jordi Casacuberta";
+Q.fnc_ideology = "Far-right Nationalism, Unilateralism";
+
+Q.csqp_leader = "Lluís Rabell";
+Q.csqp_ideology = "Anti-austerity left, Plurinationalism";
+Q.cecp_leader = "Xavier Domènech";
+Q.cecp_ideology = "Democratic socialism, Autonomism";
+Q.ecp_leader = "Jéssica Albiach";
+Q.ecp_ideology = "Social democracy, Autonomism";
+Q.fr_leader = "Albano Dante Fachín";
+Q.fr_ideology = "Anticapitalism, Unilateralism";
+
+Q.psoe_leader = "Pedro Sánchez";
+Q.psoe_ideology = "Social Democracy, Autonomism";
+Q.pp_leader = "Mariano Rajoy";
+Q.pp_ideology = "Conservatism, Centralism";
+Q.vox_leader = "Santiago Abascal";
+Q.vox_ideology = "Far-right Nationalism, Hypercentralism";
+Q.upyd_leader = "Rosa Díez";
+Q.upyd_ideology = "Liberal reformism, Hypercentralism";
+
+Q.podemos_leader = "Pablo Iglesias";
+Q.podemos_ideology = "Anti-austerity left, Plurinationalism";
+Q.iu_leader = "Cayo Lara";
+Q.iu_ideology = "Democratic Socialism, Federalism";
+Q.mpais_leader = "Íñigo Errejón";
+Q.mpais_ideology = "Social Democracy, Federalism";
+Q.sumar_leader = "Yolanda Díaz";
+Q.sumar_ideology = "Social Democracy, Autonomism";
+Q.up_leader = "Pablo Iglesias";
+Q.up_ideology = "Anti-austerity left, Federalism";
+
+Q.pnv_leader = "Iñigo Urkullu";
+Q.pnv_ideology = "Christian Democracy, Basque Pact-Pragmatism";
+Q.ehbildu_leader = "Arnaldo Otegi";
+Q.ehbildu_ideology = "Democratic Socialism, Basque Separatism";
+Q.amaiur_leader = "Maite Aristegi";
+Q.amaiur_ideology = "Democratic Socialism, Basque Separatism";
+
+Q.gbai_leader = "Uxue Barkos";
+Q.gbai_ideology = "Social Democracy, Navarrese Separatism";
+Q.upn_leader = "Yolanda Barcina";
+Q.upn_ideology = "Conservatism, Navarrese Regionalism";
+Q.nsuma_leader = "Sergio Sayas";
+Q.nsuma_ideology = "Conservatism, Navarrese Regionalism";
+
+Q.ccpnc_leader = "Paulino Rivero";
+Q.ccpnc_ideology = "Centrist Liberalism, Canarian Regionalism";
+Q.compromis_leader = "Joan Baldoví";
+Q.compromis_ideology = "Social Democracy, Valencian Regionalism";
+Q.mes_leader = "Biel Barceló";
+Q.mes_ideology = "Democratic Socialism, Balearic Federalism";
+Q.bng_leader = "Ana Pontón";
+Q.bng_ideology = "Social Democracy, Galician Separatism";
+Q.nos_leader = "Carlos Morais";
+Q.nos_ideology = "Social Democracy, Galician Separatism";
+Q.fac_leader = "Cristina Coto";
+Q.fac_ideology = "Liberal Conservatism, Asturian Regionalism";
+Q.prc_leader = "Miguel Ángel Revilla";
+Q.prc_ideology = "Centrist Social Democracy, Cantabrian Regionalism";
+Q.te_leader = "Tomás Guitarte"
+Q.te_ideology = "Transversal single-issue, Teruel Regionalism";
 
 
 // International opinions
@@ -648,99 +721,6 @@ Q.erc_congreso_catalunya_support = 7.06;
 Q.cup_congreso_catalunya_support = 0;
 
 
-
-//////////////////////// Soviet stuff
-// party names are shortened in these variables solely for convenience (bc they show up everywhere)
-// governments don't necessarily have to be the provisional government
-Q.k_in_gov = 1;
-Q.m_in_gov = 0;
-Q.sr_in_gov = 0;
-Q.b_in_gov = 0;
-// splinter parties - Left-SR and Right-SR
-Q.left_sr_in_gov = 0;
-Q.right_sr_in_gov = 0;
-// Social-Democratic Internationalists (left-Menshevik/right-Bolshevik split)
-Q.internationalist_in_gov = 0;
-// Menshevik-Defensists
-Q.defensist_in_gov = 0;
-// right-kadet split - National-Liberals
-Q.conservative_in_gov = 0;
-// left-kadet split - Union of Democrats
-Q.democrats_in_gov = 0;
-// are we currently in an all-socialist coalition?
-Q.in_socialist_coalition = 0;
-
-Q.prime_minister = "Lvov";
-Q.prime_minister_party = "Independent"
-Q.agriculture_minister = "Shingarev";
-Q.agriculture_minister_party = "Kadet";
-Q.justice_minister = "Kerensky";
-Q.justice_minister_party = "Trudovik";
-Q.interior_minister = "Lvov";
-Q.interior_minister_party = "Independent";
-Q.finance_minister = "Tereshchenko";
-Q.finance_minister_party = "Independent";
-Q.war_minister = "Guchkov";
-Q.war_minister_party = "Octobrist";
-Q.foreign_minister = "Milyukov";
-Q.foreign_minister_party = "Kadet";
-Q.transport_minister = "Nekrasov";
-Q.transport_minister_party = "Kadet";
-// minister of trade and industry
-Q.trade_minister = "Konovalov";
-Q.trade_minister_party = "Progressive";
-// at the start, food and agriculture are the same, but there will be a separate food minister.
-Q.food_minister = "Shingarev";
-Q.food_minister_party = "Kadet";
-Q.education_minister = "Oldenburg";
-Q.education_minister_party = "Kadet";
-
-// government efficacy - affects efficacy of actions. 
-Q.prov_gov_efficacy = 0.7;
-
-// provisional government legitimacy
-Q.prov_gov_legitimacy = 80;
-
-// provisional government formations
-
-//////////////////////// Petrograd Soviet
-// party names are shortened in these variables solely for convenience (bc they show up everywhere)
-Q.m_in_soviet = 1;
-Q.sr_in_soviet = 1;
-Q.b_in_soviet = 1;
-Q.k_in_soviet = 0;
-
-// executive committee
-Q.m_in_exco = 1;
-Q.sr_in_exco = 1;
-Q.b_in_exco = 0;
-Q.k_in_exco = 0;
-
-// Soviet coalitions
-Q.in_defensist_coalition = 1;
-Q.in_internationalist_coalition = 0;
-Q.in_moderate_internationalist_coalition = 0;
-Q.in_revolutionary_coalition = 0;
-Q.in_anti_bolshevik_coalition = 0;
-Q.soviet_coalition_dissent = 0;
-
-// splinter parties
-Q.internationalist_in_exco = 0;
-Q.defensist_in_exco = 0;
-Q.left_sr_in_exco = 0;
-Q.right_sr_in_exco = 0;
-Q.communist_in_exco = 0;
-
-Q.soviet_chair = "Chkheidze";
-Q.soviet_chair_party = "Menshevik";
-
-// efficacy of petrograd soviet decisions
-Q.soviet_efficacy = 0.5;
-
-// cooperation between the soviet and the provisional government
-Q.soviet_cooperation = 0.7;
-
-
 /////////////////////// Timers
 Q.n_advisors = 3;
 
@@ -814,7 +794,7 @@ Q.pau_juvilla_advisor = 0;
 set-bg: img/3rd_October_2017.jpg
 new-page: true
 
-> * I like Catalan people because [...] they do stuff. *
+> * I like Catalan people because \[...\] they do stuff. *
 
  - Mariano Rajoy, President of the Government of Spain, 2015
 
@@ -830,21 +810,21 @@ For more information on the politics, government, and recent history of Cataloni
 
 @easy_mode
 title: Begin - Easy
-on-arrival: difficulty = -1; erc_resources = 4; ciu_resources = 4; cup_resources = 5; b_resources = 4; m_dues = 3; sr_dues = 3; b_dues = 3; m_k_relation = 50; m_sr_relation = 62; sr_k_relation = 50; m_split_threshold = 65; sr_split_threshold = 65; m_support_change = 10; sr_support_change = 10; m_discipline_change = 8; sr_discipline_change = 8; max_advisors = 5; ipr_change = 8;
+on-arrival: difficulty = -1; erc_resources = 4; ciu_resources = 4; cup_resources = 5; m_k_relation = 50; m_sr_relation = 62; sr_k_relation = 50; m_split_threshold = 65; sr_split_threshold = 65; m_support_change = 10; sr_support_change = 10; m_discipline_change = 8; sr_discipline_change = 8; max_advisors = 5; ipr_change = 8;
 go-to: party_selection
 
 What party shall you lead?
 
 @normal_mode
 title: Begin - Normal
-on-arrival: difficulty = 0; erc_resources = 3; ciu_resources = 3; cup_resources = 3; b_resources = 2; m_dues = 2; sr_dues = 2; b_dues = 2; m_k_relation = 40; m_sr_relation = 55; sr_k_relation = 40; m_split_threshold = 60; sr_split_threshold = 60; m_support_change = 7; sr_support_change = 7; m_discipline_change = 6; sr_discipline_change = 6; max_advisors = 4; ipr_change = 6;
+on-arrival: difficulty = 0; erc_resources = 3; ciu_resources = 3; cup_resources = 3; m_k_relation = 40; m_sr_relation = 55; sr_k_relation = 40; m_split_threshold = 60; sr_split_threshold = 60; m_support_change = 7; sr_support_change = 7; m_discipline_change = 6; sr_discipline_change = 6; max_advisors = 4; ipr_change = 6;
 go-to: party_selection
 
 What party shall you lead?
 
 @hard_mode
 title: Begin - Hard
-on-arrival: difficulty = 1; m_resources = 2; sr_resources = 2; k_resources = 2; b_resources = 0; b_dues = 0; m_split_threshold = 50; sr_split_threshold = 50; m_support_change = 5; sr_support_change = 5; m_discipline_change = 4; sr_discipline_change = 4; max_advisors = 3; ipr_change = 5;
+on-arrival: difficulty = 1; erc_resources = 2; ciu_resources = 2; cup_resources = 2; m_k_relation = 30; m_sr_relation = 40; sr_k_relation = 30; m_split_threshold = 50; sr_split_threshold = 50; m_support_change = 5; sr_support_change = 5; m_discipline_change = 4; sr_discipline_change = 4; max_advisors = 3; ipr_change = 5;
 go-to: party_selection
 
 What party shall you lead?
@@ -852,16 +832,17 @@ What party shall you lead?
 
 @party_selection
 
-- @esquerra: Republican Left of Catalonia - <span style='color: #ff8000; font-weight: bold;'>ERC</span>
-- @cup: Popular Unity Candidacy - <span style='color: #C4B156; font-weight: bold;'>CUP</span>
-- @ciu: Convergence and Union - <span style='color: #002782; font-weight: bold;'>CiU</span>
+- @esquerra: Republican Left of Catalonia - ERC
+- @cup: Popular Unity Candidacy - CUP
+- @ciu: Convergence and Union - CiU
 
 @esquerra
 title: Republican Left of Catalonia (ERC)
 face-image: img/parties/logo_erc.svg
 
-**Republican Left of Catalonia - <span style='color: #ff8000; font-weight: bold;'>ERC</span>**
-The left-wing republican party advocates for Catalan independence, socialism, and anti-austerity measures. Formed in 1931, it endured Franco's dictatorship and re-emerged post-1975. It governed in as part of the 2003-2010 tripartite coalition with <span style="color: #e73b39; font-weight: bold;">PSC</span> and <span style="color: #67af2f; font-weight: bold;">ICV-EUiA</span> but lost support after compromising for governance, poor economic leadership, and the failed new charter of autonomy. Now in 2012 is seems to be the main beneficiary of the growing independence sentiment, pushing for a referendum on self-determination.
+**Republican Left of Catalonia - ERC**
+
+The left-wing republican party advocates for Catalan independence, socialism, and anti-austerity measures. Formed in 1931, it endured Franco's dictatorship and re-emerged post-1975. It governed in as part of the 2003-2010 tripartite coalition with PSC and ICV-EUiA but lost support after compromising for governance, poor economic leadership, and the failed new charter of autonomy. Now in 2012 is seems to be the main beneficiary of the growing independence sentiment, pushing for a referendum on self-determination.
 
 - @esquerra_2: Yes, we'll be the left of a new country!
 - @party_selection: No, select a different party.
@@ -870,7 +851,6 @@ The left-wing republican party advocates for Catalan independence, socialism, an
 @esquerra_2
 on-arrival: {!
 Q.player_party = "erc";
-Q.player_party_name = "<span style='color: #ff8000; font-weight: bold;'>ERC</span>";
 Q.position_disp = "<span style='font-style: italic;'>opposition</span>"; 
 
 Q.ciu_relations = 55;
@@ -915,8 +895,9 @@ go-to: intros
 title: Convergence and Union (CiU)
 face-image: img/parties/logo_ciu.png
 
-**Convergence and Union - <span style='color: #002782; font-weight: bold;'>CiU</span>**
-The center-right nationalist federation of the liberal Democratic Convergence of Catalonia (<span style="color: #002782; font-weight: bold;">CDC</span>) and the christian Democratic Union of Catalonia (<span style="color: #0052a3; font-weight: bold;">UDC</span>) has positioned itself as the moderately autonomist with pro-business policies force. It governed Catalonia almost undisputed in the post-Franco autonomy era, and has come back again in 2010 under <span style="color: #002782; font-weight: bold;">Artur Mas</span>, who has long championed fiscal autonomy. Nonetheless, the statute reform's partial rollback fueled internal debates on independence. In 2012, it faces strong austerity backlash and a voter shift to harder-line pro-independence options.
+**Convergence and Union - CiU**
+
+The center-right nationalist federation of the liberal Democratic Convergence of Catalonia (CDC) and the christian Democratic Union of Catalonia (UDC) has positioned itself as the moderately autonomist with pro-business policies force. It governed Catalonia almost undisputed in the post-Franco autonomy era, and has come back again in 2010 under Artur Mas, who has long championed fiscal autonomy. Nonetheless, the statute reform's partial rollback fueled internal debates on independence. In 2012, it faces strong austerity backlash and a voter shift to harder-line pro-independence options.
 
 - @ciu_2: Yes, I am a convergent!
 - @party_selection: No, select a different party.
@@ -925,14 +906,15 @@ The center-right nationalist federation of the liberal Democratic Convergence of
 @ciu_2
 choose-if: 1==0
 unavailable-subtitle: Work in progress...
-on-arrival: player_party = "ciu"; player_party_name = "<span style='color: #002782; font-weight: bold;'>CiU</span>"; position_disp = "<span style='color: #002782;'>Generalitat (minority government)</span>";
+on-arrival: player_party = "ciu"; position_disp = "<span style='color: var(--ciu);'>Generalitat (minority government)</span>";
 go-to: intros
 
 @cup
 title: Popular Unity Candidacy (CUP)
 face-image: img/parties/logo_cup.svg
 
-**Popular Unity Candidacy - <span style='color: #C4B156; font-weight: bold;'>CUP</span>**
+**Popular Unity Candidacy - CUP**
+
 The far-left, anti-capitalist, eco-socialist platform demands direct democracy, independence, and municipalism. Emerging from 1980s local assemblies, until recently it had a strong grassroots focus and avoided institutions. In 2012, it is getting ready for its first elections, posing as the "left alternative" and pledging one-term mandates and anti-austerity. How much it is able to scale nationally may very well depend on its ability to remain internally coherent and united.
 
 - @cup_2: Yes, it's the time of the peoples!
@@ -942,7 +924,6 @@ The far-left, anti-capitalist, eco-socialist platform demands direct democracy, 
 @cup_2
 on-arrival: {!
 Q.player_party = "cup";
-Q.player_party_name = "<span style='color: #C4B156; font-weight: bold;'>CUP</span>";
 Q.position_disp = "Non-existence";
 
 Q.ciu_relations = 15;

@@ -1,4 +1,5 @@
 title: Election Simulation
+set-bg: img/parlament_de_catalunya.jpg
 new-page: true
 on-arrival: {!
 // Reset everything
@@ -1874,6 +1875,7 @@ go-to: election_algorithm.esp_congreso
 set-jump: post_election_sim_congreso
 
 @post_election_sim
+set-bg: img/parlament_de_catalunya.jpg
 on-arrival: {!
 var parlament_size = 0;
 for (var constituency of Q.parlament_constituencies) {
@@ -2079,6 +2081,7 @@ if (window && d3) {
     parliament.width(width).height(height).innerRadiusCoef(0.4);
     parliament.enter.fromCenter(true).smallToBig(true);
     parliament.exit.toCenter(false).bigToSmall(true);
+    // parliament.highlightedParty("jxsi"); // for testing
     d3.select("#parlament").datum(data).call(parliament);
 }
 !}
@@ -2090,7 +2093,7 @@ if (window && d3) {
 
 {!<table style='margin-left: 0.5em; display:table; width: 95%;'>!}
 {!<tr><td style='min-width: 6em; font-weight: bold;'>Party</td><td style='width: 7em; text-align: center; font-weight: bold;'>Popular Vote</td><td style='width: 7em; font-weight: bold;'>Change</td><td style='width: 3em; text-align: center; font-weight: bold;'>Seats</td><td style='width: 3em; font-weight: bold;'>Change</td></tr>!}
-[? if jxsi_parlament_showviz: {!<tr><td><div class="box" style='background-color: #3ab6a5;'> </div> !} JxSí {!</td><td style='text-align: right;'>!}[+ jxsi_parlament_pv +]% {!</td><td>!} [+ jxsi_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ jxsi_parlament_s +] {!</td><td>!} [+ jxsi_parlament_s_delta +] {!</td>!}?]
+[? if jxsi_parlament_showviz: {!<tr><td><div class="box" style='background-color: #3ab6a5;'> </div> !} jxsi {!</td><td style='text-align: right;'>!}[+ jxsi_parlament_pv +]% {!</td><td>!} [+ jxsi_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ jxsi_parlament_s +] {!</td><td>!} [+ jxsi_parlament_s_delta +] {!</td>!}?]
 [? if ciu_parlament_showviz: {!<tr><td><div class="box" style='background-color: #002782'> </div> !} CiU {!</td><td style='text-align: right;'>!}[+ ciu_parlament_pv +]% {!</td><td>!} [+ ciu_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ ciu_parlament_s +] {!</td><td>!} [+ ciu_parlament_s_delta +] {!</td>!}?]
 [? if jxcat_parlament_showviz: {!<tr><td><div class="box" style='background-color: #ed5975; font-weight:bold;'> </div> !} JxCat {!</td><td style='text-align: right;'>!}[+ jxcat_parlament_pv +]% {!</td><td>!} [+ jxcat_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ jxcat_parlament_s +] {!</td><td>!} [+ jxcat_parlament_s_delta +] {!</td>!}?]
 [? if junts_parlament_showviz: {!<tr><td><div class="box" style='background-color: #20c0b2; font-weight:bold;'> </div> !} Junts {!</td><td style='text-align: right;'>!}[+ junts_parlament_pv +]% {!</td><td>!} [+ junts_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ junts_parlament_s +] {!</td><td>!} [+ junts_parlament_s_delta +] {!</td>!}?]
@@ -2126,22 +2129,22 @@ if (window && d3) {
 {!</table>!}
 {!<div style="font-style: italic; margin-left: 3em">Parlament control</div>!}
 
-[? if ciu_parlament_s > 0 : Note: <span style='color: #002782; font-weight: bold;width:95%;'>CiU</span> has been unclear about their position on independence, so it is counted as unaligned. ?]
+[? if ciu_parlament_s > 0 : Note: CiU has been unclear about their position on independence, so it is counted as unaligned. ?]
 
 **Government Formation**
 # yeah this is hardcoded because its only the simulation scenes
 
-[? if ciu_parlament_showviz: <span style='color: #002782; font-weight: bold;'>CiU</span> will be able to form a <span style='color: #002782; font-style: italic;'>minority government</span> with <span style='color: #ff8000; font-weight: bold;'>ERC</span>'s assent. ?]
+[? if ciu_parlament_showviz: CiU will be able to form a <span style='color: #002782; font-style: italic;'>minority government</span> with ERC's support. ?]
 
-[? if jxsi_parlament_showviz: <span style='color: #3ab6a5; font-weight: bold;'>JxSí</span> will need <span style='color: #C4B156; font-weight: bold;'>CUP</span>'s assent to form a <span style='color: #3ab6a5; font-style: italic;'>Sovereignty government</span>. ?]
+[? if jxsi_parlament_showviz: jxsi will need CUP's support to form a <span style='color: #3ab6a5; font-style: italic;'>Sovereignty government</span>. ?]
 
-[? if jxcat_parlament_showviz: <span style='color: #ed5975; font-weight: bold;'>JxCat</span> and <span style='color: #ff8000; font-weight: bold;'>ERC</span> will form a <span style='color: #bfa62d; font-style: italic;'>sovereignty government</span> with <span style='color: #C4B156; font-weight: bold;'>CUP</span>'s assent. ?]
-
+[? if jxcat_parlament_showviz: JxCat and ERC will form a <span style='color: #bfa62d; font-style: italic;'>sovereignty government</span> with CUP's support. ?]
 [? if not (ciu_parlament_showviz or jxsi_parlament_showviz or jxcat_parlament_showviz): How did we get here??? ?]
 
 - @election_simulation: Reset simulation
 
 @post_election_sim_congreso
+set-bg: img/congreso.jpg
 on-arrival: {!
 var congreso_size = 0;
 for (var constituency of Q.congreso_constituencies) {
@@ -2478,7 +2481,7 @@ if (window && d3) {
 [? if sumar_congreso_showviz: {!<tr><td><div class="box" style='background-color: #ef4b91'> </div> !} Sumar {!</td><td style='text-align: right;'>!}[+ sumar_congreso_pv +]% ([+ sumar_congreso_pv_cat +]%) {!</td><td>!} [+ sumar_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ sumar_congreso_s +] {!</td><td>!} [+ sumar_congreso_s_delta +] {!</td>!}?]
 [? if iu_congreso_showviz: {!<tr><td><div class="box" style='background-color: #732021'> </div> !} IU {!</td><td style='text-align: right;'>!}[+ iu_congreso_pv +]% ([+ iu_congreso_pv_cat +]%) {!</td><td>!} [+ iu_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ iu_congreso_s +] {!</td><td>!} [+ iu_congreso_s_delta +] {!</td>!}?]
 [? if erc_congreso_showviz: {!<tr><td><div class="box" style='background-color: #ff8000'> </div> !} ERC {!</td><td style='text-align: right;'>!}[+ erc_congreso_pv +]% ([+ erc_congreso_pv_cat +]%) {!</td><td>!} [+ erc_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ erc_congreso_s +] {!</td><td>!} [+ erc_congreso_s_delta +] {!</td>!}?]
-[? if jxsi_congreso_showviz: {!<tr><td><div class="box" style='background-color: #3ab6a5; font-weight:bold;'> </div> !} JxSí {!</td><td style='text-align: right;'>!}[+ jxsi_congreso_pv +]% ([+ jxsi_congreso_pv_cat +]%) {!</td><td>!} [+ jxsi_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ jxsi_congreso_s +] {!</td><td>!} [+ jxsi_congreso_s_delta +] {!</td>!}?]
+[? if jxsi_congreso_showviz: {!<tr><td><div class="box" style='background-color: #3ab6a5; font-weight:bold;'> </div> !} jxsi {!</td><td style='text-align: right;'>!}[+ jxsi_congreso_pv +]% ([+ jxsi_congreso_pv_cat +]%) {!</td><td>!} [+ jxsi_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ jxsi_congreso_s +] {!</td><td>!} [+ jxsi_congreso_s_delta +] {!</td>!}?]
 [? if ciu_congreso_showviz: {!<tr><td><div class="box" style='background-color: #002782'> </div> !} CiU {!</td><td style='text-align: right;'>!}[+ ciu_congreso_pv +]% ([+ ciu_congreso_pv_cat +]%) {!</td><td>!} [+ ciu_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ ciu_congreso_s +] {!</td><td>!} [+ ciu_congreso_s_delta +] {!</td>!}?]
 [? if jxcat_congreso_showviz: {!<tr><td><div class="box" style='background-color: #ed5975; font-weight:bold;'> </div> !} JxCat {!</td><td style='text-align: right;'>!}[+ jxcat_congreso_pv +]% ([+ jxcat_congreso_pv_cat +]%) {!</td><td>!} [+ jxcat_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ jxcat_congreso_s +] {!</td><td>!} [+ jxcat_congreso_s_delta +] {!</td>!}?]
 [? if cdc_congreso_showviz: {!<tr><td><div class="box" style='background-color: #002782'> </div> !} CDC {!</td><td style='text-align: right;'>!}[+ cdc_congreso_pv +]% ([+ cdc_congreso_pv_cat +]%) {!</td><td>!} [+ cdc_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ cdc_congreso_s +] {!</td><td>!} [+ cdc_congreso_s_delta +] {!</td>!}?]
@@ -2495,13 +2498,13 @@ if (window && d3) {
 [? if bng_congreso_showviz: {!<tr><td><div class="box" style='background-color: #a2c7e4; color: white'> </div> !} BNG {!</td><td style='text-align: right;'>!}[+ bng_congreso_pv +]% {!</td><td>!} [+ bng_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ bng_congreso_s +] {!</td><td>!} [+ bng_congreso_s_delta +] {!</td>!}?]
 [? if nos_congreso_showviz: {!<tr><td><div class="box" style='background-color: #ed1c24'> </div> !} NÓS {!</td><td style='text-align: right;'>!}[+ nos_congreso_pv +]% {!</td><td>!} [+ nos_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ nos_congreso_s +] {!</td><td>!} [+ nos_congreso_s_delta +] {!</td>!}?]
 [? if upyd_congreso_showviz: {!<tr><td><div class="box" style='background-color: #e9008c'> </div> !} UPyD {!</td><td style='text-align: right;'>!}[+ upyd_congreso_pv +]% ([+ upyd_congreso_pv_cat +]%) {!</td><td>!} [+ upyd_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ upyd_congreso_s +] {!</td><td>!} [+ upyd_congreso_s_delta +] {!</td>!}?]
-[? if nsuma_congreso_showviz: {!<tr><td><div class="box" style='background-color: #2a52be'> </div> !} NA+ {!</td><td style='text-align: right;'>!}[+ nsuma_congreso_pv +]% {!</td><td>!} [+ nsuma_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ nsuma_congreso_s +] {!</td><td>!} [+ nsuma_congreso_s_delta +] {!</td>!}?]
+[? if nsuma_congreso_showviz: {!<tr><td><div class="box" style='background-color: #2a52be'> </div> !} nsuma {!</td><td style='text-align: right;'>!}[+ nsuma_congreso_pv +]% {!</td><td>!} [+ nsuma_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ nsuma_congreso_s +] {!</td><td>!} [+ nsuma_congreso_s_delta +] {!</td>!}?]
 [? if compromis_congreso_showviz: {!<tr><td><div class="box" style='background-color: #ec8953; color: black'> </div> !} Compromís {!</td><td style='text-align: right;'>!}[+ compromis_congreso_pv +]% {!</td><td>!} [+ compromis_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ compromis_congreso_s +] {!</td><td>!} [+ compromis_congreso_s_delta +] {!</td>!}?]
 [? if prc_congreso_showviz: {!<tr><td><div class="box" style='background-color: #b7bf10'> </div> !} PRC {!</td><td style='text-align: right;'>!}[+ prc_congreso_pv +]% {!</td><td>!} [+ prc_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ prc_congreso_s +] {!</td><td>!} [+ prc_congreso_s_delta +] {!</td>!}?]
 [? if fac_congreso_showviz: {!<tr><td><div class="box" style='background-color: #0082ca'> </div> !} FAC {!</td><td style='text-align: right;'>!}[+ fac_congreso_pv +]% {!</td><td>!} [+ fac_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ fac_congreso_s +] {!</td><td>!} [+ fac_congreso_s_delta +] {!</td>!}?]
-[? if gbai_congreso_showviz: {!<tr><td><div class="box" style='background-color: #f75e42'> </div> !} G-Bai {!</td><td style='text-align: right;'>!}[+ gbai_congreso_pv +]% {!</td><td>!} [+ gbai_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ gbai_congreso_s +] {!</td><td>!} [+ gbai_congreso_s_delta +] {!</td>!}?]
+[? if gbai_congreso_showviz: {!<tr><td><div class="box" style='background-color: #f75e42'> </div> !} GBai {!</td><td style='text-align: right;'>!}[+ gbai_congreso_pv +]% {!</td><td>!} [+ gbai_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ gbai_congreso_s +] {!</td><td>!} [+ gbai_congreso_s_delta +] {!</td>!}?]
 [? if mes_congreso_showviz: {!<tr><td><div class="box" style='background-color: #d8de40; color: black'> </div> !} MÉS {!</td><td style='text-align: right;'>!}[+ mes_congreso_pv +]% {!</td><td>!} [+ mes_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ mes_congreso_s +] {!</td><td>!} [+ mes_congreso_s_delta +] {!</td>!}?]
-[? if te_congreso_showviz: {!<tr><td><div class="box" style='background-color: #007351'> </div> !} ¡TE! {!</td><td style='text-align: right;'>!}[+ te_congreso_pv +]% {!</td><td>!} [+ te_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ te_congreso_s +] {!</td><td>!} [+ te_congreso_s_delta +] {!</td>!}?]
+[? if te_congreso_showviz: {!<tr><td><div class="box" style='background-color: #007351'> </div> !} texiste {!</td><td style='text-align: right;'>!}[+ te_congreso_pv +]% {!</td><td>!} [+ te_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ te_congreso_s +] {!</td><td>!} [+ te_congreso_s_delta +] {!</td>!}?]
 {!</table>!}
 {!<div style="width: 95%;text-align: center; margin-top:-0.75em;">!} **Turnout:**  [+ congreso_participation_pc +]% ([+ congreso_participation_delta +]) {!</div>!}
 {!<div style="width: 95%; justify-content: center; display:flex;"><div class="box" style="width: 70%; border-radius: 3px; background-color: #ccc"><div class="box" style="height: 1em; background-color: dimgrey; margin-right: 0.5em; border-radius: 3px; width:!}[+ congreso_participation_pc+]{!%;"></div></div></div>!}
@@ -2511,9 +2514,9 @@ Author's note: Congreso election simulations are more imperfect than Parlament o
 **Government Formation**
 # yeah this is hardcoded because its only the simulation scenes
 [? if dl_congreso_showviz: No candidacy has been able to secure enough support to form a new government. New elections will happen in **June 2016**. ?]
-[? if pdcat_congreso_showviz: <span style='color: #1d84ce;'>Mariano Rajoy</span> will lead a <span style='color: #1d84ce;'>PP minority government</span> with the assent of <span style='color: #f6c300; font-weight: bold;'>Cs</span>, <span style='color: #ffcc00; font-weight: bold;'>CC-PNC</span>, and the toleration of a broken <span style='color: #da291c; font-weight: bold;'>PSOE</span>.?]
+[? if pdcat_congreso_showviz: Mariano Rajoy will lead a PP <span style='color: #1d84ce;'>minority government</span> with the support of Cs, CC-PNC, and the toleration of a broken PSOE.?]
 [? if jxcat_congreso_showviz and fr_congreso_showviz: No candidacy has been able to secure enough support to form a new government. New elections will happen in **November 2019**. ?]
-[? if jxcat_congreso_showviz and not fr_congreso_showviz: <span style='color: #da291c; font-weight: bold;'>Pedro Sánchez</span> will lead a <span style='color: #da291c; font-weight: bold;'>progressist</span> <span style='color: #5a205a; font-weight: bold;'>government</span> (<span style='color: #da291c; font-weight: bold;'>PSOE</span>-<span style='color: #5a205a; font-weight: bold;'>UP</span>) with the assent of <span style='color: #4aae4a; font-weight: bold;'>EAJ-PNV</span>, <span style='color: #027665; font-weight: bold;'>Más País</span>, <span style='color: #a2c7e4; font-weight: bold;'>BNG</span>, <span style='color: #ffcc00; font-weight: bold;'>CC-PNC</span>, <span style='color: #007351; font-weight: bold;'>¡TE!</span> and the toleration of <span style='color: #ff8000; font-weight: bold;'>ERC</span> and <span style='color: #00c19f; font-weight: bold;'>EH Bildu</span>. ?]
+[? if jxcat_congreso_showviz and not fr_congreso_showviz: Pedro Sánchez will lead a <span style='color: #da291c; font-weight: bold;'>progressist</span> <span style='color: #5a205a; font-weight: bold;'>government</span> (PSOE-UP) with the support of EAJ-PNV, Más País, BNG, CC-PNC, texiste and the toleration of ERC and EH Bildu. ?]
 
 [? if not (dl_congreso_showviz or pdcat_congreso_showviz or jxcat_congreso_showviz): How did we get here??? ?]
 

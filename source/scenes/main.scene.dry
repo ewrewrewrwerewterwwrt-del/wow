@@ -1,5 +1,5 @@
 title: Next month
-set-bg: img/tapies.jpg
+set-bg: img/salodaurat.jpg
 is-hand: true
 on-arrival: {!
 if (Q.advisor_action_timer <= 0) {
@@ -34,7 +34,6 @@ max-cards: 5
 - @cup_shuffle_leadership_pinned
 
 @main_easy
-set-bg: img/tapies.jpg
 is-hand: true
 on-arrival: {!
 if (Q.advisor_action_timer <= 0) {
@@ -69,7 +68,6 @@ max-cards: 6
 
 
 @main_hard
-set-bg: img/tapies.jpg
 is-hand: true
 on-arrival: {!
 if (Q.advisor_action_timer <= 0) {

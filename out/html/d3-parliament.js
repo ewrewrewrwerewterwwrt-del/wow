@@ -7,7 +7,8 @@ d3.parliament = function () {
   /* params */
   var width,
     height,
-    innerRadiusCoef = 0.4;
+    innerRadiusCoef = 0.4,
+    highlightedParty = null;
 
   /* animations */
   var enter = {
@@ -36,7 +37,7 @@ d3.parliament = function () {
     "touchcancel",
     "touchend",
     "touchmove",
-    "touchstart"
+    "touchstart",
   );
 
   function parliament(data) {
@@ -140,6 +141,14 @@ d3.parliament = function () {
       var seatClasses = function (d) {
         var c = "seat ";
         c += (d.party && d.party.id) || "";
+        if (highlightedParty && d.party && d.party.id === highlightedParty) {
+          c += " party-highlighted";
+        }
+        return c.trim();
+      };
+      var hitClasses = function (d) {
+        var c = "seat-hit ";
+        c += (d.party && d.party.id) || "";
         return c.trim();
       };
       var seatX = function (d) {
@@ -172,7 +181,7 @@ d3.parliament = function () {
       }
       container.attr(
         "transform",
-        "translate(" + width / 2 + "," + outerParliamentRadius + ")"
+        "translate(" + width / 2 + "," + outerParliamentRadius + ")",
       );
 
       /* all the seats as circles */
@@ -208,6 +217,87 @@ d3.parliament = function () {
           });
         })(evt);
       }
+
+      /* tooltip */
+      var tooltip = d3.select("body").select(".parliament-tooltip");
+      if (tooltip.empty()) {
+        tooltip = d3
+          .select("body")
+          .append("div")
+          .attr("class", "parliament-tooltip");
+      }
+
+      /* hit circles for better UX */
+      var hitCircles = container.selectAll(".seat-hit").data(seats);
+      var hitCirclesEnter = hitCircles.enter().append("circle");
+      hitCirclesEnter.attr("class", hitClasses);
+      hitCirclesEnter.attr("cx", seatX);
+      hitCirclesEnter.attr("cy", seatY);
+      hitCirclesEnter.attr("r", function (d) {
+        return seatRadius(d) * 2; // 100% larger hit area
+      });
+      hitCirclesEnter.attr("fill", "transparent");
+      hitCirclesEnter.attr("pointer-events", "all");
+
+      /* hover effect to highlight party members */
+      hitCirclesEnter.on("mouseenter", function (e) {
+        var partyId = e.target.classList[1];
+        if (partyId) {
+          container.selectAll(".seat").classed("party-hovered", function (d) {
+            return d.party && d.party.id === partyId;
+          });
+          container
+            .selectAll(".seat")
+            .classed("party-nothovered", function (d) {
+              return !(d.party && d.party.id === partyId);
+            });
+
+          var nSeatsInParty = d.filter(function (p) {
+            return p.id === partyId;
+          })[0].seats;
+
+          let colour = colourList.find((t) => t.words.includes(partyId));
+          if (!colour) {
+            colour = colourList.find((t) =>
+              t.words.includes(partyId.toUpperCase()),
+            );
+          }
+          tooltip
+            .html(
+              `<span style="color:${colour.colour || "black"}; font-weight:bold;">${colour.transform || partyId}</span>` +
+                "<br/>" +
+                nSeatsInParty +
+                " seat" +
+                (nSeatsInParty !== 1 ? "s" : ""),
+            )
+            .classed("visible", true);
+          tooltip.style("border-color", colour.colour || "black");
+        }
+      });
+
+      hitCirclesEnter.on("mousemove", function (event) {
+        /* position tooltip near mouse */
+        tooltip
+          .style("left", event.pageX + 10 + "px")
+          .style("top", event.pageY - 50 + "px");
+      });
+
+      hitCirclesEnter.on("mouseleave", function (e) {
+        container.selectAll(".seat").classed("party-hovered", false);
+        container.selectAll(".seat").classed("party-nothovered", false);
+        tooltip.classed("visible", false);
+      });
+
+      /* update hit circles */
+      hitCircles
+        .attr("cx", seatX)
+        .attr("cy", seatY)
+        .attr("r", function (d) {
+          return seatRadius(d) * 2; // 100% larger hit area
+        });
+
+      /* remove exiting hit circles */
+      hitCircles.exit().remove();
 
       /* animation updating seats in the parliament */
       if (update.animate) {
@@ -260,6 +350,12 @@ d3.parliament = function () {
   parliament.innerRadiusCoef = function (value) {
     if (!arguments.length) return innerRadiusCoef;
     innerRadiusCoef = value;
+    return parliament;
+  };
+
+  parliament.highlightedParty = function (value) {
+    if (!arguments.length) return highlightedParty;
+    highlightedParty = value;
     return parliament;
   };
 

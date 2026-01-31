@@ -17,11 +17,12 @@ What should be our strategy for our newspapers and party organs?
 - @cancel_advisor_action
 
 @campaign
-title: The purpose of party media is to get more <span style="color:#C4B156;;">CUP</span> seats.
+title: The purpose of party media is to get more CUP seats.
 subtitle: Party media will focus on the electoral campaign
 # on-arrival: #effects here
 
-This strategy mostly reaches those already following <span style="color:#C4B156;;">CUP</span>.
+This strategy mostly reaches those already following CUP.
+
 @ideological
 title: Party media should encourage vibrant ideological discussions.
 subtitle: There will be space for all factions to express their views.

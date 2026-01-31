@@ -27,6 +27,7 @@ body {
   padding: 0;
   line-height: 135%;
   overflow-y: scroll;
+  overflow: visible;
 }
 body.dark-mode {
   --bg-color: #000;
@@ -66,6 +67,7 @@ footer {
   font-size: 1em;
   padding: 1em 1.5em 1.5em 1.5em;
   box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2);
+  overflow: visible;
 }
 footer {
   margin-top: 1em;
@@ -192,7 +194,7 @@ ul.choices li {
   background: none;
   transition: background 0.3s;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 ul.choices li::before {
   content: "";
@@ -623,18 +625,20 @@ a.card:hover .card-tooltip {
 .face-figure {
   /*vertical-align: top;*/
   display: inline-block;
-  border: 5px solid var(--card-border-color);
+  border: 3px solid var(--card-border-color);
   float: left;
   max-width: 35%;
   /*max-height: 180px;*/
   margin-right: 1em;
   margin-bottom: 0.5em;
   overflow: hidden;
+  border-radius: 7px;
 }
 .face-img {
   /*max-width: 150px;*/
   vertical-align: bottom;
   object-fit: cover;
+  border-radius: 3px;
 }
 
 /*
@@ -766,6 +770,44 @@ img {
 table {
   border-spacing: 0.5em;
 }
+
+/* hovering and higlighting */
+.seat.party-hovered {
+  stroke: #000;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.seat.party-nothovered {
+  opacity: 0.5; /* Dim non-hovered seats */
+  transition: opacity 0.3s;
+}
+
+.seat.party-highlighted:not(.party-nothovered) {
+  stroke: #000;
+  transition: opacity 0.3s;
+}
+
+.parliament-tooltip {
+  position: absolute;
+  padding: 8px 12px;
+  background: var(--content-bg-color);
+  color: var(--text-color);
+  border-radius: 5px;
+  font-size: 14px;
+  pointer-events: none; /* Prevents tooltip from interfering with mouse events */
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 1000;
+  border-bottom: 3px solid;
+  line-height: 130%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.parliament-tooltip.visible {
+  opacity: 0.97;
+}
+
 
 /* Styles for parties - TODO: have the player party be highlighted. */
 /* Use CSS variables for the colors... */
@@ -1091,7 +1133,133 @@ table {
   background-color: var(--te);
 }
 
-.tooltip-text {
-  text-decoration: underline;
-  text-decoration-style: dotted;
+.mytooltip {
+  position: relative;
+  cursor: pointer;
+  padding: 2px 5px;
+  margin-right: -5px;
+  margin-left: -5px;
+  border-bottom: 0px;
+  transition: color 0.2s;
+  color: var(--mytooltip-color);
+}
+
+/*
+.mytooltip:hover {
+  background-color: var(--hover-color, #ded7d719);
+  border-radius: 5px;
+}
+  */
+
+.mytooltip:after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  bottom: 2px;
+  width: 0;
+  height: 1.5px;
+  background: var(--mytooltip-color);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mytooltip:hover::after {
+  width: calc(100% - 10px);
+}
+
+.mytooltiptext {
+  position: absolute;
+  z-index: 999999;
+  background: var(--content-bg-color);
+  border-radius: 7px;
+  border-top: none;
+  padding: 12px 20px 12px 14px;
+  font-size: 14px !important;
+  line-height: 135%;
+  font-weight: 500 !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  width: max-content;
+  max-width: 500px;
+  border-bottom: 3px solid var(--mytooltip-color);
+  font-family: "HkGroteskRegular", sans-serif;
+  text-transform: none;
+  letter-spacing: normal;
+
+  /* Position above the element */
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+  
+  /* Hidden by default - use visibility + opacity for smooth transitions */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+}
+
+/* Show on hover */
+.mytooltip:hover .mytooltiptext {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Show when clicked (active state) */
+.mytooltiptext.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Tooltip content layout with flexbox */
+.mytooltip-content {
+  display: flex;
+  gap: 1.25em;
+  align-items: center;
+}
+
+.mytooltip-content img {
+  width: 80px;
+  height: auto;
+  max-height: 100px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.mytooltip-text {
+  flex: 1;
+  text-indent: 0;
+  text-align: left;
+  color: var(--text-color);
+}
+
+.mytooltip-main-text {
+  font-size: inherit;
+  font-weight: bold;
+  color: var(--mytooltip-color);
+}
+.mytooltip-sub-text {
+  font-style: italic;
+  display: flex;
+  margin-bottom: -0.95em;
+}
+.mytooltip-ledby {
+  color: var(--mytooltip-color);
+}
+.mytooltip-ideology {
+  font-size: 0.9em;
+}
+.mytooltip-allegiances {
+  display: flex;
+  margin-top: 0.5em;
+  gap: 2px;
+}
+/* Arrow pointing down from tooltip */
+.mytooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: inherit;
 }

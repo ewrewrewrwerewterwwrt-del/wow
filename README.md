@@ -1,6 +1,6 @@
 # Route to Ítaca - An Alternate History (WIP!)
 
-**Important Note** this game is a work in progress and is **NOT** ready to be played as of now. 
+**Important Note** this game is a work in progress and is **NOT** ready to be played as of now.
 
 A fork from the original [Petrograd 1917](https://github.com/aucchen/petrograd_1917) by Autumn Chen, with great influence from [Dynamic Social Democracy](https://github.com/originn0/dynamic_social_democracy/) by origin0.
 
@@ -14,7 +14,7 @@ Techincal stuff for you nerds.
 
 ### Strictly required folders and files
 
-Both the `source` folder and the `html` folder containt game-essential components, even if some of the contents on the latter get re-written on game build. This goes beyond broken images and assets, as many bits of the original `css` and `html` files have been adapted to the needs of this mod.
+Both the `source` folder and the `html` folder containt game-essential components, even if some of the contents on the latter get re-written on game build. This goes beyond broken images and assets, as many bits of the original `css`, `js`, and `html` files have been adapted to the needs of this mod.
 
 ## Demographics and data analysis
 
@@ -27,6 +27,7 @@ For more info on demographic data origins and processing, check out the `demogra
 [d3.js v7](https://d3js.org)
 
 [d3-parliament](https://github.com/geoffreybr/d3-parliament)
+*Modder's note: the `d3-parliament` library has been heavily modified for this mod. I severely recommend you don't install the original version if working with this mod's files. Just use the provided one and your life will be easier.*
 
 ### Building the game
 

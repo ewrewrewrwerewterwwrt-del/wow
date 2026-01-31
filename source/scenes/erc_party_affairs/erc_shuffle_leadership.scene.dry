@@ -92,7 +92,7 @@ Dolors Bassa has been added as an advisor.
 
 @add_joan_josep_nuet
 title: Joan Josep Nuet i Pujals
-subtitle: Former member of <span style='color: #67af2f; font-weight:bold'>ICV-EUiA</span>, he left the <span style='color: #c3113b; font-weight:bold;'>CSQP</span> during its crisis.
+subtitle: Former member of ICV-EUiA, he left the CSQP during its crisis.
 choose-if: joan_josep_nuet_advisor = 0
 unavailable-subtitle: Already an advisor
 view-if: n_advisors < max_advisors and joan_josep_nuet_advisor_available = 1
@@ -104,7 +104,7 @@ Joan Josep Nuet has been added as an advisor.
 
 @add_marta_rovira
 title: Marta Rovira i Vergés
-subtitle: A lawyer by profession, she has been <span style='color: #ffcc00; font-weight:bold;'>ERC</span>'s secretary general since 2011.
+subtitle: A lawyer by profession, she has been ERC's secretary general since 2011.
 choose-if: marta_rovira_advisor = 0
 unavailable-subtitle: Already an advisor
 view-if: n_advisors < max_advisors and  marta_rovira_advisor_available = 1
@@ -131,7 +131,7 @@ Teresa Jordà has been added as an advisor.
 
 @add_oriol_junqueras
 title: Oriol Junqueras i Vies
-subtitle: Historian and former professor, he has been the president of <span style='color: #ffcc00; font-weight:bold;'>ERC</span> since 2011.
+subtitle: Historian and former professor, he has been the president of ERC since 2011.
 choose-if: oriol_junqueras_advisor = 0
 unavailable-subtitle: Already an advisor
 view-if: n_advisors < max_advisors and oriol_junqueras_advisor_available = 1
@@ -155,7 +155,7 @@ Gabriel Rufián has been added as an advisor.
 
 @add_joan_tarda
 title: Joan Tardà i Coma
-subtitle: One of the longest-serving <span style='color: #ffcc00; font-weight:bold;'>ERC</span> deputies in the Congreso.
+subtitle: One of the longest-serving ERC deputies in the Congreso.
 choose-if: joan_tarda_advisor = 0
 unavailable-subtitle: Already an advisor
 view-if: n_advisors < max_advisors and joan_tarda_advisor_available = 1
@@ -179,7 +179,7 @@ Sergi Sabrià has been added as an advisor.
 
 @add_raul_romeva
 title: Raül Romeva i Rueda
-subtitle: Former MEP for <span style='color: #67af2f; font-weight:bold;'>ICV-EUiA</span>, he is well versed in international diplomacy.
+subtitle: Former MEP for ICV-EUiA, he is well versed in international diplomacy.
 choose-if: raul_romeva_advisor = 0
 unavailable-subtitle: Already an advisor
 view-if: n_advisors < max_advisors and raul_romeva_advisor_available = 1
@@ -228,7 +228,7 @@ Alfred Bosch has been added as an advisor.
 
 @add_ernest_maragall
 title: Ernest Maragall i Mira
-subtitle: With a strong history in antifascist activism and local politics, he is a historic figure of <span style='color: #ffcc00; font-weight:bold;'>ERC</span>.
+subtitle: With a strong history in antifascist activism and local politics, he is a historic figure of ERC.
 choose-if: ernest_maragall_advisor = 0
 unavailable-subtitle: Already an advisor
 view-if: n_advisors < max_advisors and ernest_maragall_advisor_available = 1
@@ -241,7 +241,7 @@ Ernest Maragall has been added as an advisor.
 # erc_civic_nationalists
 @add_joan_laporta
 title: Joan Laporta i Estruch
-subtitle: Former FC Barcelona president, he left the <span style="color: #000000; font-weight: bold;">SI</span> coalition to instead support <span style='color: #ffcc00; font-weight:bold;'>ERC</span>.
+subtitle: Former FC Barcelona president, he left the SI coalition he co-founded to instead support ERC.
 choose-if: joan_laporta_advisor = 0
 unavailable-subtitle: Already an advisor
 view-if: n_advisors < max_advisors and joan_laporta_advisor_available = 1
