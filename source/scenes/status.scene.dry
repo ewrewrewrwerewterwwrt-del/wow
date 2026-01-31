@@ -157,11 +157,17 @@ on-arrival: {!
 
 
 <div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/economy_icon.svg"/></div><div> **Economy** ([+ economy_minister_party +])<br/><span style="font-size:0.8em">[+ economy_minister +]</span></div></div>
+
 <div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/health_icon.svg"/></div><div> **Health** ([+ health_minister_party +])<br/><span style="font-size:0.8em">[+ health_minister +]</span></div></div>
+
 <div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/education_icon.svg"/></div><div> **Education** ([+ education_minister_party +])<br/><span style="font-size:0.8em">[+ education_minister +]</span></div></div>
+
 <div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/interior_icon.svg"/></div><div> **Interior** ([+ interior_minister_party +])<br/><span style="font-size:0.8em">[+ interior_minister +]</span></div></div>
+
 <div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/international_icon.svg"/></div><div> **Foreign Affairs** ([+ foreign_minister_party +])<br/><span style="font-size:0.8em">[+ foreign_minister +]</span></div></div>
+
 <div style="display:flex; align-content:center;width:105%"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/labour_icon.svg"/></div><div> **Business & Labour** ([+ bnl_minister_party +])<br/><span style="font-size:0.8em">[+ bnl_minister +]</span></div></div>
+
 <div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/territory_icon.svg"/></div><div> **Territory** ([+ territory_minister_party +])<br/><span style="font-size:0.8em">[+ territory_minister +]</span></div></div>
 
 

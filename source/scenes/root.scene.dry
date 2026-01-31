@@ -202,7 +202,7 @@ Q.sumar_ideology = "Social Democracy, Autonomism";
 Q.up_leader = "Pablo Iglesias";
 Q.up_ideology = "Anti-austerity left, Federalism";
 
-Q.pnv_leader = "Iñigo Urkullu";
+Q.pnv_leader = "Íñigo Urkullu";
 Q.pnv_ideology = "Christian Democracy, Basque Pact-Pragmatism";
 Q.ehbildu_leader = "Arnaldo Otegi";
 Q.ehbildu_ideology = "Democratic Socialism, Basque Separatism";

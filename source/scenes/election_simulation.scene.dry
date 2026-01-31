@@ -2506,6 +2506,7 @@ if (window && d3) {
 [? if mes_congreso_showviz: {!<tr><td><div class="box" style='background-color: #d8de40; color: black'> </div> !} MÉS {!</td><td style='text-align: right;'>!}[+ mes_congreso_pv +]% {!</td><td>!} [+ mes_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ mes_congreso_s +] {!</td><td>!} [+ mes_congreso_s_delta +] {!</td>!}?]
 [? if te_congreso_showviz: {!<tr><td><div class="box" style='background-color: #007351'> </div> !} texiste {!</td><td style='text-align: right;'>!}[+ te_congreso_pv +]% {!</td><td>!} [+ te_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ te_congreso_s +] {!</td><td>!} [+ te_congreso_s_delta +] {!</td>!}?]
 {!</table>!}
+
 {!<div style="width: 95%;text-align: center; margin-top:-0.75em;">!} **Turnout:**  [+ congreso_participation_pc +]% ([+ congreso_participation_delta +]) {!</div>!}
 {!<div style="width: 95%; justify-content: center; display:flex;"><div class="box" style="width: 70%; border-radius: 3px; background-color: #ccc"><div class="box" style="height: 1em; background-color: dimgrey; margin-right: 0.5em; border-radius: 3px; width:!}[+ congreso_participation_pc+]{!%;"></div></div></div>!}
 
