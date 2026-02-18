@@ -74,11 +74,13 @@ Voting results from **El País Election results (Congreso)**. The fact that El P
 - As mentioned, no demographics classes are really used.
 - Circumscriptions are very over-simplified. The simulation only on an Autonomous Comunity level, and only for relevant communities that truly have distinct votting patterns that may be relevant game-wise. These are: Catalunya (duh), València, Balears, Navarra, Euskadi, and Galicia. The rest is bunched together as "rest".
 - This, of course, means that *some* small regional parties need special attention to get their seats. These are assigned based on fixed percentages based on their total share of "rest" votes.
+
         - D'Hont Law is still applied as it yields the most realistic results. However, the provincial threshold step is skipped not only because it is non-sensical for the scale the simulation is running, but also because historically it has not mattered (it has only once denied a party its otherwise assigned seat).
         - Bundling stuff up into one giant "rest" province is not great for d'Hont law, so instead there's a virtual simulation of smaller provinces to ensure the system still favours larger parties as if it was the real thing.
         - Since that virtualization is actually not enough to still have pp/psoe dominance boost, a penalty/boost for rural/cities virtual provinces is needed, which actually does help reflect general "tactical voting" tendencies in rural Spain.
         - Minor parties in the "rest" bundle (CC, PRC, ¡TE!) also need special reservation of seats to ensure they do have a chance of getting theirs.
         - Having single-division for the actual communities that are tracked is also not great, as it makes things like BNG and ERC get *some* seats easier. In the grand scheme of things, though, I've decided it's kinda fine.
+        
 - Regional versions of the party (PSOE variants), and whatever Podemos was doing with presenting a thousand different parties is simplified into block parties.
 
 ### How-to - Congreso

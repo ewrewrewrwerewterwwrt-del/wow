@@ -73,6 +73,15 @@ Q.public_debt = 25;
 Q.unemployment = 22.5;
 Q.unemployment_change = '<img src="img/arrowdown.png" style="transform: rotate(180deg);"> ';
 
+// Country control
+Q.airports_control = 0;
+Q.railways_control = 1;
+Q.ports_control = 1;
+Q.borders_control = 0;
+Q.security_control = 2;
+Q.communications_control = 1;
+Q.tax_control = 1;
+
 // start Parlament composition
 Q.parlament_seats = {
     "barcelona": 85,
@@ -82,6 +91,7 @@ Q.parlament_seats = {
   }; // seats
 Q.parlament_constituencies = ["barcelona", "girona", "lleida", "tarragona"];
 Q.parlament_size = 135;
+Q.parlament_s_majority = Math.floor(Q.parlament_size/2) + 1;
 
 Q.parties = ['ciu', 'erc', 'psc', 'ppc', 'icv', 'cs', 'cup', 'si', 'cdc', 'unio', 'jxsi', 'junts', 'jxcat', 'pdcat', 'csqp', 'cecp', 'ecp', 'vox', 'fnc', 'pxc'];
 
@@ -182,8 +192,8 @@ Q.ecp_ideology = "Social democracy, Autonomism";
 Q.fr_leader = "Albano Dante Fachín";
 Q.fr_ideology = "Anticapitalism, Unilateralism";
 
-Q.psoe_leader = "Pedro Sánchez";
-Q.psoe_ideology = "Social Democracy, Autonomism";
+Q.psoe_leader = "Alfredo Pérez Rubalcaba";
+Q.psoe_ideology = "Centrist Social Democracy, Autonomism";
 Q.pp_leader = "Mariano Rajoy";
 Q.pp_ideology = "Conservatism, Centralism";
 Q.vox_leader = "Santiago Abascal";
@@ -240,46 +250,35 @@ Q.international_eu_opinion = 1;
 
 // Demographics
 Q.parlament_demographics = ["buss", "ind", "middle", "young", "retired", "rural", "unemployed"]
-Q.parlament_barcelona_middle_pop = 135766667613.938;
-Q.parlament_barcelona_retired_pop = 199400482932.188;
-Q.parlament_barcelona_underage_pop = 199836330982.313;
-Q.parlament_barcelona_young_pop = 147207678929.719;
-Q.parlament_barcelona_unemployed_pop = 92290824613.969;
-Q.parlament_barcelona_buss_pop = 69299839969.875;
-Q.parlament_barcelona_rural_pop = 76164446759.344;
-Q.parlament_barcelona_ind_pop = 166167069110.156;
-Q.parlament_catalunya_middle_pop = 546063546875.0;
-Q.parlament_catalunya_retired_pop = 912957856250.0;
-Q.parlament_catalunya_underage_pop = 932585946875.0;
-Q.parlament_catalunya_young_pop = 683460181250.0;
-Q.parlament_catalunya_unemployed_pop = 412693187500.0;
-Q.parlament_catalunya_buss_pop = 320088862500.0;
-Q.parlament_catalunya_rural_pop = 501774521875.0;
-Q.parlament_catalunya_ind_pop = 708121115625.0;
-Q.parlament_girona_middle_pop = 3155593.031;
-Q.parlament_girona_retired_pop = 8565900.063;
-Q.parlament_girona_underage_pop = 9778815.406;
-Q.parlament_girona_young_pop = 7020817.031;
-Q.parlament_girona_unemployed_pop = 3880322.531;
-Q.parlament_girona_buss_pop = 3744435.75;
-Q.parlament_girona_rural_pop = 9517107.531;
-Q.parlament_girona_ind_pop = 4665446.156;
-Q.parlament_lleida_middle_pop = 185220.465;
-Q.parlament_lleida_retired_pop = 626461.245;
-Q.parlament_lleida_underage_pop = 605657.498;
-Q.parlament_lleida_young_pop = 465064.428;
-Q.parlament_lleida_unemployed_pop = 186562.642;
-Q.parlament_lleida_buss_pop = 157034.742;
-Q.parlament_lleida_rural_pop = 896909.967;
-Q.parlament_lleida_ind_pop = 266086.646;
-Q.parlament_tarragona_middle_pop = 4071570.594;
-Q.parlament_tarragona_retired_pop = 8943363.344;
-Q.parlament_tarragona_underage_pop = 9663060.0;
-Q.parlament_tarragona_young_pop = 6809437.594;
-Q.parlament_tarragona_unemployed_pop = 4318179.938;
-Q.parlament_tarragona_buss_pop = 2752965.531;
-Q.parlament_tarragona_rural_pop = 7272459.219;
-Q.parlament_tarragona_ind_pop = 6220594.875;
+Q.parlament_barcelona_middle_pop = 555810.0;
+Q.parlament_barcelona_retired_pop = 887550.0;
+Q.parlament_barcelona_young_pop = 655235.0;
+Q.parlament_barcelona_unemployed_pop = 556295.0;
+Q.parlament_barcelona_buss_pop = 226980.0;
+Q.parlament_barcelona_rural_pop = 339015.0;
+Q.parlament_barcelona_ind_pop = 739625.0;
+Q.parlament_girona_middle_pop = 33201.0;
+Q.parlament_girona_retired_pop = 107226.0;
+Q.parlament_girona_young_pop = 87885.0;
+Q.parlament_girona_unemployed_pop = 67473.0;
+Q.parlament_girona_buss_pop = 34272.0;
+Q.parlament_girona_rural_pop = 119133.0;
+Q.parlament_girona_ind_pop = 58401.0;
+Q.parlament_lleida_middle_pop = 17176.0;
+Q.parlament_lleida_retired_pop = 70946.0;
+Q.parlament_lleida_young_pop = 52668.0;
+Q.parlament_lleida_unemployed_pop = 28728.0;
+Q.parlament_lleida_buss_pop = 10184.0;
+Q.parlament_lleida_rural_pop = 101574.0;
+Q.parlament_lleida_ind_pop = 30134.0;
+Q.parlament_tarragona_middle_pop = 47503.0;
+Q.parlament_tarragona_retired_pop = 119059.0;
+Q.parlament_tarragona_young_pop = 90651.0;
+Q.parlament_tarragona_unemployed_pop = 77586.0;
+Q.parlament_tarragona_buss_pop = 26934.0;
+Q.parlament_tarragona_rural_pop = 96815.0;
+Q.parlament_tarragona_ind_pop = 82812.0;
+
 
 
 // Congreso situation
@@ -894,6 +893,8 @@ go-to: intros
 @ciu
 title: Convergence and Union (CiU)
 face-image: img/parties/logo_ciu.png
+choose-if: 1==0
+unavailable-subtitle: Comming soon! (hopefully...)
 
 **Convergence and Union - CiU**
 
@@ -904,8 +905,6 @@ The center-right nationalist federation of the liberal Democratic Convergence of
 
 
 @ciu_2
-choose-if: 1==0
-unavailable-subtitle: Work in progress...
 on-arrival: player_party = "ciu"; position_disp = "<span style='color: var(--ciu);'>Generalitat (minority government)</span>";
 go-to: intros
 
@@ -925,6 +924,7 @@ The far-left, anti-capitalist, eco-socialist platform demands direct democracy, 
 on-arrival: {!
 Q.player_party = "cup";
 Q.position_disp = "Non-existence";
+Q.cup_roadmap = 3;
 
 Q.ciu_relations = 15;
 Q.erc_relations = 65;

@@ -499,7 +499,16 @@ const tooltipList = [
     searchString: ["Pedro Sánchez"],
     mainText: "Pedro Sánchez Pérez-Castejón",
     img: "img/other_leaders/pedro_sanchez.jpg",
-    ideology: "Social Democracy, Autonomism",
+    ideology: "Centrist Social Democracy, Autonomism",
+    allegiances: (Q) => {
+      return ["<span style='color: var(--psoe)'>PSOE</span>"];
+    },
+  },
+  {
+    searchString: ["Alfredo Pérez Rubalcaba", "Rubalcaba"],
+    mainText: "Alfredo Pérez Rubalcaba",
+    img: "img/other_leaders/rubalcaba.jpg",
+    ideology: "Centrist Social Democracy, Autonomism",
     allegiances: (Q) => {
       return ["<span style='color: var(--psoe)'>PSOE</span>"];
     },
@@ -850,6 +859,10 @@ const colourList = [
   },
   {
     words: ["Pedro Sánchez"],
+    colour: "var(--psoe)",
+  },
+  {
+    words: ["Alfredo Pérez Rubalcaba", "Rubalcaba"],
     colour: "var(--psoe)",
   },
   {

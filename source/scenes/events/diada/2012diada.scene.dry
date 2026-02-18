@@ -6,6 +6,7 @@ new-page: true
 tags: event
 view-if: year = 2012 and month = 9
 max-visits: 1
+on-arrival: diada2012 = 1; parlament_snap_election = 1; independence_trust += 10;
 
 = Catalonia, new state of Europe?
 On September 11, the National Day of Catalonia, more than 1.5 million people took to the streets of Barcelona to demand independence. The peaceful and festive demonstration, of a size never seen before in Catalonia, was organized by the Catalan National Assembly (ANC), the main civil society organization pushing for independence, and supported by many other groups, from cultural and language focused Omnium Cultural to unions and the pro-independence parties of ERC, SI, CUP, as well as not-explicitly pro-independence parties, like ICV-EUiA and the ruling CiU.

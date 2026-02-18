@@ -14,6 +14,7 @@
     <script src="core.js"></script>
     <script src="game.js"></script>
     <script src="data.js"></script>
+    <script src="cat_polls.js"></script>
   </head>
   <body>
     <div class="background" id="bg2">
@@ -309,7 +310,7 @@
                         <button class="tab_button" id="politics_tab" data-tooltip="Politics" onclick="window.changeTab('status.politics', 'politics_tab');"><img class="status-icon" src="img/politics_icon.svg" alt="Politics"></button>
                         <button class="tab_button" id="government_tab" data-tooltip="Government" onclick="window.changeTab('status.government', 'government_tab');"><img class="status-icon" src="img/government_icon.svg" alt="Government"></button>
                         <button class="tab_button" id="international_tab" data-tooltip="International Relations" onclick="window.changeTab('status.international', 'international_tab');"><img class="status-icon" src="img/international_icon.svg" alt="International"></button>
-                        <button class="tab_button" id="polls_tab" data-tooltip="Opinion Polls" onclick="window.changeTab('status.polls', 'polls_tab');"><img class="status-icon" src="img/poll_icon.svg" alt="Polls"></button>
+                        <button class="tab_button" id="polls_tab" data-tooltip="Opinion Polls" onclick="window.changeTab('status.polls', 'polls_tab');initCataloniaPolls('cat-polls-widget', dendryUI.dendryEngine.state.qualities);"><img class="status-icon" src="img/poll_icon.svg" alt="Polls"></button>
                     </div>
                     <div id="qualities">
                     </div>

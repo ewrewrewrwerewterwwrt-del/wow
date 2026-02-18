@@ -1,32 +1,37 @@
 import pandas as pd
-from decimal import Decimal, ROUND_HALF_UP
 
-# Multipliers for provinces based on population proportions
+# Multipliers for provinces based on population proportions (in thousands)
 province_multipliers = {
-    'catalunya': Decimal('55'),
-    'barcelona': Decimal('40.5'),
-    'girona': Decimal('5.5'),
-    'lleida': Decimal('3.2'),
-    'tarragona': Decimal('5.5'),
+    'catalunya': 7500000,
+    'barcelona': 4850000,
+    'girona': 600000,
+    'lleida': 380000,
+    'tarragona': 670000,
 }
 
-def adjust_population(pd):
+def adjust_population(df):
     def adjust_weights(row):
         province = row['province'].lower()
-        multiplier = province_multipliers.get(province, Decimal('1'))
-        # Convert values to Decimal, multiply, round, and convert back to float
-        for idx in row.index[1:]:
-            value = Decimal(str(row[idx]))
-            result = (value * multiplier).quantize(Decimal('0.001'), rounding=ROUND_HALF_UP)
-            row[idx] = float(result)
+        multiplier = province_multipliers.get(province, 1)
+        # Normalize the values (excluding 'province')
+        values = [row[idx] for idx in row.index[1:]]
+        total = sum(values)
+        if total == 0:
+            normalized = [0 for _ in values]
+        else:
+            normalized = [v / total for v in values]
+        # Multiply by multiplier, round, and convert back to float
+        for i, idx in enumerate(row.index[1:]):
+            result = round(normalized[i] * multiplier, 3)
+            row[idx] = result
         return row
 
-    pd = pd.apply(adjust_weights, axis=1)
-    return pd
+    df = df.apply(adjust_weights, axis=1)
+    return df
 
 if __name__ == "__main__":
     input_path = "demographics_data/clean/population_weights_2012.csv"
-    output_path = "demographics_data/clean/population_weights_2012.csv"
+    output_path = "demographics_data/clean/ok_population_weights_2012.csv"
 
     df = pd.read_csv(input_path)
     adjusted_df = adjust_population(df)

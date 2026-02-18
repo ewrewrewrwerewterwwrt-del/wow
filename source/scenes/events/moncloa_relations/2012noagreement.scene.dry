@@ -3,9 +3,8 @@ subtitle: The final straw in CiU - PP relations?
 face-image: img/events/2012nofiscalagreement.webp
 new-page: true
 tags: event
-view-if: year = 2012 and month = 9
+view-if: year = 2012 and month = 9 and diada2012
 max-visits: 1
-on-arrival: parlament_snap_election = 1;
 
 = There will be no fiscal agreement
 "This did not go well", President Artur Mas stated said after his meeting with Presidente Mariano Rajoy in Madrid. After years of pressure, it looks like CiU's bet on reaching an agreement on fiscal matters have failed to bear any fruit. 

@@ -252,6 +252,8 @@
     );
   }
 
+  window.applyWholesome = applyWholesome;
+
   // This function allows you to do something in response to signals.
   window.handleSignal = function (signal, event, scene_id) {};
 
@@ -278,11 +280,15 @@
     );
     $("#qualities").append(dendryUI.contentToHTML.convert(displayContent));
     addTooltipEventListeners();
+    initCataloniaPolls(
+      "cat-polls-widget",
+      dendryUI.dendryEngine.state.qualities,
+    );
   };
 
   window.changeTab = function (newTab, tabId) {
     if (
-      tabId == "poll_tab" &&
+      tabId == "polls_tab" &&
       dendryUI.dendryEngine.state.qualities.historical_mode
     ) {
       window.alert("Polls are not available in historical mode.");

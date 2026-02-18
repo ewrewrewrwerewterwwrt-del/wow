@@ -1,4 +1,5 @@
 title: Catalan Parlament Election
+tags: election
 go-to: election_algorithm.cat_parlament
 set-jump: parlament_election.post_election
 

@@ -1,0 +1,127 @@
+title: Parlament votes on self-determination timeline
+face-image: img/parlament_card.jpg
+new-page: true
+tags: event
+view-if: year = 2012 and month = 9 and diada2012 and player_party != "cup"
+max-visits: 1
+
+After the historic demonstration on September 11, we have a unique chance to push for a parlamentary resultion to define a timeline for a vote on independence. CiU is already in on it after preliminary talks with them, meaning it is almost guaranteed to pass. But depending on the terms and wording ICV-EUiA, SI, and even the PSC could join in for a broader consensus. 
+
+The text will express the necessity for a vote the future of Catalonia to be decided by the Catalan people, but what exactly should we push for?
+
+**On the basis of the vote...**
+
+- @sovereign
+- @abstract
+- @constitutional
+
+@sovereign
+title: Self-determination should be based on the sovereignty of the Catalan people
+choose-if: 1==0
+unavailable-subtitle: House Speaker [+ speaker +] ([+ speaker_party +]) is unwilling to make a sovereignty-based declaration in the eves of the upcoming elections.
+
+@abstract
+title: Self-determination should arise from broad consensuses
+subtitle: Apealing to democracy and dialogue between institutions, including the European Union, may convince on-the-fence parties to join in.
+on-arrival: parlament2012psc = 0; parlament2012icv = 1; parlament2012si = 1; erc_roadmap = 1; ciu_roadmap = 1; independence_trust += 5; psc_relations -= 5; icv_relations +=5;
+go-to: timeline2012
+
+*The Parlament urges the Catalan government, all the political forces, and social agents to build the maximum possible consensus to bring forward this democratic process, with dialogue with the international community, the European Union, and the Spanish government so that the people of Catalonia can freely choose their own way...*
+
+@constitutional
+title: Self-determination can only happen within the limits of the current legal framework
+subtitle: It's unclear how a self-determination vote could be held under the current constitution, and the many may see it as not ambitious enough.
+on-arrival: parlament2012psc = 1; parlament2012icv = 1; parlament2012si = 0; erc_roadmap = 1; ciu_roadmap = 1; independence_trust -= 10; psc_relations += 5; si_relations -= 7; ciu_relations -=3; erc_relations -=3; cup_relations -=7;
+go-to: timeline2012
+
+*The Parlament urges the Catalan government, all the political forces, and social agents to build a consensus within the Catalan Statute of Autonomy to bring forward this democratic process, so that the people of Catalonia can freely choose their own way...*
+
+
+@timeline2012
+
+**On the timeline...**
+
+- @2014
+- @nextelection
+- @decadeend
+
+@2014
+title: This cannot wait, a vote should happen by 2014
+subtitle: This may be seen as putting extra pressure on the next government.
+on-arrival: parlament2012psc = 0; parlament2012si = 1; roadmap_year = 2014; si_relations += 5; ciu_relations -= 5; cup_relations +=2; erc_relations -=2; independence_trust += 5;
+
+*... and urges the government to organize a consultation during the next two years.*
+
+With this, the key points of the text are set. 
+
+- @parlament2012voteresult: Alea iacta est
+
+@nextelection
+title: A vote should happen during the next legislature
+on-arrival: roadmap_year = 2016; ciu_relations +=3; erc_relations +=3; independence_trust += 5;
+
+*... and urges the government to organize a consultation during the next legislature.*
+
+With this, the key points of the text are set. 
+
+- @parlament2012voteresult: Alea iacta est
+
+@decadeend
+title: Within this decade, we shall vote
+on-arrival: parlament2012si = 0; roadmap_year = 2020; si_relations -= 5; ciu_relations -= 2; cup_relations -= 5; erc_relations -=2; psc_relations += 2; independence_trust -= 5;
+
+
+*... and urges the government to make the necessary preparations for a consultation to take place within this decade.*
+
+With this, the key points of the text are set. 
+
+- @parlament2012voteresult: Alea iacta est
+
+
+
+@parlament2012voteresult
+on-arrival: {!
+    Q.parlament2012_yes = Q.ciu_parlament_s + Q.erc_parlament_s;
+    Q.parlament2012_no = Q.ppc_parlament_s + Q.cs_parlament_s;
+    Q.parlament2012_abst = 0;
+    if (Q.parlament2012si == 1) {
+        Q.parlament2012_yes += Q.si_parlament_s;
+    } else {
+        Q.parlament2012_abst += Q.si_parlament_s;
+    }
+    if (Q.parlament2012icv == 1) {
+        Q.parlament2012_yes += Q.icv_parlament_s;
+    } else {
+        Q.parlament2012_abst += Q.icv_parlament_s;
+    }
+    if (Q.parlament2012psc == 1) {
+        Q.parlament2012_yes += Q.psc_parlament_s;
+    } else {
+        Q.parlament2012_abst += Q.psc_parlament_s;
+    }
+    Q.parlament2012pc_yes = Math.round(Q.parlament2012_yes / Q.parlament_size * 100);
+    Q.parlament2012pc_no = Math.round(Q.parlament2012_no / Q.parlament_size * 100);
+    Q.parlament2012pc_abst = Math.round(100 - Q.parlament2012pc_yes - Q.parlament2012pc_no);
+!}
+
+# Note: despite some code provisions for it, ICV-EUiA will always vote yes
+
+<table style='border-spacing: 0px; margin-right: 1em; margin-left: 1em; width:95%; table-layout: fixed;'><tr><td style='width: [+ parlament2012pc_yes +]%'>Yes</td><td style='text-align: center; width: [+ parlament2012pc_abst +]%'>Abstention</td><td style='text-align: right; width: [+ parlament2012pc_no +]%'>No</td></tr><tr><td style='height: 2em; background-color: #008000; color: white; text-align: center; border-radius: 3px 0 0 3px;'>**[+ parlament2012_yes +]**</td><td style='background-color: #b1b0aeff; color: black; text-align: center'>**[+ parlament2012_abst +]**</td><td style='background-color: #c30000; color: white; text-align: center; border-radius: 0 3px 3px 0;'>**[+ parlament2012_no +]**</td></tr><tr style='vertical-align:top'><td>CiU<br/>ERC[? if parlament2012icv=1:  <br/> ICV-EUiA?][? if parlament2012si=1: <br/> SI?][? if parlament2012psc=1: <br/> PSC?]</td><td>[? if parlament2012psc=0: PSC <br/>?][? if parlament2012icv=0: ICV-EUiA <br/>?][? if parlament2012si=0: SI<br/>?]</td><td>PPC<br/>Cs[? if parlament2012si = 0 and parlament2012si_abst=1: <br/> SI ?]</td></tr></table>
+
+The vote has confortably passed with [+ parlament2012_yes +] out of the [+ parlament_s_majority +] needed. [? if parlament2012psc = 0 : After hours of debate, the PSC was not convinced to join in. Instead, they voted on their own resolution calling for the vote to explicitly happen within the Constitutional framework and with no set time limits. ?][? if parlament2012si = 0: SI has chosen to abstain as they missed a recognition of Catalan soverignty without mentions of Spain. ?]
+
+
+- @post_event: Continue...
+
+
+
+
+
+
+
+
+
+
+
+
+
