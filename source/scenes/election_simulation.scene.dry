@@ -2098,7 +2098,6 @@ if (window && d3) {
 [? if ciu_parlament_s > 0 : Note: CiU has been unclear about their position on independence, so it is counted as unaligned. ?]
 
 **Government Formation**
-# yeah this is hardcoded because its only the simulation scenes
 
 [? if ciu_parlament_showviz: CiU will be able to form a <span style='color: #002782; font-style: italic;'>minority government</span> with ERC's support. ?]
 
@@ -2479,7 +2478,7 @@ if (window && d3) {
 Author's note: Congreso election simulations are more imperfect than Parlament ones, but the main goal of the in-game dynamic is to capture the general trends and the possible government formations, pacts, and deadlocks, which is mostly achieved.
 
 **Government Formation**
-# yeah this is hardcoded because its only the simulation scenes
+
 [? if dl_congreso_showviz: No candidacy has been able to secure enough support to form a new government. New elections will happen in **June 2016**. ?]
 [? if pdcat_congreso_showviz: Mariano Rajoy will lead a PP <span style='color: #1d84ce;'>minority government</span> with the support of Cs, CC-PNC, and the toleration of a broken PSOE.?]
 [? if jxcat_congreso_showviz and fr_congreso_showviz: No candidacy has been able to secure enough support to form a new government. New elections will happen in **November 2019**. ?]

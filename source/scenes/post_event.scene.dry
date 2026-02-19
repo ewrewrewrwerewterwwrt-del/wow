@@ -29,19 +29,19 @@ for (var p of Q.parties) {
     var total_dissent = 0;
     if (Q[p+"_factions"]) {
         for (var c of (Q[p+"_factions"])) {
-            if (Q[c+'_dissent'] < 0) {
-                Q[c+'_dissent'] = 0;
-            } else if (Q[c+'_dissent'] >= 100) {
-                Q[c+'_dissent'] = 99;
+            if (Q[p + '_' + c + '_dissent'] < 0) {
+                Q[p + '_' + c + '_dissent'] = 0;
+            } else if (Q[p + '_' + c + '_dissent'] >= 100) {
+                Q[p + '_' + c + '_dissent'] = 99;
             }
-            if (Q[c+'_strength'] < 0) {
-                Q[c+'_strength'] = 0.1;
+            if (Q[p + '_' + c + '_strength'] < 0) {
+                Q[p + '_' + c + '_strength'] = 0.1;
             }
-            total_strength += Q[c+'_strength'];
+            total_strength += Q[p + '_' + c + '_strength'];
         }
         for (var c of (Q[p+"_factions"])) {
-            Q[c+'_strength'] = 100*Q[c+'_strength']/total_strength;
-            total_dissent += Q[c+'_dissent']*Q[c+'_strength']/total_strength;
+            Q[p + '_' + c + '_strength'] = 100*Q[p + '_' + c + '_strength']/total_strength;
+            total_dissent += Q[p + '_' + c + '_dissent']*Q[p + '_' + c + '_strength']/total_strength;
         }
         Q[p+'_dissent'] = 0.01*total_dissent;
         Q[p+'_percent_dissent'] = total_dissent;

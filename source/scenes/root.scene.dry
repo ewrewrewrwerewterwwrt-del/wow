@@ -144,7 +144,7 @@ Q.cdc_ideology = "Centre-right Liberalism, Pact-Pragmatism";
 Q.unio_leader = "Josep Antoni Duran i Lleida";
 Q.unio_ideology = "Christian Democracy, Pact-Pragmatism";
 
-Q.erc_ideology = "Social Democracy, Separatism";
+Q.erc_ideology = "Social Democracy, Independence";
 Q.erc_leader = "Oriol Junqueras";
 
 Q.cup_ideology = "Anticapitalism, Unilateralism";
@@ -168,11 +168,11 @@ Q.icv_ideology = "Ecosocialism, Federalism";
 
 // Initial ideologies for all parties, also future ones, just in case
 Q.pdcat_leader = "Artur Mas";
-Q.pdcat_ideology = "Centre-right Liberalism, Separatism";
+Q.pdcat_ideology = "Centre-right Liberalism, Pragmatic Independence";
 Q.dl_leader = "Artur Mas";
-Q.dl_ideology = "Centre-right Liberalism, Separatism";
+Q.dl_ideology = "Centre-right Liberalism, Pragmatic Independence";
 Q.jxsi_leader = "Artur Mas";
-Q.jxsi_ideology = "National coalition, Separatism";
+Q.jxsi_ideology = "National coalition, Independence";
 Q.jxcat_leader = "Carles Puigdemont";
 Q.jxcat_ideology = "Center-right Liberalism, Unilateralism";
 Q.junts_leader = "Carles Puigdemont";
@@ -215,12 +215,12 @@ Q.up_ideology = "Anti-austerity left, Federalism";
 Q.pnv_leader = "Íñigo Urkullu";
 Q.pnv_ideology = "Christian Democracy, Basque Pact-Pragmatism";
 Q.ehbildu_leader = "Arnaldo Otegi";
-Q.ehbildu_ideology = "Democratic Socialism, Basque Separatism";
+Q.ehbildu_ideology = "Democratic Socialism, Basque Independence";
 Q.amaiur_leader = "Maite Aristegi";
-Q.amaiur_ideology = "Democratic Socialism, Basque Separatism";
+Q.amaiur_ideology = "Democratic Socialism, Basque Independence";
 
 Q.gbai_leader = "Uxue Barkos";
-Q.gbai_ideology = "Social Democracy, Navarrese Separatism";
+Q.gbai_ideology = "Social Democracy, Navarrese Independence";
 Q.upn_leader = "Yolanda Barcina";
 Q.upn_ideology = "Conservatism, Navarrese Regionalism";
 Q.nsuma_leader = "Sergio Sayas";
@@ -233,9 +233,9 @@ Q.compromis_ideology = "Social Democracy, Valencian Regionalism";
 Q.mes_leader = "Biel Barceló";
 Q.mes_ideology = "Democratic Socialism, Balearic Federalism";
 Q.bng_leader = "Ana Pontón";
-Q.bng_ideology = "Social Democracy, Galician Separatism";
+Q.bng_ideology = "Social Democracy, Galician Independence";
 Q.nos_leader = "Carlos Morais";
-Q.nos_ideology = "Social Democracy, Galician Separatism";
+Q.nos_ideology = "Social Democracy, Galician Independence";
 Q.fac_leader = "Cristina Coto";
 Q.fac_ideology = "Liberal Conservatism, Asturian Regionalism";
 Q.prc_leader = "Miguel Ángel Revilla";
@@ -338,7 +338,7 @@ go-to: start_menu_2
 
 
 @start
-choose-if: 1==0
+# choose-if: 1==0
 unavailable-subtitle: Route to Ítaca is currently in its early development stages. Check back soon(-ish) for the full experience!
 on-arrival: {!
 Q.started = 1;
@@ -886,6 +886,20 @@ Q.ernest_maragall_advisor_available = 1;
 Q.joan_laporta_advisor_available = 1; // locked post 2012? 2015?
 Q.carles_mundo_advisor_available = 1;
 Q.elisenda_paluzie_advisor_available = 1;
+
+
+// FACTIONS
+Q.erc_factions = ["left", "core", "pragmatic", "civic"];
+Q.erc_left_strength = 20;
+Q.erc_left_dissent = 10;
+Q.erc_core_strength = 40;
+Q.erc_core_dissent = 5;
+Q.erc_pragmatic_strength = 20;
+Q.erc_pragmatic_dissent = 10;
+Q.erc_civic_strength = 30;
+Q.erc_civic_dissent = 15;
+
+
 !}
 go-to: intros
 
@@ -958,6 +972,15 @@ Q.mireia_boya_advisor_available = 1;
 Q.dolors_sabater_advisor_available = 1;
 Q.gabriela_serra_advisor_available = 1;
 Q.pau_juvilla_advisor_available = 1;
+
+// FACTIONS
+Q.cup_factions = ["radicals", "institutional", "thirdsector"];
+Q.cup_radicals_strength = 35;
+Q.cup_radicals_dissent = 15;
+Q.cup_institutional_strength = 35;
+Q.cup_institutional_dissent = 15;
+Q.cup_thirdsector_strength = 20;
+Q.cup_thirdsector_dissent = 10;
 
 
 !}

@@ -77,10 +77,6 @@ for (var party of Q.parties) {
 }
 !}
 
-= [+ player_party +] Factions
-
-Roadmap: [? if player_party = "erc": [+ erc_roadmap : roadmap +]?][? if player_party = "jxsi": [+ jxsi_roadmap : roadmap +]?][? if player_party = "ciu": [+ ciu_roadmap : roadmap +]?][? if player_party = "cup": [+ cup_roadmap : roadmap +]?][? if player_party=None: [+ player_party : roadmap +] ?] [? if roadmap_year: ([+ roadmap_year +]) ?]
-
 = PARLAMENT
 
 <div style="margin-top:1.5em;overflow:visible;">
@@ -128,6 +124,25 @@ Roadmap: [? if player_party = "erc": [+ erc_roadmap : roadmap +]?][? if player_p
 [? if pxc_parlament_s > 0 : <div style="margin-bottom:0.75em; display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="width:fit-content; border: 1px solid black; border-radius: 5px;" src="img/parties/logo_pxc.gif"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"> PxC - [+ pxc_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ pxc_leader +] <span style="font-style:italic;">([+ pxc_ideology +])</span></p></div></div> ?]
 [? if fnc_parlament_s > 0 : <div style="margin-bottom:0.75em; display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="width:fit-content;" src="img/parties/logo_fnc.png"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"> FNC - [+ fnc_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ fnc_leader +] <span style="font-style:italic;">([+ fnc_ideology +])</span></p></div></div> ?]
 [? if si_parlament_s > 0 : <div style="margin-bottom:0.75em; display: flex; gap: 0.7em;"><div style="flex: 0 0 15%;align-content:center;"><img style="width:fit-content; border: 1px solid black; border-radius: 5px;" src="img/parties/logo_si.jpg"></div><div style="flex: 1 1 85%;"><p style="margin-top:-0.25em; margin-bottom:0em;"> SI - [+ si_relations : relationships +]</p><p style="max-width:100%;margin-bottom:0em;font-size:0.8em;">[+ si_leader +] <span style="font-style:italic;">([+ si_ideology +])</span></p></div></div> ?]
+
+
+= [+ player_party +] Factions
+
+**Roadmap:** [? if player_party = "erc": [+ erc_roadmap : roadmap +]?][? if player_party = "jxsi": [+ jxsi_roadmap : roadmap +]?][? if player_party = "ciu": [+ ciu_roadmap : roadmap +]?][? if player_party = "cup": [+ cup_roadmap : roadmap +]?][? if player_party=None: [+ player_party : roadmap +] ?] [? if roadmap_year: ([+ roadmap_year +]) ?]
+
+[? if player_party = "erc": <div style="display:flex;"><div style="display:flex; align-items:center; justify-content:center; font-weight: bold; max-width: 40%;"> Social Left </div><div style="display:flex; font-size: 0.8em; margin-left: 1em; flex-direction:column;"> <div> Strength: [+ erc_left_strength : dissent +] </div><div> Dissent: [+ erc_left_dissent : dissent +]</div> </div> </div>?]
+
+[? if player_party = "erc":<div style="display:flex;"><div style="display:flex; align-items:center; justify-content:center; font-weight: bold; max-width: 40%;"> Republican Core </div><div style="display:flex; font-size: 0.8em; margin-left: 1em; flex-direction:column;"> <div> Strength: [+ erc_core_strength : dissent +] </div><div> Dissent: [+ erc_core_dissent : dissent +]</div> </div> </div>?]
+
+[? if player_party = "erc": <div style="display:flex;"><div style="display:flex; align-items:center; justify-content:center; font-weight: bold; max-width: 40%;"> Institutional Pragmatics </div><div style="display:flex; font-size: 0.8em; margin-left: 1em; flex-direction:column;"> <div> Strength: [+ erc_pragmatic_strength : dissent +] </div><div> Dissent: [+ erc_pragmatic_dissent : dissent +]</div> </div> </div>?]
+
+[? if player_party = "erc": <div style="display:flex;"><div style="display:flex; align-items:center; justify-content:center; font-weight: bold; max-width: 40%;"> Civic Nationalists </div><div style="display:flex; font-size: 0.8em; margin-left: 1em; flex-direction:column;"> <div> Strength: [+ erc_civic_strength : dissent +] </div><div> Dissent: [+ erc_civic_dissent : dissent +]</div> </div> </div>?]
+
+[? if player_party = "cup": <div style="display:flex;"><div style="display:flex; align-items:center; justify-content:center; font-weight: bold; max-width: 40%;"> Radical Anticap. </div><div style="display:flex; font-size: 0.8em; margin-left: 1em; flex-direction:column;"> <div> Strength: [+ cup_radicals_strength : dissent +] </div><div> Dissent: [+ cup_radicals_dissent : dissent +]</div> </div> </div>?]
+
+[? if player_party = "cup": <div style="display:flex;"><div style="display:flex; align-items:center; justify-content:center; font-weight: bold; max-width: 40%;"> Institutional Fighters </div><div style="display:flex; font-size: 0.8em; margin-left: 1em; flex-direction:column;"> <div> Strength: [+ cup_institutional_strength : dissent +] </div><div> Dissent: [+ cup_institutional_dissent : dissent +]</div> </div> </div>?]
+
+[? if player_party = "cup": <div style="display:flex;"><div style="display:flex; align-items:center; justify-content:center; font-weight: bold; max-width: 40%;"> Third Sector </div><div style="display:flex; font-size: 0.8em; margin-left: 1em; flex-direction:column;"> <div> Strength: [+ cup_thirdsector_strength : dissent +] </div><div> Dissent: [+ cup_thirdsector_dissent : dissent +]</div> </div> </div>?]
 
 
 @international

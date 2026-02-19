@@ -15,7 +15,7 @@ if (Q.next_election_month >= 13) {
     Q.next_election_year = Q.year;
 }
 Q.cat_coalition_disp_old = Q.cat_coalition_disp;
-Q.cat_coalition_disp = Q.president_party + "<span style=\"font-style:italic;\"> caretaker government</span>";
+Q.cat_coalition_disp = Q.president_party + "<span style=\"font-style:italic;\"> caretaker gov.</span>";
 !}
 
 = New Parlament elections called!

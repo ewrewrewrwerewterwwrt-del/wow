@@ -413,7 +413,7 @@ const tooltipList = [
     searchString: ["Oriol Junqueras", "Oriol Junqueras i Vies"],
     mainText: "Oriol Junqueras i Vies",
     img: "img/erc/junqueras.jpg",
-    ideology: "Left-wing Republicanism, Separatism",
+    ideology: "Left-wing Republicanism, Independence",
     allegiances: (Q) => {
       let list = ["<span style='color: var(--erc)'>ERC</span>"];
       if (Q.jxsi_formed)
@@ -517,7 +517,7 @@ const tooltipList = [
     searchString: ["Joan Laporta", "Joan Laporta i Estruch"],
     mainText: "Joan Laporta i Estruch",
     img: "img/erc/laporta.jpg",
-    ideology: "Centerist regeneration, Separatism",
+    ideology: "Centerist regeneration, Independence",
     allegiances: (Q) => {
       return [
         "<span style='color: var(--si)'>SI</span>",
