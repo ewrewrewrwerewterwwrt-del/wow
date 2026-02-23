@@ -23,25 +23,28 @@ Peak, fork, and play around with the code from <a class="link" href="https://git
 Artificial Intelligence (AI) tools were used in the form of Large Language Models (LLMs), in limitted form and for very specific tasks, goals, and purposes. These are disclosed herein as an ethically indispensible exercice of transparency and integrity.
 
 OpenAI's GPT-4 and GPT-4.1 models were used as part of the integrated Copilot within Visual Studio Code as:
+
 - Tools for speeding up the programming process. 
 - Coding and debugging assistance.
 - Ortographic, grammatical, and typografic review of texts and code.
 
 Perplexity's AI framework (inlcuding the usage of the Claude, Gemini, GPT, and Grok model families) were used for:
+
 - Initial research and data gathering and exploration.
 - Boiler-plate code generation and iteration.
 - Data analysis, cleaning, processing, and transformation assistance.
 
 Applying to all of the above:
+
 - All code was human-reviewed, tested, and approved. No fully vibe-coded files exist in this project.
 - All (LLM-provided) sources of information were human-reviewed and cross-checked.
 
 **No AI tools were used for:**
+
 - Game Design
 - Storyline Development
 - UI/UX Design
-- Text generation
-- Image generation
+- Text, Image, Video, or Music generation.
 
 The author's stance on the use of AI tools is strictly against AI-generated "Art", including images, videos, text, music, videogames, and other creative works that may apply. Nonetheless, LLM tools can and do provide valuable assistance as specific tools for concrete tasks, and can undoubtedly help by speeding-up of many aspects of the development workflow. Its usage as a tool must be as responsible as it is transparent. If you feel like the usages descrived herein attempt against your intellectual property rights, contact me via <a class="link" href="https://www.reddit.com/user/_BrokenArrows/">Reddit DM</a>.
 
@@ -138,8 +141,6 @@ Note: when choosing images, priority has always been given to those taken during
 ​cup/mireiaboya.jpg: By Arnaucc - Own work, CC BY-SA 4.0, <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=46632741">commons.wikimedia.org/w/index.php?curid=46632741</a> (2015)
 
 ​cup/mireiavehi.jpg: By Cuarto Poder - Interview with Mireia Vehí, CC BY 3.0, <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=85700112">commons.wikimedia.org/w/index.php?curid=85700112</a> (2019)
-
-​cup/nataliasanchezdipp.jpg: By llibertat.cat, CC BY-SA 4.0, <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=64969246">commons.wikimedia.org/w/index.php?curid=64969246</a> (2017)
 
 ​cup/paujuvilla.jpg: By Candidatura d'Unitat Popular, CC BY-SA 4.0, <a class="link" href="https://commons.wikimedia.org/w/index.php?curid=99772544">commons.wikimedia.org/w/index.php?curid=99772544</a> (2021)
 

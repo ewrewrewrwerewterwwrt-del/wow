@@ -28,11 +28,17 @@ Route to Ítaca is about imagining how different could the 2010's have been for 
 
 = FAQ
 
+**What's up with the name?**
+
+The naming comes from the (in)famous metaphor used President Artur Mas in 2012. Keen on using nautical expressions and, at the time, not wanting to explicitly mention independence, it was a way to say that such political transformations are arduous journeys that, at the very least, take years. Comparing independence to the Odyssey was seen as exaggerated at the time, even proof that he was only using the movement to propel his career. In hindsight, it’s kinda funny if you ask me. Even the far-left CUP ended up adopting the also (in)famous *“we were going slow because we were going far”* motto, and Ithaca, needless to say, was never reached… *anyway*
+
 **How do I cross the Rubicon?**
+
 You need to have the Catalan Parlament pass the twin laws on self-determination and juridical transition. I.e. the path for a non-agreement referendum. Just like in Dynamic Social Democracy, this makes time slow down to a weekly basis to reflect how critical the situation is. Also just like in Dynamic Social Democracy, Rubicon mode remains active for the rest of the game.
 
 **Will you make XYZ party playable?**
-Most probably not. Excluding the three main pro-indy parties, I *might* do one for Comuns/Podemos, but the might is carrying a lot in this sentence. You are free to mod them in yourself, though. Do, nonetheless, refrain from doing them for the far-right parties. The original game by Autumn Chen was already about preventing their rise, and I have absolutely no intention to change that.
+
+Most probably not. Excluding the three main pro-indy parties, I *might* do one for Comuns/​Podemos, but the might is carrying a lot in this sentence. You are free to mod them in yourself, though. Do, nonetheless, refrain from doing them for the far-right parties. The original game by Autumn Chen was already about preventing their rise, and I have absolutely no intention to change that.
 
 - @force_new_page_about: Back
 
@@ -44,6 +50,7 @@ Most probably not. Excluding the three main pro-indy parties, I *might* do one f
 If you encounter any bugs, issues, typos, or whatever other issue that bothers you, please report them via <a class="link" href="https://github.com/broken-arrows/route_to_itaca/issues">GitHub Issues</a>. If you don't have a GitHub account, you can also contact me via Reddit DM at <a class="link" href="https://www.reddit.com/user/broken_arrows_/">u/broken_arrows_</a>.
 
 If you believe you found a game-breaking bug, please include as much information as possible, like:
+
 - A detailed description of the bug/issue.
 - Steps to reproduce it, if applicable.
 - Your current save file (if possible).
@@ -58,6 +65,7 @@ Any and all reports are most welcome!
 = changelog
 
 **v0.1.0** - TBD
+
 - Initial Release
 - Playable ERC.
 - Playable CUP.
@@ -67,10 +75,12 @@ Any and all reports are most welcome!
 = Future Plans
 
 **v0.2.0** - TBD
+
 - Playable CiU / Junts.
 - More achievements
 
 **TBD future plans and ideas**
+
 - Post Rubicon game?
 - More advisors?
 - Historical difficulty mode (no saving, loading, nor polls).

@@ -130,7 +130,7 @@ Teresa Jordà has been added as an advisor.
 # erc_republican_core
 
 @add_oriol_junqueras
-title: Oriol Junqueras i Vies
+title: ​Oriol Junqueras i Vies
 subtitle: Historian and former professor, he has been the president of ERC since 2011.
 choose-if: oriol_junqueras_advisor = 0
 unavailable-subtitle: Already an advisor
@@ -139,7 +139,7 @@ on-arrival: oriol_junqueras_advisor = 1; n_advisors += 1;
 tags: erc_advisor, erc_republican_core
 go-to: erc_advisor_menu
 
-Oriol Junqueras has been added as an advisor.
+​Oriol Junqueras has been added as an advisor.
 
 @add_gabriel_rufian
 title: Gabriel Rufián Romero
@@ -327,13 +327,13 @@ go-to: rm_main
 Teresa Jordà is no longer an advisor. Social Leftists are not pleased.
 
 @remove_oriol_junqueras
-title: Remove Oriol Junqueras
+title: Remove ​Oriol Junqueras
 view-if: oriol_junqueras_advisor = 1
 on-arrival: oriol_junqueras_advisor = 0; n_advisors -= 1;
 tags: erc_rm_advisor
 go-to: rm_main
 
-Oriol Junqueras is no longer an advisor. The Republican Core is not pleased.
+​Oriol Junqueras is no longer an advisor. The Republican Core is not pleased.
 
 @remove_gabriel_rufian
 title: Remove Gabriel Rufián

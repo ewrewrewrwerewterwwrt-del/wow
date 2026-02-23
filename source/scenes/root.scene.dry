@@ -770,21 +770,22 @@ Q.elisenda_paluzie_advisor = 0;
 
 
 // CUP Advisors
-// Radical Anticapitalists
+// Endavant
 Q.anna_gabriel_advisor = 0;
 Q.carles_riera_advisor = 0;
 Q.mireia_vehi_advisor = 0;
 Q.vidal_aragones_advisor = 0;
-Q.natalia_sanchez_advisor = 0;
-// Institutionalists
-Q.quim_arrufat_advisor = 0;
 Q.eulalia_reguant_advisor = 0;
-Q.benet_salellas_advisor = 0;
+
+// Poble Lliure
+Q.quim_arrufat_advisor = 0; 
+Q.mireia_boya_advisor = 0;
 Q.albert_botran_advisor = 0;
 Q.antonio_banos_advisor = 0;
+
 // Municipalists, Assamblearies, and the Third Sector
 Q.david_fernandez_advisor = 0;
-Q.mireia_boya_advisor = 0;
+Q.benet_salellas_advisor = 0;
 Q.dolors_sabater_advisor = 0;
 Q.gabriela_serra_advisor = 0;
 Q.pau_juvilla_advisor = 0;
@@ -951,20 +952,21 @@ Q.vox_relations = 0;
 Q.pxc_relations = 0;
 
 // CUP Advisors
-// Radicals
+// Endavant
 Q.anna_gabriel_advisor = 1;
 Q.anna_gabriel_advisor_available = 1;
 Q.carles_riera_advisor_available = 1;
 Q.mireia_vehi_advisor_available = 1;
 Q.vidal_aragones_advisor_available = 1;
-Q.natalia_sanchez_advisor_available = 1;
-// Institutionalists
+Q.eulalia_reguant_advisor_available = 1;
+
+// Poble Lliure
 Q.quim_arrufat_advisor = 1;
 Q.quim_arrufat_advisor_available = 1;
-Q.eulalia_reguant_advisor_available = 1;
 Q.benet_salellas_advisor_available = 1;
 Q.albert_botran_advisor_available = 1;
 Q.antonio_banos_advisor_available = 1;
+
 // Municipalists, Assamblearies, and the Third Sector
 Q.david_fernandez_advisor = 1;
 Q.david_fernandez_advisor_available = 1;
@@ -974,11 +976,11 @@ Q.gabriela_serra_advisor_available = 1;
 Q.pau_juvilla_advisor_available = 1;
 
 // FACTIONS
-Q.cup_factions = ["radicals", "institutional", "thirdsector"];
-Q.cup_radicals_strength = 35;
-Q.cup_radicals_dissent = 15;
-Q.cup_institutional_strength = 35;
-Q.cup_institutional_dissent = 15;
+Q.cup_factions = ["endavant", "poblelliure", "thirdsector"];
+Q.cup_endavant_strength = 35;
+Q.cup_endavant_dissent = 15;
+Q.cup_poblelliure_strength = 35;
+Q.cup_poblelliure_dissent = 15;
 Q.cup_thirdsector_strength = 20;
 Q.cup_thirdsector_dissent = 10;
 

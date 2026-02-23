@@ -53,6 +53,8 @@
     // Try to get from CSS variable first
     let partyVar = party;
     if (party.includes("icv")) partyVar = "icv"; // Handle ICV-... case
+    if (party.includes("udc")) partyVar = "unio"; // Handle unio
+    if (party.includes("jxsí")) partyVar = "jxsi"; // Handle jxsí
     const cssVar = getComputedStyle(document.documentElement)
       .getPropertyValue(`--${partyVar}`)
       .trim();

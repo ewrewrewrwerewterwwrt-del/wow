@@ -42,8 +42,8 @@ title: Add advisors
 tags: cup_endavant, cup_institutional, cup_municipalism
 frequency: 1
 
-- @cup_endavant: Add from Radical Anticapitalists
-- @cup_institutional: Add from Institutional Fighters
+- @cup_endavant: Add from Endavant
+- @cup_institutional: Add from Poble Lliure
 - @cup_municipalism: Add from Municipalists, Assamblearies, and the Third Sector
 - @rm_main_cup: Remove advisors instead
 - @remove_none_cup: Stop changing advisors
@@ -116,17 +116,17 @@ go-to: cup_advisor_menu
 
 Vidal Aragonés has been added as an advisor.
 
-@add_natalia_sanchez
-title: Natàlia Sànchez i Dipp
-subtitle: A historian and cultural communicator, her fights focus on truth, transparency, and historical memory and justice.
-choose-if: natalia_sanchez_advisor = 0
+@add_eulalia_reguant
+title: Eulàlia Reguant i Cura
+subtitle: A mathematician with a trajectory of work on social organizations, ethical finances, global justice, and antifascism.
+choose-if: eulalia_reguant_advisor = 0
 unavailable-subtitle: Already an advisor
-view-if: n_advisors < max_advisors and natalia_sanchez_advisor_available = 1
-on-arrival: natalia_sanchez_advisor = 1; n_advisors += 1;
+view-if: n_advisors < max_advisors and eulalia_reguant_advisor_available = 1
+on-arrival: eulalia_reguant_advisor = 1; n_advisors += 1;
 tags: cup_advisor, cup_endavant
 go-to: cup_advisor_menu
 
-Natàlia Sànchez has been added as an advisor.
+Eulàlia Reguant has been added as an advisor.
 
 @add_quim_arrufat
 title: Quim Arrufat i Ibáñez
@@ -139,30 +139,6 @@ tags: cup_advisor, cup_institutional
 go-to: cup_advisor_menu
 
 Quim Arrufat has been added as an advisor.
-
-@add_eulalia_reguant
-title: Eulàlia Reguant i Cura
-subtitle: A mathematician with a trajectory of work on social organizations, ethical finances, global justice, and antifascism.
-choose-if: eulalia_reguant_advisor = 0
-unavailable-subtitle: Already an advisor
-view-if: n_advisors < max_advisors and eulalia_reguant_advisor_available = 1
-on-arrival: eulalia_reguant_advisor = 1; n_advisors += 1;
-tags: cup_advisor, cup_institutional
-go-to: cup_advisor_menu
-
-Eulàlia Reguant has been added as an advisor.
-
-@add_benet_salellas
-title: Benet Salellas i Vilar
-subtitle: A lawer and philologyst, he is a specialist in penal law and defence of political persecution. 
-choose-if: benet_salellas_advisor = 0
-unavailable-subtitle: Already an advisor
-view-if: n_advisors < max_advisors and benet_salellas_advisor_available = 1
-on-arrival: benet_salellas_advisor = 1; n_advisors += 1;
-tags: cup_advisor, cup_institutional
-go-to: cup_advisor_menu
-
-Benet Salellas has been added as an advisor.
 
 @add_albert_botran
 title: Albert Botran i Pahissa
@@ -188,8 +164,21 @@ go-to: cup_advisor_menu
 
 Antonio Baños has been added as an advisor.
 
+@add_mieria_boya
+title: Mireia Boya e Busquet
+subtitle: An ambientologist, she represents the Aranese-Occitan minority of Catalonia and leads fights on environmentalism, territorial defence, minority rights.
+choose-if: mieria_boya_advisor = 0
+unavailable-subtitle: Already an advisor
+view-if: n_advisors < max_advisors and mieria_boya_advisor_available = 1
+on-arrival: mieria_boya_advisor = 1; n_advisors += 1;
+tags: cup_advisor, cup_institutional
+go-to: cup_advisor_menu
+
+Mireia Boya has been added as an advisor.
+
+
 @add_david_fernandez
-title: David Fernàndez i Ramos
+title: ​David Fernàndez i Ramos
 subtitle: A journalist with a diverse background in social movements, he's one of the most charismatic figures in the party with strong points on corruption fight and civil disobedience.
 choose-if: david_fernandez_advisor = 0
 unavailable-subtitle: Already an advisor
@@ -198,19 +187,7 @@ on-arrival: david_fernandez_advisor = 1; n_advisors += 1;
 tags: cup_advisor, cup_municipalism
 go-to: cup_advisor_menu
 
-David Fernàndez has been added as an advisor.
-
-@add_mieria_boya
-title: Mireia Boya e Busquet
-subtitle: An ambientologist, she represents the Aranese-Occitan minority of Catalonia and leads fights on environmentalism, territorial defence, minority rights.
-choose-if: mieria_boya_advisor = 0
-unavailable-subtitle: Already an advisor
-view-if: n_advisors < max_advisors and mieria_boya_advisor_available = 1
-on-arrival: mieria_boya_advisor = 1; n_advisors += 1;
-tags: cup_advisor, cup_municipalism
-go-to: cup_advisor_menu
-
-Mireia Boya has been added as an advisor.
+​David Fernàndez has been added as an advisor.
 
 @add_dolors_sabater
 title: Dolors Sabater i Puig
@@ -235,6 +212,18 @@ tags: cup_advisor, cup_municipalism
 go-to: cup_advisor_menu
 
 Gabriela Serra has been added as an advisor.
+
+@add_benet_salellas
+title: Benet Salellas i Vilar
+subtitle: A lawer and philologyst, he is a specialist in penal law and defence of political persecution. 
+choose-if: benet_salellas_advisor = 0
+unavailable-subtitle: Already an advisor
+view-if: n_advisors < max_advisors and benet_salellas_advisor_available = 1
+on-arrival: benet_salellas_advisor = 1; n_advisors += 1;
+tags: cup_advisor, cup_municipalism
+go-to: cup_advisor_menu
+
+Benet Salellas has been added as an advisor.
 
 @add_pau_juvilla
 title: Pau Juvillà i Ballester
@@ -286,15 +275,6 @@ go-to: rm_main_cup
 
 Vidal Aragonés has been removed as an advisor.
 
-@remove_natalia_sanchez
-title: Remove Natalia Sànchez
-view-if: natalia_sanchez_advisor = 1
-on-arrival: natalia_sanchez_advisor = 0; n_advisors -= 1;
-tags: cup_rm_advisor
-go-to: rm_main_cup
-
-Natalia Sànchez has been removed as an advisor.
-
 @remove_quim_arrufat
 title: Remove Quim Arrufat
 view-if: quim_arrufat_advisor = 1
@@ -341,13 +321,13 @@ go-to: rm_main_cup
 Antonio Baños has been removed as an advisor.
 
 @remove_david_fernandez
-title: Remove David Fernàndez
+title: Remove ​David Fernàndez
 view-if: david_fernandez_advisor = 1
 on-arrival: david_fernandez_advisor = 0; n_advisors -= 1;
 tags: cup_rm_advisor
 go-to: rm_main_cup
 
-David Fernàndez has been removed as an advisor.
+​David Fernàndez has been removed as an advisor.
 
 @remove_mieria_boya
 title: Remove Mireia Boya
