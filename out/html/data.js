@@ -66,7 +66,7 @@ const tooltipList = [
   },
   {
     searchString: ["Junts", "junts"],
-    mainText: "Junts",
+    mainText: "Together",
     subText: "Junts",
     img: "img/parties/logo_junts.png",
     ledBy: "junts_leader",
