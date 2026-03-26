@@ -15,6 +15,7 @@
     <script src="game.js"></script>
     <script src="data.js"></script>
     <script src="cat_polls.js"></script>
+    <script src="cat_engine.js"></script>
   </head>
   <body>
     <div class="background" id="bg2">
@@ -30,16 +31,16 @@
                     <td>
                         Backgrounds:
                     </td>
-                    <td>
+                    <td style="cursor: pointer">
                         <label for="backgrounds_yes">On</label>
                     </td>
-                    <td>
+                    <td style="cursor: pointer">
                         <input type="radio" id="backgrounds_yes" name="backgrounds" value="1" onclick="window.enableBg();">
                     </td>
-                    <td>
+                    <td style="cursor: pointer">
                         <label for="backgrounds_no">Off</label>
                     </td>
-                    <td>
+                    <td style="cursor: pointer">
                         <input type="radio" id="backgrounds_no" name="backgrounds" value="0" onclick="window.disableBg();">
                     </td>
                 </tr>
@@ -49,16 +50,16 @@
                 <tr>
                     <td>
                         Event images:
-                    <td>
+                    <td style="cursor: pointer">
                         <label for="images_yes">On</label>
                     </td>
-                    <td>
+                    <td style="cursor: pointer">
                         <input type="radio" id="images_yes" name="images" value="1" onclick="window.enableImages();">
                     </td>
-                    <td>
+                    <td style="cursor: pointer">
                         <label for="images_no">Off</label>
                     </td>
-                    <td>
+                    <td style="cursor: pointer">
                         <input type="radio" id="images_no" name="images" value="0" onclick="window.disableImages();">
                     </td>
                 </tr>
@@ -70,16 +71,16 @@
                     <td>
                         Animations:
                     </td>
-                    <td>
+                    <td style="cursor: pointer">
                         <label for="animate_yes">On</label>
                     </td>
-                    <td>
+                    <td style="cursor: pointer">
                         <input type="radio" id="animate_yes" name="animate" value="1" onclick="window.enableAnimate();">
                     </td>
-                    <td>
+                    <td style="cursor: pointer">
                         <label for="animate_no">Off</label>
                     </td>
-                    <td>
+                    <td style="cursor: pointer">
                         <input type="radio" id="animate_no" name="animate" value="0" onclick="window.disableAnimate();">
                     </td>
                 </tr>
@@ -90,16 +91,16 @@
                     <td>
                         Music (WIP):
                     </td>
-                    <td>
-                        <label for="audio_yes">On</label>
+                    <td style="cursor: not-allowed;">
+                        <label for="audio_yes" style="color: grey">On</label>
                     </td>
-                    <td>
+                    <td style="cursor: not-allowed;">
                         <input type="radio" id="audio_yes" name="audio" value="1" onclick="window.enableAudio();" disabled>
                     </td>
-                    <td>
+                    <td style="cursor: pointer">
                         <label for="audio_no">Off</label>
                     </td>
-                    <td>
+                    <td style="cursor: pointer">
                         <input type="radio" id="audio_no" name="audio" value="0" onclick="window.disableAudio();">
                     </td>
                 </tr>
@@ -111,16 +112,16 @@
                     <td>
                         Color mode (WIP):
                     </td>
-                    <td>
+                    <td style="cursor: pointer">
                         <label for="light_mode">Light</label>
                     </td>
-                    <td>
+                    <td style="cursor: pointer">
                         <input type="radio" id="light_mode" name="ld_mode" value="1" onclick="window.enableLightMode();">
                     </td>
-                    <td>
-                        <label for="dark_mode">Dark</label>
+                    <td style="cursor: not-allowed;">
+                        <label for="dark_mode" style="color: grey">Dark</label>
                     </td>
-                    <td>
+                    <td style="cursor: not-allowed;">
                         <input type="radio" id="dark_mode" name="ld_mode" value="0" onclick="window.enableDarkMode();" disabled>
                     </td>
                 </tr>

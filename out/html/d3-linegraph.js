@@ -20,7 +20,7 @@ d3.linegraph = function (
   partyNames,
   dataMax,
   dataMin,
-  additionalMonths
+  additionalMonths,
 ) {
   /* params */
   if (!parties) {
@@ -67,14 +67,20 @@ d3.linegraph = function (
       const dates = data.map((d) => new Date(d.date));
       // Map the data to an array of arrays of {x, y} tuples.
       const series = parties.map((party) =>
-        data.map((d) => ({ x: new Date(d.date), y: d[party], series: party }))
+        data
+          .map((d) =>
+            d[party] != null && d[party] != undefined
+              ? { x: new Date(d.date), y: d[party], series: party }
+              : null,
+          )
+          .filter((d) => d !== null && d.y !== null && d.y !== undefined),
       );
 
       // Declare the x (horizontal position) scale.
       const maxDate = d3.max(dates);
       const xScale = d3.scaleUtc(
-        [new Date(1928, 0), addMonths(maxDate, additionalMonths)],
-        [marginLeft, width - marginRight]
+        [new Date(2012, 7), addMonths(maxDate, additionalMonths)],
+        [marginLeft, width - marginRight],
       );
 
       var xaxis = d3
@@ -92,14 +98,15 @@ d3.linegraph = function (
 
       // Declare the y (vertical position) scale.
       if (!dataMax) {
-        const maxSPD = d3.max(data, (d) => d.spd);
-        const maxNSDAP = d3.max(data, (d) => d.nsdap);
-        dataMax = maxSPD >= maxNSDAP ? maxSPD + 10 : maxNSDAP + 10;
+        dataMax =
+          d3.max(parties, (party) =>
+            d3.max(data, (d) => d[party] ?? -Infinity),
+          ) + 10;
         dataMin = 0;
       }
       const yScale = d3.scaleLinear(
         [dataMin, dataMax],
-        [height - marginBottom, marginTop]
+        [height - marginBottom, marginTop],
       );
 
       //Create the SVG container.
@@ -128,11 +135,14 @@ d3.linegraph = function (
       const partyLine = (party) =>
         d3
           .line()
+          .defined((d) => d[party] != null && d[party] !== undefined)
           .x((d) => xScale(new Date(d.date)))
           .y((d) => yScale(d[party]));
 
       // draw the lines
       for (const party of parties) {
+        const partySeries = series[parties.indexOf(party)];
+        if (partySeries.length === 0) continue;
         svg
           .append("path")
           .attr("fill", "none")
@@ -171,7 +181,7 @@ d3.linegraph = function (
           .append("circle")
           .attr(
             "class",
-            (d) => d.series + " " + d.series + "-node " + "party-node"
+            (d) => d.series + " " + d.series + "-node " + "party-node",
           )
           .attr("fill", (d) => partyColors[d.series])
           .attr("series", (d) => d.series)
@@ -198,7 +208,7 @@ d3.linegraph = function (
       // draw right-hand labels
       svg
         .selectAll(".labels")
-        .data(series)
+        .data(series.filter((s) => s.length > 0))
         .enter()
         .append("text")
         .text((s) => partyNames[s[0].series])

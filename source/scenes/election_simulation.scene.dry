@@ -108,9 +108,6 @@ Q.cup_parlament_pv = 0;
 Q.cup_parlament_s = 0;
 
 // Support as of November 2012
-Q.unio_parlament_barcelona_buss_support = 0;
-Q.csqp_parlament_barcelona_buss_support = 0;
-Q.jxsi_parlament_barcelona_buss_support = 0;
 Q.ciu_parlament_barcelona_buss_support = 23.5;
 Q.abstain_parlament_barcelona_buss_support = 25.4;
 Q.erc_parlament_barcelona_buss_support = 7.2;
@@ -121,9 +118,6 @@ Q.cup_parlament_barcelona_buss_support = 2.2;
 Q.si_parlament_barcelona_buss_support = 1.1;
 Q.ppc_parlament_barcelona_buss_support = 14.9;
 
-Q.jxsi_parlament_barcelona_ind_support = 0;
-Q.csqp_parlament_barcelona_ind_support = 0;
-Q.unio_parlament_barcelona_ind_support = 0;
 Q.abstain_parlament_barcelona_ind_support = 32.42;
 Q.psc_parlament_barcelona_ind_support = 13.64;
 Q.ciu_parlament_barcelona_ind_support = 19.19;
@@ -134,9 +128,6 @@ Q.ppc_parlament_barcelona_ind_support = 9.09;
 Q.cup_parlament_barcelona_ind_support = 1.82;
 Q.ciu_parlament_barcelona_middle_support = 17.54;
 
-Q.unio_parlament_barcelona_middle_support = 0;
-Q.csqp_parlament_barcelona_middle_support = 0;
-Q.jxsi_parlament_barcelona_middle_support = 0;
 Q.abstain_parlament_barcelona_middle_support = 27.66;
 Q.erc_parlament_barcelona_middle_support = 7.52;
 Q.icv_parlament_barcelona_middle_support = 10.02;
@@ -147,9 +138,6 @@ Q.cup_parlament_barcelona_middle_support = 1.9;
 Q.si_parlament_barcelona_middle_support = 1.2;
 Q.ciu_parlament_barcelona_retired_support = 29.35;
 
-Q.unio_parlament_barcelona_retired_support = 0;
-Q.csqp_parlament_barcelona_retired_support = 0;
-Q.jxsi_parlament_barcelona_retired_support = 0;
 Q.abstain_parlament_barcelona_retired_support = 24.29;
 Q.cup_parlament_barcelona_retired_support = 0;
 Q.psc_parlament_barcelona_retired_support = 15.99;
@@ -158,18 +146,12 @@ Q.ppc_parlament_barcelona_retired_support = 17.21;
 Q.icv_parlament_barcelona_retired_support = 3.34;
 Q.cs_parlament_barcelona_retired_support = 1.52;
 
-Q.unio_parlament_barcelona_rural_support = 0;
-Q.csqp_parlament_barcelona_rural_support = 0;
-Q.jxsi_parlament_barcelona_rural_support = 0;
 Q.erc_parlament_barcelona_rural_support = 26.5;
 Q.ciu_parlament_barcelona_rural_support = 25.0;
 Q.psc_parlament_barcelona_rural_support = 23.0;
 Q.abstain_parlament_barcelona_rural_support = 16.0;
 Q.cup_parlament_barcelona_rural_support = 9.5;
 
-Q.unio_parlament_barcelona_unemployed_support = 0;
-Q.csqp_parlament_barcelona_unemployed_support = 0;
-Q.jxsi_parlament_barcelona_unemployed_support = 0;
 Q.abstain_parlament_barcelona_unemployed_support = 42.08;
 Q.ciu_parlament_barcelona_unemployed_support = 14.53;
 Q.erc_parlament_barcelona_unemployed_support = 8.92;
@@ -180,9 +162,6 @@ Q.cs_parlament_barcelona_unemployed_support = 4.91;
 Q.si_parlament_barcelona_unemployed_support = 1.2;
 Q.cup_parlament_barcelona_unemployed_support = 1.3;
 
-Q.unio_parlament_barcelona_young_support = 0;
-Q.csqp_parlament_barcelona_young_support = 0;
-Q.jxsi_parlament_barcelona_young_support = 0;
 Q.abstain_parlament_barcelona_young_support = 44.33;
 Q.ciu_parlament_barcelona_young_support = 12.54;
 Q.erc_parlament_barcelona_young_support = 6.92;
@@ -194,9 +173,6 @@ Q.cs_parlament_barcelona_young_support = 9.33;
 Q.si_parlament_barcelona_young_support = 2.01;
 Q.ciu_parlament_girona_buss_support = 31.43;
 
-Q.unio_parlament_girona_buss_support = 0;
-Q.csqp_parlament_girona_buss_support = 0;
-Q.jxsi_parlament_girona_buss_support = 0;
 Q.abstain_parlament_girona_buss_support = 24.2;
 Q.erc_parlament_girona_buss_support = 17.1;
 Q.psc_parlament_girona_buss_support = 7.73;
@@ -207,9 +183,6 @@ Q.cup_parlament_girona_buss_support = 2.79;
 Q.cs_parlament_girona_buss_support = 2.57;
 Q.ciu_parlament_girona_ind_support = 24.19;
 
-Q.unio_parlament_girona_ind_support = 0;
-Q.csqp_parlament_girona_ind_support = 0;
-Q.jxsi_parlament_girona_ind_support = 0;
 Q.abstain_parlament_girona_ind_support = 28.45;
 Q.erc_parlament_girona_ind_support = 16.72;
 Q.psc_parlament_girona_ind_support = 11.66;
@@ -220,9 +193,6 @@ Q.cup_parlament_girona_ind_support = 2.03;
 Q.si_parlament_girona_ind_support = 1.12;
 Q.ciu_parlament_girona_middle_support = 28.12;
 
-Q.unio_parlament_girona_middle_support = 0;
-Q.csqp_parlament_girona_middle_support = 0;
-Q.jxsi_parlament_girona_middle_support = 0;
 Q.abstain_parlament_girona_middle_support = 24.48;
 Q.erc_parlament_girona_middle_support = 15.62;
 Q.icv_parlament_girona_middle_support = 7.81;
@@ -233,9 +203,6 @@ Q.si_parlament_girona_middle_support = 1.04;
 Q.ppc_parlament_girona_middle_support = 10.18;
 Q.ciu_parlament_girona_retired_support = 44.6;
 
-Q.unio_parlament_girona_retired_support = 0;
-Q.csqp_parlament_girona_retired_support = 0;
-Q.jxsi_parlament_girona_retired_support = 0;
 Q.abstain_parlament_girona_retired_support = 25.39;
 Q.erc_parlament_girona_retired_support = 8.29;
 Q.psc_parlament_girona_retired_support = 7.77;
@@ -246,9 +213,6 @@ Q.si_parlament_girona_retired_support = 1.55;
 Q.cup_parlament_girona_retired_support = 0.24;
 Q.ciu_parlament_girona_rural_support = 29.14;
 
-Q.unio_parlament_girona_rural_support = 0;
-Q.csqp_parlament_girona_rural_support = 0;
-Q.jxsi_parlament_girona_rural_support = 0;
 Q.abstain_parlament_girona_rural_support = 32.66;
 Q.erc_parlament_girona_rural_support = 16.08;
 Q.cup_parlament_girona_rural_support = 5.74;
@@ -259,9 +223,6 @@ Q.ppc_parlament_girona_rural_support = 3.81;
 Q.cs_parlament_girona_rural_support = 2.01;
 Q.ciu_parlament_girona_unemployed_support = 31.62;
 
-Q.unio_parlament_girona_unemployed_support = 0;
-Q.csqp_parlament_girona_unemployed_support = 0;
-Q.jxsi_parlament_girona_unemployed_support = 0;
 Q.abstain_parlament_girona_unemployed_support = 29.5;
 Q.psc_parlament_girona_unemployed_support = 8.81;
 Q.erc_parlament_girona_unemployed_support = 8.83;
@@ -272,9 +233,6 @@ Q.cup_parlament_girona_unemployed_support = 2.33;
 Q.si_parlament_girona_unemployed_support = 2.07;
 Q.ciu_parlament_girona_young_support = 27.58;
 
-Q.unio_parlament_girona_young_support = 0;
-Q.csqp_parlament_girona_young_support = 0;
-Q.jxsi_parlament_girona_young_support = 0;
 Q.abstain_parlament_girona_young_support = 28.05;
 Q.erc_parlament_girona_young_support = 14.81;
 Q.psc_parlament_girona_young_support = 11.11;
@@ -285,9 +243,6 @@ Q.ppc_parlament_girona_young_support = 4.53;
 Q.cup_parlament_girona_young_support = 4.4;
 Q.ciu_parlament_lleida_buss_support = 30.92;
 
-Q.unio_parlament_lleida_buss_support = 0;
-Q.csqp_parlament_lleida_buss_support = 0;
-Q.jxsi_parlament_lleida_buss_support = 0;
 Q.abstain_parlament_lleida_buss_support = 33.33;
 Q.erc_parlament_lleida_buss_support = 10.94;
 Q.psc_parlament_lleida_buss_support = 4.69;
@@ -297,9 +252,6 @@ Q.ppc_parlament_lleida_buss_support = 12.83;
 Q.si_parlament_lleida_buss_support = 2.08;
 Q.ciu_parlament_lleida_ind_support = 25.77;
 
-Q.unio_parlament_lleida_ind_support = 0;
-Q.csqp_parlament_lleida_ind_support = 0;
-Q.jxsi_parlament_lleida_ind_support = 0;
 Q.abstain_parlament_lleida_ind_support = 31.31;
 Q.erc_parlament_lleida_ind_support = 18.18;
 Q.icv_parlament_lleida_ind_support = 5.56;
@@ -310,9 +262,6 @@ Q.cs_parlament_lleida_ind_support = 3.03;
 Q.si_parlament_lleida_ind_support = 2.02;
 Q.ciu_parlament_lleida_middle_support = 28.32;
 
-Q.unio_parlament_lleida_middle_support = 0;
-Q.csqp_parlament_lleida_middle_support = 0;
-Q.jxsi_parlament_lleida_middle_support = 0;
 Q.abstain_parlament_lleida_middle_support = 28.42;
 Q.erc_parlament_lleida_middle_support = 18.95;
 Q.psc_parlament_lleida_middle_support = 4.21;
@@ -323,9 +272,6 @@ Q.cs_parlament_lleida_middle_support = 3.16;
 Q.si_parlament_lleida_middle_support = 1.05;
 Q.ciu_parlament_lleida_retired_support = 40.68;
 
-Q.unio_parlament_lleida_retired_support = 0;
-Q.csqp_parlament_lleida_retired_support = 0;
-Q.jxsi_parlament_lleida_retired_support = 0;
 Q.abstain_parlament_lleida_retired_support = 29.47;
 Q.erc_parlament_lleida_retired_support = 8.42;
 Q.psc_parlament_lleida_retired_support = 6.32;
@@ -334,9 +280,6 @@ Q.icv_parlament_lleida_retired_support = 2.11;
 Q.cup_parlament_lleida_retired_support = 0;
 Q.ciu_parlament_lleida_rural_support = 33.82;
 
-Q.unio_parlament_lleida_rural_support = 0;
-Q.csqp_parlament_lleida_rural_support = 0;
-Q.jxsi_parlament_lleida_rural_support = 0;
 Q.abstain_parlament_lleida_rural_support = 26.8;
 Q.erc_parlament_lleida_rural_support = 15.46;
 Q.icv_parlament_lleida_rural_support = 4.12;
@@ -346,9 +289,6 @@ Q.si_parlament_lleida_rural_support = 2.06;
 Q.cs_parlament_lleida_rural_support = 3.61;
 Q.cup_parlament_lleida_rural_support = 4.64;
 
-Q.unio_parlament_lleida_unemployed_support = 0;
-Q.csqp_parlament_lleida_unemployed_support = 0;
-Q.jxsi_parlament_lleida_unemployed_support = 0;
 Q.abstain_parlament_lleida_unemployed_support = 38.65;
 Q.ciu_parlament_lleida_unemployed_support = 22.09;
 Q.erc_parlament_lleida_unemployed_support = 12.56;
@@ -359,9 +299,6 @@ Q.cs_parlament_lleida_unemployed_support = 3.38;
 Q.cup_parlament_lleida_unemployed_support = 3.38;
 Q.ppc_parlament_lleida_unemployed_support = 4.0;
 
-Q.unio_parlament_lleida_young_support = 0;
-Q.csqp_parlament_lleida_young_support = 0;
-Q.jxsi_parlament_lleida_young_support = 0;
 Q.abstain_parlament_lleida_young_support = 33.82;
 Q.erc_parlament_lleida_young_support = 16.43;
 Q.ciu_parlament_lleida_young_support = 24.05;
@@ -374,9 +311,6 @@ Q.cs_parlament_lleida_young_support = 2.9;
 Q.ciu_parlament_tarragona_buss_support = 25.58;
 Q.erc_parlament_tarragona_buss_support = 22.31;
 
-Q.unio_parlament_tarragona_buss_support = 0;
-Q.csqp_parlament_tarragona_buss_support = 0;
-Q.jxsi_parlament_tarragona_buss_support = 0;
 Q.abstain_parlament_tarragona_buss_support = 27.18;
 Q.icv_parlament_tarragona_buss_support = 2.02;
 Q.cs_parlament_tarragona_buss_support = 7.05;
@@ -384,9 +318,6 @@ Q.ppc_parlament_tarragona_buss_support = 12.92;
 Q.cup_parlament_tarragona_buss_support = 2.94;
 Q.ciu_parlament_tarragona_ind_support = 28.64;
 
-Q.unio_parlament_tarragona_ind_support = 0;
-Q.csqp_parlament_tarragona_ind_support = 0;
-Q.jxsi_parlament_tarragona_ind_support = 0;
 Q.abstain_parlament_tarragona_ind_support = 34.17;
 Q.psc_parlament_tarragona_ind_support = 11.06;
 Q.icv_parlament_tarragona_ind_support = 7.04;
@@ -396,9 +327,6 @@ Q.ppc_parlament_tarragona_ind_support = 5.53;
 Q.cup_parlament_tarragona_ind_support = 3.52;
 Q.ciu_parlament_tarragona_middle_support = 22.61;
 
-Q.unio_parlament_tarragona_middle_support = 0;
-Q.csqp_parlament_tarragona_middle_support = 0;
-Q.jxsi_parlament_tarragona_middle_support = 0;
 Q.abstain_parlament_tarragona_middle_support = 29.15;
 Q.erc_parlament_tarragona_middle_support = 10.05;
 Q.icv_parlament_tarragona_middle_support = 6.53;
@@ -409,9 +337,6 @@ Q.si_parlament_tarragona_middle_support = 1.01;
 Q.cs_parlament_tarragona_middle_support = 8.04;
 Q.ciu_parlament_tarragona_retired_support = 35.72;
 
-Q.unio_parlament_tarragona_retired_support = 0;
-Q.csqp_parlament_tarragona_retired_support = 0;
-Q.jxsi_parlament_tarragona_retired_support = 0;
 Q.abstain_parlament_tarragona_retired_support = 30.62;
 Q.erc_parlament_tarragona_retired_support = 9.18;
 Q.ppc_parlament_tarragona_retired_support = 11.22;
@@ -420,9 +345,6 @@ Q.cs_parlament_tarragona_retired_support = 3.06;
 Q.icv_parlament_tarragona_retired_support = 3.06;
 Q.cup_parlament_tarragona_retired_support = 0;
 
-Q.unio_parlament_tarragona_rural_support = 0;
-Q.csqp_parlament_tarragona_rural_support = 0;
-Q.jxsi_parlament_tarragona_rural_support = 0;
 Q.abstain_parlament_tarragona_rural_support = 39.55;
 Q.erc_parlament_tarragona_rural_support = 21.47;
 Q.icv_parlament_tarragona_rural_support = 6.21;
@@ -431,9 +353,6 @@ Q.psc_parlament_tarragona_rural_support = 12.43;
 Q.ppc_parlament_tarragona_rural_support = 10.73;
 Q.cup_parlament_tarragona_rural_support = 0;
 
-Q.unio_parlament_tarragona_unemployed_support = 0;
-Q.csqp_parlament_tarragona_unemployed_support = 0;
-Q.jxsi_parlament_tarragona_unemployed_support = 0;
 Q.abstain_parlament_tarragona_unemployed_support = 37.62;
 Q.ciu_parlament_tarragona_unemployed_support = 20.79;
 Q.erc_parlament_tarragona_unemployed_support = 7.92;
@@ -443,9 +362,6 @@ Q.cs_parlament_tarragona_unemployed_support = 6.93;
 Q.ppc_parlament_tarragona_unemployed_support = 4.95;
 Q.cup_parlament_tarragona_unemployed_support = 2.97;
 
-Q.unio_parlament_tarragona_young_support = 0;
-Q.csqp_parlament_tarragona_young_support = 0;
-Q.jxsi_parlament_tarragona_young_support = 0;
 Q.abstain_parlament_tarragona_young_support = 31.53;
 Q.ciu_parlament_tarragona_young_support = 18.72;
 Q.erc_parlament_tarragona_young_support = 8.87;
@@ -551,7 +467,7 @@ Q.unio_parlament_barcelona_buss_support = 1.77;
 
 
 Q.abstain_parlament_barcelona_ind_support = 21.51;
-Q.icv_parlament_barcelona_buss_support = 0;
+Q.icv_parlament_barcelona_ind_support = 0;
 Q.ciu_parlament_barcelona_ind_support = 0;
 Q.erc_parlament_barcelona_ind_support = 0;
 Q.vox_parlament_barcelona_ind_support = 0.5;
@@ -2064,7 +1980,7 @@ if (window && d3) {
 [? if jxcat_parlament_showviz: {!<tr><td><div class="box" style='background-color: #ed5975; font-weight:bold;'> </div> !} JxCat {!</td><td style='text-align: right;'>!}[+ jxcat_parlament_pv +]% {!</td><td>!} [+ jxcat_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ jxcat_parlament_s +] {!</td><td>!} [+ jxcat_parlament_s_delta +] {!</td>!}?]
 [? if junts_parlament_showviz: {!<tr><td><div class="box" style='background-color: #20c0b2; font-weight:bold;'> </div> !} Junts {!</td><td style='text-align: right;'>!}[+ junts_parlament_pv +]% {!</td><td>!} [+ junts_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ junts_parlament_s +] {!</td><td>!} [+ junts_parlament_s_delta +] {!</td>!}?]
 [? if cdc_parlament_showviz: {!<tr><td><div class="box" style='background-color: #002782'> </div> !} CDC {!</td><td style='text-align: right;'>!}[+ cdc_parlament_pv +]% {!</td><td>!} [+ cdc_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ cdc_parlament_s +] {!</td><td>!} [+ cdc_parlament_s_delta +] {!</td>!}?]
-[? if pdcat_parlament_showviz: {!<tr><td><div class="box" style='background-color: #0081c2'> </div style='text-align: right;'> !} PDeCAT {!</td><td>!}[+ pdcat_parlament_pv +]% {!</td><td>!} [+ pdcat_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ pdcat_parlament_s +] {!</td><td>!} [+ pdcat_parlament_s_delta +] {!</td>!}?]
+[? if pdcat_parlament_showviz: {!<tr><td><div class="box" style='background-color: #0081c2'> </div> !} PDeCAT {!</td><td style='text-align: right;'>!}[+ pdcat_parlament_pv +]% {!</td><td>!} [+ pdcat_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ pdcat_parlament_s +] {!</td><td>!} [+ pdcat_parlament_s_delta +] {!</td>!}?]
 [? if erc_parlament_showviz: {!<tr><td><div class="box" style='background-color: #FFB232'> </div> !} ERC {!</td><td style='text-align: right;'>!}[+ erc_parlament_pv +]% {!</td><td>!} [+ erc_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ erc_parlament_s +] {!</td><td>!} [+ erc_parlament_s_delta +] {!</td>!}?]
 [? if cs_parlament_showviz: {!<tr><td><div class="box" style='background-color: #EB6109'> </div> !} Cs {!</td><td style='text-align: right;'>!}[+ cs_parlament_pv +]% {!</td><td>!} [+ cs_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ cs_parlament_s +] {!</td><td>!} [+ cs_parlament_s_delta +] {!</td>!}?]
 [? if psc_parlament_showviz: {!<tr><td><div class="box" style='background-color: #e73b39'> </div> !} PSC {!</td><td style='text-align: right;'>!}[+ psc_parlament_pv +]% {!</td><td>!} [+ psc_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ psc_parlament_s +] {!</td><td>!} [+ psc_parlament_s_delta +] {!</td>!}?]
@@ -2096,6 +2012,10 @@ if (window && d3) {
 {!<div style="font-style: italic; margin-left: 3em">Parlament control</div>!}
 
 [? if ciu_parlament_s > 0 : Note: CiU has been unclear about their position on independence, so it is counted as unaligned. ?]
+
+**Results by Constituency**
+
+{!<div id="cat-polls-widget-wide" style="margin-top: -2em"></div>!}
 
 **Government Formation**
 

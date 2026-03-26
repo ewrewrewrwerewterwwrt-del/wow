@@ -1,0 +1,100 @@
+title: Party Disunity
+new-page: true
+is-card: true
+view-if: erc_disunity_timer = 0 and (erc_dissent >= 30 or (erc_left_dissent > 30 and not erc_left_resign) or (erc_core_dissent > 30 and not erc_core_resign) or (erc_civic_dissent > 30 and not erc_civic_resign) or (erc_pragmatic_dissent > 30 and not erc_pragmatic_resign))
+on-arrival: month_actions += 1; erc_disunity_timer = 4
+card-image: img/erc/disunity.jpeg
+face-image: img/erc/disunity.jpeg
+frequency: 200
+tags: erc_party
+
+
+= Party Disunity
+
+The party is being torn apart by internal dissent. Upset at the leadership and general direction, factions have started sabotaging their rivals, hampering our efforts to win votes and carry out our policies.
+
+[? if erc_civic_dissent > 30 : Our ties with civil society organizations are upset at our direction.  ?]
+[? if erc_pragmatics_dissent > 30 : The pragmatic wing is displeased with the direction of our party. ?]
+[? if erc_core_dissent > 30 : The republican core of our party feels says we're betraying our principles. ?]
+[? if erc_left_dissent > 30: The left wing is quite unhappy with our course of action. ?]
+
+Something must be done to reinforce party unity.
+
+- @enforce_unity
+- @concessions_civic
+- @concessions_pragmatics
+- @concessions_core
+- @concessions_left
+- @do_nothing
+- @easy_discard
+
+@enforce_unity
+title: Enforce party discipline.
+on-arrival: {!
+    Q.erc_civic_dissent -= 8; Q.erc_pragmatics_dissent -= 8; Q.erc_core_dissent -= 8; Q.erc_left_dissent -= 8; 
+    Q.erc_parlament_barcelona_middle_support -= (Q.erc_dissent/100 * 7); 
+    Q.erc_parlament_girona_middle_support -= (Q.erc_dissent/100 * 7);
+    Q.erc_parlament_lleida_middle_support -= (Q.erc_dissent/100 * 7);
+    Q.erc_parlament_tarragona_middle_support -= (Q.erc_dissent/100 * 7);
+    Q.erc_parlament_barcelona_ind_support -= (Q.erc_dissent/100 * 3); 
+    Q.erc_parlament_girona_ind_support -= (Q.erc_dissent/100 * 3);
+    Q.erc_parlament_lleida_ind_support -= (Q.erc_dissent/100 * 3);
+    Q.erc_parlament_tarragona_ind_support -= (Q.erc_dissent/100 * 3);
+    Q.erc_parlament_barcelona_rural_support -= (Q.erc_dissent/100 * 3);
+    Q.erc_parlament_girona_rural_support -= (Q.erc_dissent/100 * 3);
+    Q.erc_parlament_lleida_rural_support -= (Q.erc_dissent/100 * 3);
+    Q.erc_parlament_tarragona_rural_support -= (Q.erc_dissent/100 * 3);
+    Q.erc_parlament_barcelona_young_support -= (Q.erc_dissent/100 * 3)
+    Q.erc_parlament_girona_young_support -= (Q.erc_dissent/100 * 3)
+    Q.erc_parlament_lleida_young_support -= (Q.erc_dissent/100 * 3)
+    Q.erc_parlament_tarragona_young_support -= (Q.erc_dissent/100 * 3);
+    Q.erc_parlament_barcelona_unemployed_support -= (Q.erc_dissent/100 * 2);
+    Q.erc_parlament_girona_unemployed_support -= (Q.erc_dissent/100 * 2);
+    Q.erc_parlament_lleida_unemployed_support -= (Q.erc_dissent/100 * 2);
+    Q.erc_parlament_tarragona_unemployed_support -= (Q.erc_dissent/100 * 2);
+!}
+
+Enforcing party discipline reduces dissent, but it could lead to an exit of dissenting members.
+
+# enforcing party discipline applies to all parties.
+
+# each party has a concessions action and an expulsions action.
+
+@concessions_civic
+title: Give concessions to the civil organizations.
+view-if: erc_civic_dissent > 30
+on-arrival: erc_civic_dissent -= 15; erc_pragmatic_dissent += 10
+
+We have promised to follow through with our promises to many civil society organization. The pragmatic wing of our party is bickering about not being very realistic.
+
+@concessions_core
+title: Give concessions to our republican core.
+view-if: erc_core_dissent > 30
+on-arrival: erc_core_dissent -= 15; erc_left_dissent += 8; erc_pragmatic_dissent += 8;
+
+We have promised to take more policy suggestions from the republican core. Both the left and pragmatic wings of the party might be displeased.
+
+@concessions_left
+title: Give concessions to the left.
+view-if: erc_left_dissent > 30
+on-arrival: erc_left_dissent -= 15; erc_pragmatic_dissent += 5; erc_core_dissent += 5
+
+We have promised that we will listen to the left wing of the party. Of course, this leads to increased dissent from the pragmatics and the republican core.
+
+@concessions_pragmatics
+title: Give concessions to the pragmatics.
+view-if: erc_pragmatic_dissent > 30
+on-arrival: erc_pragmatic_dissent -= 15; erc_left_dissent += 5; erc_civic_dissent += 10;
+
+We have promised to follow the path of pragmatism and realpolitik a bit closer from now on. This upsets the civic organizations and the left wing of our party, for they believe that values should always come first.
+
+
+@do_nothing
+title: Let the factions argue with themselves.
+on-arrival: erc_pragmatic_dissent += 1; erc_left_dissent += 1; erc_core_dissent += 1; erc_civic_dissent += 1
+
+Let the factions bicker; perhaps dissent is healthy for the party.
+
+
+# TODO: Add expel actions?
+

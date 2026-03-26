@@ -1,24 +1,314 @@
-title: Catalan Parlament Election
+title: Parlament Elections - [+ next_election_month : month +] [+ next_election_year +]
 tags: election
+view-if: year = next_election_year and month = next_election_month and (week = next_election_week or not rubicon)
+new-page: true
+set-bg: img/parlament_de_catalunya.jpg
+# face-image: img/parlament_card.jpg
+
+And thus, the [+ next_election_month : month +] [+ next_election_year +] Parlament elections have come. 
+
+- @parlament_election_fire: May we do our best...
+
+@parlament_election_fire
 go-to: election_algorithm.cat_parlament
 set-jump: parlament_election.post_election
 
 @post_election
+new-page: true
 on-arrival: {!
-// whatever we need to calc post election
 
+    // TODO: this should happen after we display results, otherwise its weird.
+    const clean_boost_parties = ["pxc", "fnc", "vox", "pdcat", "cup", "si", "unio"];
+    for (var p of clean_boost_parties) {
+        if (Q[p + "_parlament_s"] > 0 && Q[p + "_parlament_s"] < 5 && !Q[p + "_parlament_boosted_postelection"]) {
+            for (var c of Q.parlament_constituencies) {
+                for (var d of Q.parlament_demographics) {
+                    Q[p + "_parlament_" + c + "_" + d + "_support"] = 1.25*Q[p + "_parlament_" + c + "_" + d + "_support"];
+                }
+            }
+            Q[p + "_parlament_boosted_postelection"] = true;
+        } else if (Q[p + "_parlament_s"] < 0) {
+            for (var c of Q.parlament_constituencies) {
+                for (var d of Q.parlament_demographics) {
+                    if (Q[p + "_parlament_" + c + "_" + d + "_support"] < 0.25) {
+                        Q[p + "_parlament_" + c + "_" + d + "_support"] = 0;
+                    } else {
+                        Q[p + "_parlament_" + c + "_" + d + "_support"] = 0.1*Q[p + "_parlament_" + c + "_" + d + "_support"];
+                    }
+                }
+            }
+        }
+    }
+
+    Q.next_election_year += 4;
+    Q.next_election_time += 48;
 !}
 on-display: {!
-// COPY from election_simulation!!
+    const data = [];
 
+    if (Q.si_parlament_s) {
+        data.push({
+            "id": "si",
+            "legend": "SI",
+            "name": "SI",
+            "seats": Q.si_parlament_s,
+        });
+    }
+
+    if (Q.cup_parlament_s) {
+        data.push({
+            "id": "cup",
+            "legend": "CUP",
+            "name": "CUP",
+            "seats": Q.cup_parlament_s,
+        });
+    }
+
+    if (Q.jxsi_parlament_s) {
+        data.push({
+            "id": "jxsi",
+            "legend": "JxSí",
+            "name": "JxSí",
+            "seats": Q.jxsi_parlament_s,
+        });
+    }
+
+    if (Q.icv_parlament_s) {
+        data.push({
+            "id": "icv",
+            "legend": "ICV-EUiA",
+            "name": "ICV-EUiA",
+            "seats": Q.icv_parlament_s,
+        });
+    }
+
+    if (Q.cecp_parlament_s) {
+        data.push({
+            "id": "cecp",
+            "legend": "CECP",
+            "name": "CECP",
+            "seats": Q.cecp_parlament_s,
+        });
+    }
+
+    if(Q.ecp_parlament_s) {
+        data.push({
+            "id": "ecp",
+            "legend": "ECP-PEC",
+            "name": "ECP-PEC",
+            "seats": Q.ecp_parlament_s,
+        });
+    }
+
+    if (Q.erc_parlament_s) {
+        data.push({
+            "id": "erc",
+            "legend": "ERC",
+            "name": "ERC",
+            "seats": Q.erc_parlament_s,
+        });
+    }
+
+    if (Q.csqp_parlament_s) {
+        data.push({
+            "id": "csqp",
+            "legend": "CSQP",
+            "name": "CSQP",
+            "seats": Q.csqp_parlament_s,
+        });
+    }
+
+    if (Q.psc_parlament_s) {
+        data.push({
+            "id": "psc",
+            "legend": "PSC",
+            "name": "PSC",
+            "seats": Q.psc_parlament_s,
+        });
+    }
+
+    if (Q.jxcat_parlament_s) {
+        data.push({
+            "id": "jxcat",
+            "legend": "JxCat",
+            "name": "JxCat",
+            "seats": Q.jxcat_parlament_s,
+        });
+    }
+
+    if (Q.junts_parlament_s) {
+        data.push({
+            "id": "junts",
+            "legend": "Junts",
+            "name": "Junts",
+            "seats": Q.junts_parlament_s,
+        });
+    }
+
+    if (Q.cdc_parlament_s) {
+        data.push({
+            "id": "cdc",
+            "legend": "CDC",
+            "name": "CDC",
+            "seats": Q.cdc_parlament_s,
+        });
+    }
+
+    if (Q.pdcat_parlament_s) {
+        data.push({
+            "id": "pdcat",
+            "legend": "PDeCAT",
+            "name": "PDeCAT",
+            "seats": Q.pdcat_parlament_s,
+        });
+    }
+
+    if (Q.cs_parlament_s) {
+        data.push({
+            "id": "cs",
+            "legend": "Cs",
+            "name": "Cs",
+            "seats": Q.cs_parlament_s,
+        });
+    }
+
+    if (Q.ciu_parlament_s) {
+        data.push({
+            "id": "ciu",
+            "legend": "CiU",
+            "name": "CiU",
+            "seats": Q.ciu_parlament_s,
+        });
+    }
+
+    if (Q.unio_parlament_s) {
+        data.push({
+            "id": "unio",
+            "legend": "UDC",
+            "name": "UDC",
+            "seats": Q.unio_parlament_s,
+        });
+    }
+
+    if (Q.ppc_parlament_s) {
+        data.push({
+            "id": "ppc",
+            "legend": "PPC",
+            "name": "PPC",
+            "seats": Q.ppc_parlament_s,
+        });
+    }
+
+    if (Q.pxc_parlament_s) {
+        data.push({
+            "id": "pxc",
+            "legend": "PxC",
+            "name": "PxC",
+            "seats": Q.pxc_parlament_s,
+        });
+    }
+
+    if (Q.fnc_parlament_s) {
+        data.push({
+            "id": "fnc",
+            "legend": "FNC",
+            "name": "FNC",
+            "seats": Q.fnc_parlament_s,
+        });
+    }
+
+    if (Q.vox_parlament_s) {
+        data.push({
+            "id": "vox",
+            "legend": "Vox",
+            "name": "Vox",
+            "seats": Q.vox_parlament_s,
+        });
+    }
+
+    if (window && d3) {
+        var width = 500;
+        var height = 500;
+        var screenWidth =  document.getElementById('content').offsetWidth;
+        if (screenWidth < width - 50) {
+            width = screenWidth - 50;
+            height = width;
+            document.getElementById("parlament").style.height = screenWidth/2 + "px";
+        }
+        var parliament = d3.parliament();
+        parliament.width(width).height(height).innerRadiusCoef(0.4);
+        parliament.enter.fromCenter(true).smallToBig(true);
+        parliament.exit.toCenter(false).bigToSmall(true);
+        parliament.highlightedParty(Q.player_party);
+        d3.select("#parlament").datum(data).call(parliament);
+
+
+        var lines_cat = d3.linegraph(true, true,
+            Q.parties,
+            {'ciu': 'var(--ciu)', 'erc': 'var(--erc)', 'cs': 'var(--cs)', 'psc': 'var(--psc)', 'ppc': 'var(--ppc)', 'vox': 'var(--vox)', 'icv': 'var(--icv)', 'csqp': 'var(--csqp)', 'cecp': 'var(--cecp)', 'ecp': 'var(--ecp)', 'cup': 'var(--cup)', 'si': 'var(--si)', 'unio': 'var(--unio)', 'jxsi': 'var(--jxsi)', 'jxcat': 'var(--jxcat)', 'junts': 'var(--junts)', 'cdc': 'var(--cdc)', 'pdcat': 'var(--pdcat)', 'fnc': 'var(--fnc)', 'pxc': 'var(--pxc)'},
+            {'ciu': 'CiU', 'erc': 'ERC', 'cs': 'Cs', 'psc': 'PSC', 'ppc': 'PPC', 'vox': 'Vox', 'icv': 'ICV-EUiA', 'csqp': 'CSQP', 'cecp': 'CECP', 'ecp': 'ECP-PEC', 'cup': 'CUP', 'si': 'SI', 'unio': 'UDC', 'jxsi': 'JxSí', 'jxcat': 'JxCat', 'junts': 'Junts', 'cdc': 'CDC', 'pdcat': 'PDeCAT', 'fnc': "FNC", "pxc": "PxC"});
+        lines_cat.width(width).height(400);
+        d3.select("#party_support_history").datum(Q.party_support_records).call(lines_cat);
+        console.log("party_support_records", Q.party_support_records);
+    }
 !}
 
 = Election Results
 
-WIP!
+{!<svg id="parlament" style="width: 500px; height: 250px;"> </svg>!}
+{!<div style='margin-top: -2em; width: 100%; font-style: italic; text-align: center'>!} Majority: [+ parlament_s_majority +]{!</div>!}
+
+{!<table style='margin-left: 0.5em; display:table; width: 95%;'>!}
+{!<tr><td style='min-width: 6em; font-weight: bold;'>Party</td><td style='width: 7em; text-align: center; font-weight: bold;'>Popular Vote</td><td style='width: 7em; font-weight: bold;'>Change</td><td style='width: 3em; text-align: center; font-weight: bold;'>Seats</td><td style='width: 3em; font-weight: bold;'>Change</td></tr>!}
+[? if jxsi_parlament_showviz: {!<tr><td><div class="box" style='background-color: #3ab6a5;'> </div> !} jxsi {!</td><td style='text-align: right;'>!}[+ jxsi_parlament_pv +]% {!</td><td>!} [+ jxsi_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ jxsi_parlament_s +] {!</td><td>!} [+ jxsi_parlament_s_delta +] {!</td>!}?]
+[? if ciu_parlament_showviz: {!<tr><td><div class="box" style='background-color: #002782'> </div> !} CiU {!</td><td style='text-align: right;'>!}[+ ciu_parlament_pv +]% {!</td><td>!} [+ ciu_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ ciu_parlament_s +] {!</td><td>!} [+ ciu_parlament_s_delta +] {!</td>!}?]
+[? if jxcat_parlament_showviz: {!<tr><td><div class="box" style='background-color: #ed5975; font-weight:bold;'> </div> !} JxCat {!</td><td style='text-align: right;'>!}[+ jxcat_parlament_pv +]% {!</td><td>!} [+ jxcat_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ jxcat_parlament_s +] {!</td><td>!} [+ jxcat_parlament_s_delta +] {!</td>!}?]
+[? if junts_parlament_showviz: {!<tr><td><div class="box" style='background-color: #20c0b2; font-weight:bold;'> </div> !} Junts {!</td><td style='text-align: right;'>!}[+ junts_parlament_pv +]% {!</td><td>!} [+ junts_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ junts_parlament_s +] {!</td><td>!} [+ junts_parlament_s_delta +] {!</td>!}?]
+[? if cdc_parlament_showviz: {!<tr><td><div class="box" style='background-color: #002782'> </div> !} CDC {!</td><td style='text-align: right;'>!}[+ cdc_parlament_pv +]% {!</td><td>!} [+ cdc_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ cdc_parlament_s +] {!</td><td>!} [+ cdc_parlament_s_delta +] {!</td>!}?]
+[? if pdcat_parlament_showviz: {!<tr><td><div class="box" style='background-color: #0081c2'> </div> !} PDeCAT {!</td><td style='text-align: right;'>!}[+ pdcat_parlament_pv +]% {!</td><td>!} [+ pdcat_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ pdcat_parlament_s +] {!</td><td>!} [+ pdcat_parlament_s_delta +] {!</td>!}?]
+[? if erc_parlament_showviz: {!<tr><td><div class="box" style='background-color: #FFB232'> </div> !} ERC {!</td><td style='text-align: right;'>!}[+ erc_parlament_pv +]% {!</td><td>!} [+ erc_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ erc_parlament_s +] {!</td><td>!} [+ erc_parlament_s_delta +] {!</td>!}?]
+[? if cs_parlament_showviz: {!<tr><td><div class="box" style='background-color: #EB6109'> </div> !} Cs {!</td><td style='text-align: right;'>!}[+ cs_parlament_pv +]% {!</td><td>!} [+ cs_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ cs_parlament_s +] {!</td><td>!} [+ cs_parlament_s_delta +] {!</td>!}?]
+[? if psc_parlament_showviz: {!<tr><td><div class="box" style='background-color: #e73b39'> </div> !} PSC {!</td><td style='text-align: right;'>!}[+ psc_parlament_pv +]% {!</td><td>!} [+ psc_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ psc_parlament_s +] {!</td><td>!} [+ psc_parlament_s_delta +] {!</td>!}?]
+[? if ppc_parlament_showviz: {!<tr><td><div class="box" style='background-color: #007fff'> </div> !} PPC {!</td><td style='text-align: right;'>!}[+ ppc_parlament_pv +]% {!</td><td>!} [+ ppc_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ ppc_parlament_s +] {!</td><td>!} [+ ppc_parlament_s_delta +] {!</td>!}?]
+[? if vox_parlament_showviz: {!<tr><td><div class="box" style='background-color: #63be21'> </div> !} Vox {!</td><td style='text-align: right;'>!}[+ vox_parlament_pv +]% {!</td><td>!} [+ vox_parlament_pv_delta +] {!</td><td>!} [+ vox_parlament_s +] {!</td><td style='text-align: right;'>!} [+ vox_parlament_s_delta +] {!</td>!}?]
+[? if icv_parlament_showviz: {!<tr><td><div class="box" style='background-color: #67af2f'> </div> !} ICV-EUiA {!</td><td style='text-align: right;'>!}[+ icv_parlament_pv +]% {!</td><td>!} [+ icv_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ icv_parlament_s +] {!</td><td>!} [+ icv_parlament_s_delta +] {!</td>!}?]
+[? if csqp_parlament_showviz: {!<tr><td><div class="box" style='background-color: #c3113b'> </div> !} CSQP {!</td><td style='text-align: right;'>!}[+ csqp_parlament_pv +]% {!</td><td>!} [+ csqp_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ csqp_parlament_s +] {!</td><td>!} [+ csqp_parlament_s_delta +] {!</td>!}?]
+[? if cecp_parlament_showviz: {!<tr><td><div class="box" style='background-color: #be3882'> </div> !} CECP {!</td><td style='text-align: right;'>!}[+ cecp_parlament_pv +]% {!</td><td>!} [+ cecp_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ cecp_parlament_s +] {!</td><td>!} [+ cecp_parlament_s_delta +] {!</td>!}?]
+[? if ecp_parlament_showviz: {!<tr><td><div class="box" style='background-color: #6e236e'> </div> !} ECP {!</td><td style='text-align: right;'>!}[+ ecp_parlament_pv +]% {!</td><td>!} [+ ecp_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ ecp_parlament_s +] {!</td><td>!} [+ ecp_parlament_s_delta +] {!</td>!}?]
+[? if cup_parlament_showviz: {!<tr><td><div class="box" style='background-color: #ffed00'> </div> !} CUP {!</td><td style='text-align: right;'>!}[+ cup_parlament_pv +]% {!</td><td>!} [+ cup_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ cup_parlament_s +] {!</td><td>!} [+ cup_parlament_s_delta +] {!</td>!}?]
+[? if unio_parlament_showviz: {!<tr><td><div class="box" style='background-color: #0052a3'> </div> !} UDC {!</td><td style='text-align: right;'>!}[+ unio_parlament_pv +]% {!</td><td>!} [+ unio_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ unio_parlament_s +] {!</td><td>!} [+ unio_parlament_s_delta +] {!</td>!}?]
+[? if pxc_parlament_showviz: {!<tr><td><div class="box" style='background-color: #00FFFF'> </div> !} PxC {!</td><td style='text-align: right;'>!}[+ pxc_parlament_pv +]% {!</td><td>!} [+ pxc_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ pxc_parlament_s +] {!</td><td>!} [+ pxc_parlament_s_delta +] {!</td>!}?]
+[? if fnc_parlament_showviz: {!<tr><td><div class="box" style='background-color: #55A0D9'> </div> !} FNC {!</td><td style='text-align: right;'>!}[+ fnc_parlament_pv +]% {!</td><td>!} [+ fnc_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ fnc_parlament_s +] {!</td><td>!} [+ fnc_parlament_s_delta +] {!</td>!}?]
+[? if si_parlament_showviz: {!<tr><td><div class="box" style='background-color: #000000'> </div> !} SI {!</td><td style='text-align: right;'>!}[+ si_parlament_pv +]% {!</td><td>!} [+ si_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ si_parlament_s +] {!</td><td>!} [+ si_parlament_s_delta +] {!</td>!}?]
+{!</table>!}
+
+{!<div style="width: 95%;text-align: center; margin-top:-0.75em;">!} **Turnout:**  [+ parlament_participation_pc +]% ([+ parlament_participation_delta +]) {!</div>!}
+{!<div style="width: 95%; justify-content: center; display:flex;"><div class="box" style="width: 70%; border-radius: 3px; background-color: #ccc"><div class="box" style=" height: 1em; background-color: dimgrey; margin-right: 0.5em; border-radius: 3px; width:!}[+ parlament_participation_pc+]{!%;"></div></div></div>!}
+
+{!<table style='border-spacing: 0px; margin-right: 1em; margin-left: 1em; width:95%; table-layout: fixed;'>!}
+{!<tr><td style='width: !}[+ independence_parlament_pv +]{!%'>Independence</td><td style='text-align: center; width: !}[+ nonaligned_parlament_pv +]{!%'>Unaligned</td><td style='text-align: right; width: !}[+ unionist_parlament_pv +]{!%'>Union</td></tr>!}
+{!<tr><td style='height: 2em; background-color: #008000; color: white; text-align: center; border-radius: 3px 0 0 3px;'>!}**[+ independence_parlament_pv +]%**{!</td><td style='background-color: #b1b0aeff; color: black; text-align: center'>!}**[+ nonaligned_parlament_pv +]%**{!</td><td style='background-color: #c30000; color: white; text-align: center; border-radius: 0 3px 3px 0;'>!}**[+ unionist_parlament_pv +]%**{!</td></tr>!}
+{!</table>!}
+{!<div style="font-style: italic; margin-left: 3em">Popular vote</div>!}
+
+{!<table style='border-spacing: 0px; margin-right: 1em; margin-left: 1em; width:95%; table-layout: fixed; margin-top:-0.75em;'>!}
+{!<tr><td style='overflow:hidden; white-space: nowrap; width: !}[+ independence_parlament_spc +]{!%; height: 2em; background-color: #008000; color: white; text-align: center; border-radius: 3px 0 0 3px;'>!}**[+ independence_parlament_s+]** ([+ independence_parlament_spc +]%) {!</td><td style='overflow:hidden; white-space: nowrap; width: !}[+ nonaligned_parlament_spc +]{!%; background-color: #b1b0aeff; color: black; text-align: center'>!}**[+ nonaligned_parlament_s+]** ([+ nonaligned_parlament_spc +]%) {!</td><td style='overflow:hidden; white-space: nowrap; width: !}[+ unionist_parlament_spc +]{!%; background-color: #c30000; color: white; text-align: center; border-radius: 0 3px 3px 0;'>!}**[+ unionist_parlament_s+]** ([+ unionist_parlament_spc +]%) {!</td></tr>!}
+{!</table>!}
+{!<div style="font-style: italic; margin-left: 3em">Parlament control</div>!}
+
+[? if ciu_parlament_s > 0 : Note: CiU has been unclear about their position on independence, so it is counted as unaligned. ?]
+
+**Results by Constituency**
+
+{!<div id="cat-polls-widget-wide" style="margin-top: -2em"></div>!}
+
+**Party support trends**
+
+{!<svg id="party_support_history" style="width: 500px; height: 400px;"> </svg>!}
+
 
 - @back
 
 @back
-title: Back
-go-to: root
+title: Continue...
+go-to: main if difficulty = 0; main.main_easy if difficulty = -1; main.main_hard if difficulty = 1

@@ -1,8 +1,4 @@
 title: Election
-on-arrival: {!
-// TODO: Proper normalization of party support within each class
-
-!}
 go-to: jumpScene
 
 

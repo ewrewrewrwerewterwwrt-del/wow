@@ -4,7 +4,7 @@ view-if: erc_shuffle_leadership_timer <= 0 and player_party = "erc" and difficul
 on-arrival: erc_shuffle_leadership_timer += 4; month_actions += 1 if difficulty > 0
 frequency: 100
 is-card: true
-card-image: img/erc/congres.png
+card-image: img/erc/congres.jepg
 tags: erc_party
 
 = Shuffle Leadership
@@ -43,10 +43,10 @@ title: Add advisors
 tags: erc_social_left, erc_republican_core, erc_institutional_pragmatics, erc_civic_nationalists
 frequency: 1
 
-- @erc_social_left: Add from the Social Left
+- @erc_social_left: Add from the Left
 - @erc_republican_core: Add from the Republican Core
-- @erc_institutional_pragmatics: Add Institutional Pragmatics
-- @erc_civic_nationalists: Add Civic Nationalists
+- @erc_institutional_pragmatics: Add from the Pragmatics
+- @erc_civic_nationalists: Add from Civil Organizations
 - @rm_main: Remove advisors instead
 - @remove_none: Stop changing advisors
 
@@ -297,7 +297,7 @@ on-arrival: dolors_bassa_advisor = 0; n_advisors -= 1;
 tags: erc_rm_advisor
 go-to: rm_main
 
-Dolors Bassa is no longer an advisor. Social Leftists are not pleased.
+Dolors Bassa is no longer an advisor. The party's Left will not be pleased.
 
 @remove_joan_josep_nuet
 title: Remove Joan Josep Nuet
@@ -306,7 +306,7 @@ on-arrival: joan_josep_nuet_advisor = 0; n_advisors -= 1;
 tags: erc_rm_advisor
 go-to: rm_main
 
-Joan Josep Nuet is no longer an advisor. Social Leftists are not pleased.
+Joan Josep Nuet is no longer an advisor. The party's Left will not be pleased.
 
 @remove_marta_rovira
 title: Remove Marta Rovira
@@ -315,7 +315,7 @@ on-arrival: marta_rovira_advisor = 0; n_advisors -= 1;
 tags: erc_rm_advisor
 go-to: rm_main
 
-Marta Rovira is no longer an advisor. Social Leftists are not pleased.
+Marta Rovira is no longer an advisor. The party's Left will not be pleased.
 
 @remove_teresa_jorda
 title: Remove Teresa Jordà
@@ -324,7 +324,7 @@ on-arrival: teresa_jorda_advisor = 0; n_advisors -= 1;
 tags: erc_rm_advisor
 go-to: rm_main
 
-Teresa Jordà is no longer an advisor. Social Leftists are not pleased.
+Teresa Jordà is no longer an advisor. The party's Left will not be pleased.
 
 @remove_oriol_junqueras
 title: Remove ​Oriol Junqueras
@@ -378,7 +378,7 @@ on-arrival: pere_aragones_advisor = 0; n_advisors -= 1;
 tags: erc_rm_advisor
 go-to: rm_main
 
-Pere Aragonès is no longer an advisor. Institutional Pragmatics are not pleased.
+Pere Aragonès is no longer an advisor. Pragmatics will not be pleased.
 
 @remove_roger_torrent
 title: Remove Roger Torrent
@@ -387,7 +387,7 @@ on-arrival: roger_torrent_advisor = 0; n_advisors -= 1;
 tags: erc_rm_advisor
 go-to: rm_main
 
-Roger Torrent is no longer an advisor. Institutional Pragmatics are not pleased.
+Roger Torrent is no longer an advisor. Pragmatics will not be pleased.
 
 @remove_alfred_bosch
 title: Remove Alfred Bosch
@@ -396,7 +396,7 @@ on-arrival: alfred_bosch_advisor = 0; n_advisors -= 1;
 tags: erc_rm_advisor
 go-to: rm_main
 
-Alfred Bosch is no longer an advisor. Institutional Pragmatics are not pleased.
+Alfred Bosch is no longer an advisor. Pragmatics will not be pleased.
 
 @remove_ernest_maragall
 title: Remove Ernest Maragall
@@ -405,7 +405,7 @@ on-arrival: ernest_maragall_advisor = 0; n_advisors -= 1;
 tags: erc_rm_advisor
 go-to: rm_main
 
-Ernest Maragall is no longer an advisor. Institutional Pragmatics are not pleased.
+Ernest Maragall is no longer an advisor. Pragmatics will not be pleased.
 
 @remove_joan_laporta
 title: Remove Joan Laporta
@@ -414,7 +414,7 @@ on-arrival: joan_laporta_advisor = 0; n_advisors -= 1;
 tags: erc_rm_advisor
 go-to: rm_main
 
-Joan Laporta is no longer an advisor. Civic Nationalists are not pleased.
+Joan Laporta is no longer an advisor. Civic Organizations tied to the party will not be pleased.
 
 @remove_carles_mundo
 title: Remove Carles Mundó
@@ -423,7 +423,7 @@ on-arrival: carles_mundo_advisor = 0; n_advisors -= 1;
 tags: erc_rm_advisor
 go-to: rm_main
 
-Carles Mundó is no longer an advisor. Civic Nationalists are not pleased.
+Carles Mundó is no longer an advisor. Civic Organizations tied to the party will not be pleased.
 
 @remove_carme_forcadell
 title: Remove Carme Forcadell
@@ -432,7 +432,7 @@ on-arrival: carme_forcadell_advisor = 0; n_advisors -= 1;
 tags: erc_rm_advisor
 go-to: rm_main
 
-Carme Forcadell is no longer an advisor. Civic Nationalists are not pleased.
+Carme Forcadell is no longer an advisor. Civic Organizations tied to the party will not be pleased.
 
 @remove_elisenda_paluzie
 title: Remove Elisenda Paluzie
@@ -441,5 +441,5 @@ on-arrival: elisenda_paluzie_advisor = 0; n_advisors -= 1;
 tags: erc_rm_advisor
 go-to: rm_main
 
-Elisenda Paluzie is no longer an advisor. Civic Nationalists are not pleased.
+Elisenda Paluzie is no longer an advisor. Civic Organizations tied to the party will not be pleased.
 

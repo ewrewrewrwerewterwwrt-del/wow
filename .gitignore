@@ -2,3 +2,9 @@
 /out/game.json
 /out/html/core.js
 .temp/
+venv
+.venv
+.vscode
+__pycache__
+GEMINI.md
+Overview.pdf

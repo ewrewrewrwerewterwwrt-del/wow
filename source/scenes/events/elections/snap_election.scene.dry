@@ -14,8 +14,10 @@ if (Q.next_election_month >= 13) {
 } else {
     Q.next_election_year = Q.year;
 }
+Q.next_election_time = Q.time + 2;
 Q.cat_coalition_disp_old = Q.cat_coalition_disp;
 Q.cat_coalition_disp = Q.president_party + "<span style=\"font-style:italic;\"> caretaker gov.</span>";
+console.info("Set new election date for ", Q.next_election_month, Q.next_election_year, ", week", Q.next_election_week);
 !}
 
 = New Parlament elections called!

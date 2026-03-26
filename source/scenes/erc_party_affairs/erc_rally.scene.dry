@@ -1,0 +1,183 @@
+title: Political Rally
+new-page: true
+is-card: true
+tags: erc_party
+view-if: erc_rally_timer <= 0 and (year > 2012 or month >= 9)
+on-arrival: month_actions += 1; erc_rally_timer = 6 if next_election_time - time > 6 and not (year == 2012); erc_rally_timer = 2 if (year == 2012) or (next_election_time - time <= 6)
+card-image: img/erc/rally.png
+face-image: img/erc/rally.png
+
+Mass rallies, protests, and student strikes are a common feature of left and pro-independence parties and civic organizataions. ERC is no stranger to these, specially in politically charged times like now. What should these focus on at the current moment?
+
+- @independence: The struggle for Catalan independence and self-determination.
+- @welfare: Política Social - the maintenance and expansion of social welfare programs.
+- @reform: Democratization, republicanism, and the fight for a new system for the Spanish state.
+- @far_right: Holding the line against the far right, Spanish nationalism, and all the political heirs to Franco's regime.
+- @local: A mixture of various local and national concerns that resonate most with the audience.
+- @easy_discard
+
+@independence
+on-arrival: {!
+    Q.erc_civic_dissent -= 5;
+    Q.erc_civic_strength += 5;
+    if (Q.roadmap_year < Q.year) {
+        for (var c of Q.parlament_constituencies) {
+            Q["erc_parlament_" + c + "_middle_support"] += 2*(1-Q.erc_dissent/100);
+            Q["erc_parlament_" + c + "_young_support"] += 1*(1-Q.erc_dissent/100);
+            Q["erc_parlament_" + c + "_rural_support"] += 1*(1-Q.erc_dissent/100);
+        }
+        Q.independence_movement += 1;
+    } else {
+        Q.independence_movement += 5;
+        switch (Q.roadmap) {
+            default:
+            // Should not happen?
+                for (var c of Q.parlament_constituencies) {
+                    Q["erc_parlament_" + c + "_middle_support"] += 2*(1-Q.erc_dissent/100);
+                    Q["erc_parlament_" + c + "_young_support"] += 1*(1-Q.erc_dissent/100);
+                    Q["erc_parlament_" + c + "_rural_support"] += 1*(1-Q.erc_dissent/100);
+                }
+                break;
+            case 1:
+            // vote on agreement
+                for (var c of Q.parlament_constituencies) {
+                    Q["erc_parlament_" + c + "_ind_support"] += 1*(1-Q.erc_dissent/100);
+                    Q["erc_parlament_" + c + "_middle_support"] += 3*(1-Q.erc_dissent/100);
+                    Q["erc_parlament_" + c + "_young_support"] += 2*(1-Q.erc_dissent/100);
+                    Q["erc_parlament_" + c + "_rural_support"] += 2*(1-Q.erc_dissent/100);
+                }
+                break;
+            case 2:
+            // generic independence push
+                for (var c of Q.parlament_constituencies) {
+                    Q["erc_parlament_" + c + "_ind_support"] += 0.5*(1-Q.erc_dissent/100);
+                    Q["erc_parlament_" + c + "_middle_support"] += 3*(1-Q.erc_dissent/100);
+                    Q["erc_parlament_" + c + "_young_support"] += 3*(1-Q.erc_dissent/100);
+                    Q["erc_parlament_" + c + "_rural_support"] += 3*(1-Q.erc_dissent/100);
+                }
+                break;
+            case 3:
+            // unilateral independence
+                for (var c of Q.parlament_constituencies) {
+                    Q["erc_parlament_" + c + "_middle_support"] += 2*(1-Q.erc_dissent/100);
+                    Q["erc_parlament_" + c + "_young_support"] += 4*(1-Q.erc_dissent/100);
+                    Q["erc_parlament_" + c + "_rural_support"] += 4*(1-Q.erc_dissent/100);
+                }
+                break;
+        }
+    }
+!}
+
+Rallying around independence and building a new state is the core of ERC, and also serves as a foundation to talk about all it can achieve regarding other issues, from social welfare to a new democracy. [? if roadmap_year < year: However, the fact that we've not fulfilled our Roadmap to Independence makes us sound hard to believe. ?][? if roadmap_year >= year and roadmap = 1: Our current Roadmap to Independence focuses on reaching an agreement with the central government. This is hard to believe as achievable, but does seem to sway more on-the-fence people. ?][? if roadmap_year >= year and roadmap = 2: Our current Roadmap to Independence focuses on a more generic push for independence, open to opportunities as they arise, be it for agreement or for unilateral action. While not the most clear, people seem willing to at least give it a chance for now. ?][? if roadmap_year >= year and roadmap = 3: Our current Roadmap to Independence focuses on unilateral action. Ambitious and hardcore-sounding, it is loved by hardliners, but it may be hard to digest by those on the fence. ?]
+
+
+@welfare
+on-arrival: {!
+    Q.erc_left_dissent -= 5;
+    Q.erc_left_strength += 5;
+    Q.erc_pragmatic_dissent -= 3;
+    Q.erc_pragmatic_strength += 3;
+    if (Q.erc_supporting) {
+        if (Q.welfare_index > 65) {
+            for (var c of Q.parlament_constituencies) {
+                Q["erc_parlament_" + c + "_unemployed_support"] += 3*(1-Q.erc_dissent/100);
+                Q["erc_parlament_" + c + "_young_support"] += 2*(1-Q.erc_dissent/100);
+                Q["erc_parlament_" + c + "_ind_support"] += 1.5*(1-Q.erc_dissent/100);
+            }
+        } else {
+            for (var c of Q.parlament_constituencies) {
+                Q["erc_parlament_" + c + "_unemployed_support"] -= 2*(1-Q.erc_dissent/100);
+                Q["erc_parlament_" + c + "_young_support"] -= 1*(1-Q.erc_dissent/100);
+                Q["erc_parlament_" + c + "_ind_support"] -= 1*(1-Q.erc_dissent/100);
+            }
+        }
+    } else if (Q.erc_in_gob) {
+        if (Q.welfare_index > 72) {
+            for (var c of Q.parlament_constituencies) {
+                Q["erc_parlament_" + c + "_unemployed_support"] += 4*(1-Q.erc_dissent/100);
+                Q["erc_parlament_" + c + "_young_support"] += 3*(1-Q.erc_dissent/100);
+                Q["erc_parlament_" + c + "_ind_support"] += 2.5*(1-Q.erc_dissent/100);
+            }
+        } else {
+            for (var c of Q.parlament_constituencies) {
+                Q["erc_parlament_" + c + "_unemployed_support"] -= 3*(1-Q.erc_dissent/100);
+                Q["erc_parlament_" + c + "_young_support"] -= 2*(1-Q.erc_dissent/100);
+                Q["erc_parlament_" + c + "_ind_support"] -= 2*(1-Q.erc_dissent/100);
+            }
+        }
+    } else {
+        for (var c of Q.parlament_constituencies) {
+            Q["erc_parlament_" + c + "_unemployed_support"] += 3*(1-Q.erc_dissent/100);
+            Q["erc_parlament_" + c + "_young_support"] += 2*(1-Q.erc_dissent/100);
+            Q["erc_parlament_" + c + "_ind_support"] += 1.5*(1-Q.erc_dissent/100);
+        }
+    }
+!} 
+
+The focus on social welfare is something ERC has always championed, and does resonate with workers and the youth. [? if erc_supporting and welfare_index > 65 : With us supporting a government that is saving the welfare system, at least so far, makes us look as the a sure bet to ensure this continues to be the case. ?][? if erc_supporting and welfare_index <= 65 : Our support for a government that is largely seen as responsible for austerity makes our rally around this issue notably more challenging. ?][? if erc_in_gob and welfare_index > 72: Our government's work towards restoring the welfare system has been well received by the public, and makes us the more beliveable. ?][? if erc_in_gob and welfare_index <= 72: Despite our government's efforts, the public remains skeptical about the effectiveness of our welfare policies. ?]
+
+@reform
+on-arrival: {!
+    Q.erc_left_dissent -= 3;
+    Q.erc_left_strength += 3;
+    Q.erc_core_dissent -= 2;
+    Q.erc_core_strength += 2;
+
+    if (Q.erc_in_gob || Q.erc_supporting) {
+        Q.independence_trust -= 10;
+    }
+    var sum_left_spain = 0;
+    var sum_psoe_spain = 0;
+    for (var c of Q.congreso_constituencies) {
+        for (var p of Q.congreso_parties_left) {
+            sum_left_spain += Q["congreso_" + c + "_" + p + "_support"];
+        }
+        sum_psoe_spain += Q["congreso_" + c + "_psoe_support"];
+    }
+    if (sum_left_spain >= 0.95*sum_psoe_spain) {
+        Q.erc_pragmatic_dissent -= 2;
+        for (var c of Q.parlament_constituencies) {
+            Q["erc_parlament_" + c + "_ind_support"] += 4*(1-Q.erc_dissent/100);
+            Q["erc_parlament_" + c + "_middle_support"] += 2.5*(1-Q.erc_dissent/100);
+            Q["erc_parlament_" + c + "_young_support"] += 3*(1-Q.erc_dissent/100);
+        }
+    } else {
+        Q.erc_pragmatic_dissent += 2;
+        for (var c of Q.parlament_constituencies) {
+            Q["erc_parlament_" + c + "_ind_support"] += 2*(1-Q.erc_dissent/100);
+            Q["erc_parlament_" + c + "_middle_support"] += 1*(1-Q.erc_dissent/100);
+            Q["erc_parlament_" + c + "_young_support"] += 1.5*(1-Q.erc_dissent/100);
+        }
+    }
+!}
+
+Republicanism is in the very name of ERC, and we have a longstanding fame of battling in the Congreso grounds for true radical transformation for Spain. Nonetheless, the idea of "saving Spain from itself" is not always popular with everyone, unless a true leftist alternative to the PSOE-PP duopoly manages to become a viable and believable option.
+
+@far_right
+on-arrival: {!
+    Q.erc_left_dissent -= 5;
+    Q.erc_left_strength += 5;
+    Q.erc_core_dissent -= 3;
+    Q.erc_core_strength += 3;
+    if (Q.vox_congreso_s < 10 && !Q.pxc_parlament_s && !Q.fnc_parlament_s) {
+        for (var c of Q.parlament_constituencies) {
+            Q["erc_parlament_" + c + "_middle_support"] += 2*(1-Q.erc_dissent/100);
+            Q["erc_parlament_" + c + "_young_support"] += 1*(1-Q.erc_dissent/100);
+            Q["erc_parlament_" + c + "_ind_support"] += 1*(1-Q.erc_dissent/100);
+        }
+    } else {
+        for (var c of Q.parlament_constituencies) {
+            Q["erc_parlament_" + c + "_middle_support"] += 4*(1-Q.erc_dissent/100);
+            Q["erc_parlament_" + c + "_young_support"] += 2*(1-Q.erc_dissent/100);
+            Q["erc_parlament_" + c + "_ind_support"] += 2*(1-Q.erc_dissent/100);
+        }
+    }
+!}
+
+[? if vox_congreso_s < 10 and (not pxc_parlament_s and not fnc_parlament_s): The far-right is hardly seen as a threat now, but it's always good to remain vigilant, even if voters don't really follow along that much. ?]
+
+@local
+on-arrival: erc_parlament_barcelona_middle_support += 3*(1-dissent); erc_parlament_girona_middle_support += 3*(1-dissent); erc_parlament_lleida_middle_support += 3*(1-dissent); erc_parlament_tarragona_middle_support += 3*(1-dissent); erc_parlament_barcelona_young_support += 1*(1-dissent); erc_parlament_girona_young_support += 1*(1-dissent); erc_parlament_lleida_young_support += 1*(1-dissent); erc_parlament_tarragona_young_support += 1*(1-dissent); erc_parlament_barcelona_rural_support += 2*(1-dissent); erc_parlament_girona_rural_support += 2*(1-dissent); erc_parlament_lleida_rural_support += 2*(1-dissent); erc_parlament_tarragona_rural_support += 2*(1-dissent);
+
+Our speakers have gauged the mood and are speaking to the issues that seem to most affect the people in this moment.
+

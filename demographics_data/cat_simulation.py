@@ -367,6 +367,7 @@ class CataloniaElectionSimulator:
             'cecp': '#be3882',
             'ecp': '#6e236e',
             'vox': '#63be21',
+            'fnc': '#064a81',
             'ac': '#064a81',
             'abstain': '#a0a0a0',
         }

@@ -15,7 +15,13 @@
     ui = dendryUI;
     game = ui.game;
 
-    // Add your custom code here.
+    // I want these settings on by default, but the engine does not have a way to set them and I don't fancy touching that sht.
+    if (!window.dendryUI.dendryEngine.touchedSettings) {
+      window.dendryUI.animate = true;
+      window.dendryUI.show_portraits = true;
+      window.dendryUI.dark_mode = false;
+      window.dendryUI.saveSettings();
+    }
   };
 
   var TITLE =
@@ -35,6 +41,7 @@
   window.showOptions = function () {
     var save_element = document.getElementById("options");
     window.populateOptions();
+    window.dendryUI.dendryEngine.touchedSettings = true;
     save_element.style.display = "block";
     if (!save_element.onclick) {
       save_element.onclick = function (evt) {
@@ -260,12 +267,22 @@
   // This function runs on a new page. Right now, this auto-saves.
   window.onNewPage = function () {
     var scene = window.dendryUI.dendryEngine.state.sceneId;
+    console.log("New page: " + scene);
     if (scene != "root" && !window.justLoaded) {
       window.dendryUI.autosave();
     }
     if (window.justLoaded) {
       window.justLoaded = false;
     }
+    initCataloniaPolls(
+      "cat-polls-widget",
+      dendryUI.dendryEngine.state.qualities,
+    );
+    initCataloniaPolls(
+      "cat-polls-widget-wide",
+      dendryUI.dendryEngine.state.qualities,
+      true,
+    );
     addTooltipEventListeners();
   };
 
@@ -279,11 +296,16 @@
       true,
     );
     $("#qualities").append(dendryUI.contentToHTML.convert(displayContent));
-    addTooltipEventListeners();
     initCataloniaPolls(
       "cat-polls-widget",
       dendryUI.dendryEngine.state.qualities,
     );
+    initCataloniaPolls(
+      "cat-polls-widget-wide",
+      dendryUI.dendryEngine.state.qualities,
+      true,
+    );
+    addTooltipEventListeners();
   };
 
   window.changeTab = function (newTab, tabId) {
@@ -302,10 +324,12 @@
     tabButton.className += " active";
     window.statusTab = newTab;
     window.updateSidebar();
+    addTooltipEventListeners();
   };
 
   window.onDisplayContent = function () {
     window.updateSidebar();
+    addTooltipEventListeners();
   };
 
   /*
@@ -351,6 +375,16 @@
     }
     window.pinnedCardsDescription =
       "Advisor cards - actions are only usable once per 6 months.";
+
+    initCataloniaPolls(
+      "cat-polls-widget",
+      dendryUI.dendryEngine.state.qualities,
+    );
+    initCataloniaPolls(
+      "cat-polls-widget-wide",
+      dendryUI.dendryEngine.state.qualities,
+      true,
+    );
 
     addTooltipEventListeners();
   };

@@ -1,0 +1,170 @@
+title: Campaigning
+new-page: true
+view-if: not rubicon or campaigning_timer <= 0
+on-arrival: month_actions += 1; campaigning_timer +=2 if rubicon
+max-visits: 36
+is-card: true
+card-image: img/erc/campaign.jpeg
+face-image: img/erc/campaign.jpeg
+frequency: 100
+tags: erc_party
+
+= Campaigning
+
+Whether or not we are in an electoral campaign, the party is always trying to broaden its voter base. Who should we focus our campaign efforts on?
+
+- @workers: The industrial working class, including factory workers, construction workers, and service workers.
+- @redbelt: The working class in the metropolitan area of Barcelona, the traditional stronghold of the PSC.
+- @middle: The middle working class of professionals, public employees, and highly qualified workers.
+- @business: Small business owners and the self-employed.
+- @rural: Rural workers and small farmers from rural Catalonia.
+- @unemployed: The unemployed.
+- @root: We either don't want to or cannot campaign right now.
+- @easy_discard
+
+@workers
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+unavailable-subtitle: Not enough resources.
+on-arrival: {!
+    Q.erc_parlament_barcelona_ind_support += (1-Q.erc_dissent/100); 
+    Q.erc_parlament_girona_ind_support += 6*(1-Q.erc_dissent/100);
+    Q.erc_parlament_lleida_ind_support += 6*(1-Q.erc_dissent/100);
+    Q.erc_parlament_tarragona_ind_support += 2*(1-Q.erc_dissent/100);
+    Q.erc_resources -= 1; 
+    if (Q.unemployment >= 20 && (Q.erc_supporting == 1 || Q.erc_in_gob == 1)) {
+        Q.erc_parlament_barcelona_ind_support -= 1;
+        Q.erc_parlament_girona_ind_support -= 1;
+        Q.erc_parlament_lleida_ind_support -= 1;
+        Q.erc_parlament_tarragona_ind_support -= 1;
+    }
+    if (Q.broken_roadmap == 1) {
+        Q.erc_parlament_barcelona_ind_support -= 4;
+        Q.erc_parlament_girona_ind_support -= 4;
+        Q.erc_parlament_lleida_ind_support -= 4;
+        Q.erc_parlament_tarragona_ind_support -= 2;
+    }
+!}
+
+We have increased our campaigning among industrial workers across Catalonia, but such a generalized campaign will have a hard time breaking through Barcelona's red belt. [? if gabriel_rufian_advisor: The figure of Gabriel Rufian seems to be functioning greatly for these campaigns. ?][? if unemployed >= 20 and (erc_supporting = 1 or erc_in_gob = 1): The high levels of unemployment make our campaign more difficult, since we are associated with the government that enacted cuts, and our campaign may even backfire. ?][? if broken_roadmap = 1: We have been unable to follow through with our roadmap to independence, and that makes our campaign more notoriously more difficult. ?]
+
+@redbelt
+subtitle: -1 resources
+view-if: gabriel_rufian_advisor = 1 or erc_break_red_belt = 1
+choose-if: erc_resources >= 1
+unavailable-subtitle: Not enough resources.
+on-arrival: {!
+    Q.erc_parlament_barcelona_ind_support += 6*(1-Q.erc_dissent/100) + 2*Q.gabriel_rufian_advisor; 
+    Q.erc_parlament_tarragona_ind_support += 4*(1-Q.erc_dissent/100) + Q.gabriel_rufian_advisor;
+    Q.erc_resources -= 1; 
+    if (Q.unemployment >= 20 && (Q.erc_supporting == 1 || Q.erc_in_gob == 1)) {
+        Q.erc_parlament_barcelona_ind_support -= 1;
+        Q.erc_parlament_tarragona_ind_support -= 1;
+    }
+    if (Q.broken_roadmap == 1) {
+        Q.erc_parlament_barcelona_ind_support -= 4;
+        Q.erc_parlament_tarragona_ind_support -= 2;
+    }
+!}
+
+We have increased our campaigning efforts among industrial workers, specially around Barcelona's red belt, the traditional stronghold of the PSC. [? if gabriel_rufian_advisor: The figure of Gabriel Rufian seems to be functioning greatly for these campaigns. ?][? if unemployed >= 20 and (erc_supporting = 1 or erc_in_gob = 1): The high levels of unemployment make our campaign more difficult, since we are associated with the government that enacted cuts, and our campaign may even backfire. ?][? if broken_roadmap = 1: We have been unable to follow through with our roadmap to independence, and that makes our campaign more notoriously more difficult. ?]
+
+@middle
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+unavailable-subtitle: Not enough resources.
+on-arrival: {!
+    Q.erc_parlament_barcelona_middle_support += 6*(1-Q.erc_dissent/100) + Q.joan_josep_nuet_advisor + Q.joan_laporta_advisor;
+    Q.erc_parlament_girona_middle_support += 6*(1-Q.erc_dissent/100) + Q.raul_romeva_advisor;
+    Q.erc_parlament_lleida_middle_support += 6*(1-Q.erc_dissent/100) + Q.raul_romeva_advisor;
+    Q.erc_parlament_tarragona_middle_support += 6*(1-Q.erc_dissent/100);
+    Q.erc_resources -= 1;
+    if (Q.unemployment >= 20 && (Q.erc_supporting == 1 || Q.erc_in_gob == 1)) {
+        Q.erc_parlament_barcelona_middle_support -= 1;
+        Q.erc_parlament_girona_middle_support -= 1;
+        Q.erc_parlament_lleida_middle_support -= 1;
+        Q.erc_parlament_tarragona_middle_support -= 1;
+    }
+    if (Q.broken_roadmap == 1) {
+        Q.erc_parlament_barcelona_middle_support -= 4;
+        Q.erc_parlament_girona_middle_support -= 4;
+        Q.erc_parlament_lleida_middle_support -= 4;
+        Q.erc_parlament_tarragona_middle_support -= 4;
+    }
+!}
+
+We have increased our campaigning among the middle class. [? if unemployed >= 20 and (erc_supporting = 1 or erc_in_gob = 1): The high levels of unemployment make our campaign more difficult, since we are associated with the government that enacted cuts, and our campaign may even backfire. ?][? if broken_roadmap = 1: We have been unable to follow through with our roadmap to independence, and that makes our campaign more notoriously more difficult. ?]
+
+@business
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+unavailable-subtitle: Not enough resources.
+on-arrival: {!
+    Q.erc_parlament_barcelona_business_support += (Q.erc_pragmatic_strength/100)*(1-Q.erc_dissent/100) + Q.joan_laporta_advisor; 
+    Q.erc_parlament_girona_business_support += (Q.erc_pragmatic_strength/100)*(1-Q.erc_dissent/100) + Q.joan_laporta_advisor;
+    Q.erc_parlament_lleida_business_support += (Q.erc_pragmatic_strength/100)*(1-Q.erc_dissent/100) + Q.joan_laporta_advisor;
+    Q.erc_parlament_tarragona_business_support += (Q.erc_pragmatic_strength/100)*(1-Q.erc_dissent/100) + Q.joan_laporta_advisor;
+    Q.erc_resources -= 1; 
+    if (Q.broken_roadmap == 1) {
+        Q.erc_parlament_barcelona_business_support -= 1;
+        Q.erc_parlament_girona_business_support -= 1;
+        Q.erc_parlament_lleida_business_support -= 1;
+        Q.erc_parlament_tarragona_business_support -= 1;
+    }
+    if (Q.erc_roadmap > 2) {
+        Q.erc_parlament_barcelona_business_support -= 2;
+        Q.erc_parlament_girona_business_support -= 2;
+        Q.erc_parlament_lleida_business_support -= 2;
+        Q.erc_parlament_tarragona_business_support -= 2;
+    }
+!}
+
+We have increased our campaigning among the business community. [? if erc_pragmatic_strength < 40 or erc_roadmap > 2: However, our general party lines are not the most appealing to this group, who may prefer more pragmatic approaches to politics. ?][? if broken_roadmap = 1: We have been unable to follow through with our roadmap to independence, and that makes our campaign somewhat more difficult. ?]
+
+@rural
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+unavailable-subtitle: Not enough resources.
+on-arrival: {!
+    Q.erc_parlament_barcelona_rural_support += 6*(1-Q.erc_dissent/100) + Q.teresa_jorda_advisor;
+    Q.erc_parlament_girona_rural_support += 6*(1-Q.erc_dissent/100) + Q.teresa_jorda_advisor;
+    Q.erc_parlament_lleida_rural_support += 6*(1-Q.erc_dissent/100) + Q.teresa_jorda_advisor;
+    Q.erc_parlament_tarragona_rural_support += 6*(1-Q.erc_dissent/100) + Q.teresa_jorda_advisor;
+    Q.erc_resources -= 1; 
+    if (Q.unemployment >= 20 && (Q.erc_supporting == 1 || Q.erc_in_gob == 1)) {
+        Q.erc_parlament_barcelona_rural_support -= 6;
+        Q.erc_parlament_girona_rural_support -= 6;
+        Q.erc_parlament_lleida_rural_support -= 6;
+        Q.erc_parlament_tarragona_rural_support -= 6;
+    }
+    if (Q.broken_roadmap == 1) {
+        Q.erc_parlament_barcelona_rural_support -= 8;
+        Q.erc_parlament_girona_rural_support -= 8;
+        Q.erc_parlament_lleida_rural_support -= 8;
+        Q.erc_parlament_tarragona_rural_support -= 8;
+    }
+
+!}
+
+We have increased our campaigning efforts in rural Catalonia. [? if unemployment >= 20 and (erc_supporting = 1 or erc_in_gob = 1): The high levels of unemployment make our campaign more difficult, since we are associated with the government that enacted cuts, and our campaign may even backfire. ?][? if broken_roadmap = 1: We have been unable to follow through with our roadmap to independence, and that makes our campaign specially difficult. ?]
+
+@unemployed
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+unavailable-subtitle: Not enough resources.
+on-arrival: {!
+    Q.erc_parlament_barcelona_unemployed_support += 6*(1-Q.erc_dissent/100) + Q.joan_josep_nuet_advisor; 
+    Q.erc_parlament_girona_unemployed_support += 6*(1-Q.erc_dissent/100) + Q.joan_josep_nuet_advisor;
+    Q.erc_parlament_lleida_unemployed_support += 6*(1-Q.erc_dissent/100) + Q.joan_josep_nuet_advisor;
+    Q.erc_parlament_tarragona_unemployed_support += 6*(1-Q.erc_dissent/100) + Q.joan_josep_nuet_advisor;
+    Q.erc_resources -= 1; 
+    if (Q.broken_roadmap == 1) {
+        Q.erc_parlament_barcelona_unemployed_support -= 8;
+        Q.erc_parlament_girona_unemployed_support -= 8;
+        Q.erc_parlament_lleida_unemployed_support -= 8;
+        Q.erc_parlament_tarragona_unemployed_support -= 8;
+    }
+!}
+
+We have increased our campaigning among the unemployed. [? if welfare_index < 50 and (erc_supporting = 1 or erc_in_gob = 1): The welfare cuts and resultant poverty make our campaign more difficult, since we are associated with the government that enacted these cuts, and our campaign may even backfire. ?]
+

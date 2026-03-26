@@ -13,6 +13,7 @@ if (Q.advisor_action_timer <= 0) {
 max-cards: 5
 
 [? if rubicon = 1 and event_rubicon : [+ event_rubicon +] ?]
+[? if historical_event : [+ historical_event +] ?]
 
 [? if year = 2012 : [+ month : events2012 +] ?]
 [? if year = 2013 : [+ month : events2013 +] ?]
@@ -35,6 +36,7 @@ max-cards: 5
 
 @main_easy
 is-hand: true
+set-bg: img/salodaurat.jpg
 on-arrival: {!
 if (Q.advisor_action_timer <= 0) {
     Q.pinnedCardsDescription = 'Advisors - an action is available.';
@@ -47,6 +49,7 @@ if (Q.advisor_action_timer <= 0) {
 max-cards: 6
 
 [? if rubicon = 1 and event_rubicon : [+ event_rubicon +] ?]
+[? if historical_event : [+ historical_event +] ?]
 
 [? if year = 2012 : [+ month : events2012 +] ?]
 [? if year = 2013 : [+ month : events2013 +] ?]
@@ -69,6 +72,7 @@ max-cards: 6
 
 @main_hard
 is-hand: true
+set-bg: img/salodaurat.jpg
 on-arrival: {!
 if (Q.advisor_action_timer <= 0) {
     Q.pinnedCardsDescription = 'Advisors - an action is available.';
@@ -81,6 +85,7 @@ if (Q.advisor_action_timer <= 0) {
 max-cards: 3
 
 [? if rubicon = 1 and event_rubicon : [+ event_rubicon +] ?]
+[? if historical_event : [+ historical_event +] ?]
 
 [? if year = 2012 : [+ month : events2012 +] ?]
 [? if year = 2013 : [+ month : events2013 +] ?]
@@ -101,7 +106,7 @@ max-cards: 3
 
 @party_erc
 title: Party Affairs
-card-image: img/erc/executiva.jpg
+card-image: img/erc/araerc.jpg
 is-deck: true
 view-if: player_party = "erc"
 

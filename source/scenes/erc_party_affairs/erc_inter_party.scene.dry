@@ -1,0 +1,738 @@
+title: Inter-Party Relationships
+new-page: true
+view-if: erc_inter_party_relationships_timer <= 0
+tags: erc_party
+is-card: true
+on-arrival: month_actions += 1; erc_inter_party_relationships_timer = 6;
+card-image: img/parties/frontpopular.jpg
+face-image: img/parties/frontpopular.jpg
+
+# TODO: Proper weighting of relations for different comuns leaders (just as we did with PSC). Should we do the same with CUP factions in power?
+
+= Inter-Party Relationships
+
+ERC cannot govern by itself yet. Because we do not have an electoral majority, we need the support of other parties. Up until 2010, we were part of a tripartite coalition with PSC and ICV-EUiA [? if csqp_formed: (now part of CSQP)?][? if cecp_formed: (now part of CECP)?][? if ecp_formed: (now part of ECP)?], but its failures have left us with strained relations, specially with the PSC. The new surge of support for independence also opens new avenues of cooperation through shared national lines, namely with [? if not ciu_dissolved: CiU?][? if pdcat_formed and not pdcat_split: pdcat?][? if cdc_formed: CDC?][? if dl_formed: DL?][?if not erc_in_jxcat and jxcat_formed: JxCat?][? if erc_in_jxcat and jxcat_formed: CDC?][? if junts_formed: Junts ?][? if si_parlament_s> 0: , SI?] and CUP.
+
+- @jxsi_relations: We need to work on national unity within JxSi!
+- @jxcat_relations: We need to work on national unity within JxCat!
+- @ciu_relations: We need to work on national unity with CiU ([+ciu_ideology+])
+- @pdcat_nosplit_relations: We need to work on national unity with PdCat ([+pdcat_ideology+])
+- @cdc_relations: We need to work on national unity with CDC ([+cdc_ideology+])
+- @dl_relations: We need to work on national unity with DL ([+dl_ideology+])
+- @jxcat_noerc_relations: We need to work on national unity with JxCat ([+jxcat_ideology+])
+- @junts_relations: We need to work on national unity with Junts ([+junts_ideology+])
+- @cup_relations: Left and national unity at the same time? Let's work on it with CUP ([+cup_ideology+])
+- @si_relations: Left and national unity, plus people willing to work with us? Let's talk with SI ([+si_ideology+])
+- @icv_relations: We could use boosted trust with ICV-EUiA ([+icv_ideology+])
+- @csqp_relations: Let's build bridges with the new left, CSQP ([+csqp_ideology+])
+- @cecp_relations: Let's build bridges with the new left, CECP ([+cecp_ideology+])
+- @ecp_relations: We should build bridges with the left, ECP ([+ecp_ideology+])
+- @psc_relations: Can we repair our relationship with the PSC ([+psc_ideology+])?
+- @pdcat_split_relations: Should we lean closer to the more moderate PdCat ([+pdcat_ideology+])?
+- @unio_relations: Can we convince the more Catalan wing of UDC ([+unio_ideology+]) to work with us?
+- @pxc_relations: Maybe national unity should include the fringe Catalan far-right, PxC ([+pxc_ideology+])?
+- @fnc_relations: Maybe national unity should include the fringe Catalan far-right, FNC ([+fnc_ideology+])?
+- @erc_alone: ERC can stand alone for now.
+- @easy_discard
+
+@si_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+view-if: si_parlament_s > 0
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    Q.si_relations += 10*(1 - Q.erc_dissent/100);
+!}
+
+SI are already quite aligned with us, and already eager to work together. Let's hope they retain popular support so we can build a strong alliance here. With the pro-independence movement on the rise, it's not like they are going to just disappear from the Parlament, right?
+
+@jxsi_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+view-if: jxsi_formed and erc_in_jxsi
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    for (var party in Q.jxsi_parties) {
+        if (party === "erc") continue;
+        Q[party + "_relations"] += 8*(1 - Q.erc_dissent/100);
+    }
+    if (!Q.jxsi_parties.includes("cup")) {
+        Q.cup_relations += 1;
+    }
+    if (Q.csqp_formed) {
+        Q.csqp_relations -= 2;
+    } else if (Q.cecp_formed) {
+        Q.cecp_relations -= 2;
+    } else if (Q.ecp_formed) {
+        Q.ecp_relations -= 4;
+    } else {
+        Q.icv_relations -= 2;
+    }
+!}
+
+The JxSí coalition is a naturally unstable one, but in the name of National Unity we are doing our best to keep it together.
+
+@jxcat_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+view-if: jxcat_formed and erc_in_jxcat
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    for (var party in Q.jxcat_parties) {
+        if (party === "erc") continue;
+        Q[party + "_relations"] += 8*(1 - Q.erc_dissent/100);
+    }
+    if (!Q.jxcat_parties.includes("cup")) {
+        Q.cup_relations += 1;
+    }
+    if (Q.csqp_formed) {
+        Q.csqp_relations -= 2;
+    } else if (Q.cecp_formed) {
+        Q.cecp_relations -= 2;
+    } else if (Q.ecp_formed) {
+        Q.ecp_relations -= 5;
+    } else {
+        Q.icv_relations -= 2;
+    }
+!}
+
+Just as with JxSí, the JxCat coalition is not the epitome of stability. But now that we are re-editing the National Unity formula, we are somewhat more used to it, and we are doing our best to keep it together.
+
+
+@ciu_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1 
+view-if: not ciu_dissolved
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    if (Q.erc_supporting && Q.cat_coalition.includes("ciu")) {
+        Q.ciu_relations += 7*(1 - Q.erc_dissent/100);
+        Q.cup_realations -= 2;
+    } else if (Q.erc_in_gob && Q.cat_coalition.includes("ciu")) {
+        Q.ciu_relations += 4*(1 - Q.erc_dissent/100);
+        Q.cup_relations -= 1;
+        Q.cat_coalition_dissent = -5;
+    } else {
+        Q.ciu_relations += 6*(1 - Q.erc_dissent/100);
+        Q.cup_relations -= 3;
+    }
+    if (Q.csqp_formed) {
+        Q.csqp_relations -= 3;
+    } else if (Q.cecp_formed) {
+        Q.cecp_relations -= 3;
+    } else if (Q.ecp_formed) {
+        Q.ecp_relations -= 3;
+    } else {
+        Q.icv_relations -= 3;
+    }
+    Q.cat_coalition_includes_ciu = Q.cat_coalition.includes("ciu");
+!}
+
+[? if erc_supporting and cat_coalition_includes_ciu: We are currently supporting a CiU government, which they already appreciate. Maybe this can bring us closer together? ?][? if erc_in_gob and cat_coalition_includes_ciu: We are currently governing together with CiU, which already creates some tensions. These move will hopefully smooth some of that over. ?][? if (not erc_supporting or not cat_coalition_includes_ciu) or (not erc_in_gob or not cat_coalition_includes_ciu): Without official institutional obligations to eachother for the moment, building ties with CiU is always easier. ?]The left parties are not particularly happy about these moves though.
+
+@pdcat_nosplit_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1 
+view-if: pdcat_formed and not pdcat_split and not pdcat_in_jxcat and not pdcat_in_jxsi
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    if (Q.erc_supporting && Q.cat_coalition.includes("pdcat")) {
+        Q.pdcat_relations += 7*(1 - Q.erc_dissent/100);
+        Q.cup_realations -= 2;
+    } else if (Q.erc_in_gob && Q.cat_coalition.includes("pdcat")) {
+        Q.pdcat_relations += 4*(1 - Q.erc_dissent/100);
+        Q.cup_relations -= 1;
+        Q.cat_coalition_dissent = -5;
+    } else {
+        Q.pdcat_relations += 6*(1 - Q.erc_dissent/100);
+        Q.cup_relations -= 3;
+    }
+    if (Q.csqp_formed) {
+        Q.csqp_relations -= 3;
+    } else if (Q.cecp_formed) {
+        Q.cecp_relations -= 3;
+    } else if (Q.ecp_formed) {
+        Q.ecp_relations -= 3;
+    } else {
+        Q.icv_relations -= 3;
+    }
+    Q.cat_coalition_includes_pdcat = Q.cat_coalition.includes("pdcat");
+!}
+
+[? if erc_supporting and cat_coalition_includes_pdcat: We are currently supporting a pdcat government, which they already appreciate. Maybe this can bring us closer together? ?][? if erc_in_gob and cat_coalition_includes_pdcat: We are currently governing together with pdcat, which already creates some tensions. These move will hopefully smooth some of that over. ?][? if (not erc_supporting and cat_coalition_includes_pdcat) or (not erc_in_gob and cat_coalition_includes_pdcat): Without official institutional obligations to eachother for the moment, building ties with pdcat is always easier. ?]The left parties are not particularly happy about these moves though.
+
+@cdc_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1 
+view-if: cdc_formed and not cdc_in_jxsi and not cdc_in_jxcat
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    if (Q.erc_supporting && Q.cat_coalition.includes("cdc")) {
+        Q.cdc_relations += 7*(1 - Q.erc_dissent/100);
+        Q.cup_realations -= 2;
+    } else if (Q.erc_in_gob && Q.cat_coalition.includes("cdc")) {
+        Q.cdc_relations += 4*(1 - Q.erc_dissent/100);
+        Q.cup_relations -= 1;
+        Q.cat_coalition_dissent = -5;
+    } else {
+        Q.cdc_relations += 6*(1 - Q.erc_dissent/100);
+        Q.cup_relations -= 3;
+    }
+    if (Q.csqp_formed) {
+        Q.csqp_relations -= 3;
+    } else if (Q.cecp_formed) {
+        Q.cecp_relations -= 3;
+    } else if (Q.ecp_formed) {
+        Q.ecp_relations -= 3;
+    } else {
+        Q.icv_relations -= 3;
+    }
+    Q.cat_coalition_includes_cdc = Q.cat_coalition.includes("cdc");
+!}
+
+[? if erc_supporting and cat_coalition_includes_cdc: We are currently supporting a cdc government, which they already appreciate. Maybe this can bring us closer together? ?][? if erc_in_gob and cat_coalition_includes_cdc: We are currently governing together with cdc, which already creates some tensions. These move will hopefully smooth some of that over. ?][? if (not erc_supporting and cat_coalition_includes_cdc) or (not erc_in_gob and cat_coalition_includes_cdc): Without official institutional obligations to eachother for the moment, building ties with cdc is always easier. ?]The left parties are not particularly happy about these moves though.
+
+@dl_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1 
+view-if: dl_formed and not dl_in_jxcat and not dl_in_jxsi
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    if (Q.erc_supporting && Q.cat_coalition.includes("dl")) {
+        Q.dl_relations += 7*(1 - Q.erc_dissent/100);
+        Q.cup_realations -= 2;
+    } else if (Q.erc_in_gob && Q.cat_coalition.includes("dl")) {
+        Q.dl_relations += 4*(1 - Q.erc_dissent/100);
+        Q.cup_relations -= 1;
+        Q.cat_coalition_dissent = -5;
+    } else {
+        Q.dl_relations += 6*(1 - Q.erc_dissent/100);
+        Q.cup_relations -= 3;
+    }
+    if (Q.csqp_formed) {
+        Q.csqp_relations -= 3;
+    } else if (Q.cecp_formed) {
+        Q.cecp_relations -= 3;
+    } else if (Q.ecp_formed) {
+        Q.ecp_relations -= 3;
+    } else {
+        Q.icv_relations -= 3;
+    }
+    Q.cat_coalition_includes_dl = Q.cat_coalition.includes("dl");
+!}
+
+[? if erc_supporting and cat_coalition_includes_dl: We are currently supporting a dl government, which they already appreciate. Maybe this can bring us closer together? ?][? if erc_in_gob and cat_coalition_includes_dl: We are currently governing together with dl, which already creates some tensions. These move will hopefully smooth some of that over. ?][? if (not erc_supporting and cat_coalition_includes_dl) or (not erc_in_gob and cat_coalition_includes_dl): Without official institutional obligations to eachother for the moment, building ties with dl is always easier. ?]The left parties are not particularly happy about these moves though.
+
+@jxcat_noerc_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1 
+view-if: jxcat_formed and not erc_in_jxcat
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    if (Q.erc_supporting && Q.cat_coalition.includes("jxcat")) {
+        Q.jxcat_relations += 7*(1 - Q.erc_dissent/100);
+        Q.cup_realations -= 2;
+    } else if (Q.erc_in_gob && Q.cat_coalition.includes("jxcat")) {
+        Q.jxcat_relations += 4*(1 - Q.erc_dissent/100);
+        Q.cup_relations -= 1;
+        Q.cat_coalition_dissent = -5;
+    } else {
+        Q.jxcat_relations += 6*(1 - Q.erc_dissent/100);
+        Q.cup_relations -= 3;
+    }
+    if (Q.csqp_formed) {
+        Q.csqp_relations -= 3;
+    } else if (Q.cecp_formed) {
+        Q.cecp_relations -= 3;
+    } else if (Q.ecp_formed) {
+        Q.ecp_relations -= 3;
+    } else {
+        Q.icv_relations -= 3;
+    }
+    Q.cat_coalition_includes_jxcat = Q.cat_coalition.includes("jxcat");
+!}
+
+[? if erc_supporting and cat_coalition_includes_jxcat: We are currently supporting a jxcat government, which they already appreciate. Maybe this can bring us closer together? ?][? if erc_in_gob and cat_coalition_includes_jxcat: We are currently governing together with jxcat, which already creates some tensions. These move will hopefully smooth some of that over. ?][? if (not erc_supporting and cat_coalition_includes_jxcat) or (not erc_in_gob and cat_coalition_includes_jxcat): Without official institutional obligations to eachother for the moment, building ties with jxcat is always easier. ?]The left parties are not particularly happy about these moves though.
+
+@junts_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1 
+view-if: junts_formed
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    if (Q.erc_supporting && Q.cat_coalition.includes("junts")) {
+        Q.junts_relations += 7*(1 - Q.erc_dissent/100);
+        Q.cup_realations -= 2;
+    } else if (Q.erc_in_gob && Q.cat_coalition.includes("junts")) {
+        Q.junts_relations += 4*(1 - Q.erc_dissent/100);
+        Q.cup_relations -= 1;
+        Q.cat_coalition_dissent = -5;
+    } else {
+        Q.junts_relations += 6*(1 - Q.erc_dissent/100);
+        Q.cup_relations -= 3;
+    }
+    if (Q.csqp_formed) {
+        Q.csqp_relations -= 3;
+    } else if (Q.cecp_formed) {
+        Q.cecp_relations -= 3;
+    } else if (Q.ecp_formed) {
+        Q.ecp_relations -= 3;
+    } else {
+        Q.icv_relations -= 3;
+    }
+    Q.cat_coalition_includes_junts = Q.cat_coalition.includes("junts");
+!}
+
+[? if erc_supporting and cat_coalition_includes_junts: We are currently supporting a junts government, which they already appreciate. Maybe this can bring us closer together? ?][? if erc_in_gob and cat_coalition_includes_junts: We are currently governing together with junts, which already creates some tensions. These move will hopefully smooth some of that over. ?][? if (not erc_supporting and cat_coalition_includes_junts) or (not erc_in_gob and cat_coalition_includes_junts): Without official institutional obligations to eachother for the moment, building ties with junts is always easier. ?]The left parties are not particularly happy about these moves though.
+
+@cup_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+view-if: not cup_in_jxsi and not cup_in_jxcat
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    if (Q.cup_supporting && Q.cat_coalition.includes("erc")) {
+        Q.cup_relations += 5*(1 - Q.erc_dissent/100);
+    } else if (Q.erc_in_gob && Q.cat_coalition.includes("cup")) {
+        Q.cup_relations += 7*(1 - Q.erc_dissent/100);
+        Q.cat_coalition_dissent = -5;
+    } else {
+        Q.cup_relations += 6*(1 - Q.erc_dissent/100);
+    }
+    Q.cat_coalition_includes_erc = Q.cat_coalition.includes("erc");
+    Q.cat_coalition_includes_cup = Q.cat_coalition.includes("cup");
+!}
+
+[? if cup_supporting and cat_coalition_includes_erc: CUP is currently supporting our government, which is already a balancing act. Hopefully this can bring us closer together. ?][? if erc_in_gob and cat_coalition_includes_cup: We are currently governing together with CUP, which alread demonstrates our commitment to leftist values. Let's hope this formula can hold up for some time. ?][? if (not cup_supporting and cat_coalition_includes_erc) or (not erc_in_gob and cat_coalition_includes_cup): Without official institutional obligations to eachother for the moment, building ties with CUP is always easier. ?]
+
+@icv_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+view-if: not csqp_formed and not ceccp_formed and not ecp_formed
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    if (Q.icv_supporting && Q.cat_coalition.includes("erc")) {
+        Q.icv_relations += 5*(1 - Q.erc_dissent/100);
+    } else if (Q.erc_in_gob && Q.cat_coalition.includes("icv") || Q.cat_coalition.includes("icv") && Q.erc_supporting || Q.icv_supporting && Q.erc_supporting) {
+        Q.icv_relations += 4*(1 - Q.erc_dissent/100);
+        Q.cat_coalition_dissent = -5;
+    } else {
+        Q.icv_relations += 6*(1 - Q.erc_dissent/100);
+    }
+    if (Q.junts_formed) {
+        Q.junts_relations -= 2;
+    } else if (Q.jxcat_formed && !Q.erc_in_jxcat) {
+        Q.jxcat_relations -= 2;
+    } else if (Q.dl_formed) {
+        Q.dl_relations -= 2;
+    } else if (Q.cdc_formed) {
+        Q.cdc_relations -= 2;
+    } else if (Q.pdcat_formed) {
+        Q.pdcat_relations -= 2;
+    } else {
+        Q.ciu_relations -= 2;
+    }
+    if (Q.unio_split) {
+        Q.unio_relations -= 2;
+    }
+    Q.cat_coalition_includes_icv = Q.cat_coalition.includes("icv");
+    Q.cat_coalition_includes_erc = Q.cat_coalition.includes("erc");
+!}
+
+ICV-EUiA has been a longstanding ally of ERC, we a lot of shared goals on Republicanism and Social Justice. [? if icv_supporting and cat_coalition_includes_erc: They are currently supporting our government, which does bring some friction. ?][? if erc_in_gob and cat_coalition_includes_icv: Governing together does bring some friction though. ?][? if cat_coalition_includes_icv and erc_supporting: We are already supporting a government they are a part of. Not being part of it is bringing some friction though. ?][? if icv_supporting and erc_supporting: We are currently supporting the same government, which feels a bit underwhelming. We should be there as welll! ?]Nonetheless, hope to be able to build on those shared goals. By doing this, we may be somewhat alienating our more Catalanist allies to our right.
+
+@csqp_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+view-if: csqp_formed
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    if (Q.csqp_supporting && Q.cat_coalition.includes("erc")) {
+        Q.csqp_relations += 5*(1 - Q.erc_dissent/100);
+    } else if (Q.erc_in_gob && Q.cat_coalition.includes("csqp")) {
+        Q.csqp_relations += 7*(1 - Q.erc_dissent/100);
+        Q.cat_coalition_dissent = -5;
+    } else {
+        Q.csqp_relations += 6*(1 - Q.erc_dissent/100);
+    }
+        if (Q.junts_formed) {
+        Q.junts_relations -= 2;
+    } else if (Q.jxcat_formed && !Q.erc_in_jxcat) {
+        Q.jxcat_relations -= 2;
+    } else if (Q.dl_formed) {
+        Q.dl_relations -= 2;
+    } else if (Q.cdc_formed) {
+        Q.cdc_relations -= 2;
+    } else if (Q.pdcat_formed) {
+        Q.pdcat_relations -= 2;
+    } else {
+        Q.ciu_relations -= 2;
+    }
+    if (Q.unio_split) {
+        Q.unio_relations -= 2;
+    }
+    Q.cat_coalition_includes_csqp = Q.cat_coalition.includes("csqp");
+    Q.cat_coalition_includes_erc = Q.cat_coalition.includes("erc");
+!}
+
+CSQP feels like a natural ally of ERC in many ways. We a lot of shared goals on Republicanism and Social Justice. [? if csqp_supporting and cat_coalition_includes_erc: They are currently supporting our government, which does bring some friction. ?][? if erc_in_gob and cat_coalition_includes_csqp: Governing together does bring some friction though. ?][? if cat_coalition_includes_csqp and erc_supporting: We are already supporting a government they are a part of. Not being part of it is bringing some friction though. ?][? if csqp_supporting and erc_supporting: We are currently supporting the same government, which feels a bit underwhelming. We should be there as welll! ?]Nonetheless, hope to be able to build on those shared goals. By doing this, we may be somewhat alienating our more Catalanist allies to our right.
+
+@cecp_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+view-if: cecp_formed
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    if (Q.cecp_supporting && Q.cat_coalition.includes("erc")) {
+        Q.cecp_relations += 5*(1 - Q.erc_dissent/100);
+    } else if (Q.erc_in_gob && Q.cat_coalition.includes("cecp")) {
+        Q.cecp_relations += 7*(1 - Q.erc_dissent/100);
+        Q.cat_coalition_dissent = -5;
+    } else {
+        Q.cecp_relations += 6*(1 - Q.erc_dissent/100);
+    }
+        if (Q.junts_formed) {
+        Q.junts_relations -= 2;
+    } else if (Q.jxcat_formed && !Q.erc_in_jxcat) {
+        Q.jxcat_relations -= 2;
+    } else if (Q.dl_formed) {
+        Q.dl_relations -= 2;
+    } else if (Q.cdc_formed) {
+        Q.cdc_relations -= 2;
+    } else if (Q.pdcat_formed) {
+        Q.pdcat_relations -= 2;
+    } else {
+        Q.ciu_relations -= 2;
+    }
+    if (Q.unio_split) {
+        Q.unio_relations -= 2;
+    }
+    Q.cat_coalition_includes_cecp = Q.cat_coalition.includes("cecp");
+    Q.cat_coalition_includes_erc = Q.cat_coalition.includes("erc");
+!}
+
+CECP feels like a natural ally of ERC in many ways. We a lot of shared goals on Republicanism and Social Justice. [? if cecp_supporting and cat_coalition_includes_erc: They are currently supporting our government, which does bring some friction. ?][? if erc_in_gob and cat_coalition_includes_cecp: Governing together does bring some friction though. ?][? if cat_coalition_includes_cecp and erc_supporting: We are already supporting a government they are a part of. Not being part of it is bringing some friction though. ?][? if cecp_supporting and erc_supporting: We are currently supporting the same government, which feels a bit underwhelming. We should be there as welll! ?]Nonetheless, hope to be able to build on those shared goals. By doing this, we may be somewhat alienating our more Catalanist allies to our right.
+
+@ecp_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+view-if: ecp_formed
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    if (Q.ecp_supporting && Q.cat_coalition.includes("erc")) {
+        Q.ecp_relations += 3*(1 - Q.erc_dissent/100);
+    } else if (Q.erc_in_gob && Q.cat_coalition.includes("ecp")) {
+        Q.ecp_relations += 3*(1 - Q.erc_dissent/100);
+        Q.cat_coalition_dissent = -5;
+    } else {
+        Q.ecp_relations += 4*(1 - Q.erc_dissent/100);
+    }
+        if (Q.junts_formed) {
+        Q.junts_relations -= 2;
+    } else if (Q.jxcat_formed && !Q.erc_in_jxcat) {
+        Q.jxcat_relations -= 2;
+    } else if (Q.dl_formed) {
+        Q.dl_relations -= 2;
+    } else if (Q.cdc_formed) {
+        Q.cdc_relations -= 2;
+    } else if (Q.pdcat_formed) {
+        Q.pdcat_relations -= 2;
+    } else {
+        Q.ciu_relations -= 2;
+    }
+    if (Q.unio_split) {
+        Q.unio_relations -= 2;
+    }
+    Q.cat_coalition_includes_ecp = Q.cat_coalition.includes("ecp");
+    Q.cat_coalition_includes_erc = Q.cat_coalition.includes("erc");
+!}
+
+ECP feels less like a natural ally of ERC than its predecessors. We still have a lot of shared goals on Republicanism and Social Justice, but the moderation in their demands is a bit disappointing. [? if ecp_supporting and cat_coalition_includes_erc: They are currently supporting our government, which does bring some friction. ?][? if erc_in_gob and cat_coalition_includes_ecp: Governing together does bring some friction though. ?][? if cat_coalition_includes_ecp and erc_supporting: We are already supporting a government they are a part of. Not being part of it is bringing some friction though. ?][? if ecp_supporting and erc_supporting: We are currently supporting the same government, which feels a bit underwhelming. We should be there as welll! ?]Nonetheless, hope to be able to build on those shared goals. By doing this, we may be somewhat alienating our more Catalanist allies to our right.
+
+@psc_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+view-if: not psc_dissolved
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    if (Q.junts_formed) {
+        Q.junts_relations -= 2;
+    } else if (Q.jxcat_formed && !Q.erc_in_jxcat) {
+        Q.jxcat_relations -= 2;
+    } else if (Q.dl_formed) {
+        Q.dl_relations -= 2; 
+    } else if (Q.cdc_formed) {
+        Q.cdc_relations -= 2;
+    } else if (Q.pdcat_formed) {
+        Q.pdcat_relations -= 2;
+    } else {
+        Q.ciu_relations -= 2;
+    }
+    if (Q.unio_split) {
+        Q.unio_relations -= 2;
+    }
+    Q.cat_coalition_includes_psc = Q.cat_coalition.includes("psc");
+    Q.cat_coalition_includes_erc = Q.cat_coalition.includes("erc");
+!}
+go-to: psc_relations_iceta if psc_leader = "Miquel Iceta"; psc_relations_parlon if psc_leader = "Nuria Parlón"; psc_relations_navarro if psc_leader = "Pere Navarro"; psc_relations_ros if psc_leader = "Àngel Ros"; psc_relations_tura if psc_leader = "Monsterrat Tura"
+
+@psc_relations_iceta
+on-arrival: {!
+    var psc_factor = 2;
+    if (Q.psc_supporting && Q.cat_coalition.includes("erc")) {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100);
+    } else if (Q.erc_in_gob && Q.cat_coalition.includes("psc")) {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100);
+        Q.cat_coalition_dissent = -5;
+    } else if (Q.erc_supporting && Q.cat_coalition.includes("psc")) {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100) - 1;
+    } else {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100);
+    }
+!}
+
+Miquel Iceta's PSC is not particularly prone to collaborating with us, does not enjoy a lot of popularity, and is not particularly motivated to even reform the Spanish state. There is definitely some shared grounds, but its certainly not the most promising relationship to exist. [? if psc_supporting and cat_coalition_includes_erc: They are, at least, currently supporting our government. ?][? if erc_in_gob and cat_coalition_includes_psc: Governing together does bring some friction on top of that. ?][? if erc_supporting and cat_coalition_includes_psc: We are already supporting a government they are a part of. Not being part of it is bringing some friction though. ?]By doing this, we may be somewhat alienating our more Catalanist allies to our right.
+
+@psc_relations_parlon
+on-arrival: {!
+    var psc_factor = 3.5;
+    if (Q.psc_supporting && Q.cat_coalition.includes("erc")) {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100);
+    } else if (Q.erc_in_gob && Q.cat_coalition.includes("psc")) {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100);
+        Q.cat_coalition_dissent = -5;
+    } else if (Q.erc_supporting && Q.cat_coalition.includes("psc")) {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100) - 1;
+    } else {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100);
+    }
+!}
+
+Núria Parlon's PSC is not a bit rough to work with, but at least they have a willingness to support a federal reform of the Spanish state. Let's hope we can build on these shared grounds. [? if psc_supporting and cat_coalition_includes_erc: They are, at least, currently supporting our government. ?][? if erc_in_gob and cat_coalition_includes_psc: Governing together does bring some friction on top of that. ?][? if erc_supporting and cat_coalition_includes_psc: We are already supporting a government they are a part of. Not being part of it is bringing some friction though. ?]By doing this, we may be somewhat alienating our more Catalanist allies to our right.
+
+@psc_relations_navarro
+on-arrival: {!
+    var psc_factor = 4;
+    if (Q.psc_supporting && Q.cat_coalition.includes("erc")) {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100);
+    } else if (Q.erc_in_gob && Q.cat_coalition.includes("psc")) {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100);
+        Q.cat_coalition_dissent = -5;
+    } else if (Q.erc_supporting && Q.cat_coalition.includes("psc")) {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100) - 1;
+    } else {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100);
+    }
+!}
+
+Pere Navarro's PSC is unstable and unpopular. His hard bet on a federal Spain and on self-determination rights without many supports for such move within the PSOE don't make it the most appealing option to voters or political allies, but at least it is a shared ground to build on top of. [? if psc_supporting and cat_coalition_includes_erc: They are, at least, currently supporting our government. ?][? if erc_in_gob and cat_coalition_includes_psc: Governing together does bring some friction on top of that. ?][? if erc_supporting and cat_coalition_includes_psc: We are already supporting a government they are a part of. Not being part of it is bringing some friction though. ?]By doing this, we may be somewhat alienating our more Catalanist allies to our right.
+
+
+@psc_relations_ros
+on-arrival: {!
+    var psc_factor = 7;
+    if (Q.psc_supporting && Q.cat_coalition.includes("erc")) {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100);
+    } else if (Q.erc_in_gob && Q.cat_coalition.includes("psc")) {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100);
+        Q.cat_coalition_dissent = -5;
+    } else if (Q.erc_supporting && Q.cat_coalition.includes("psc")) {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100) - 1;
+    } else {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100);
+    }
+!}
+
+Àngel Ros's PSC has taken a risky but commendable stance on Federal Catalanism. Breaking with the PSOE may not have been an easy move, but it has given them a lot more breathing room and a chance to stand for themselves. We have much to build together! [? if psc_supporting and cat_coalition_includes_erc: They are, on top of that, currently supporting our government. ?][? if erc_in_gob and cat_coalition_includes_psc: Governing together does bring some friction, though. ?][? if erc_supporting and cat_coalition_includes_psc: We are already supporting a government they are a part of. Not being part of it is bringing some friction though. ?]By doing this, we may be somewhat alienating our more Catalanist allies to our right.
+
+
+@psc_relations_tura
+on-arrival: {!
+    var psc_factor = 9;
+    if (Q.psc_supporting && Q.cat_coalition.includes("erc")) {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100);
+    } else if (Q.erc_in_gob && Q.cat_coalition.includes("psc")) {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100);
+        Q.cat_coalition_dissent = -5;
+    } else if (Q.erc_supporting && Q.cat_coalition.includes("psc")) {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100) - 1;
+    } else {
+        Q.psc_relations += psc_factor*(1 - Q.erc_dissent/100);
+    }
+!}
+
+Montserrat Tura has taken the PSC through a bold and commendable reform. Not only she has broken with the PSOE, but has moved the party to the left and has now a radical confederalist, pro-self-determination position that we could have only wished for just a few years ago. We have much to build together! [? if psc_supporting and cat_coalition_includes_erc: They are, on top of that, currently supporting our government. ?][? if erc_in_gob and cat_coalition_includes_psc: Governing together does bring some friction, though. ?][? if erc_supporting and cat_coalition_includes_psc: We are already supporting a government they are a part of. Not being part of it is bringing some friction though. ?]By doing this, we may be somewhat alienating our more Catalanist allies to our right.
+
+@pdcat_split_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+view-if: pdcat_split
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    Q.pdcat_relations += 5*(1 - Q.erc_dissent/100);
+    if (Q.junts_formed) {
+        Q.junts_relations -= 2;
+    } else if (Q.jxcat_formed && !Q.erc_in_jxcat) {
+        Q.jxcat_relations -= 2;
+    } else if (Q.dl_formed) {
+        Q.dl_relations -= 2;
+    } else if (Q.cdc_formed) {
+        Q.cdc_relations -= 2;
+    } else if (Q.pdcat_formed) {
+        Q.pdcat_relations -= 2;
+    } else {
+        Q.ciu_relations -= 2;
+    }
+    if (Q.csqp_formed) {
+        Q.csqp_relations -= 3;
+    } else if (Q.cecp_formed) {
+        Q.cecp_relations -= 3;
+    } else if (Q.ecp_formed) {
+        Q.ecp_relations -= 3;
+    } else {
+        Q.icv_relations -= 3;
+    }
+    Q.cup_relations -= 3;
+    Q.erc_parlament_barcelona_ind_support -= 1.5;
+    Q.erc_parlament_girona_ind_support -= 1;
+    Q.erc_parlament_lleida_ind_support -= 1;
+    Q.erc_parlament_tarragona_ind_support -= 1.5;
+
+    Q.erc_left_dissent += 5;
+!}
+
+The move to improve our relations with the now-separated, unapologetically bourgeois pdcat is a risky move. They sure are, on paper, pro-independence, but they are far from popular and not particularly well-liked by parties closer to us, both to our right and to our left. It may even alienate some of our more working-class voters. Only time will tell if this move was worth it.
+
+@unio_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+view-if: unio_split and not unio_dissolved
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    Q.unio_relations += 5*(1 - Q.erc_dissent/100);
+    if (Q.junts_formed) {
+        Q.junts_relations -= 2;
+    } else if (Q.jxcat_formed && !Q.erc_in_jxcat) {
+        Q.jxcat_relations -= 2;
+    } else if (Q.dl_formed) {
+        Q.dl_relations -= 2;
+    } else if (Q.cdc_formed) {
+        Q.cdc_relations -= 2;
+    } else if (Q.pdcat_formed) {
+        Q.pdcat_relations -= 2;
+    } else {
+        Q.ciu_relations -= 2;
+    }
+    if (Q.csqp_formed) {
+        Q.csqp_relations -= 3;
+    } else if (Q.cecp_formed) {
+        Q.cecp_relations -= 3;
+    } else if (Q.ecp_formed) {
+        Q.ecp_relations -= 3;
+    } else {
+        Q.icv_relations -= 3;
+    }
+    Q.cup_relations -= 3;
+    Q.erc_parlament_barcelona_ind_support -= 2;
+    Q.erc_parlament_girona_ind_support -= 1.5;
+    Q.erc_parlament_lleida_ind_support -= 1.5;
+    Q.erc_parlament_tarragona_ind_support -= 2;
+
+    Q.erc_left_dissent += 5;
+!} 
+
+The move to improve our relations with the now-separated, christian democratic udc is a risky move. They are far from popular and not particularly well-liked by parties closer to us, both to our right and to our left. It may even alienate some of our more working-class voters. Only time will tell if this move was worth it.
+
+@pxc_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+view-if: not pxc_dissolved
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    Q.pxc_relations += 5*(1 - Q.erc_dissent/100);
+    if (Q.csqp_formed) {
+        Q.csqp_relations -= 5;
+    } else if (Q.cecp_formed) {
+        Q.cecp_relations -= 5;
+    } else if (Q.ecp_formed) {
+        Q.ecp_relations -= 5;
+    } else {
+        Q.icv_relations -= 5;
+    }
+    Q.cup_relations -= 7;
+    Q.psc_relations -= 4;
+
+    Q.erc_parlament_barcelona_ind_support -= 2;
+    Q.erc_parlament_girona_ind_support -= 1.5;
+    Q.erc_parlament_lleida_ind_support -= 1.5;
+    Q.erc_parlament_tarragona_ind_support -= 2;
+    Q.erc_parlament_barcelona_middle_support -= 1;
+    Q.erc_parlament_girona_middle_support -= 1;
+    Q.erc_parlament_lleida_middle_support -= 1;
+    Q.erc_parlament_tarragona_middle_support -= 1;
+
+    Q.erc_left_dissent += 10;
+    Q.erc_core_dissent += 5;
+    Q.erc_civic_dissent += 7.5;
+!}
+
+The Catalan far-right of PxC is not only very marginal, but it is also very much at our ideological opposite. They are even for a re-centralization of Spain (???). Us getting closer to them is quite the unpopular move not only with many of our voters, but also with many potential allies. Are you sure this is worth it?
+
+@fnc_relations
+subtitle: -1 resources
+choose-if: erc_resources >= 1
+view-if: fnc_formed
+unavailable-subtitle: Not enough resources
+on-arrival: {!
+    Q.erc_resources -= 1;
+    Q.fnc_relations += 5*(1 - Q.erc_dissent/100);
+        if (Q.csqp_formed) {
+        Q.csqp_relations -= 5;
+    } else if (Q.cecp_formed) {
+        Q.cecp_relations -= 5;
+    } else if (Q.ecp_formed) {
+        Q.ecp_relations -= 5;
+    } else {
+        Q.icv_relations -= 5;
+    }
+    Q.cup_relations -= 7;
+    Q.psc_relations -= 4;
+
+    Q.erc_parlament_barcelona_ind_support -= 2;
+    Q.erc_parlament_girona_ind_support -= 1.5;
+    Q.erc_parlament_lleida_ind_support -= 1.5;
+    Q.erc_parlament_tarragona_ind_support -= 2;
+    Q.erc_parlament_barcelona_middle_support -= 1;
+    Q.erc_parlament_girona_middle_support -= 1;
+    Q.erc_parlament_lleida_middle_support -= 1;
+    Q.erc_parlament_tarragona_middle_support -= 1;
+    Q.erc_left_dissent += 10;
+    Q.erc_core_dissent += 5;
+    Q.erc_civic_dissent += 7.5;
+!}
+
+The Catalan far-right of FNC is not only very marginal, but it is also very much at our ideological opposite. In our first ever meeting, they called us *"turbomuslim megacomunists"* (lol). Us getting closer to them is quite the unpopular move not only with many of our voters, but also with many potential allies. Are you sure this is worth it?
+
+@erc_alone
+
+Whether it is because we *cannot* or *will not*, we do not make ties with other parties at this moment.
+
+- @return: Continue...

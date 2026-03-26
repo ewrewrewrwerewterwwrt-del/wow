@@ -194,19 +194,21 @@
 .catalonia-polls-widget #table-container {
   overflow-x: auto;
   max-height: 300px;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
   overflow-y: auto;
   scrollbar-width: thin;
+  margin-bottom: 5px;
 }
 
 .catalonia-polls-widget table-container {
   overflow-x: auto;
   max-height: 300px;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
   overflow-y: auto;
   scrollbar-width: thin;
   border-radius: 5px;
   overflow: hidden;
+  margin-bottom: 5px;
 }
 
 .catalonia-polls-widget table {
@@ -288,6 +290,22 @@
 
 .catalonia-polls-widget th:last-child {
   border-top-right-radius: 5px;
+}
+
+
+.catalonia-polls-widget #catmap-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  gap: 5%;
+}
+.catalonia-polls-widget #catmap-left {
+  width: 47.5%;
+}
+.catalonia-polls-widget #catmap-right {
+  width: 47.5%;
+  max-width:47.5%;
 }
     `;
     document.head.appendChild(style);
@@ -797,10 +815,9 @@
   /**
    * Initialize the widget
    */
-  function initCataloniaPolls(containerId, Q) {
+  function initCataloniaPolls(containerId, Q, wide = false) {
     container = document.getElementById(containerId);
     if (!container) {
-      console.error("Catalonia Polls: Container not found:", containerId);
       return;
     }
 
@@ -816,15 +833,33 @@
     injectStyles();
 
     // Build the HTML structure
-    container.innerHTML = `
-      <div id="map-container">
-        ${getSVGContent()}
+    if (wide) {
+      container.innerHTML = `
+      <div id="catmap-wrapper">
+        <div id="catmap-left">
+          <div id="map-container">
+            ${getSVGContent()}
+          </div>
+        </div>
+        <div id="catmap-right">
+          <div id="tabs"></div>
+          <div id="table-container"></div>
+          <div id="bars-legend"></div>
+          <div id="bars"></div>
       </div>
-      <div id="bars-legend"></div>
-      <div id="bars"></div>
-      <div id="tabs"></div>
-      <div id="table-container"></div>
-    `;
+      </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div id="map-container">
+          ${getSVGContent()}
+        </div>
+        <div id="tabs"></div>
+        <div id="table-container"></div>
+        <div id="bars-legend"></div>
+        <div id="bars"></div>
+      `;
+    }
 
     // Initialize
     colorProvinces(Q);
