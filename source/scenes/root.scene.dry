@@ -171,7 +171,7 @@ Q.ppc_leader = "Alícia Sánchez-Camacho";
 Q.ppc_ideology = "Conservatism, Centralism";
 
 Q.icv_leader = "Joan Herrera";
-Q.icv_ideology = "Ecosocialism, Federalism";
+Q.icv_ideology = "Green Left, Federalism";
 
 
 // Initial ideologies for all parties, also future ones, just in case

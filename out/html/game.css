@@ -809,7 +809,7 @@ table {
 }
 
 
-/* Styles for parties - TODO: have the player party be highlighted. */
+/* Styles for parties */
 /* Use CSS variables for the colors... */
 :root {
   --ciu: #002782;

@@ -160,7 +160,7 @@
 
     let fla_bonus = 0.0;
     if (Q.fla_active) {
-      fla_bonus += SURPLUS_FLA_BONUS_BY_GOB[gob_key] || 0;
+      fla_bonus += Q.SURPLUS_FLA_BONUS_BY_GOB[gob_key] || 0;
       if (Q.fla_escalated) fla_bonus += SURPLUS_FLA_ESCALATION_BONUS;
     }
 
@@ -393,8 +393,8 @@
             TRUST_DISENGAGE_COEFF *
             Math.abs(d_vars[1]) *
             indy_factor *
-            nl_d.cuptrust *
-            nl_p.cuptrust;
+            nl_d.cup_trust *
+            nl_p.cup_trust;
           delta_vec[FAMILIES.indexOf("abs")] += abs_gain;
           delta_vec[FAMILIES.indexOf("icr")] -= abs_gain * 0.55;
           delta_vec[FAMILIES.indexOf("il")] -= abs_gain * 0.45;
@@ -430,8 +430,8 @@
             -CUP_TRUST_EXTRA *
             d_vars[1] *
             depth *
-            nl_d.cuptrust *
-            nl_p.cuptrust;
+            nl_d.cup_trust *
+            nl_p.cup_trust;
           delta_vec[FAMILIES.indexOf("cup")] += extra_cup;
           delta_vec[FAMILIES.indexOf("icr")] -= extra_cup * 0.7;
           delta_vec[FAMILIES.indexOf("il")] -= extra_cup * 0.3;
