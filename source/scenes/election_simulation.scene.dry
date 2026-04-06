@@ -3,6 +3,7 @@ set-bg: img/parlament_de_catalunya.jpg
 new-page: true
 on-arrival: {!
 // Reset everything
+Q.art155_ever = false;
 for (var p of Q.parties) {
     Q[p + '_parlament_s'] = 0;
     Q[p + '_parlament_pv'] = 0;
@@ -22,18 +23,621 @@ for (var constituency of Q.congreso_constituencies) {
 }
 
 !}
+call: root.start_menu
 set-jump: post_election_sim
 
 The Election Simulation system is an in-game tool used for debugging and testing. Do play around with historic election results and see how the game handles them!
 
 - @2012_11: Catalan Parlament (November 2012)
+- @2015_5: Local Elections (May 2015)
 - @2015_9: Catalan Parlament (September 2015)
 - @2015_12: Spanish Congreso (December 2015)
 - @2016_6: Spanish Congreso (June 2016)
 - @2017_12: Catalan Parlament (December 2017)
 - @2019_4: Spanish Congreso (April 2019)
+- @2019_5: Local Elections (May 2019)
 - @2019_11: Spanish Congreso (November 2019)
 - @root: Back
+
+@2015_5
+on-arrival: {!
+    // 2011 results, for delta calculations
+    Q.ciu_local_barcelona_s = 14;
+    Q.ciu_local_barcelona_pv = 28.73;
+    Q.psc_local_barcelona_s = 11;
+    Q.psc_local_barcelona_pv = 22.14;
+    Q.pp_local_barcelona_s = 9;
+    Q.pp_local_barcelona_pv = 17.24;
+    Q.bcomu_local_barcelona_s = 5; // was icv-euia
+    Q.bcomu_local_barcelona_pv = 10.39;
+    Q.icv_local_barcelona_s = 0;
+    Q.icv_local_barcelona_pv = 0;
+    Q.erc_local_barcelona_s = 2;
+    Q.erc_local_barcelona_pv = 5.59;
+
+    // status as of 2015
+    Q.gdp_growth = 1.21;
+    Q.unemployment = 24.08;
+    Q.public_debt = 33.09;
+    Q.generalitat_surplus = -0.70;
+    Q.cat_spa_relations = 26.11;
+    Q.independence_movement = 63.40;
+    Q.independence_trust = 42.60;
+    Q.social_dissent = 60.89;
+    Q.welfare_index = 53.57;
+    Q.podemos_channeling = 0.94;
+    Q.corruption_events_ciu = 2;
+    Q.unio_split_happened = false;
+    Q.pdcat_split_happened = false;
+    
+    Q.bcomu_local_barcelona_support    = 23.0;
+    Q.ciu_local_barcelona_support      =  8.0;  // +17 Trias → ~27%, 10-11 seats
+    Q.cdc_local_barcelona_support      =  0;
+    Q.dl_local_barcelona_support       =  0;
+    Q.jxcat_local_barcelona_support    =  0;
+    Q.junts_local_barcelona_support    =  0;
+    Q.erc_local_barcelona_support      = 10.0;
+    Q.psc_local_barcelona_support      =  9.0;
+    Q.cs_local_barcelona_support       = 10.0;
+    Q.cup_local_barcelona_support      =  7.0;
+    Q.pp_local_barcelona_support       =  8.0;
+    Q.primaries_local_barcelona_support =  0;
+    Q.icv_local_barcelona_support    =  0;
+
+    Q.psc_leader = "Miquel Iceta";
+    Q.cs_leader = "Inés Arrimadas";
+    Q.ppc_leader = "Xavier García Albiol";
+    Q.cup_leader = "Antonio Baños";
+    Q.comuns_name = "icv";
+
+
+    // Parlament support states for other results calculations
+    Q.ciu_parlament_barcelona_buss_support = 22.0;
+    Q.erc_parlament_barcelona_buss_support = 8.6;
+    Q.cup_parlament_barcelona_buss_support = 3.2;
+    Q.csqp_parlament_barcelona_buss_support = 8.7;
+    Q.psc_parlament_barcelona_buss_support = 5.4;
+    Q.cs_parlament_barcelona_buss_support = 19.6;
+    Q.ppc_parlament_barcelona_buss_support = 14.7;
+    Q.abstain_parlament_barcelona_buss_support = 17.3;
+    Q.ciu_parlament_barcelona_ind_support = 17.2;
+    Q.erc_parlament_barcelona_ind_support = 8.9;
+    Q.cup_parlament_barcelona_ind_support = 3.7;
+    Q.csqp_parlament_barcelona_ind_support = 11.8;
+    Q.psc_parlament_barcelona_ind_support = 13.1;
+    Q.cs_parlament_barcelona_ind_support = 10.2;
+    Q.ppc_parlament_barcelona_ind_support = 8.2;
+    Q.abstain_parlament_barcelona_ind_support = 26.3;
+    Q.ciu_parlament_barcelona_middle_support = 14.8;
+    Q.erc_parlament_barcelona_middle_support = 9.1;
+    Q.cup_parlament_barcelona_middle_support = 3.7;
+    Q.csqp_parlament_barcelona_middle_support = 11.5;
+    Q.psc_parlament_barcelona_middle_support = 5.2;
+    Q.cs_parlament_barcelona_middle_support = 21.3;
+    Q.ppc_parlament_barcelona_middle_support = 13.0;
+    Q.abstain_parlament_barcelona_middle_support = 20.8;
+    Q.ciu_parlament_barcelona_young_support = 8.8;
+    Q.erc_parlament_barcelona_young_support = 9.3;
+    Q.cup_parlament_barcelona_young_support = 9.0;
+    Q.csqp_parlament_barcelona_young_support = 11.9;
+    Q.psc_parlament_barcelona_young_support = 4.0;
+    Q.cs_parlament_barcelona_young_support = 15.6;
+    Q.ppc_parlament_barcelona_young_support = 1.9;
+    Q.abstain_parlament_barcelona_young_support = 38.8;
+    Q.ciu_parlament_barcelona_retired_support = 25.9;
+    Q.erc_parlament_barcelona_retired_support = 9.3;
+    Q.cup_parlament_barcelona_retired_support = 2.3;
+    Q.csqp_parlament_barcelona_retired_support = 5.9;
+    Q.psc_parlament_barcelona_retired_support = 15.6;
+    Q.cs_parlament_barcelona_retired_support = 5.5;
+    Q.ppc_parlament_barcelona_retired_support = 15.4;
+    Q.abstain_parlament_barcelona_retired_support = 19.3;
+    Q.ciu_parlament_barcelona_rural_support = 21.4;
+    Q.erc_parlament_barcelona_rural_support = 25.7;
+    Q.cup_parlament_barcelona_rural_support = 10.8;
+    Q.csqp_parlament_barcelona_rural_support = 0.6;
+    Q.psc_parlament_barcelona_rural_support = 21.2;
+    Q.cs_parlament_barcelona_rural_support = 9.8;
+    Q.ppc_parlament_barcelona_rural_support = 0.0;
+    Q.abstain_parlament_barcelona_rural_support = 9.8;
+    Q.ciu_parlament_barcelona_unemployed_support = 12.6;
+    Q.erc_parlament_barcelona_unemployed_support = 10.6;
+    Q.cup_parlament_barcelona_unemployed_support = 3.1;
+    Q.csqp_parlament_barcelona_unemployed_support = 15.3;
+    Q.psc_parlament_barcelona_unemployed_support = 7.5;
+    Q.cs_parlament_barcelona_unemployed_support = 11.6;
+    Q.ppc_parlament_barcelona_unemployed_support = 3.3;
+    Q.abstain_parlament_barcelona_unemployed_support = 35.6;
+    Q.ciu_parlament_girona_buss_support = 30.6;
+    Q.erc_parlament_girona_buss_support = 19.1;
+    Q.cup_parlament_girona_buss_support = 3.9;
+    Q.csqp_parlament_girona_buss_support = 4.3;
+    Q.psc_parlament_girona_buss_support = 5.8;
+    Q.cs_parlament_girona_buss_support = 14.0;
+    Q.ppc_parlament_girona_buss_support = 8.3;
+    Q.abstain_parlament_girona_buss_support = 13.5;
+    Q.ciu_parlament_girona_ind_support = 22.3;
+    Q.erc_parlament_girona_ind_support = 18.7;
+    Q.cup_parlament_girona_ind_support = 4.0;
+    Q.csqp_parlament_girona_ind_support = 5.2;
+    Q.psc_parlament_girona_ind_support = 10.8;
+    Q.cs_parlament_girona_ind_support = 9.8;
+    Q.ppc_parlament_girona_ind_support = 8.0;
+    Q.abstain_parlament_girona_ind_support = 20.7;
+    Q.ciu_parlament_girona_middle_support = 26.1;
+    Q.erc_parlament_girona_middle_support = 17.3;
+    Q.cup_parlament_girona_middle_support = 4.8;
+    Q.csqp_parlament_girona_middle_support = 8.9;
+    Q.psc_parlament_girona_middle_support = 5.2;
+    Q.cs_parlament_girona_middle_support = 12.6;
+    Q.ppc_parlament_girona_middle_support = 9.3;
+    Q.abstain_parlament_girona_middle_support = 15.3;
+    Q.ciu_parlament_girona_young_support = 24.7;
+    Q.erc_parlament_girona_young_support = 16.4;
+    Q.cup_parlament_girona_young_support = 7.4;
+    Q.csqp_parlament_girona_young_support = 6.0;
+    Q.psc_parlament_girona_young_support = 10.1;
+    Q.cs_parlament_girona_young_support = 12.2;
+    Q.ppc_parlament_girona_young_support = 2.7;
+    Q.abstain_parlament_girona_young_support = 19.9;
+    Q.ciu_parlament_girona_retired_support = 42.2;
+    Q.erc_parlament_girona_retired_support = 10.6;
+    Q.cup_parlament_girona_retired_support = 2.4;
+    Q.csqp_parlament_girona_retired_support = 4.2;
+    Q.psc_parlament_girona_retired_support = 6.8;
+    Q.cs_parlament_girona_retired_support = 6.6;
+    Q.ppc_parlament_girona_retired_support = 7.1;
+    Q.abstain_parlament_girona_retired_support = 19.3;
+    Q.ciu_parlament_girona_rural_support = 27.7;
+    Q.erc_parlament_girona_rural_support = 18.7;
+    Q.cup_parlament_girona_rural_support = 7.7;
+    Q.csqp_parlament_girona_rural_support = 2.9;
+    Q.psc_parlament_girona_rural_support = 2.9;
+    Q.cs_parlament_girona_rural_support = 16.4;
+    Q.ppc_parlament_girona_rural_support = 2.5;
+    Q.abstain_parlament_girona_rural_support = 20.6;
+    Q.ciu_parlament_girona_unemployed_support = 30.6;
+    Q.erc_parlament_girona_unemployed_support = 11.0;
+    Q.cup_parlament_girona_unemployed_support = 4.3;
+    Q.csqp_parlament_girona_unemployed_support = 6.8;
+    Q.psc_parlament_girona_unemployed_support = 7.5;
+    Q.cs_parlament_girona_unemployed_support = 13.1;
+    Q.ppc_parlament_girona_unemployed_support = 5.8;
+    Q.abstain_parlament_girona_unemployed_support = 20.4;
+    Q.ciu_parlament_lleida_buss_support = 29.9;
+    Q.erc_parlament_lleida_buss_support = 13.5;
+    Q.cup_parlament_lleida_buss_support = 0.7;
+    Q.csqp_parlament_lleida_buss_support = 5.6;
+    Q.psc_parlament_lleida_buss_support = 2.9;
+    Q.cs_parlament_lleida_buss_support = 9.2;
+    Q.ppc_parlament_lleida_buss_support = 12.5;
+    Q.abstain_parlament_lleida_buss_support = 25.1;
+    Q.ciu_parlament_lleida_ind_support = 24.1;
+    Q.erc_parlament_lleida_ind_support = 21.4;
+    Q.cup_parlament_lleida_ind_support = 1.5;
+    Q.csqp_parlament_lleida_ind_support = 6.3;
+    Q.psc_parlament_lleida_ind_support = 5.6;
+    Q.cs_parlament_lleida_ind_support = 8.9;
+    Q.ppc_parlament_lleida_ind_support = 6.7;
+    Q.abstain_parlament_lleida_ind_support = 24.9;
+    Q.ciu_parlament_lleida_middle_support = 26.4;
+    Q.erc_parlament_lleida_middle_support = 21.1;
+    Q.cup_parlament_lleida_middle_support = 1.5;
+    Q.csqp_parlament_lleida_middle_support = 9.1;
+    Q.psc_parlament_lleida_middle_support = 2.8;
+    Q.cs_parlament_lleida_middle_support = 10.5;
+    Q.ppc_parlament_lleida_middle_support = 6.9;
+    Q.abstain_parlament_lleida_middle_support = 21.1;
+    Q.ciu_parlament_lleida_young_support = 21.1;
+    Q.erc_parlament_lleida_young_support = 18.2;
+    Q.cup_parlament_lleida_young_support = 5.4;
+    Q.csqp_parlament_lleida_young_support = 7.3;
+    Q.psc_parlament_lleida_young_support = 8.2;
+    Q.cs_parlament_lleida_young_support = 9.5;
+    Q.ppc_parlament_lleida_young_support = 2.2;
+    Q.abstain_parlament_lleida_young_support = 27.4;
+    Q.ciu_parlament_lleida_retired_support = 37.9;
+    Q.erc_parlament_lleida_retired_support = 9.4;
+    Q.cup_parlament_lleida_retired_support = 2.0;
+    Q.csqp_parlament_lleida_retired_support = 4.3;
+    Q.psc_parlament_lleida_retired_support = 5.5;
+    Q.cs_parlament_lleida_retired_support = 4.5;
+    Q.ppc_parlament_lleida_retired_support = 11.2;
+    Q.abstain_parlament_lleida_retired_support = 24.3;
+    Q.ciu_parlament_lleida_rural_support = 33.0;
+    Q.erc_parlament_lleida_rural_support = 18.2;
+    Q.cup_parlament_lleida_rural_support = 6.2;
+    Q.csqp_parlament_lleida_rural_support = 4.4;
+    Q.psc_parlament_lleida_rural_support = 2.5;
+    Q.cs_parlament_lleida_rural_support = 14.9;
+    Q.ppc_parlament_lleida_rural_support = 3.8;
+    Q.abstain_parlament_lleida_rural_support = 16.6;
+    Q.ciu_parlament_lleida_unemployed_support = 20.6;
+    Q.erc_parlament_lleida_unemployed_support = 15.2;
+    Q.cup_parlament_lleida_unemployed_support = 5.0;
+    Q.csqp_parlament_lleida_unemployed_support = 6.5;
+    Q.psc_parlament_lleida_unemployed_support = 6.6;
+    Q.cs_parlament_lleida_unemployed_support = 10.7;
+    Q.ppc_parlament_lleida_unemployed_support = 3.2;
+    Q.abstain_parlament_lleida_unemployed_support = 31.7;
+    Q.ciu_parlament_tarragona_buss_support = 23.8;
+    Q.erc_parlament_tarragona_buss_support = 23.3;
+    Q.cup_parlament_tarragona_buss_support = 3.9;
+    Q.csqp_parlament_tarragona_buss_support = 2.6;
+    Q.psc_parlament_tarragona_buss_support = 0.2;
+    Q.cs_parlament_tarragona_buss_support = 13.5;
+    Q.ppc_parlament_tarragona_buss_support = 12.2;
+    Q.abstain_parlament_tarragona_buss_support = 20.0;
+    Q.ciu_parlament_tarragona_ind_support = 25.9;
+    Q.erc_parlament_tarragona_ind_support = 6.6;
+    Q.cup_parlament_tarragona_ind_support = 5.4;
+    Q.csqp_parlament_tarragona_ind_support = 7.9;
+    Q.psc_parlament_tarragona_ind_support = 10.2;
+    Q.cs_parlament_tarragona_ind_support = 11.6;
+    Q.ppc_parlament_tarragona_ind_support = 4.2;
+    Q.abstain_parlament_tarragona_ind_support = 27.6;
+    Q.ciu_parlament_tarragona_middle_support = 20.1;
+    Q.erc_parlament_tarragona_middle_support = 11.8;
+    Q.cup_parlament_tarragona_middle_support = 7.1;
+    Q.csqp_parlament_tarragona_middle_support = 8.0;
+    Q.psc_parlament_tarragona_middle_support = 10.4;
+    Q.cs_parlament_tarragona_middle_support = 13.6;
+    Q.ppc_parlament_tarragona_middle_support = 5.1;
+    Q.abstain_parlament_tarragona_middle_support = 23.3;
+    Q.ciu_parlament_tarragona_young_support = 15.2;
+    Q.erc_parlament_tarragona_young_support = 11.5;
+    Q.cup_parlament_tarragona_young_support = 9.0;
+    Q.csqp_parlament_tarragona_young_support = 6.9;
+    Q.psc_parlament_tarragona_young_support = 9.2;
+    Q.cs_parlament_tarragona_young_support = 13.4;
+    Q.ppc_parlament_tarragona_young_support = 8.0;
+    Q.abstain_parlament_tarragona_young_support = 26.2;
+    Q.ciu_parlament_tarragona_retired_support = 32.1;
+    Q.erc_parlament_tarragona_retired_support = 10.4;
+    Q.cup_parlament_tarragona_retired_support = 2.5;
+    Q.csqp_parlament_tarragona_retired_support = 6.0;
+    Q.psc_parlament_tarragona_retired_support = 6.6;
+    Q.cs_parlament_tarragona_retired_support = 6.3;
+    Q.ppc_parlament_tarragona_retired_support = 8.9;
+    Q.abstain_parlament_tarragona_retired_support = 26.4;
+    Q.ciu_parlament_tarragona_rural_support = 6.6;
+    Q.erc_parlament_tarragona_rural_support = 22.4;
+    Q.cup_parlament_tarragona_rural_support = 1.3;
+    Q.csqp_parlament_tarragona_rural_support = 7.0;
+    Q.psc_parlament_tarragona_rural_support = 11.4;
+    Q.cs_parlament_tarragona_rural_support = 8.2;
+    Q.ppc_parlament_tarragona_rural_support = 10.0;
+    Q.abstain_parlament_tarragona_rural_support = 32.5;
+    Q.ciu_parlament_tarragona_unemployed_support = 19.2;
+    Q.erc_parlament_tarragona_unemployed_support = 8.5;
+    Q.cup_parlament_tarragona_unemployed_support = 4.9;
+    Q.csqp_parlament_tarragona_unemployed_support = 6.4;
+    Q.psc_parlament_tarragona_unemployed_support = 12.3;
+    Q.cs_parlament_tarragona_unemployed_support = 12.3;
+    Q.ppc_parlament_tarragona_unemployed_support = 4.2;
+    Q.abstain_parlament_tarragona_unemployed_support = 31.7;
+!}
+go-to: election_algorithm.local_elections
+set-jump: post_election_sim_local
+
+@2019_5
+on-arrival: {!
+    Q.year = 2019;
+
+    // 2015 results, for delta calculations
+    Q.bcomu_local_barcelona_s = 11;
+    Q.bcomu_local_barcelona_pv = 25.21;
+    Q.jxcat_local_barcelona_s = 10; // was ciu
+    Q.jxcat_local_barcelona_pv = 22.75;
+    Q.ciu_local_barcelona_s = 0;
+    Q.ciu_local_barcelona_pv = 0;
+    Q.cs_local_barcelona_s = 5;
+    Q.cs_local_barcelona_pv = 11.03;
+    Q.erc_local_barcelona_s = 5;
+    Q.erc_local_barcelona_pv = 11.01;
+    Q.psc_local_barcelona_s = 4;
+    Q.psc_local_barcelona_pv = 9.63;
+    Q.pp_local_barcelona_s = 3;
+    Q.pp_local_barcelona_pv = 8.71;
+    Q.cup_local_barcelona_s = 3; 
+    Q.cup_local_barcelona_pv = 7.42;
+
+    Q.gdp_growth = 3.09;
+    Q.unemployment = 16.05;
+    Q.public_debt = 33.31;
+    Q.generalitat_surplus = 0.50;
+    Q.cat_spa_relations = 5.63;
+    Q.independence_movement = 63.47;
+    Q.independence_trust = 38.14;
+    Q.social_dissent = 46.30;
+    Q.welfare_index = 35.33;
+    Q.podemos_channeling = 0.38;
+    Q.corruption_events_ciu = 2;
+    Q.unio_split = true;
+    Q.pdcat_split = false;
+    Q.art155_ever = true;
+
+    Q.psc_leader = "Miquel Iceta";
+    Q.cs_leader = "Inés Arrimadas";
+    Q.ppc_leader = "Alejandro Fernández";
+    Q.cup_leader = "Carles Riera";
+    Q.csbcn_leader = "Manuel Valls";
+    Q.ercbcn_leader = "Ernest Maragall";
+    Q.ppbcn_leader = "Josep Bou";
+    Q.cupbcn_leader = "Anna Saliente";
+    Q.pp_leader = "Pablo Casado";
+    Q.comuns_name = "ecp";
+
+    Q.bcomu_local_barcelona_support    = 20.8;
+    Q.ciu_local_barcelona_support      =  0;
+    Q.cdc_local_barcelona_support      =  0;
+    Q.dl_local_barcelona_support       =  0;
+    Q.jxcat_local_barcelona_support    = 10.6;  // active ICR party
+    Q.junts_local_barcelona_support    =  0;
+    Q.erc_local_barcelona_support      = 21.4;
+    Q.psc_local_barcelona_support      = 18.5;
+    Q.cs_local_barcelona_support       = 13.2;
+    Q.cup_local_barcelona_support      =  3.9;
+    Q.pp_local_barcelona_support       =  5.0;
+    Q.primaries_local_barcelona_support =  3.8;
+    Q.icv_local_barcelona_support    =  0;
+
+    // Parlament support states for other results calculations
+    Q.jxcat_parlament_barcelona_buss_support = 20.6;
+    Q.erc_parlament_barcelona_buss_support = 8.6;
+    Q.cup_parlament_barcelona_buss_support = 2.9;
+    Q.ecp_parlament_barcelona_buss_support = 10.1;
+    Q.psc_parlament_barcelona_buss_support = 14.1;
+    Q.cs_parlament_barcelona_buss_support = 29.1;
+    Q.ppc_parlament_barcelona_buss_support = 8.1;
+    Q.vox_parlament_barcelona_buss_support = 0.3;
+    Q.abstain_parlament_barcelona_buss_support = 5.6;
+    Q.jxcat_parlament_barcelona_ind_support = 15.2;
+    Q.erc_parlament_barcelona_ind_support = 9.8;
+    Q.cup_parlament_barcelona_ind_support = 4.6;
+    Q.ecp_parlament_barcelona_ind_support = 13.7;
+    Q.psc_parlament_barcelona_ind_support = 23.3;
+    Q.cs_parlament_barcelona_ind_support = 13.4;
+    Q.ppc_parlament_barcelona_ind_support = 0.3;
+    Q.vox_parlament_barcelona_ind_support = 0.3;
+    Q.abstain_parlament_barcelona_ind_support = 18.8;
+    Q.jxcat_parlament_barcelona_middle_support = 11.9;
+    Q.erc_parlament_barcelona_middle_support = 9.8;
+    Q.cup_parlament_barcelona_middle_support = 4.5;
+    Q.ecp_parlament_barcelona_middle_support = 13.9;
+    Q.psc_parlament_barcelona_middle_support = 14.3;
+    Q.cs_parlament_barcelona_middle_support = 28.4;
+    Q.ppc_parlament_barcelona_middle_support = 5.5;
+    Q.vox_parlament_barcelona_middle_support = 0.3;
+    Q.abstain_parlament_barcelona_middle_support = 10.9;
+    Q.jxcat_parlament_barcelona_young_support = 3.8;
+    Q.erc_parlament_barcelona_young_support = 8.9;
+    Q.cup_parlament_barcelona_young_support = 10.6;
+    Q.ecp_parlament_barcelona_young_support = 14.0;
+    Q.psc_parlament_barcelona_young_support = 12.8;
+    Q.cs_parlament_barcelona_young_support = 19.0;
+    Q.ppc_parlament_barcelona_young_support = 0.0;
+    Q.vox_parlament_barcelona_young_support = 0.3;
+    Q.abstain_parlament_barcelona_young_support = 30.0;
+    Q.jxcat_parlament_barcelona_retired_support = 23.4;
+    Q.erc_parlament_barcelona_retired_support = 11.0;
+    Q.cup_parlament_barcelona_retired_support = 3.1;
+    Q.ecp_parlament_barcelona_retired_support = 9.4;
+    Q.psc_parlament_barcelona_retired_support = 26.0;
+    Q.cs_parlament_barcelona_retired_support = 6.2;
+    Q.ppc_parlament_barcelona_retired_support = 6.8;
+    Q.vox_parlament_barcelona_retired_support = 0.4;
+    Q.abstain_parlament_barcelona_retired_support = 12.8;
+    Q.jxcat_parlament_barcelona_rural_support = 13.0;
+    Q.erc_parlament_barcelona_rural_support = 18.5;
+    Q.cup_parlament_barcelona_rural_support = 8.3;
+    Q.ecp_parlament_barcelona_rural_support = 2.0;
+    Q.psc_parlament_barcelona_rural_support = 24.8;
+    Q.cs_parlament_barcelona_rural_support = 15.4;
+    Q.ppc_parlament_barcelona_rural_support = 0.0;
+    Q.vox_parlament_barcelona_rural_support = 0.3;
+    Q.abstain_parlament_barcelona_rural_support = 17.5;
+    Q.jxcat_parlament_barcelona_unemployed_support = 10.0;
+    Q.erc_parlament_barcelona_unemployed_support = 10.6;
+    Q.cup_parlament_barcelona_unemployed_support = 3.8;
+    Q.ecp_parlament_barcelona_unemployed_support = 16.2;
+    Q.psc_parlament_barcelona_unemployed_support = 16.5;
+    Q.cs_parlament_barcelona_unemployed_support = 16.6;
+    Q.ppc_parlament_barcelona_unemployed_support = 0.0;
+    Q.vox_parlament_barcelona_unemployed_support = 0.3;
+    Q.abstain_parlament_barcelona_unemployed_support = 25.5;
+    Q.jxcat_parlament_girona_buss_support = 26.6;
+    Q.erc_parlament_girona_buss_support = 17.7;
+    Q.cup_parlament_girona_buss_support = 3.1;
+    Q.ecp_parlament_girona_buss_support = 4.2;
+    Q.psc_parlament_girona_buss_support = 13.0;
+    Q.cs_parlament_girona_buss_support = 25.8;
+    Q.ppc_parlament_girona_buss_support = 0.2;
+    Q.vox_parlament_girona_buss_support = 0.3;
+    Q.abstain_parlament_girona_buss_support = 8.6;
+    Q.jxcat_parlament_girona_ind_support = 20.4;
+    Q.erc_parlament_girona_ind_support = 20.0;
+    Q.cup_parlament_girona_ind_support = 5.2;
+    Q.ecp_parlament_girona_ind_support = 6.2;
+    Q.psc_parlament_girona_ind_support = 20.5;
+    Q.cs_parlament_girona_ind_support = 17.0;
+    Q.ppc_parlament_girona_ind_support = 0.3;
+    Q.vox_parlament_girona_ind_support = 0.3;
+    Q.abstain_parlament_girona_ind_support = 9.6;
+    Q.jxcat_parlament_girona_middle_support = 20.9;
+    Q.erc_parlament_girona_middle_support = 15.7;
+    Q.cup_parlament_girona_middle_support = 4.9;
+    Q.ecp_parlament_girona_middle_support = 9.6;
+    Q.psc_parlament_girona_middle_support = 12.9;
+    Q.cs_parlament_girona_middle_support = 20.7;
+    Q.ppc_parlament_girona_middle_support = 0.7;
+    Q.vox_parlament_girona_middle_support = 0.3;
+    Q.abstain_parlament_girona_middle_support = 13.8;
+    Q.jxcat_parlament_girona_young_support = 17.3;
+    Q.erc_parlament_girona_young_support = 13.1;
+    Q.cup_parlament_girona_young_support = 8.2;
+    Q.ecp_parlament_girona_young_support = 6.9;
+    Q.psc_parlament_girona_young_support = 17.4;
+    Q.cs_parlament_girona_young_support = 17.6;
+    Q.ppc_parlament_girona_young_support = 0.0;
+    Q.vox_parlament_girona_young_support = 0.3;
+    Q.abstain_parlament_girona_young_support = 18.7;
+    Q.jxcat_parlament_girona_retired_support = 40.3;
+    Q.erc_parlament_girona_retired_support = 11.6;
+    Q.cup_parlament_girona_retired_support = 3.1;
+    Q.ecp_parlament_girona_retired_support = 6.9;
+    Q.psc_parlament_girona_retired_support = 16.0;
+    Q.cs_parlament_girona_retired_support = 9.9;
+    Q.ppc_parlament_girona_retired_support = 0.0;
+    Q.vox_parlament_girona_retired_support = 0.3;
+    Q.abstain_parlament_girona_retired_support = 11.0;
+    Q.jxcat_parlament_girona_rural_support = 19.2;
+    Q.erc_parlament_girona_rural_support = 13.4;
+    Q.cup_parlament_girona_rural_support = 6.7;
+    Q.ecp_parlament_girona_rural_support = 2.2;
+    Q.psc_parlament_girona_rural_support = 8.7;
+    Q.cs_parlament_girona_rural_support = 28.7;
+    Q.ppc_parlament_girona_rural_support = 0.0;
+    Q.vox_parlament_girona_rural_support = 0.3;
+    Q.abstain_parlament_girona_rural_support = 20.5;
+    Q.jxcat_parlament_girona_unemployed_support = 28.7;
+    Q.erc_parlament_girona_unemployed_support = 10.3;
+    Q.cup_parlament_girona_unemployed_support = 5.5;
+    Q.ecp_parlament_girona_unemployed_support = 7.0;
+    Q.psc_parlament_girona_unemployed_support = 16.0;
+    Q.cs_parlament_girona_unemployed_support = 23.1;
+    Q.ppc_parlament_girona_unemployed_support = 0.0;
+    Q.vox_parlament_girona_unemployed_support = 0.3;
+    Q.abstain_parlament_girona_unemployed_support = 8.6;
+    Q.jxcat_parlament_lleida_buss_support = 30.0;
+    Q.erc_parlament_lleida_buss_support = 14.0;
+    Q.cup_parlament_lleida_buss_support = 0.1;
+    Q.ecp_parlament_lleida_buss_support = 6.6;
+    Q.psc_parlament_lleida_buss_support = 11.1;
+    Q.cs_parlament_lleida_buss_support = 19.1;
+    Q.ppc_parlament_lleida_buss_support = 5.9;
+    Q.vox_parlament_lleida_buss_support = 0.3;
+    Q.abstain_parlament_lleida_buss_support = 12.4;
+    Q.jxcat_parlament_lleida_ind_support = 22.9;
+    Q.erc_parlament_lleida_ind_support = 23.0;
+    Q.cup_parlament_lleida_ind_support = 1.8;
+    Q.ecp_parlament_lleida_ind_support = 7.7;
+    Q.psc_parlament_lleida_ind_support = 14.9;
+    Q.cs_parlament_lleida_ind_support = 12.9;
+    Q.ppc_parlament_lleida_ind_support = 0.0;
+    Q.vox_parlament_lleida_ind_support = 0.3;
+    Q.abstain_parlament_lleida_ind_support = 16.1;
+    Q.jxcat_parlament_lleida_middle_support = 24.7;
+    Q.erc_parlament_lleida_middle_support = 22.6;
+    Q.cup_parlament_lleida_middle_support = 1.7;
+    Q.ecp_parlament_lleida_middle_support = 11.0;
+    Q.psc_parlament_lleida_middle_support = 11.3;
+    Q.cs_parlament_lleida_middle_support = 17.4;
+    Q.ppc_parlament_lleida_middle_support = 0.0;
+    Q.vox_parlament_lleida_middle_support = 0.3;
+    Q.abstain_parlament_lleida_middle_support = 10.4;
+    Q.jxcat_parlament_lleida_young_support = 16.9;
+    Q.erc_parlament_lleida_young_support = 18.2;
+    Q.cup_parlament_lleida_young_support = 6.5;
+    Q.ecp_parlament_lleida_young_support = 9.2;
+    Q.psc_parlament_lleida_young_support = 17.0;
+    Q.cs_parlament_lleida_young_support = 14.0;
+    Q.ppc_parlament_lleida_young_support = 0.0;
+    Q.vox_parlament_lleida_young_support = 0.3;
+    Q.abstain_parlament_lleida_young_support = 17.4;
+    Q.jxcat_parlament_lleida_retired_support = 36.8;
+    Q.erc_parlament_lleida_retired_support = 11.0;
+    Q.cup_parlament_lleida_retired_support = 2.6;
+    Q.ecp_parlament_lleida_retired_support = 7.5;
+    Q.psc_parlament_lleida_retired_support = 15.1;
+    Q.cs_parlament_lleida_retired_support = 5.8;
+    Q.ppc_parlament_lleida_retired_support = 2.6;
+    Q.vox_parlament_lleida_retired_support = 0.3;
+    Q.abstain_parlament_lleida_retired_support = 17.4;
+    Q.jxcat_parlament_lleida_rural_support = 25.8;
+    Q.erc_parlament_lleida_rural_support = 14.6;
+    Q.cup_parlament_lleida_rural_support = 5.0;
+    Q.ecp_parlament_lleida_rural_support = 4.2;
+    Q.psc_parlament_lleida_rural_support = 9.2;
+    Q.cs_parlament_lleida_rural_support = 23.4;
+    Q.ppc_parlament_lleida_rural_support = 0.0;
+    Q.vox_parlament_lleida_rural_support = 0.3;
+    Q.abstain_parlament_lleida_rural_support = 17.3;
+    Q.jxcat_parlament_lleida_unemployed_support = 18.7;
+    Q.erc_parlament_lleida_unemployed_support = 15.3;
+    Q.cup_parlament_lleida_unemployed_support = 5.5;
+    Q.ecp_parlament_lleida_unemployed_support = 7.1;
+    Q.psc_parlament_lleida_unemployed_support = 15.4;
+    Q.cs_parlament_lleida_unemployed_support = 16.9;
+    Q.ppc_parlament_lleida_unemployed_support = 0.0;
+    Q.vox_parlament_lleida_unemployed_support = 0.3;
+    Q.abstain_parlament_lleida_unemployed_support = 20.5;
+    Q.jxcat_parlament_tarragona_buss_support = 22.8;
+    Q.erc_parlament_tarragona_buss_support = 25.4;
+    Q.cup_parlament_tarragona_buss_support = 3.7;
+    Q.ecp_parlament_tarragona_buss_support = 3.6;
+    Q.psc_parlament_tarragona_buss_support = 9.5;
+    Q.cs_parlament_tarragona_buss_support = 19.1;
+    Q.ppc_parlament_tarragona_buss_support = 5.0;
+    Q.vox_parlament_tarragona_buss_support = 0.3;
+    Q.abstain_parlament_tarragona_buss_support = 10.2;
+    Q.jxcat_parlament_tarragona_ind_support = 23.7;
+    Q.erc_parlament_tarragona_ind_support = 7.4;
+    Q.cup_parlament_tarragona_ind_support = 6.1;
+    Q.ecp_parlament_tarragona_ind_support = 9.3;
+    Q.psc_parlament_tarragona_ind_support = 19.7;
+    Q.cs_parlament_tarragona_ind_support = 12.4;
+    Q.ppc_parlament_tarragona_ind_support = 0.0;
+    Q.vox_parlament_tarragona_ind_support = 0.3;
+    Q.abstain_parlament_tarragona_ind_support = 20.6;
+    Q.jxcat_parlament_tarragona_middle_support = 17.4;
+    Q.erc_parlament_tarragona_middle_support = 12.6;
+    Q.cup_parlament_tarragona_middle_support = 7.8;
+    Q.ecp_parlament_tarragona_middle_support = 10.0;
+    Q.psc_parlament_tarragona_middle_support = 19.8;
+    Q.cs_parlament_tarragona_middle_support = 16.6;
+    Q.ppc_parlament_tarragona_middle_support = 0.0;
+    Q.vox_parlament_tarragona_middle_support = 0.3;
+    Q.abstain_parlament_tarragona_middle_support = 15.0;
+    Q.jxcat_parlament_tarragona_young_support = 11.3;
+    Q.erc_parlament_tarragona_young_support = 12.6;
+    Q.cup_parlament_tarragona_young_support = 11.2;
+    Q.ecp_parlament_tarragona_young_support = 9.6;
+    Q.psc_parlament_tarragona_young_support = 19.1;
+    Q.cs_parlament_tarragona_young_support = 15.8;
+    Q.ppc_parlament_tarragona_young_support = 0.0;
+    Q.vox_parlament_tarragona_young_support = 0.3;
+    Q.abstain_parlament_tarragona_young_support = 19.4;
+    Q.jxcat_parlament_tarragona_retired_support = 29.6;
+    Q.erc_parlament_tarragona_retired_support = 12.3;
+    Q.cup_parlament_tarragona_retired_support = 3.5;
+    Q.ecp_parlament_tarragona_retired_support = 9.7;
+    Q.psc_parlament_tarragona_retired_support = 16.6;
+    Q.cs_parlament_tarragona_retired_support = 5.6;
+    Q.ppc_parlament_tarragona_retired_support = 0.0;
+    Q.vox_parlament_tarragona_retired_support = 0.4;
+    Q.abstain_parlament_tarragona_retired_support = 21.3;
+    Q.jxcat_parlament_tarragona_rural_support = 3.0;
+    Q.erc_parlament_tarragona_rural_support = 25.0;
+    Q.cup_parlament_tarragona_rural_support = 1.4;
+    Q.ecp_parlament_tarragona_rural_support = 8.5;
+    Q.psc_parlament_tarragona_rural_support = 21.0;
+    Q.cs_parlament_tarragona_rural_support = 16.5;
+    Q.ppc_parlament_tarragona_rural_support = 2.6;
+    Q.vox_parlament_tarragona_rural_support = 0.3;
+    Q.abstain_parlament_tarragona_rural_support = 21.2;
+    Q.jxcat_parlament_tarragona_unemployed_support = 17.5;
+    Q.erc_parlament_tarragona_unemployed_support = 9.0;
+    Q.cup_parlament_tarragona_unemployed_support = 5.6;
+    Q.ecp_parlament_tarragona_unemployed_support = 7.1;
+    Q.psc_parlament_tarragona_unemployed_support = 21.9;
+    Q.cs_parlament_tarragona_unemployed_support = 15.0;
+    Q.ppc_parlament_tarragona_unemployed_support = 0.0;
+    Q.vox_parlament_tarragona_unemployed_support = 0.3;
+    Q.abstain_parlament_tarragona_unemployed_support = 23.1;
+!}
+go-to: election_algorithm.local_elections
+set-jump: post_election_sim_local
 
 @2012_11
 on-arrival: {!
@@ -382,6 +986,12 @@ set-jump: post_election_sim
 on-arrival: {!
 Q.parties = ['ciu', 'erc', 'psc', 'ppc', 'icv', 'cs', 'cup', 'si', 'cdc', 'unio', 'jxsi', 'junts', 'jxcat', 'pdcat', 'csqp', 'cecp', 'ecp', 'vox', 'fnc', 'pxc'];
 
+// New leaders:
+Q.psc_leader = "Miquel Iceta";
+Q.cs_leader = "Inés Arrimadas";
+Q.ppc_leader = "Xavier García Albiol";
+Q.cup_leader = "Antonio Baños";
+
 Q.parlament_constituencies = ["barcelona", "girona", "lleida", "tarragona"];
 Q.parlament_seats = {
     "barcelona": 85,
@@ -417,7 +1027,11 @@ Q.cup_parlament_s = 3;
 Q.si_parlament_pv = 0;
 Q.si_parlament_s = 0;
 
-
+// Remove both erc and ciu for delta calc
+Q.erc_parlament_pv = 0;
+Q.erc_parlament_s = 0;
+Q.ciu_parlament_pv = 0;
+Q.ciu_parlament_s = 0;
 
 // New demographics, unemployement has shifted stuff around
 Q.parlament_barcelona_middle_pop = 620783.994227461;
@@ -850,6 +1464,12 @@ set-jump: post_election_sim
 
 @2015_12
 on-arrival: {!
+
+// new leaders
+Q.psoe_leader = "Perdo Sánchez";
+Q.iu_leader = "Alberto Garzón";
+Q.pnv_leader = "Andoni Ortuzar";
+
 Q.congreso_seats = {
     "catalunya": 47,
     "valencia": 33,
@@ -888,6 +1508,8 @@ Q.congreso_urban_bias = {
 // Previous election results (2011)
 Q.abstain_congreso_pv = 31.06;
 
+Q.ciu_congreso_s = 0;
+Q.ciu_congreso_pv = 0;
 Q.dl_congreso_s = 16; // Was CiU
 Q.dl_congreso_pv = 4.17;
 Q.dl_congreso_pv_cat = 29.35;
@@ -908,6 +1530,8 @@ Q.upyd_congreso_pv = 4.7;
 Q.upyd_congreso_pv_cat = 1.14;
 Q.pnv_congreso_s = 5;
 Q.pnv_congreso_pv = 1.33;
+Q.bng_congreso_s = 0;
+Q.bng_congreso_pv = 0;
 Q.nos_congreso_s = 2; // Was BNG
 Q.nos_congreso_pv = 0.75;
 Q.nos_congreso_pv_true = 11.18;
@@ -921,6 +1545,8 @@ Q.prc_congreso_s = 0;
 Q.prc_congreso_pv = 0.18;
 Q.gbai_congreso_s = 1;
 Q.gbai_congreso_pv = 0.17;
+Q.amaiur_congreso_s = 0;
+Q.amaiur_congreso_pv = 0;
 Q.ehbildu_congreso_s = 7; // Was Amaiur
 Q.ehbildu_congreso_pv = 1.37;
 
@@ -1007,6 +1633,10 @@ set-jump: post_election_sim_congreso
 
 @2016_6
 on-arrival: {!
+Q.psoe_leader = "Perdo Sánchez";
+Q.iu_leader = "Alberto Garzón";
+Q.pnv_leader = "Andoni Ortuzar";
+
 Q.congreso_seats = {
     "catalunya": 47,
     "valencia": 33,
@@ -1051,6 +1681,8 @@ Q.pp_congreso_pv_cat = 11.02;
 Q.psoe_congreso_s = 90;
 Q.psoe_congreso_pv = 22.01;
 Q.psoe_congreso_pv_cat = 17.07;
+Q.iu_congreso_s = 0;
+Q.iu_congreso_pv = 0;
 Q.up_congreso_s = 69 + 2; // Including IU now
 Q.up_congreso_pv = 20.66 + 3.67;
 Q.up_congreso_pv_cat = 24.74;
@@ -1060,18 +1692,31 @@ Q.cs_congreso_pv_cat = 13.05;
 Q.erc_congreso_s = 9;
 Q.erc_congreso_pv = 2.39;
 Q.erc_congreso_pv_cat = 15.98;
-Q.pdcat_congreso_s = 8; // Was DL
+Q.ciu_congreso_s = 0;
+Q.ciu_congreso_pv = 0;
+Q.pdcat_congreso_s = 8; // Was DL, Ciu
 Q.pdcat_congreso_pv = 2.25;
 Q.pdcat_congreso_pv_cat = 15.08;
 Q.pnv_congreso_s = 6;
 Q.pnv_congreso_pv = 1.2;
+Q.amaiur_congreso_s = 0;
+Q.amaiur_congreso_pv = 0;
 Q.ehbildu_congreso_s = 2;
 Q.ehbildu_congreso_pv = 0.87;
 Q.cc_congreso_s = 1;
 Q.cc_congreso_pv = 0.33;
+Q.bng_congreso_s = 0;
+Q.bng_congreso_pv = 0;
 Q.nos_congreso_s = 0;
 Q.nos_congreso_pv = 0.28;
-
+Q.fac_congreso_s = 0;
+Q.fac_congreso_pv = 0;
+Q.gbai_congreso_s = 0;
+Q.gbai_congreso_pv = 0;
+Q.upyd_congreso_s = 0;
+Q.upyd_congreso_pv = 0;
+Q.compromis_congreso_s = 0;
+Q.compromis_congreso_pv = 0;
 
 // New support levels by constituency
 // Balears
@@ -1150,6 +1795,12 @@ set-jump: post_election_sim_congreso
 @2017_12
 on-arrival: {!
 Q.parties = ['ciu', 'erc', 'psc', 'ppc', 'icv', 'cs', 'cup', 'si', 'cdc', 'unio', 'jxsi', 'junts', 'jxcat', 'pdcat', 'csqp', 'cecp', 'ecp', 'vox', 'fnc', 'pxc'];
+
+// New leaders
+Q.psc_leader = "Miquel Iceta";
+Q.cs_leader = "Inés Arrimadas";
+Q.ppc_leader = "Xavier García Albiol";
+Q.cup_leader = "Carles Riera";
 
 Q.parlament_constituencies = ["barcelona", "girona", "lleida", "tarragona"];
 Q.parlament_seats = {
@@ -1468,6 +2119,11 @@ set-jump: post_election_sim
 
 @2019_4
 on-arrival: {!
+// New leaders
+Q.psoe_leader = "Perdo Sánchez";
+Q.pnv_leader = "Andoni Ortuzar";
+Q.pp_leader = "Pablo Casado";
+
 Q.congreso_seats = {
     "catalunya": 47,
     "valencia": 33,
@@ -1511,6 +2167,8 @@ Q.pp_congreso_pv_cat = 13.36;
 Q.psoe_congreso_s = 85;
 Q.psoe_congreso_pv = 22.66;
 Q.psoe_congreso_pv_cat = 16.12;
+Q.iu_congreso_s = 0;
+Q.iu_congreso_pv = 0;
 Q.up_congreso_s = 71;
 Q.up_congreso_pv = 21.10;
 Q.up_congreso_pv_cat = 24.51;
@@ -1520,16 +2178,29 @@ Q.cs_congreso_pv_cat = 10.09;
 Q.erc_congreso_s = 9;
 Q.erc_congreso_pv = 2.63;
 Q.erc_congreso_pv_cat = 18.17;
+Q.ciu_congreso_s = 0;
+Q.ciu_congreso_pv = 0;
 Q.jxcat_congreso_s = 8; // Was CDC
 Q.jxcat_congreso_pv = 2.01;
 Q.jxcat_congreso_pv_cat = 13.09;
 Q.pnv_congreso_s = 5;
 Q.pnv_congreso_pv = 1.2;
+Q.amaiur_congreso_s = 0;
+Q.amaiur_congreso_pv = 0;
 Q.ehbildu_congreso_s = 2;
 Q.ehbildu_congreso_pv = 0.77;
 Q.cc_congreso_s = 1;
 Q.cc_congreso_pv = 0.33;
-
+Q.bng_congreso_s = 0;
+Q.bng_congreso_pv = 0;
+Q.fac_congreso_s = 0;
+Q.fac_congreso_pv = 0;
+Q.gbai_congreso_s = 0;
+Q.gbai_congreso_pv = 0;
+Q.upyd_congreso_s = 0;
+Q.upyd_congreso_pv = 0;
+Q.compromis_congreso_s = 0;
+Q.compromis_congreso_pv = 0;
 
 // New support levels by constituency
 // Balears
@@ -1607,6 +2278,10 @@ set-jump: post_election_sim_congreso
 
 @2019_11
 on-arrival: {!
+Q.psoe_leader = "Perdo Sánchez";
+Q.pnv_leader = "Andoni Ortuzar";
+Q.pp_leader = "Pablo Casado";
+
 Q.congreso_seats = {
     "catalunya": 47,
     "valencia": 33,
@@ -1677,7 +2352,20 @@ Q.nsuma_congreso_pv = 0.41;
 // Q.compromis_congreso_pv = 0.66;
 Q.prc_congreso_s = 1;
 Q.prc_congreso_pv = 0.2;
-
+Q.ciu_congreso_s = 0;
+Q.ciu_congreso_pv = 0;
+Q.amaiur_congreso_s = 0;
+Q.amaiur_congreso_pv = 0;
+Q.fac_congreso_s = 0;
+Q.fac_congreso_pv = 0;
+Q.gbai_congreso_s = 0;
+Q.gbai_congreso_pv = 0;
+Q.upyd_congreso_s = 0;
+Q.upyd_congreso_pv = 0;
+Q.iu_congreso_s = 0;
+Q.iu_congreso_pv = 0;
+Q.compromis_congreso_s = 0;
+Q.compromis_congreso_pv = 0;
 
 // New support levels by constituency
 // Balears
@@ -2359,7 +3047,7 @@ if (window && d3) {
 [? if psoe_congreso_showviz: {!<tr><td><div class="box" style='background-color: #da291c'> </div> !} PSOE {!</td><td style='text-align: right;'>!}[+ psoe_congreso_pv +]% ([+ psoe_congreso_pv_cat +]%) {!</td><td>!} [+ psoe_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ psoe_congreso_s +] {!</td><td>!} [+ psoe_congreso_s_delta +] {!</td>!}?]
 [? if pp_congreso_showviz: {!<tr><td><div class="box" style='background-color: #1d84ce'> </div> !} PP {!</td><td style='text-align: right;'>!}[+ pp_congreso_pv +]% ([+ pp_congreso_pv_cat +]%) {!</td><td>!} [+ pp_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ pp_congreso_s +] {!</td><td>!} [+ pp_congreso_s_delta +] {!</td>!}?]
 [? if up_congreso_showviz: {!<tr><td><div class="box" style='background-color: #5a205a'> </div> !} UP {!</td><td style='text-align: right;'>!}[+ up_congreso_pv +]% ([+ up_congreso_pv_cat +]%) {!</td><td>!} [+ up_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ up_congreso_s +] {!</td><td>!} [+ up_congreso_s_delta +] {!</td>!}?]
-[? if cs_congreso_showviz: {!<tr><td><div class="box" style='background-color: #EB6109'> </div> !} Cs {!</td><td style='text-align: right;'>!}[+ cs_congreso_pv +]% ([+ cs_congreso_pv_cat +]%) {!</td><td>!} [+ cs_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ cs_congreso_s +] {!</td><td>!} [+ cs_congreso_s_delta +] {!</td>!}?]
+[? if cs_congreso_showviz: {!<tr><td><div class="box" style='background-color: #EB6109'> </div> !} csspa {!</td><td style='text-align: right;'>!}[+ cs_congreso_pv +]% ([+ cs_congreso_pv_cat +]%) {!</td><td>!} [+ cs_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ cs_congreso_s +] {!</td><td>!} [+ cs_congreso_s_delta +] {!</td>!}?]
 [? if vox_congreso_showviz: {!<tr><td><div class="box" style='background-color: #63be21'> </div> !} Vox {!</td><td style='text-align: right;'>!}[+ vox_congreso_pv +]% ([+ vox_congreso_pv_cat +]%) {!</td><td>!} [+ vox_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ vox_congreso_s +] {!</td><td>!} [+ vox_congreso_s_delta +] {!</td>!}?]
 [? if podemos_congreso_showviz: {!<tr><td><div class="box" style='background-color: #9269f5'> </div> !} Podemos {!</td><td style='text-align: right;'>!}[+ podemos_congreso_pv +]% ([+ podemos_congreso_pv_cat +]%) {!</td><td>!} [+ podemos_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ podemos_congreso_s +] {!</td><td>!} [+ podemos_congreso_s_delta +] {!</td>!}?]
 [? if mpais_congreso_showviz: {!<tr><td><div class="box" style='background-color: #027665'> </div> !} Más País {!</td><td style='text-align: right;'>!}[+ mpais_congreso_pv +]% ([+ mpais_congreso_pv_cat +]%) {!</td><td>!} [+ mpais_congreso_pv_delta +] {!</td><td style='text-align: right;'>!} [+ mpais_congreso_s +] {!</td><td>!} [+ mpais_congreso_s_delta +] {!</td>!}?]
@@ -2405,5 +3093,246 @@ Author's note: Congreso election simulations are more imperfect than Parlament o
 [? if jxcat_congreso_showviz and not fr_congreso_showviz: Pedro Sánchez will lead a <span style='color: #da291c; font-weight: bold;'>progressist</span> <span style='color: #5a205a; font-weight: bold;'>government</span> (PSOE-UP) with the support of EAJ-PNV, Más País, BNG, CC-PNC, texiste and the toleration of ERC and EH Bildu. ?]
 
 [? if not (dl_congreso_showviz or pdcat_congreso_showviz or jxcat_congreso_showviz): How did we get here??? ?]
+
+- @election_simulation: Reset simulation
+
+
+@post_election_sim_local
+set-bg: img/salo_de_cent.jpg
+on-arrival: {!
+    Q.local_barcelona_seats = 41;
+    Q.barcelona_s_majority = Math.floor(Q.local_barcelona_seats/2) + 1;
+!}
+on-display: {!
+    const data = [];
+    if (Q.cup_local_barcelona_s) {
+        data.push({
+            "id": "cup",
+            "legend": "CUP",
+            "name": "CUP",
+            "seats": Q.cup_local_barcelona_s,
+        });
+    }
+    if (Q.primaries_local_barcelona_s) {
+        data.push({
+            "id": "primaries",
+            "legend": "Primàries",
+            "name": "Primàries",
+            "seats": Q.primaries_local_barcelona_s,
+        });
+    }
+    if (Q.bcomu_local_barcelona_s) {
+        data.push({
+            "id": "bcomu",
+            "legend": "BComú",
+            "name": "BComú",
+            "seats": Q.bcomu_local_barcelona_s,
+        });
+    }
+    if (Q.icv_local_barcelona_s) {
+        data.push({
+            "id": "icv",
+            "legend": "ICV-EUiA",
+            "name": "ICV-EUiA",
+            "seats": Q.icv_local_barcelona_s,
+        });
+    }
+    if (Q.erc_local_barcelona_s) {
+        data.push({
+            "id": "erc",
+            "legend": "ERC",
+            "name": "ERC",
+            "seats": Q.erc_local_barcelona_s,
+        });
+    }
+    if (Q.psc_local_barcelona_s) {
+        data.push({
+            "id": "psc",
+            "legend": "PSC",
+            "name": "PSC",
+            "seats": Q.psc_local_barcelona_s,
+        });
+    }
+    if (Q.cs_local_barcelona_s) {
+        data.push({
+            "id": "cs",
+            "legend": "Cs",
+            "name": "Cs",
+            "seats": Q.cs_local_barcelona_s,
+        });
+    }
+    if (Q.jxsi_local_barcelona_s) {
+        data.push({
+            "id": "jxsi",
+            "legend": "JxSí",
+            "name": "JxSí",
+            "seats": Q.jxsi_local_barcelona_s,
+        });
+    }
+    if (Q.jxcat_local_barcelona_s) {
+        data.push({
+            "id": "jxcat",
+            "legend": "JxCat",
+            "name": "JxCat",
+            "seats": Q.jxcat_local_barcelona_s,
+        });
+    }
+    if (Q.junts_local_barcelona_s) {
+        data.push({
+            "id": "junts",
+            "legend": "Junts",
+            "name": "Junts",
+            "seats": Q.junts_local_barcelona_s,
+        });
+    }
+    if (Q.cdc_local_barcelona_s) {
+        data.push({
+            "id": "cdc",
+            "legend": "CDC",
+            "name": "CDC",
+            "seats": Q.cdc_local_barcelona_s,
+        });
+    }
+    if (Q.ciu_local_barcelona_s) {
+        data.push({
+            "id": "ciu",
+            "legend": "CiU",
+            "name": "CiU",
+            "seats": Q.ciu_local_barcelona_s,
+        });
+    }
+    if (Q.pdcat_local_barcelona_s) {
+        data.push({
+            "id": "pdcat",
+            "legend": "PDeCAT",
+            "name": "PDeCAT",
+            "seats": Q.pdcat_local_barcelona_s,
+        });
+    }
+    if (Q.unio_local_barcelona_s) {
+        data.push({
+            "id": "unio",
+            "legend": "UDC",
+            "name": "UDC",
+            "seats": Q.unio_local_barcelona_s,
+        });
+    }
+    if (Q.dl_local_barcelona_s) {
+        data.push({
+            "id": "dl",
+            "legend": "DL",
+            "name": "DL",
+            "seats": Q.dl_local_barcelona_s,
+        });
+    }
+    if (Q.pp_local_barcelona_s) {
+        data.push({
+            "id": "pp",
+            "legend": "PP",
+            "name": "PP",
+            "seats": Q.pp_local_barcelona_s,
+        });
+    }
+    if (Q.fnc_local_barcelona_s) {
+        data.push({
+            "id": "fnc",
+            "legend": "FNC",
+            "name": "FNC",
+            "seats": Q.fnc_local_barcelona_s,
+        });
+    }
+    if (Q.pxc_local_barcelona_s) {
+        data.push({
+            "id": "pxc",
+            "legend": "PxC",
+            "name": "PxC",
+            "seats": Q.pxc_local_barcelona_s,
+        });
+    }
+    if (Q.vox_local_barcelona_s) {
+        data.push({
+            "id": "vox",
+            "legend": "Vox",
+            "name": "Vox",
+            "seats": Q.vox_local_barcelona_s,
+        });
+    }
+
+    console.log(data);
+
+    if (window && d3) {
+        var width = 500;
+        var height = 500;
+        var screenWidth =  document.getElementById('content').offsetWidth;
+        if (screenWidth < width - 50) {
+            width = screenWidth - 50;
+            height = width;
+            document.getElementById("barcelonalocal").style.height = screenWidth/2 + "px";
+        }
+        var parliament = d3.parliament();
+        parliament.width(width).height(height).innerRadiusCoef(0.4);
+        parliament.enter.fromCenter(true).smallToBig(true);
+        parliament.exit.toCenter(false).bigToSmall(true);
+        d3.select("#barcelonalocal").datum(data).call(parliament);
+    }
+!}
+
+= Barcelona Local Election Results
+
+{!<svg id="barcelonalocal" style="width: 500px; height: 250px;"> </svg>!}
+{!<div style='margin-top: -2em; width: 100%; font-style: italic; text-align: center'>!} Majority: [+ barcelona_s_majority +]{!</div>!}
+
+
+{!<table style='margin-left: 0.5em; display:table; width: 95%;'>!}
+{!<tr><td style='min-width: 6em; font-weight: bold;'>Party</td><td style='width: 7em; text-align: center; font-weight: bold;'>Popular Vote</td><td style='width: 7em; font-weight: bold;'>Change</td><td style='width: 3em; text-align: center; font-weight: bold;'>Seats</td><td style='width: 3em; font-weight: bold;'>Change</td></tr>!}
+[? if bcomu_local_barcelona_showviz: {!<tr><td><div class="box" style='background-color: var(--bcomu);'> </div> !} bcomu {!</td><td style='text-align: right;'>!}[+ bcomu_local_barcelona_pv +]% {!</td><td>!} [+ bcomu_local_barcelona_pv_delta +] {!</td><td style='text-align: right;'>!} [+ bcomu_local_barcelona_s +] {!</td><td>!} [+ bcomu_local_barcelona_s_delta +] {!</td>!}?]
+[? if jxsi_bacelona_local_showviz: {!<tr><td><div class="box" style='background-color: #3ab6a5;'> </div> !} jxsibcn {!</td><td style='text-align: right;'>!}[+ jxsi_local_barcelona_pv +]% {!</td><td>!} [+ jxsi_local_barcelona_pv_delta +] {!</td><td style='text-align: right;'>!} [+ jxsi_local_barcelona_s +] {!</td><td>!} [+ jxsi_local_barcelona_s_delta +] {!</td>!}?]
+[? if ciu_local_barcelona_showviz: {!<tr><td><div class="box" style='background-color: #002782'> </div> !} ciubcn {!</td><td style='text-align: right;'>!}[+ ciu_local_barcelona_pv +]% {!</td><td>!} [+ ciu_local_barcelona_pv_delta +] {!</td><td style='text-align: right;'>!} [+ ciu_local_barcelona_s +] {!</td><td>!} [+ ciu_local_barcelona_s_delta +] {!</td>!}?]
+[? if jxcat_local_barcelona_showviz: {!<tr><td><div class="box" style='background-color: #ed5975; font-weight:bold;'> </div> !} jxcatbcn {!</td><td style='text-align: right;'>!}[+ jxcat_local_barcelona_pv +]% {!</td><td>!} [+ jxcat_local_barcelona_pv_delta +] {!</td><td style='text-align: right;'>!} [+ jxcat_local_barcelona_s +] {!</td><td>!} [+ jxcat_local_barcelona_s_delta +] {!</td>!}?]
+[? if junts_local_barcelona_showviz: {!<tr><td><div class="box" style='background-color: #20c0b2; font-weight:bold;'> </div> !} juntsbcn {!</td><td style='text-align: right;'>!}[+ junts_local_barcelona_pv +]% {!</td><td>!} [+ junts_local_barcelona_pv_delta +] {!</td><td style='text-align: right;'>!} [+ junts_local_barcelona_s +] {!</td><td>!} [+ junts_local_barcelona_s_delta +] {!</td>!}?]
+[? if cdc_local_barcelona_showviz: {!<tr><td><div class="box" style='background-color: #002782'> </div> !} cdcbcn {!</td><td style='text-align: right;'>!}[+ cdc_local_barcelona_pv +]% {!</td><td>!} [+ cdc_local_barcelona_pv_delta +] {!</td><td style='text-align: right;'>!} [+ cdc_local_barcelona_s +] {!</td><td>!} [+ cdc_local_barcelona_s_delta +] {!</td>!}?]
+[? if pdcat_local_barcelona_showviz: {!<tr><td><div class="box" style='background-color: #0081c2'> </div> !} pdcatbcn {!</td><td style='text-align: right;'>!}[+ pdcat_local_barcelona_pv +]% {!</td><td>!} [+ pdcat_local_barcelona_pv_delta +] {!</td><td style='text-align: right;'>!} [+ pdcat_local_barcelona_s +] {!</td><td>!} [+ pdcat_local_barcelona_s_delta +] {!</td>!}?]
+[? if erc_local_barcelona_showviz: {!<tr><td><div class="box" style='background-color: #FFB232'> </div> !} ercbcn {!</td><td style='text-align: right;'>!}[+ erc_local_barcelona_pv +]% {!</td><td>!} [+ erc_local_barcelona_pv_delta +] {!</td><td style='text-align: right;'>!} [+ erc_local_barcelona_s +] {!</td><td>!} [+ erc_local_barcelona_s_delta +] {!</td>!}?]
+[? if psc_local_barcelona_showviz: {!<tr><td><div class="box" style='background-color: #e73b39'> </div> !} pscbcn {!</td><td style='text-align: right;'>!}[+ psc_local_barcelona_pv +]% {!</td><td>!} [+ psc_local_barcelona_pv_delta +] {!</td><td style='text-align: right;'>!} [+ psc_local_barcelona_s +] {!</td><td>!} [+ psc_local_barcelona_s_delta +] {!</td>!}?]
+[? if cs_local_barcelona_showviz: {!<tr><td><div class="box" style='background-color: #EB6109'> </div> !} csbcn {!</td><td style='text-align: right;'>!}[+ cs_local_barcelona_pv +]% {!</td><td>!} [+ cs_local_barcelona_pv_delta +] {!</td><td style='text-align: right;'>!} [+ cs_local_barcelona_s +] {!</td><td>!} [+ cs_local_barcelona_s_delta +] {!</td>!}?]
+[? if pp_local_barcelona_showviz: {!<tr><td><div class="box" style='background-color: #007fff'> </div> !} ppbcn {!</td><td style='text-align: right;'>!}[+ pp_local_barcelona_pv +]% {!</td><td>!} [+ pp_local_barcelona_pv_delta +] {!</td><td style='text-align: right;'>!} [+ pp_local_barcelona_s +] {!</td><td>!} [+ pp_local_barcelona_s_delta +] {!</td>!}?]
+[? if vox_local_barcelona_showviz: {!<tr><td><div class="box" style='background-color: #63be21'> </div> !} voxbcn {!</td><td style='text-align: right;'>!}[+ vox_local_barcelona_pv +]% {!</td><td>!} [+ vox_local_barcelona_pv_delta +] {!</td><td>!} [+ vox_local_barcelona_s +] {!</td><td style='text-align: right;'>!} [+ vox_local_barcelona_s_delta +] {!</td>!}?]
+[? if cup_local_barcelona_showviz: {!<tr><td><div class="box" style='background-color: #ffed00'> </div> !} cupbcn {!</td><td style='text-align: right;'>!}[+ cup_local_barcelona_pv +]% {!</td><td>!} [+ cup_local_barcelona_pv_delta +] {!</td><td style='text-align: right;'>!} [+ cup_local_barcelona_s +] {!</td><td>!} [+ cup_local_barcelona_s_delta +] {!</td>!}?]
+[? if unio_local_barcelona_showviz: {!<tr><td><div class="box" style='background-color: #0052a3'> </div> !} udcbcn {!</td><td style='text-align: right;'>!}[+ unio_local_barcelona_pv +]% {!</td><td>!} [+ unio_local_barcelona_pv_delta +] {!</td><td style='text-align: right;'>!} [+ unio_local_barcelona_s +] {!</td><td>!} [+ unio_local_barcelona_s_delta +] {!</td>!}?]
+[? if pxc_local_barcelona_showviz: {!<tr><td><div class="box" style='background-color: #00FFFF'> </div> !} pxcbcn {!</td><td style='text-align: right;'>!}[+ pxc_local_barcelona_pv +]% {!</td><td>!} [+ pxc_local_barcelona_pv_delta +] {!</td><td style='text-align: right;'>!} [+ pxc_local_barcelona_s +] {!</td><td>!} [+ pxc_local_barcelona_s_delta +] {!</td>!}?]
+[? if fnc_local_barcelona_showviz: {!<tr><td><div class="box" style='background-color: #55A0D9'> </div> !} fncbcn {!</td><td style='text-align: right;'>!}[+ fnc_local_barcelona_pv +]% {!</td><td>!} [+ fnc_local_barcelona_pv_delta +] {!</td><td style='text-align: right;'>!} [+ fnc_local_barcelona_s +] {!</td><td>!} [+ fnc_local_barcelona_s_delta +] {!</td>!}?]
+[? if primaries_local_barcelona_showviz: {!<tr><td><div class="box" style='background-color: var(--primaries)'> </div> !} primariesbcn {!</td><td style='text-align: right;'>!}[+ primaries_local_barcelona_pv +]% {!</td><td>!} [+ primaries_local_barcelona_pv_delta +] {!</td><td style='text-align: right;'>!} [+ primaries_local_barcelona_s +] {!</td><td>!} [+ primaries_local_barcelona_s_delta +] {!</td>!}?]
+{!</table>!}
+
+
+[? if bcomu_local_barcelona_s = 11: Ada Colau will lead a bcomu <span style="color: var(--bcomu); font-style: italic;"> minority government</span> with the support of ERC, PSC, and CUP. ?]
+[? if bcomu_local_barcelona_s = 10: Ada Colau will lead a bcomu-pscbcn <span style="color: var(--bcomu); font-style: italic;">coalition</span> <span style="color: var(--psc); font-style: italic;">government</span> with the support of csbcn. ?]
+
+- @local_cat_results: Catalonia is not only Barcelona, though...
+
+@local_cat_results
+on-arrival: {!
+    if (Q.bcomu_local_barcelona_s == 11 || Q.bcomu_local_barcelona_s == 10) {
+        Q.local_barcelona_wp = "bcomu";
+    }
+!}
+
+= Local Election Results
+
+{! <div id="catalonia-local-map"> </div> !}
+
+**Red belt holdings**
+
+{!<table style='border-spacing: 0px; margin-right: 1em; margin-left: 1em; width:95%; table-layout: fixed; margin-top:-0.75em;'>!}
+<tr>[? if psc_local_rb_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ psc_local_rb_pct +]%; height: 2em; background-color: var(--psc); color: white; text-align: center; font-weight: bold; border-radius: 3px 0 0 3px;'>[+ psc_local_rb_pct+]%</td>?][? if erc_local_rb_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ erc_local_rb_pct +]%; height: 2em; background-color: var(--erc); color: var(--text-color); text-align: center; font-weight: bold;'>[+ erc_local_rb_pct+]%</td>?][? if cs_local_rb_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ cs_local_rb_pct +]%; height: 2em; background-color: var(--cs); color: white; text-align: center; font-weight: bold;'>[+ cs_local_rb_pct+]%</td>?][? if ciu_local_rb_pct > 0: <td style='overflow:hidden; white-space: nowrap; width: [+ ciu_local_rb_pct +]%; height: 2em; background-color: var(--ciu); color: white; text-align: center; font-weight: bold; '>[+ ciu_local_rb_pct+]%</td>?][? if cdc_local_rb_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ cdc_local_rb_pct +]%; height: 2em; background-color: var(--cdc); color: white; text-align: center; font-weight: bold;'>[+ cdc_local_rb_pct+]%</td>?][? if jxsi_local_rb_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ jxsi_local_rb_pct +]%; height: 2em; background-color: var(--jxsi); color: white; text-align: center; font-weight: bold;'>[+ jxsi_local_rb_pct+]%</td>?][? if dl_local_rb_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ dl_local_rb_pct +]%; height: 2em; background-color: var(--dl); color: white; text-align: center; font-weight: bold;'>[+ dl_local_rb_pct+]%</td>?][? if pdcat_local_rb_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ pdcat_local_rb_pct +]%; height: 2em; background-color: var(--pdcat); color: white; text-align: center; font-weight: bold;'>[+ pdcat_local_rb_pct+]%</td>?][? if jxcat_local_rb_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ jxcat_local_rb_pct +]%; height: 2em; background-color: var(--jxcat); color: white; text-align: center; font-weight: bold;;'>[+ jxcat_local_rb_pct+]%</td>?][? if junts_local_rb_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ junts_local_rb_pct +]%; height: 2em; background-color: var(--junts); color: white; text-align: center; font-weight: bold;'>[+ junts_local_rb_pct+]%</td>?][? if cup_local_rb_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ cup_local_rb_pct +]%; height: 2em; background-color: var(--cup); color: var(--text-color); text-align: center; font-weight: bold;'>[+ cup_local_rb_pct+]%</td>?][? if pp_local_rb_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ pp_local_rb_pct +]%; height: 2em; background-color: var(--pp); color: white; text-align: center; font-weight: bold;'>[+ pp_local_rb_pct+]%</td>?][? if comuns_local_rb_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ comuns_local_rb_pct +]%; height: 2em; [? if comuns_name = "icv": background-color: var(--icv)?][? if comuns_name = "csqp": background-color: var(--csqp)?][? if comuns_name = "cecp": background-color: var(--cecp)?][? if comuns_name = "ecp": background-color: var(--ecp)?]; color: white; text-align: center; font-weight: bold;'>[+ comuns_local_rb_pct+]%</td>?][? if others_local_rb_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ others_local_rb_pct +]%; height: 2em; background-color: var(--txt); color: white; text-align: center; font-weight: bold; border-radius: 0 3px 3px 0;'>[+ others_local_rb_pct+]%</td>?]</tr> 
+<tr>[? if psc_local_rb_pct > 0: <td style='white-space: nowrap; width: [+ psc_local_rb_pct +]%'>psc</td>?][? if erc_local_rb_pct > 0: <td style='white-space: nowrap; width: [+ erc_local_rb_pct +]%'>erc</td>?][? if cs_local_rb_pct > 0: <td style='white-space: nowrap; width: [+ cs_local_rb_pct +]%'>cs</td>?][? if ciu_local_rb_pct > 0: <td style='white-space: nowrap; width: [+ ciu_local_rb_pct +]%'>ciu</td>?][? if cdc_local_rb_pct > 0: <td style='white-space: nowrap; width: [+ cdc_local_rb_pct +]%'>cdc</td>?][? if jxsi_local_rb_pct > 0: <td style='white-space: nowrap; width: [+ jxsi_local_rb_pct +]%'>jxsi</td>?][? if dl_local_rb_pct > 0: <td style=' white-space: nowrap; width: [+ dl_local_rb_pct +]%'>dl</td>?][? if pdcat_local_rb_pct > 0: <td style='white-space: nowrap; width: [+ pdcat_local_rb_pct +]%'>pdcat</td>?][? if jxcat_local_rb_pct > 0: <td style='white-space: nowrap; width: [+ jxcat_local_rb_pct +]%'>jxcat</td>?][? if junts_local_rb_pct > 0: <td style='white-space: nowrap; width: [+ junts_local_rb_pct +]%'>junts</td>?][? if cup_local_rb_pct > 0: <td style='white-space: nowrap; width: [+ cup_local_rb_pct +]%'>cup</td>?][? if pp_local_rb_pct > 0: <td style='white-space: nowrap; width: [+ pp_local_rb_pct +]%'>pp</td>?][? if comuns_local_rb_pct > 0: <td style='white-space: nowrap; width: [+ comuns_local_rb_pct +]%'>[? if comuns_name = "icv" : ICV-... ?][? if comuns_name != "icv" : [+ comuns_name +]?]</td>?][? if others_local_rb_pct > 0: <td style='white-space: nowrap; width: [+ others_local_rb_pct +]%; color: var(--txt); text-align: right; font-style: italic; font-size: 0.75em;'>others</td>?]</tr>
+{!</table>!}
+
+**Holdings beyond the metropolitan area**
+
+{!<table style='border-spacing: 0px; margin-right: 1em; margin-left: 1em; width:95%; table-layout: fixed; margin-top:-0.75em;'>!}
+<tr>[? if ciu_local_interior_pct > 0: <td style='overflow:hidden; white-space: nowrap; width: [+ ciu_local_interior_pct +]%; height: 2em; background-color: var(--ciu); color: white; text-align: center; font-weight: bold; border-radius: 3px 0 0 3px;'>[+ ciu_local_interior_pct+]%</td>?][? if cdc_local_interior_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ cdc_local_interior_pct +]%; height: 2em; background-color: var(--cdc); color: white; text-align: center; font-weight: bold; border-radius: 3px 0 0 3px;'>[+ cdc_local_interior_pct+]%</td>?][? if jxsi_local_interior_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ jxsi_local_interior_pct +]%; height: 2em; background-color: var(--jxsi); color: white; text-align: center; font-weight: bold; border-radius: 3px 0 0 3px;'>[+ jxsi_local_interior_pct+]%</td>?][? if dl_local_interior_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ dl_local_interior_pct +]%; height: 2em; background-color: var(--dl); color: white; text-align: center; font-weight: bold; border-radius: 3px 0 0 3px;'>[+ dl_local_interior_pct+]%</td>?][? if pdcat_local_interior_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ pdcat_local_interior_pct +]%; height: 2em; background-color: var(--pdcat); color: white; text-align: center; font-weight: bold; border-radius: 3px 0 0 3px;'>[+ pdcat_local_interior_pct+]%</td>?][? if jxcat_local_interior_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ jxcat_local_interior_pct +]%; height: 2em; background-color: var(--jxcat); color: white; text-align: center; font-weight: bold; border-radius: 3px 0 0 3px;'>[+ jxcat_local_interior_pct+]%</td>?][? if junts_local_interior_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ junts_local_interior_pct +]%; height: 2em; background-color: var(--junts); color: white; text-align: center; font-weight: bold; border-radius: 3px 0 0 3px;'>[+ junts_local_interior_pct+]%</td>?][? if erc_local_interior_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ erc_local_interior_pct +]%; height: 2em; background-color: var(--erc); color: var(--text-color); text-align: center; font-weight: bold;'>[+ erc_local_interior_pct+]%</td>?][? if psc_local_interior_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ psc_local_interior_pct +]%; height: 2em; background-color: var(--psc); color: white; text-align: center; font-weight: bold;'>[+ psc_local_interior_pct+]%</td>?][? if cup_local_interior_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ cup_local_interior_pct +]%; height: 2em; background-color: var(--cup); color: var(--text-color); text-align: center; font-weight: bold;'>[+ cup_local_interior_pct+]%</td>?][? if fnc_local_interior_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ fnc_local_interior_pct +]%; height: 2em; background-color: var(--fnc); color: white; text-align: center; font-weight: bold;'>[+ fnc_local_interior_pct+]%</td>?][? if others_local_interior_pct > 0:<td style='overflow:hidden; white-space: nowrap; width: [+ others_local_interior_pct +]%; height: 2em; background-color: var(--txt); color: white; text-align: center; font-weight: bold; border-radius: 0 3px 3px 0;'>[+ others_local_interior_pct+]%</td>?]</tr> 
+<tr>[? if ciu_local_interior_pct > 0: <td style='white-space: nowrap; width: [+ ciu_local_interior_pct +]%'>ciu</td>?][? if cdc_local_interior_pct > 0: <td style='white-space: nowrap; width: [+ cdc_local_interior_pct +]%'>cdc</td>?][? if jxsi_local_interior_pct > 0: <td style='white-space: nowrap; width: [+ jxsi_local_interior_pct +]%'>jxsi</td>?][? if dl_local_interior_pct > 0: <td style=' white-space: nowrap; width: [+ dl_local_interior_pct +]%'>dl</td>?][? if pdcat_local_interior_pct > 0: <td style='white-space: nowrap; width: [+ pdcat_local_interior_pct +]%'>pdcat</td>?][? if jxcat_local_interior_pct > 0: <td style='white-space: nowrap; width: [+ jxcat_local_interior_pct +]%'>jxcat</td>?][? if junts_local_interior_pct > 0: <td style='white-space: nowrap; width: [+ junts_local_interior_pct +]%'>junts</td>?][? if erc_local_interior_pct > 0: <td style='white-space: nowrap; width: [+ erc_local_interior_pct +]%'>erc</td>?][? if psc_local_interior_pct > 0: <td style='white-space: nowrap; width: [+ psc_local_interior_pct +]%'>psc</td>?][? if cup_local_interior_pct > 0: <td style='white-space: nowrap; width: [+ cup_local_interior_pct +]%'>cup</td>?][? if fnc_local_interior_pct > 0: <td style='white-space: nowrap; width: [+ fnc_local_interior_pct +]%'>fnc</td>?][? if others_local_interior_pct > 0: <td style='white-space: nowrap; width: [+ others_local_interior_pct +]%; color: var(--txt); text-align: right; font-style: italic; font-size: 0.75em;'>others</td>?]</tr>
+{!</table>!}
 
 - @election_simulation: Reset simulation

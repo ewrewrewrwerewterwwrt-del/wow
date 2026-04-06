@@ -46,7 +46,7 @@ Next election: [+ next_election_month : month +] [+ next_election_year +]
 
 Next election: [+ next_spanish_election_month : month +] [+ next_spanish_election_year +]
 
-Tensions: [+ cat_spa_relations : social_dissent +]
+Tensions: [+ cat_spa_relations : cat_spa_relations +]
 
 = Economy and Society
 

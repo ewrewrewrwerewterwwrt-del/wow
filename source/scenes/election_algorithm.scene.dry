@@ -465,3 +465,590 @@ if (Q.abstain_congreso_pv_old > Q.abstain_congreso_pv) {
 
 !}
 go-to: jumpScene
+
+@local_elections
+on-arrival: {!
+
+for (var p of Q.parties_bcn) {
+    if (Q[p+'_local_barcelona_s'] > 0) {
+        Q[p+'_local_barcelona_showviz'] = 1;
+    } else {
+        Q[p+'_local_barcelona_showviz'] = 0;
+    }
+    Q[p+'_local_barcelona_pv_old'] = Q[p+'_local_barcelona_pv'];
+    Q[p+'_local_barcelona_s_old'] = Q[p+'_local_barcelona_s'];
+    console.log(`Party ${p} old seats: ${Q[p+'_local_barcelona_s']}`);
+    Q[p+'_local_barcelona_s'] = 0;
+    Q[p+'_local_barcelona_pv'] = 0;
+}
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function _cl(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+let _activeIcr = "ciu";
+for (let p of ["ciu","cdc","dl","jxcat","junts","jxsi","pdcat"]) {
+    if (Q[p + "_local_barcelona_support"] > 0) {
+        _activeIcr = p;
+        break;
+    }
+}
+const DEMOS = Q.parlament_demographics;
+
+// Map party to family for province-level capital resolution.
+// Unio is handled by whether unio_split has happened.
+function _familyOf(p) {
+    if (["ciu","cdc","dl","jxcat","junts","pdcat","jxsi","si"].includes(p)) return "icr";
+    if (Q.unio_split && p === "unio") return "unio";
+    if (!Q.unio_split && p === "unio") return "icr";
+    if (p === "erc") return "erc";
+    if (p === "cup") return "cup";
+    if (["icv","csqp","cecp","ecp","bcomu"].includes(p)) return "fl";
+    if (["psc","ua-psc"].includes(p)) return "psc";
+    if (p === "cs") return "cs";
+    if (["ppc","pp"].includes(p)) return "pp";
+    if (p === "vox") return "vox";
+    if (["fnc","pxc"].includes(p)) return "fnc";
+    return null;
+}
+
+// Aggregate Parliament support by family for a province, weighted by actual demo populations.
+const CAPITAL_DEMO_WEIGHTS = {
+    "barcelona": {"ind": 0.25, "middle": 0.30, "buss": 0.12,
+                  "young": 0.18, "retired": 0.10, "unemployed": 0.05},
+    "girona":    {"ind": 0.22, "middle": 0.28, "buss": 0.14,
+                  "young": 0.16, "retired": 0.14, "unemployed": 0.06},
+    "lleida":    {"ind": 0.28, "middle": 0.25, "buss": 0.12,
+                  "young": 0.15, "retired": 0.14, "unemployed": 0.06},
+    "tarragona": {"ind": 0.27, "middle": 0.26, "buss": 0.11,
+                  "young": 0.16, "retired": 0.14, "unemployed": 0.06},
+};
+function _provinceFamilySupport(province, isCapital = false) {
+    var totals = {};
+    var totalPop = 0;
+    for (var demo of DEMOS) {
+        var pop = Q["parlament_" + province + "_" + demo + "_pop"];
+        if (isCapital) {
+            var w = CAPITAL_DEMO_WEIGHTS[province][demo];
+            pop = pop * w;
+        }
+        totalPop += pop;
+        for (var p of Q.parties) {
+            var fam = _familyOf(p);
+            if (!fam) continue;
+            if (!totals[fam]) totals[fam] = 0;
+            totals[fam] += (Q[p + "_parlament_" + province + "_" + demo + "_support"]) * pop;
+        }
+    }
+    if (totalPop > 0) for (var f in totals) totals[f] = totals[f] / totalPop;
+    var total = Object.values(totals).reduce(function(a,b){return a+b;}, 0);
+    if (total > 0) for (var f in totals) totals[f] = totals[f] / total * 100;
+    return totals;
+}
+
+// Pick winner family, map ICR back to active party name.
+function _resolveProvince(province, gironaBoost, isCapital = false) {
+    var s = _provinceFamilySupport(province, isCapital);
+    if (gironaBoost) {
+        s.psc = (s.psc || 0) * 1.20;
+        var t = Object.values(s).reduce(function(a,b){return a+b;}, 0);
+        if (t > 0) for (var f in s) s[f] = s[f] / t * 100;
+    }
+    var total = Object.values(s).reduce(function(a,b){return a+b;}, 0);
+    if (total === 0) return _activeIcr;  // parliament not yet initialised — safe default
+    var winner = Object.keys(s).reduce(function(a,b){ return s[a]>s[b]?a:b; });
+    return winner === "icr" ? _activeIcr : winner;
+}
+
+// ── 1. BARCELONA ─────────────────────────────────────────────────────────────
+var BCN_PARTIES = Q.parties_bcn;
+var BCN_SEATS = 41;
+var BCN_THRESHOLD = 5.0;
+var bcn = {};
+for (var p of BCN_PARTIES) bcn[p] = Q[p + "_local_barcelona_support"] || 0.0;
+
+// Trias candidacy bonus: strong CiU incumbent in 2015, not in 2019
+if (Q[_activeIcr + "bcn_leader"] == "Xavier Trias") bcn["ciu"] = (bcn["ciu"] || 0) + 17.0;
+
+var bcnTotal = Object.values(bcn).reduce(function(a,b){return a+b;}, 0);
+if (bcnTotal > 0) for (var p of BCN_PARTIES) bcn[p] = bcn[p] / bcnTotal * 100;
+
+// Store popular vote shares
+for (var p of BCN_PARTIES) Q[p + "_local_barcelona_pv"] = Math.round(bcn[p] * 100) / 100;
+
+// D'Hondt seat allocation
+var bcnSeats = {};
+for (var p of BCN_PARTIES) bcnSeats[p] = 0;
+var bcnEligible = BCN_PARTIES.filter(function(p){ return bcn[p] >= BCN_THRESHOLD; });
+for (var i = 0; i < BCN_SEATS; i++) {
+    var best = null, bestQ = 0;
+    for (var p of bcnEligible) {
+        var q = bcn[p] / (bcnSeats[p] + 1);
+        if (q > bestQ) { bestQ = q; best = p; }
+    }
+    if (best) bcnSeats[best]++;
+}
+for (var p of BCN_PARTIES) Q[p + "_local_barcelona_s"] = bcnSeats[p];
+
+for (var p of Q.parties_bcn) {
+    if (Q[p+'_local_barcelona_s'] > 0) {
+        Q[p+'_local_barcelona_spc'] = Math.round(Q[p+'_local_barcelona_s'] / BCN_SEATS * 1000) / 10;
+        Q[p+'_local_barcelona_showviz'] = 1;
+    } else {
+        Q[p+'_local_barcelona_spc'] = 0;
+    }
+    if (Q[p+'_local_barcelona_s_old'] == 0 || !Q[p+'_local_barcelona_s_old']) {
+        Q[p+'_local_barcelona_s_delta'] = '<div style="font-style: italic;">New!</div>';
+        Q[p+'_local_barcelona_pv_delta'] = '<div style="font-style: italic;">New!</div>';
+    } else {
+        Q[p+'_local_barcelona_s_delta'] = Q[p+'_local_barcelona_s'] - Q[p+'_local_barcelona_s_old'];
+        var sign1 = Q[p+'_local_barcelona_s_delta'] > 0 ?
+            '<img src="img/arrowup.png"> ' :
+            Q[p+'_local_barcelona_s_delta'] < 0 ? '<img src="img/arrowdown.png"> ' :
+            '<img src="img/steady.png"> ';
+        Q[p+'_local_barcelona_s_delta'] = sign1 + Math.abs(Q[p+'_local_barcelona_s_delta'])
+        Q[p+'_local_barcelona_pv_delta'] = Q[p+'_local_barcelona_pv'] - Q[p+'_local_barcelona_pv_old'];
+        var sign2 = Q[p+'_local_barcelona_pv_delta'] > 0 ?
+            '<img src="img/arrowup.png"> ' :
+            Q[p+'_local_barcelona_pv_delta'] < 0 ? '<img src="img/arrowdown.png"> ' :
+            '<img src="img/steady.png"> ';
+        Q[p+'_local_barcelona_pv_delta'] = sign2 + Math.abs(Q[p+'_local_barcelona_pv_delta']).toFixed(2) + '%';
+    }
+}
+
+
+// ── 2. RED BELT SCORES ────────────────────────────────────────────────────────
+var rb = Q.RB_DEFAULTS;
+var im  = Q.independence_movement || 50;
+var it  = Q.independence_trust    || 28;
+var sd  = Q.social_dissent        || 50;
+var wi  = Q.welfare_index         || 50;
+var spa = Q.cat_spa_relations     || 38;
+var pp  = Q.podemos_channeling    || 0;
+
+var cs_rb = _cl(
+    _cl(im - 30, 0, 60) * rb.cs_im_coeff
+    + _cl(40 - spa, 0, 35) * rb.cs_spa_coeff
+    + _cl(sd - 35, 0, 25) * rb.cs_diss_coeff
+    + (Q.cs_redbelt_mod || 0),
+    0, 100);
+
+var erc_rb = _cl(
+    _cl(it - 12, 0, 48) * rb.erc_trust_coeff
+    + _cl(im - 30, 0, 40) * rb.erc_im_coeff
+    + (Q.erc_redbelt_mod || -10),   // -10 default = no outreach penalty
+    0, 100);
+
+var comuns_rb = _cl(
+    _cl(sd - 20, 0, 50) * rb.comuns_diss_coeff
+    + _cl(pp * rb.comuns_pp_scale, 0, 25)
+    + _cl(50 - wi, 0, 30) * rb.comuns_welf_coeff
+    + (Q.comuns_redbelt_mod || 0),
+    0, 40);
+
+var cup_rb = _cl(
+    _cl(sd - 25, 0, 50) * 0.70
+    + _cl(im - it, 0, 40) * 0.50
+    + (Q.cup_redbelt_mod || 0),
+    0, 100);
+
+// Write for comarca map shading
+Q.cs_local_redbelt     = cs_rb;
+Q.erc_local_redbelt    = erc_rb;
+Q.comuns_local_redbelt = comuns_rb;
+Q.cup_local_redbelt    = cup_rb;
+
+// ── 3. INTERIOR SCORES ───────────────────────────────────────────────────────
+var intr = Q.INT_DEFAULTS;
+var icrMod = Q[_activeIcr + "_interior_mod"] || 0;
+
+var ciu_decay = _cl(
+    intr.decay_base
+    + (Q.corruption_events_ciu || 0) * intr.decay_corr_coeff
+    + _cl(50 - wi, 0, 30) * intr.decay_welf_coeff
+    + (Q.pdcat_split ? intr.decay_pdcat_bonus : 0)
+    + (Q.unio_split  ? intr.decay_unio_bonus  : 0),
+    0, 100);
+
+var erc_int = _cl(
+    _cl(it - 10, 0, 50) * intr.erc_trust_coeff
+    + _cl(im - 25, 0, 45) * intr.erc_im_coeff
+    + intr.erc_base_bonus
+    + (Q.erc_interior_mod || 0),
+    0, 100);
+
+var cup_int = _cl(
+    _cl(im - it, 0, 65) * intr.cup_imtrust_coeff
+    + _cl(sd - 20, 0, 45) * intr.cup_diss_coeff
+    + (Q.cup_interior_mod || 0),
+    0, 100);
+
+// ERC/CUP split damping: if both are strong and close, both bleed
+if (erc_int > 45 && cup_int > 45 && Math.abs(erc_int - cup_int) < 12) {
+    erc_int *= 0.70;
+    cup_int *= 0.70;
+}
+
+var fnc_gate = (it < 35 && im > 55 && ciu_decay > 50 && erc_int < 50);
+var fnc_int = fnc_gate ? _cl(
+    (im - it) * 0.60 + ciu_decay * 0.30 - cup_int * 0.30
+    + (Q.fnc_interior_mod || 0),
+    0, 100) : 0.0;
+
+// Holdout base (per-location int_resistance added during resolution below)
+var holdout_base = intr.holdout_base + icrMod;
+
+// Write for comarca map shading (cat_maps adds per-comarca int_resistance on top)
+Q[_activeIcr + "_local_interior"] = _cl(holdout_base - ciu_decay, 0, 100);
+Q.erc_local_interior = erc_int;
+Q.cup_local_interior = cup_int;
+Q.fnc_local_interior = fnc_int;
+
+// ── 4. LOCATION RESOLUTION ───────────────────────────────────────────────────
+// Each entry: [svgId, system, ...system-specific fields]
+// rb: [id, "rb", rb_resistance, rb_primary, rb_secondary, rb_secondary_threshold]
+// interior: [id, "int", int_tier, int_fnc_risk, int_ebre, int_resistance]
+// capital: [id, "cap", province, gironaBoost]
+// decorative: [id, "dec", province]
+
+var LOCS_RB = [
+    ["lhospitalet-de-llobregat", 55, "cs",  null,  999],
+    ["sant-boi-de-llobregat",    55, "cs",  null,  999],
+    ["el-prat-de-llobregat",     55, "cs",  null,  999],
+    ["viladecans",               55, "cs",  null,  999],
+    ["esplugues-de-llobregat",   55, "cs",  null,  999],
+    ["ripollet",                 25, "cup", null,  999],
+    ["sant-adria-de-besos",      55, "cs",  null,  999],
+    ["terrassa",                 75, "cs",  null,  999],
+    ["sabadell",                 75, "cs",  "erc", 50 ],
+    ["cornella-de-llobregat",    78, "cs",  null,  999],
+    ["rubi",                     72, "cs",  null,  999],
+    ["granollers",               78, "erc", null,  999],
+    ["mollet-del-valles",        67, "cs",  null,  999],
+    ["mataro",                   80, "erc", null,  999],
+    ["badalona",                 80, "cs",  "erc", 50 ],
+    ["santa-coloma-de-gramenet", 95, "cs",  null,  999],
+    ["balaguer",                 28, "erc", null,  999],
+    ["sant-vicenc-dels-horts",  32, "erc", null,  999],
+    ["martorell",               38, "ciu", null,  999],
+    ["vilafranca-del-penedes",  40, "ciu", null,  999],
+];
+// id, res, primary, secondary, sec_threshold
+
+var TIER_15 = {"lhospitalet-de-llobregat":1,"sant-boi-de-llobregat":1,"el-prat-de-llobregat":1,"viladecans":1,"esplugues-de-llobregat":1,"sant-adria-de-besos":1};
+var TIER_10 = {"terrassa":1,"sabadell":1,"cornella-de-llobregat":1,"rubi":1,"granollers":1,"mollet-del-valles":1,"mataro":1};
+var pscMod  = Q.psc_redbelt_mod || 0;
+
+Q.erc_local_rb_holdings = 0;
+Q.cs_local_rb_holdings = 0;
+Q.ciu_local_rb_holdings = 0;
+Q.cdc_local_rb_holdings = 0;
+Q.dl_local_rb_holdings = 0;
+Q.jxcat_local_rb_holdings = 0;
+Q.jxsi_local_rb_holdings = 0;
+Q.pdcat_local_rb_holdings = 0;
+Q.junts_local_rb_holdings = 0;
+Q.psc_local_rb_holdings = 0;
+Q.cup_local_rb_holdings = 0;
+Q.comuns_local_rb_holdings = 0;
+Q.pp_local_rb_holdings = 0;
+
+for (var loc of LOCS_RB) {
+    var id = loc[0], res = loc[1], primary = loc[2], secondary = loc[3], sec_thresh = loc[4];
+    var tierBonus = TIER_15[id] ? 15 : TIER_10[id] ? 10 : 5;
+    var resistance = res + tierBonus + pscMod;
+    if (Q.year >= 2017) resistance -= 3;
+
+    var dominant, winner, actual_winner;
+    if (id === "badalona") {
+        var pp_score = 60.0 + _cl(im - 40, 0, 20) * 0.5;
+        if (pp_score > Math.max(cs_rb, erc_rb, comuns_rb)) { 
+            actual_winner = "pp";
+        }
+    } else {
+        if (primary === "erc") {
+            dominant = cs_rb > erc_rb + 20 ? cs_rb : erc_rb;
+            winner   = cs_rb > erc_rb + 20 ? "cs"   : "erc";
+        } else if (primary === "comuns") {
+            dominant = comuns_rb; winner = "bcomu";
+        } else if (primary === "cup") {
+            dominant = cup_rb; winner = "cup";
+        } else if (primary === "ciu") {
+            dominant = Math.max(cs_rb, erc_rb); winner = _activeIcr;
+        } else {
+            dominant = cs_rb; winner = "cs";
+            if (secondary === "erc" && erc_rb > sec_thresh && erc_rb > cs_rb) {
+                dominant = erc_rb; winner = "erc";
+            }
+        }
+        actual_winner = dominant < resistance ? "psc" : winner;
+    }
+    Q["local_" + id + "_wp"] = actual_winner;
+    Q[actual_winner + "_local_rb_holdings"] += actual_winner == "erc" || actual_winner == "cs" ? 1.5 : actual_winner == _activeIcr ? 0.5 : 1;
+}
+
+var LOCS_INT = [
+    // id, int_tier, int_fnc_risk, int_ebre, int_resistance
+    ["manresa",          "A",       true,  false,   0],
+    ["figueres",         "A",       false, false,   0],
+    ["vic",              "three-way",true, false,  10],
+    ["igualada",         "A",       false, false,   18],
+    ["olot",             "A",       true,  false,   18],
+    ["la-seu-durgell",   "A",       false, false,   5],
+    ["tarrega",          "B",       false, false,  10],
+    ["berga",            "B",       false, false, -65],
+    ["solsona",          "A",       false, false, -40],
+    ["ripoll",           "C",       true,  false,  10],
+    ["tortosa",          "A",       false, true,    0],
+    ["amposta",          "A",       false, true,  -40],
+    ["mora-debre",       "B",       false, true,    0],
+    ["sant-cugat-del-valles", "bridge", true, false,  10],
+];
+
+Q.erc_local_interior_holdings = 0;
+Q.ciu_local_interior_holdings = 0;
+Q.cdc_local_interior_holdings = 0;
+Q.dl_local_interior_holdings = 0;
+Q.jxcat_local_interior_holdings = 0;
+Q.jxsi_local_interior_holdings = 0;
+Q.pdcat_local_interior_holdings = 0;
+Q.junts_local_interior_holdings = 0;
+Q.psc_local_interior_holdings = 0;
+Q.cup_local_interior_holdings = 0;
+Q.fnc_local_interior_holdings = 0;
+
+for (var loc of LOCS_INT) {
+    var id = loc[0], tier = loc[1], fnc_risk = loc[2], ebre = loc[3], int_res = loc[4];
+
+    var winner;
+    if (ebre) {
+        var ebre_thresh = 75 + int_res;
+        winner = erc_int > ebre_thresh ? "erc" : _activeIcr;
+    } else {
+        var holdout = _cl(holdout_base - ciu_decay + int_res, 0, 100);
+        var challengers = {};
+        if (["A","C","bridge","three-way"].includes(tier)) challengers.erc = erc_int;
+        if (["B","C","three-way"].includes(tier)) {
+            challengers.cup = cup_int;
+            if (!challengers.erc) challengers.erc = erc_int * 0.60;
+        }
+        if (!Object.keys(challengers).length) challengers.erc = erc_int;
+        if (fnc_risk && fnc_gate) challengers.fnc = fnc_int;
+
+        var topParty = Object.keys(challengers).reduce(function(a,b){ return challengers[a]>challengers[b]?a:b; });
+         winner = challengers[topParty] > holdout ? topParty : _activeIcr;
+    }
+    Q["local_" + id + "_wp"] = winner;
+    Q[winner + "_local_interior_holdings"] += 1;
+}
+
+// Capitals: parliament-extrapolated
+var lleida_winner    = _resolveProvince("lleida",    false, true);
+Q["local_lleida_wp"]    = lleida_winner;
+Q[lleida_winner + "_local_interior_holdings"] += 3;
+var tarragona_winner = _resolveProvince("tarragona", false, true);
+Q["local_tarragona_wp"] = tarragona_winner;
+Q[tarragona_winner + "_local_interior_holdings"] += 3;
+// Reus: JxCat holds the city even when Tarragona province trends PSC (incumbent mayor effect)
+var _reusProv = _resolveProvince("tarragona", false);
+var reus_winner = (ciu_decay < 70 && (_reusProv === "psc" || _reusProv === "cs")) ? _activeIcr : _reusProv;
+Q["local_reus_wp"]     = reus_winner;
+Q[reus_winner + "_local_interior_holdings"] += 2; 
+var girona_winner   = _resolveProvince("girona",    true, true);
+Q["local_girona_wp"]   = girona_winner;
+Q[girona_winner + "_local_interior_holdings"] += 3;
+
+// Decorative: raw province winner
+var banyoles_winner = _resolveProvince("girona",    false);
+Q["local_banyoles_wp"] = banyoles_winner;
+Q[banyoles_winner + "_local_interior_holdings"] += 2;
+// Vilanova i la Geltrú: CiU 2015, PSC 2019 (strong local PSC candidate, ERC close second)
+var _vilanovaFamilies = _provinceFamilySupport("barcelona");
+delete _vilanovaFamilies.cs; delete _vilanovaFamilies.pp; delete _vilanovaFamilies.vox;
+var _vilanovaTotal = Object.values(_vilanovaFamilies).reduce(function(a,b){return a+b;}, 0);
+var _vilanovaRaw = _vilanovaTotal === 0 ? "icr" : Object.keys(_vilanovaFamilies).reduce(function(a,b){ return _vilanovaFamilies[a]>_vilanovaFamilies[b]?a:b; });
+_vilanovaRaw = _vilanovaRaw === "icr" ? _activeIcr : _vilanovaRaw;
+// PSC flips Vilanova when JxCat is sufficiently decayed (post-2017 local candidate effect)
+var vilanova_winner = (ciu_decay > 55 && (_vilanovaRaw === _activeIcr || _vilanovaRaw === "erc")) ? "psc" : _vilanovaRaw;
+Q["local_vilanova-i-la-geltru_wp"] = vilanova_winner;
+Q[vilanova_winner + "_local_interior_holdings"] += 2;
+var tremp_winner = _resolveProvince("lleida",    false);
+Q["local_tremp_wp"] = tremp_winner;
+Q[tremp_winner + "_local_interior_holdings"] += 1;
+
+
+// Terrassa exception
+if ((Q.psc_leader == "Miquel Iceta" || Q.psc_leader == "Pere Navarro") && Q.art155_ever && Q.local_terrassa_wp === "psc") {
+    Q.local_terrassa_wp = "txt"; // Jordi Ballart exception
+    Q.txt_leader = "Jordi Ballart";
+    Q.txt_ideology = "Centrist Social Democracy, Local focus";
+    Q.psc_local_rb_holdings -= 2;
+    Q.erc_local_rb_holdings += 1;
+}
+
+// Vielha e Mijaran: UA-PSC vs CDA duopoly
+// CDA wins if IM is surging OR PSC is weak — UA-PSC only holds when both conditions fail
+var _lleidaFamilies = _provinceFamilySupport("lleida");
+var _icrLleida = _lleidaFamilies.icr || 0;
+var vielha_winner = (im > 65 || _icrLleida >= 40 || Q.art155_ever) ? "cda-pna" : "ua-psc";
+Q["local_vielha-e-mijaran_wp"] = vielha_winner;
+if (vielha_winner === "ua-psc") {
+    Q.psc_local_interior_holdings += 2;
+} else {
+    Q[_activeIcr + "_local_interior_holdings"] += 2;
+}
+
+// ── 5. COMARCA WINNERS ───────────────────────────────────────────────────────
+// this is just map painting for aesthetics really
+// Red belt comarques
+var _rbComarques = [
+    {id:"barcelones",       res:90, primary:"cs"},
+    {id:"baix-llobregat",   res:80, primary:"cs"},
+    {id:"valles-occidental",res:70, primary:"cs"},
+    {id:"valles-oriental",  res:60, primary:"erc"},
+    {id:"garraf",           res:45, primary:"cs"},
+    {id:"alt-penedes",      res:40, primary:"ciu"},
+];
+for (var com of _rbComarques) {
+    var dominant, dWinner;
+    if (com.primary === "erc") {
+        dominant = erc_rb >= cs_rb ? erc_rb : cs_rb;
+        dWinner  = erc_rb >= cs_rb ? "erc"  : "cs";
+    } else if (com.primary === "ciu") {
+        dominant = Math.max(cs_rb, erc_rb); dWinner = _activeIcr;
+    } else {
+        // cs primary: also check comuns and cup as possible challengers
+        dominant = cs_rb; dWinner = "cs";
+        if (comuns_rb > dominant) { dominant = comuns_rb; dWinner = "bcomu"; }
+        if (cup_rb    > dominant) { dominant = cup_rb;    dWinner = "cup";   }
+    }
+    var comarca_winner = dominant < com.res ? "psc" : dWinner;
+    Q["local_" + com.id + "_wp"] = comarca_winner;
+    Q[comarca_winner + "_local_rb_holdings"] += comarca_winner == "erc" || comarca_winner == "cs" ? 3 : comarca_winner == _activeIcr ? 1 : 2;
+}
+
+// Interior comarques
+var _intComarques = [
+    {id:"bages",           tier:"A",         fnc:true,  ebre:false, res:0  },
+    {id:"anoia",           tier:"A",         fnc:false, ebre:false, res:0  },
+    {id:"osona",           tier:"three-way", fnc:true,  ebre:false, res:-10},
+    {id:"bergueda",        tier:"three-way", fnc:false, ebre:false, res:-10},
+    {id:"solsones",        tier:"A",         fnc:false, ebre:false, res:0  },
+    {id:"ripolles",        tier:"C",         fnc:true,  ebre:false, res:10 },
+    {id:"garrotxa",        tier:"A",         fnc:true,  ebre:false, res:10 },
+    {id:"cerdanya",        tier:"B",         fnc:false, ebre:false, res:12 },
+    {id:"alt-urgell",      tier:"A",         fnc:false, ebre:false, res:16 },
+    {id:"pallars-sobira",  tier:"C",         fnc:false, ebre:false, res:5  },
+    {id:"pallars-jussa",   tier:"B",         fnc:false, ebre:false, res:0  },
+    {id:"alta-ribagorca",  tier:"C",         fnc:false, ebre:false, res:5  },
+    {id:"noguera",         tier:"A",         fnc:false, ebre:false, res:-8 },
+    {id:"urgell",          tier:"B",         fnc:false, ebre:false, res:0  },
+    {id:"segarra",         tier:"B",         fnc:false, ebre:false, res:8  },
+    {id:"conca-de-barbera",tier:"B",         fnc:false, ebre:false, res:0  },
+    {id:"priorat",         tier:"A",         fnc:false, ebre:false, res:-8 },
+    {id:"ribera-debre",    tier:"A",         fnc:false, ebre:true,  res:-20},
+    {id:"terra-alta",      tier:"B",         fnc:false, ebre:true,  res:-20},
+    {id:"montsia",         tier:"A",         fnc:false, ebre:true,  res:-20},
+    {id:"baix-ebre",       tier:"A",         fnc:false, ebre:true,  res:-20},
+];
+for (var com of _intComarques) {
+    var comarca_winner;
+    if (com.ebre) {
+        var thresh = 55 + com.res;
+        comarca_winner = erc_int > thresh ? "erc" : _activeIcr;
+    } else {
+        var hout = _cl(holdout_base - ciu_decay + com.res, 0, 100);
+        var chal = {};
+        if (["A","C","bridge","three-way"].includes(com.tier)) chal.erc = erc_int;
+        if (["B","C","three-way"].includes(com.tier)) {
+            chal.cup = cup_int;
+            if (!chal.erc) chal.erc = erc_int * 0.60;
+        }
+        if (!Object.keys(chal).length) chal.erc = erc_int;
+        if (com.fnc && fnc_gate) chal.fnc = fnc_int;
+        var topC = Object.keys(chal).reduce(function(a,b){ return chal[a]>chal[b]?a:b; });
+        comarca_winner = chal[topC] > hout ? topC : _activeIcr;
+    }
+    Q["local_" + com.id + "_wp"] = comarca_winner;
+    Q[comarca_winner + "_local_interior_holdings"] += comarca_winner == _activeIcr ? 1 : 2; // otherwise icr is too bloated for calcs
+}
+
+// Province-backed comarques: resolved via province family support
+var _provComarques = [
+    {id:"pla-de-lestany", prov:"girona"},
+    {id:"baix-emporda",   prov:"girona"},
+    {id:"alt-emporda",    prov:"girona"},
+    {id:"girones",        prov:"girona"},
+    {id:"selva",          prov:"girona"},
+    {id:"pla-durgell",    prov:"lleida"},
+    {id:"garrigues",      prov:"lleida"},
+    {id:"segria",         prov:"lleida"},
+    {id:"alt-camp",       prov:"tarragona"},
+    {id:"baix-penedes",   prov:"barcelona"},
+];
+for (var com of _provComarques) {
+    var comarca_winner = _resolveProvince(com.prov, false);
+    Q["local_" + com.id + "_wp"] = comarca_winner;
+    Q[comarca_winner + "_local_interior_holdings"] += 1;
+}
+Q["local_val-daran_wp"] = Q["local_vielha-e-mijaran_wp"];
+
+// ── 6. SPECIFIC COMARCA OVERRIDES ────────────────────────────────────────────
+// Maresme: CiU 2015 → ERC 2019 (independence bloc shift; PSC/CS never dominant here)
+var maresme_winner = ciu_decay > 55 ? "erc" : _activeIcr;
+Q["local_maresme_wp"] = maresme_winner;
+Q[maresme_winner + "_local_interior_holdings"] += 3;
+// Tarragones: PSC stronghold (Tarragona city bloc dominates, even when ICR leads province)
+Q["local_tarragones_wp"] = "psc";
+Q.psc_local_interior_holdings += 2;
+// Baix Camp: ERC territory (Reus hinterland consistently independence-left in both years)
+Q["local_baix-camp_wp"] = "erc";
+Q.erc_local_interior_holdings += 2;
+
+// ── 7. Party wins to percentage ──────────────────────────────────────────────
+Q.erc_local_interior_pct = 0;
+Q.ciu_local_interior_pct = 0;
+Q.cdc_local_interior_pct = 0;
+Q.dl_local_interior_pct = 0;
+Q.jxcat_local_interior_pct = 0;
+Q.jxsi_local_interior_pct = 0;
+Q.pdcat_local_interior_pct = 0;
+Q.junts_local_interior_pct = 0;
+Q.psc_local_interior_pct = 0;
+Q.cup_local_interior_pct = 0;
+Q.fnc_local_interior_pct = 0;
+Q.cs_local_rb_pct = 0;
+Q.erc_local_rb_pct = 0;
+Q.ciu_local_rb_pct = 0;
+Q.cdc_local_rb_pct = 0;
+Q.dl_local_rb_pct = 0;
+Q.jxcat_local_rb_pct = 0;
+Q.jxsi_local_rb_pct = 0;
+Q.pdcat_local_rb_pct = 0;
+Q.junts_local_rb_pct = 0;
+Q.psc_local_rb_pct = 0;
+Q.cup_local_rb_pct = 0;
+Q.comuns_local_rb_pct = 0;
+Q.pp_local_rb_pct = 0;
+
+var TOTAL_INT_LOCS = Object.keys(Q).filter(function(k){ return k.endsWith("_local_interior_holdings"); })
+    .map(function(k){ return Q[k]; }).reduce(function(a,b){ return a+b; }, 0) + 5; // add "others"
+var TOTAL_RB_LOCS = Object.keys(Q).filter(function(k){ return k.endsWith("_local_rb_holdings"); })
+    .map(function(k){ return Q[k]; }).reduce(function(a,b){ return a+b; }, 0) + 5; // add "others"
+
+Q.erc_local_interior_pct = Math.round(Q.erc_local_interior_holdings / TOTAL_INT_LOCS * 1000) / 10;
+Q[_activeIcr + "_local_interior_pct"] = Math.round(Q[_activeIcr + "_local_interior_holdings"] / TOTAL_INT_LOCS * 1000) / 10;
+Q.psc_local_interior_pct = Math.round(Q.psc_local_interior_holdings / TOTAL_INT_LOCS * 1000) / 10;
+Q.cup_local_interior_pct = Math.round(Q.cup_local_interior_holdings / TOTAL_INT_LOCS * 1000) / 10;
+Q.fnc_local_interior_pct = Math.round(Q.fnc_local_interior_holdings / TOTAL_INT_LOCS * 1000) / 10;
+Q.others_local_interior_pct = Math.round((TOTAL_INT_LOCS - Q.erc_local_interior_holdings - Q[_activeIcr + "_local_interior_holdings"] - Q.psc_local_interior_holdings - Q.cup_local_interior_holdings - Q.fnc_local_interior_holdings) / TOTAL_INT_LOCS * 1000) / 10;
+Q.cs_local_rb_pct = Math.round(Q.cs_local_rb_holdings / TOTAL_RB_LOCS * 1000) / 10;
+Q.erc_local_rb_pct = Math.round(Q.erc_local_rb_holdings / TOTAL_RB_LOCS * 1000) / 10;
+Q[_activeIcr + "_local_rb_pct"] = Math.round(Q[_activeIcr + "_local_rb_holdings"] / TOTAL_RB_LOCS * 1000) / 10;
+Q.psc_local_rb_pct = Math.round(Q.psc_local_rb_holdings / TOTAL_RB_LOCS * 1000) / 10;
+Q.cup_local_rb_pct = Math.round(Q.cup_local_rb_holdings / TOTAL_RB_LOCS * 1000) / 10;
+Q.comuns_local_rb_pct = Math.round((Q.comuns_local_rb_holdings + 1) / TOTAL_RB_LOCS * 1000) / 10;
+Q.pp_local_rb_pct = Math.round(Q.pp_local_rb_holdings / TOTAL_RB_LOCS * 1000) / 10;
+Q.others_local_rb_pct = Math.round((TOTAL_RB_LOCS - Q.cs_local_rb_holdings - Q.erc_local_rb_holdings - Q[_activeIcr + "_local_rb_holdings"] - Q.psc_local_rb_holdings - Q.cup_local_rb_holdings - Q.comuns_local_rb_holdings - Q.pp_local_rb_holdings) / TOTAL_RB_LOCS * 1000) / 10;
+
+!}
+go-to: jumpScene

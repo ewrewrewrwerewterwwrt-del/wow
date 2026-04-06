@@ -73,11 +73,19 @@ const tooltipList = [
     ideology: "junts_ideology",
   },
   {
-    searchString: ["Cs", "cs", "Ciutadans", "Ciudadanos"],
+    searchString: ["Cs", "cs", "Ciutadans"],
     mainText: "Citizens - Party of the Citizenry",
     subText: "Ciutadans - Partido de la Ciudadanía",
     img: "img/parties/logo_cs.svg",
     ledBy: "cs_leader",
+    ideology: "cs_ideology",
+  },
+  {
+    searchString: ["csspa", "cs_spa", "Ciudadanos"],
+    mainText: "Citizens - Party of the Citizenry",
+    subText: "Ciudadanos - Partido de la Ciudadanía",
+    img: "img/parties/logo_cs.svg",
+    ledBy: "csspa_leader",
     ideology: "cs_ideology",
   },
   {
@@ -344,6 +352,142 @@ const tooltipList = [
     ledBy: "si_leader",
     ideology: "si_ideology",
   },
+  {
+    searchString: ["BComu", "bcomu", "Barcelona en Comú", "BComú"],
+    mainText: "Barcelona in Common",
+    subText: "Barcelona en Comú",
+    img: "img/parties/logo_bcomu.png",
+    ledBy: "bcomu_leader",
+    ideology: "bcomu_ideology",
+  },
+  {
+    searchString: ["ppbcn", "pp_bcn"],
+    mainText: "People's Party (Barcelona)",
+    subText: "Partit Popular",
+    img: "img/parties/logo_pp.png",
+    ledBy: "ppbcn_leader",
+    ideology: "ppc_ideology",
+  },
+  {
+    searchString: ["csbcn", "cs_bcn"],
+    mainText: "Citizens - Party of the Citizenry (Barcelona)",
+    subText: "Ciutadans - Partido de la Ciudadanía",
+    img: "img/parties/logo_cs.svg",
+    ledBy: "csbcn_leader",
+    ideology: "cs_ideology",
+  },
+  {
+    searchString: ["pscbcn", "psc_bcn"],
+    mainText: "Socialist Party of Catalonia (Barcelona)",
+    subText: "Partit dels Socialistes de Catalunya",
+    img: "img/parties/logo_psc.svg",
+    ledBy: "pscbcn_leader",
+    ideology: "psc_ideology",
+  },
+  {
+    searchString: ["ercbcn", "erc_bcn"],
+    mainText: "Republican Left of Catalonia (Barcelona)",
+    subText: "Esquerra Republicana de Catalunya",
+    img: "img/parties/logo_erc.svg",
+    ledBy: "ercbcn_leader",
+    ideology: "erc_ideology",
+  },
+  {
+    searchString: ["cupbcn", "cup_bcn"],
+    mainText: "Popular Unity Candidacy (Barcelona)",
+    subText: "Candidatura d'Unitat Popular",
+    img: "img/parties/logo_cup.svg",
+    ledBy: "cupbcn_leader",
+    ideology: "cup_ideology",
+  },
+  {
+    searchString: ["cdcbcn", "cdc_bcn"],
+    mainText: "Democratic Convergence of Catalonia (Barcelona)",
+    subText: "Convergència Democràtica de Catalunya",
+    img: "img/parties/logo_cdc.png",
+    ledBy: "cdcbcn_leader",
+    ideology: "cdc_ideology",
+  },
+  {
+    searchString: ["dlbcn", "dl_bcn"],
+    mainText: "Democracy and Liberty (Barcelona)",
+    subText: "Democràcia i Llibertat",
+    img: "img/parties/logo_dl.png",
+    ledBy: "dlbcn_leader",
+    ideology: "dl_ideology",
+  },
+  {
+    searchString: ["jxsibcn", "jxsi_bcn"],
+    mainText: "Together for Yes (Barcelona)",
+    subText: "Junts pel Sí",
+    img: "img/parties/logo_jxsi.png",
+    ledBy: "jxsibcn_leader",
+    ideology: "jxsi_ideology",
+  },
+  {
+    searchString: ["pdcatbcn", "pdcat_bcn", "pdecatbcn", "pdecat_bcn"],
+    mainText: "Catalan European Democratic Party (Barcelona)",
+    subText: "Partit Demòcrata Europeu Català",
+    img: "img/parties/logo_pdecat.svg",
+    ledBy: "pdcatbcn_leader",
+    ideology: "pdcat_ideology",
+  },
+  {
+    searchString: ["jxcatbcn", "jxcat_bcn"],
+    mainText: "Together for Catalonia (Barcelona)",
+    subText: "Junts per Catalunya",
+    img: "img/parties/logo_jxcat.svg",
+    ledBy: "jxcatbcn_leader",
+    ideology: "jxcat_ideology",
+  },
+  {
+    searchString: ["juntsbcn", "junts_bcn"],
+    mainText: "Together (Barcelona)",
+    subText: "Junts",
+    img: "img/parties/logo_junts.png",
+    ledBy: "juntsbcn_leader",
+    ideology: "junts_ideology",
+  },
+  {
+    searchString: ["ciubcn", "ciu_bcn"],
+    mainText: "Convergence and Union (Barcelona)",
+    subText: "Convergència i Unió",
+    img: "img/parties/logo_ciu.png",
+    ledBy: "ciubcn_leader",
+    ideology: "ciu_ideology",
+  },
+  {
+    searchString: ["primariesbcn"],
+    mainText: "Barcelona is Capital - Primaries",
+    subText: "Primàries - Barcelona és Capital",
+    img: "img/parties/logo_primaries.svg",
+    ledBy: "primaries_leader",
+    ideology: "primaries_ideology",
+  },
+  {
+    searchString: ["ua-psc", "UA", "UA-PSC"],
+    mainText: "Aran Unity - Socialist Party of Catalonia",
+    subText: "Unitat d'Aran - Partit dels Socialistes de Catalunya",
+    img: "img/parties/logo_ua.svg",
+    ledBy: "ua_psc_leader",
+    ideology: "ua_psc_ideology",
+  },
+  {
+    searchString: ["cda-pna", "CDA-PNA", "CDA", "cda"],
+    mainText: "Aranese Democratic Convergence - Aranese Nationalist Party",
+    subText: "Convergéncia Democratica Aranesa - Partit Nacionalista Aranés",
+    img: "img/parties/logo_cda.svg",
+    ledBy: "cda_pna_leader",
+    ideology: "cda_pna_ideology",
+  },
+  {
+    searchString: ["txt"],
+    mainText: "Everything for Terrassa",
+    subText: "Tot per Terrassa",
+    img: "img/parties/logo_txt.png",
+    ledBy: "txt_leader",
+    ideology: "txt_ideology",
+  },
   /* LEADERS */
   {
     searchString: ["Lluís Companys"],
@@ -525,6 +669,21 @@ const tooltipList = [
       ];
     },
   },
+  {
+    searchString: ["Ada Colau"],
+    mainText: "Ada Colau i Ballano",
+    img: "img/other_leaders/ada_colau.jpg",
+    ideology: "Anti-austerity Left, Plurinationalism",
+    allegiances: (Q) => {
+      let list = ["<span style='color: var(--bcomu)'>BComú</span>"];
+      if (Q.csqp_formed)
+        list.push("<span style='color: var(--csqp)'>CSQP</span>");
+      if (Q.cecp_formed)
+        list.push("<span style='color: var(--cecp)'>CECP</span>");
+      if (Q.ecp_formed) list.push("<span style='color: var(--ecp)'>ECP</span>");
+      return list;
+    },
+  },
 ];
 
 const colourList = [
@@ -584,7 +743,13 @@ const colourList = [
     transform: "Junts",
   },
   {
-    words: ["Cs", "cs", "Ciutadans", "Ciudadanos"],
+    words: ["Cs", "cs", "Ciutadans"],
+    colour: "var(--cs)",
+    style: "font-weight: bold;",
+    transform: "Cs",
+  },
+  {
+    words: ["csspa", "cs_spa", "Ciudadanos"],
     colour: "var(--cs)",
     style: "font-weight: bold;",
     transform: "Cs",
@@ -800,6 +965,132 @@ const colourList = [
     transform: "SI",
   },
   {
+    words: ["BComu", "bcomu", "Barcelona en Comú", "BComú"],
+    colour: "var(--bcomu)",
+    style: "font-weight: bold;",
+    transform: "BComú",
+  },
+  {
+    words: ["ppbcn"],
+    colour: "var(--ppc)",
+    style: "font-weight: bold;",
+    transform: "PP",
+  },
+  {
+    words: ["pscbcn"],
+    colour: "var(--psc)",
+    style: "font-weight: bold;",
+    transform: "PSC",
+  },
+  {
+    words: ["csbcn"],
+    colour: "var(--cs)",
+    style: "font-weight: bold;",
+    transform: "Cs",
+  },
+  {
+    words: ["cupbcn"],
+    colour: "#b8a12b",
+    style: "font-weight: bold;",
+    transform: "CUP",
+  },
+  {
+    words: ["ercbcn"],
+    colour: "var(--erc)",
+    style: "font-weight: bold;",
+    transform: "ERC",
+  },
+  {
+    words: ["ciubcn"],
+    colour: "var(--ciu)",
+    style: "font-weight: bold;",
+    transform: "CiU",
+  },
+  {
+    words: ["cdcbcn"],
+    colour: "var(--cdc)",
+    style: "font-weight: bold;",
+    transform: "CDC",
+  },
+  {
+    words: ["uniobcn", "udcbcn"],
+    colour: "var(--unio)",
+    style: "font-weight: bold;",
+    transform: "UDC",
+  },
+  {
+    words: ["jxsi_bcn", "jxsibcn"],
+    colour: "var(--jxsi)",
+    style: "font-weight: bold;",
+    transform: "JxSí",
+  },
+  {
+    words: ["jxcat_bcn", "jxcatbcn"],
+    colour: "var(--jxcat)",
+    style: "font-weight: bold;",
+    transform: "JxCat",
+  },
+  {
+    words: ["pdcat_bcn", "pdcatbcn"],
+    colour: "var(--pdcat)",
+    style: "font-weight: bold;",
+    transform: "PDeCAT",
+  },
+  {
+    words: ["junts_bcn", "juntsbcn"],
+    colour: "var(--junts)",
+    style: "font-weight: bold;",
+    transform: "Junts",
+  },
+  {
+    words: ["dl_bcn", "dlbcn"],
+    colour: "var(--dl)",
+    style: "font-weight: bold;",
+    transform: "DL",
+  },
+  {
+    words: ["fncbcn"],
+    colour: "var(--fnc)",
+    style: "font-weight: bold;",
+    transform: "FNC",
+  },
+  {
+    words: ["pxcbcn"],
+    colour: "var(--pxc)",
+    style: "font-weight: bold;",
+    transform: "PxC",
+  },
+  {
+    words: ["vox_bcn", "voxbcn"],
+    colour: "var(--vox)",
+    style: "font-weight: bold;",
+    transform: "VOX",
+  },
+  {
+    words: ["primariesbcn", "primaries_bcn"],
+    colour: "var(--primaries)",
+    style: "font-weight: bold;",
+    transform: "Primàries",
+  },
+  {
+    words: ["ua-psc", "UA", "UA-PSC"],
+    colour: "var(--ua-psc)",
+    style: "font-weight: bold;",
+    transform: "UA-PSC",
+  },
+  {
+    words: ["cda-pna", "CDA-PNA"],
+    colour: "var(--cda-pna)",
+    style: "font-weight: bold;",
+    transform: "CDA-PNA",
+  },
+  {
+    words: ["txt"],
+    colour: "var(--txt)",
+    style: "font-weight: bold;",
+    transform: "TxT",
+  },
+  {
     words: ["indp"],
     colour: "#464646",
     style: "font-weight: bold;",
@@ -868,5 +1159,9 @@ const colourList = [
   {
     words: ["Joan Laporta i Estruch", "Joan Laporta"],
     colour: "var(--si)",
+  },
+  {
+    words: ["Ada Colau"],
+    colour: "var(--bcomu)",
   },
 ];

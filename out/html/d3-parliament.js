@@ -41,7 +41,6 @@ d3.parliament = function () {
   );
 
   function parliament(data) {
-    console.log(data);
     data.each(function (d) {
       // if user did not provide, fill the svg:
       width = width ? width : this.getBoundingClientRect().width;
@@ -262,13 +261,21 @@ d3.parliament = function () {
               t.words.includes(partyId.toUpperCase()),
             );
           }
+          let img = tooltipList.find((t) => t.searchString.includes(partyId));
+          if (!img) {
+            img = tooltipList.find((t) =>
+              t.searchString.includes(partyId.toUpperCase()),
+            );
+          }
           tooltip
             .html(
-              `<span style="color:${colour.colour || "black"}; font-weight:bold;">${colour.transform || partyId}</span>` +
-                "<br/>" +
-                nSeatsInParty +
-                " seat" +
-                (nSeatsInParty !== 1 ? "s" : ""),
+              `<div style="display:flex; align-items:center;">
+                <img src="${img.img}" alt="${img.mainText}" style="height:42px; width:auto; margin-right:10px; max-width: 120px; object-fit: contain; flex-shrink: 0;">
+                <div>
+                  <span style="color:${colour.colour || "black"}; font-weight:bold;">${colour.transform || partyId}</span><br>
+                  <span>${nSeatsInParty} seat${nSeatsInParty !== 1 ? "s" : ""}</span>
+                </div>
+              </div>`,
             )
             .classed("visible", true);
           tooltip.style("border-color", colour.colour || "black");

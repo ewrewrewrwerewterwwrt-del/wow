@@ -1,0 +1,11 @@
+
+# Cat-Spain relations
+
+(..15) <span style='color: #9b0000ff;'>very high</span>
+(15..30) <span style='color: #933b00ff;'>high</span>
+(30..40) <span style='color: #885f00ff;'>medium-high</span>
+(40..60) <span style='color: #9b6200ff;'>medium</span>
+(60..70) <span style='color: #a08800ff;'>medium-low</span>
+(70..85) <span style='color: #679b00ff;'>low</span>
+(85..) <span style='color: #009f00ff;'>very low</span>
+

@@ -507,6 +507,112 @@
         }
       }
     }
+
+    updateLocalBarcelona(
+      Q,
+      prev_indy_mov,
+      prev_indy_trust,
+      prev_dissent,
+      prev_welfare,
+      prev_cat_spa,
+      prev_unemployment,
+    );
+  }
+
+  // --- LOCAL BARCELONA TICK ---
+  // ICR family for local BCN: ciu/cdc/dl/jxcat/junts/pdcat are one bloc.
+  // Only the currently active ICR party (the one with support > 0) receives
+  // the delta. "ciu" is the canonical key for matrix lookups throughout.
+  const BCN_ICR_PARTIES = new Set([
+    "ciu",
+    "cdc",
+    "dl",
+    "jxcat",
+    "junts",
+    "pdcat",
+  ]);
+  const BCN_ICR_CANONICAL = "ciu";
+
+  function _bcnMatrixKey(party) {
+    return BCN_ICR_PARTIES.has(party) ? BCN_ICR_CANONICAL : party;
+  }
+
+  function updateLocalBarcelona(
+    Q,
+    prev_indy_mov,
+    prev_indy_trust,
+    prev_dissent,
+    prev_welfare,
+    prev_cat_spa,
+    prev_unemployment,
+  ) {
+    const bcnMatrices = Q.LOCAL_BCN_MATRICES;
+    if (!bcnMatrices) return;
+
+    const BCN_PARTIES = Q.parties_bcn;
+    const REVERSION = bcnMatrices.BCN_MEAN_REVERSION_SPEED || 0.012;
+
+    const bcn_d = [
+      Q.independence_movement - prev_indy_mov,
+      Q.independence_trust - prev_indy_trust,
+      Q.social_dissent - prev_dissent,
+      Q.welfare_index - prev_welfare,
+      Q.cat_spa_relations - prev_cat_spa,
+      Q.unemployment - prev_unemployment,
+      Q.podemos_channeling || 0,
+    ];
+
+    // Find the active ICR party (the one with support > 0)
+    const icrCandidates = BCN_PARTIES.filter((p) => BCN_ICR_PARTIES.has(p));
+    const activeIcr =
+      icrCandidates.find((p) => (Q[`${p}_local_barcelona_support`] || 0) > 0) ??
+      icrCandidates[0] ??
+      null;
+
+    for (const party of BCN_PARTIES) {
+      // Skip inactive ICR parties — only the active one carries support
+      if (BCN_ICR_PARTIES.has(party) && party !== activeIcr) continue;
+
+      const matrixKey = _bcnMatrixKey(party);
+      const key = `${party}_local_barcelona_support`;
+      if (Q[key] === undefined) {
+        Q[key] = bcnMatrices.BCN_BASELINE[matrixKey] || 0.0;
+      }
+
+      const sens = bcnMatrices.BCN_SENSITIVITY[matrixKey] || new Array(7).fill(0);
+      let delta = 0;
+      for (let i = 0; i < 7; i++) delta += sens[i] * bcn_d[i];
+
+      // Post-2015 nonlinear surge: high IM amplifies established indy parties when
+      // trust is healthy, and radical parties (CUP/primaries) when trust is low.
+      if (Q.year > 2015 && Q.independence_movement > 60) {
+        const imSurplus = (Q.independence_movement - 60) * 0.1;
+        if (BCN_ICR_PARTIES.has(party) || party === "erc") {
+          const trustFactor = clamp((Q.independence_trust - 25) / 20, 0, 1);
+          const coeff = party === "erc" ? 0.35 : 0.22;
+          delta += coeff * imSurplus * trustFactor;
+        } else if (party === "cup" || party === "primaries") {
+          const frustrationFactor = clamp((38 - Q.independence_trust) / 20, 0, 1);
+          delta += 0.18 * imSurplus * frustrationFactor;
+        }
+      }
+
+      const baseline = bcnMatrices.BCN_BASELINE[matrixKey] || 0.0;
+      delta += REVERSION * (baseline - Q[key]);
+
+      Q[key] = clamp(Q[key] + delta, 0.0, 100.0);
+    }
+
+    // Renormalise city-wide
+    let total = 0;
+    for (const party of BCN_PARTIES)
+      total += Q[`${party}_local_barcelona_support`] || 0;
+    if (total > 0) {
+      for (const party of BCN_PARTIES) {
+        const key = `${party}_local_barcelona_support`;
+        Q[key] = (Q[key] / total) * 100.0;
+      }
+    }
   }
 
   window.engineTick = monthPasses;

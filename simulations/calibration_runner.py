@@ -27,7 +27,8 @@ eng4 = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(eng4)
 
 import vote_model as vm_mod
-from vote_model import (VoteModel, FAMILIES, FAM_IDX, BASE_T , N_VARS, VAR_NAMES)
+from vote_model import (VoteModel, FAMILIES, FAM_IDX, BASE_T , N_VARS, VAR_NAMES,
+                        PROVINCES, DEMOS)
 
 ELECTION_MONTHS = {4: '2012', 38: '2015', 65: '2017'}
 ANCHOR_PATH     = 'results/election_anchors.pkl'
@@ -269,6 +270,31 @@ def run_simulation(T_override=None, verbose=True, seed=42):
             'podemos_pulse':     1.0 if podemos_fired_this_month else 0.0,
         }
         vmodel.update(engine_state, delta_vars)
+
+        # ── Parliament support snapshots (May 2015 / May 2019) ────────────────
+        if m in {34, 82}:
+            yr_label = "May 2015" if m == 34 else "May 2019"
+            # Map family → active JS party name at this time
+            if m == 34:
+                fam_party = {'icr': 'ciu', 'il': 'erc', 'cup': 'cup', 'fl': 'csqp',
+                             'psc': 'psc', 'cs': 'cs', 'ppc': 'ppc', 'abs': 'abstain',
+                             'unio': None, 'pdcat': None, 'vox': None, 'fnc': None}
+            else:
+                fam_party = {'icr': 'jxcat', 'il': 'erc', 'cup': 'cup', 'fl': 'ecp',
+                             'psc': 'psc', 'cs': 'cs', 'ppc': 'ppc', 'abs': 'abstain',
+                             'vox': 'vox', 'unio': None, 'pdcat': None, 'fnc': None}
+            active_fams = [f for f in FAMILIES if fam_party.get(f)]
+            print(f"\n// {'='*68}")
+            print(f"// Parliament support — {yr_label} (m={m})")
+            print(f"// {'='*68}")
+            for pi, prov in enumerate(PROVINCES):
+                for di, demo in enumerate(DEMOS):
+                    row = vmodel.support[:, pi, di]
+                    total = row.sum()
+                    for fam in active_fams:
+                        party = fam_party[fam]
+                        val = (row[FAM_IDX[fam]] / total * 100) if total > 0 else 0.0
+                        print(f"Q.{party}_parlament_{prov}_{demo}_support = {val:.1f};")
 
         # ── Record seats ─────────────────────────────────────────────────────
         seats = vmodel.seat_counts()

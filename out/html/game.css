@@ -828,6 +828,11 @@ table {
   --si: #000000;
   --csqp: #c3113b;
   --cecp: #be3882;
+  --bcomu: #d51e73;
+  --primaries: #ec4c5e;
+  --ua-psc: #d00c3c;
+  --cda-pna: #24346c;
+  --txt: #7c7c7c;
   --ecp: #6e236e;
   --vox: #63be21;
   --pxc: #00ffff;
@@ -986,7 +991,18 @@ table {
 .box.fnc {
   background-color: var(--fnc);
 }
-
+.box.bcomu {
+  background-color: var(--bcomu);
+}
+.seat.bcomu {
+  fill: var(--bcomu);
+}
+.box.primaries {
+  background-color: var(--primaries);
+}
+.seat.primaries {
+  fill: var(--primaries);
+}
 /* same, but the extras for the congreso */
 .seat.pp {
   fill: var(--pp);

@@ -773,13 +773,12 @@ class VoteModel:
             return delta
             
         # 3. Consolidation peak (2017 cycle)
-        # Ends after 21-D elections (but art155_ever continues)
+        # Stops entirely after 21-D: useful-vote is an election-campaign phenomenon,
+        # not a structural post-crisis state. Continuing after 21-D drains CUP to 0.
         is_21d_fired = state.get('21d_fired', False)
         if is_21d_fired:
-            # Shift fades but does not stop entirely if art155 is ongoing
-            shift_mult = 0.45
-        else:
-            shift_mult = 1.0
+            return delta
+        shift_mult = 1.0
 
         # Transfer from CUP to main parties
         # In reality, CUP went from 8% to 4% in 2017.

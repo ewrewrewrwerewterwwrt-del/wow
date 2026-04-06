@@ -283,6 +283,10 @@
       dendryUI.dendryEngine.state.qualities,
       true,
     );
+    initCatLocalMap(
+      "catalonia-local-map",
+      dendryUI.dendryEngine.state.qualities,
+    );
     addTooltipEventListeners();
   };
 
@@ -304,6 +308,10 @@
       "cat-polls-widget-wide",
       dendryUI.dendryEngine.state.qualities,
       true,
+    );
+    initCatLocalMap(
+      "catalonia-local-map",
+      dendryUI.dendryEngine.state.qualities,
     );
     addTooltipEventListeners();
   };
@@ -384,6 +392,10 @@
       "cat-polls-widget-wide",
       dendryUI.dendryEngine.state.qualities,
       true,
+    );
+    initCatLocalMap(
+      "catalonia-local-map",
+      dendryUI.dendryEngine.state.qualities,
     );
 
     addTooltipEventListeners();

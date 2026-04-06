@@ -77,6 +77,7 @@ Q.unemployment = 22.5;
 Q.unemployment_change = '<img src="img/arrowdown.png" style="transform: rotate(180deg);"> ';
 Q.podemos_surged = false;
 Q.podemos_channeling = 0.0;
+Q.corruption_events_ciu = 0;
 
 // Country control
 Q.airports_control = 0;
@@ -144,6 +145,7 @@ Q.fnc_parlament_s = 0;
 Q.abstain_parlament_pv = 41.2;
 
 // Initial party positions
+
 Q.ciu_ideology = "Liberal-Conservatism, Pact-Pragmatism";
 Q.ciu_leader = "Artur Mas";
 Q.cdc_leader = "Artur Mas";
@@ -172,7 +174,7 @@ Q.ppc_ideology = "Conservatism, Centralism";
 
 Q.icv_leader = "Joan Herrera";
 Q.icv_ideology = "Green Left, Federalism";
-
+Q.comuns_name = "icv";
 
 // Initial ideologies for all parties, also future ones, just in case
 Q.pdcat_leader = "Artur Mas";
@@ -204,6 +206,7 @@ Q.psoe_leader = "Alfredo Pérez Rubalcaba";
 Q.psoe_ideology = "Centrist Social Democracy, Autonomism";
 Q.pp_leader = "Mariano Rajoy";
 Q.pp_ideology = "Conservatism, Centralism";
+Q.csspa_leader = "Albert Rivera";
 Q.vox_leader = "Santiago Abascal";
 Q.vox_ideology = "Far-right Nationalism, Hypercentralism";
 Q.upyd_leader = "Rosa Díez";
@@ -250,6 +253,122 @@ Q.prc_leader = "Miguel Ángel Revilla";
 Q.prc_ideology = "Centrist Social Democracy, Cantabrian Regionalism";
 Q.te_leader = "Tomás Guitarte"
 Q.te_ideology = "Transversal single-issue, Teruel Regionalism";
+
+// Initial values for bcn parties as well
+Q.parties_bcn = ['bcomu', 'cup', 'psc', 'erc', 'ciu', 'cdc', 'dl', 'jxcat', 'junts', 'primaries', 'cs', 'pp', "icv"];
+
+Q.bcomu_leader = "Ada Colau";
+Q.bcomu_ideology = "Anti-austerity left, Plurinationalism";
+Q.ppbcn_leader = "Alberto Fernández Díaz";
+Q.csbcn_leader = "Carina Mejías";
+Q.cupbcn_leader = "María José Lecha";
+Q.pscbcn_leader = "Jaume Collboni";
+Q.ercbcn_leader = "Alfred Bosch";
+Q.ciubcn_leader = "Xavier Trias";
+Q.cdcbcn_leader = "Xavier Trias";
+Q.dlbcn_leader = "Xavier Trias";
+Q.jxcatbcn_leader = "Joaquim Forn";
+Q.primaries_leader = "Jordi Graupera";
+Q.primaries_ideology = "Transversal single-issue, Unilateralism";
+Q.ua_psc_leader = "Francés Boya Alós";
+Q.ua_psc_ideology = "Social Democracy, Aranese Regionalism";
+Q.cda_pna_leader = "Carles Barrera Sánchez";
+Q.cda_pna_ideology = "Liberal-Conservatism, Aranese Regionalism";
+
+Q.icv_local_barcelona_support    = 29.0;
+Q.ciu_local_barcelona_support  = 12.5;
+Q.cdc_local_barcelona_support  = 0;
+Q.dl_local_barcelona_support   = 0;
+Q.jxcat_local_barcelona_support = 0;
+Q.junts_local_barcelona_support = 0;
+Q.erc_local_barcelona_support      = 11.0;
+Q.psc_local_barcelona_support      = 16.5;
+Q.cs_local_barcelona_support       = 13.5;
+Q.cup_local_barcelona_support      =  7.0;
+Q.pp_local_barcelona_support       = 10.5;
+Q.primaries_local_barcelona_support =  0.0;
+
+
+// 2011 local elections results (for delta calcs)
+Q.ciu_local_barcelona_s = 14;
+Q.ciu_local_barcelona_pv = 28.73;
+Q.psc_local_barcelona_s = 11;
+Q.psc_local_barcelona_pv = 22.14;
+Q.pp_local_barcelona_s = 9;
+Q.pp_local_barcelona_pv = 17.24;
+Q.icv_local_barcelona_s = 5;
+Q.icv_local_barcelona_pv = 10.39;
+Q.erc_local_barcelona_s = 2;
+Q.erc_local_barcelona_pv = 5.59;
+
+Q.cs_redbelt_mod = 0;
+Q.erc_redbelt_mod = -10;
+Q.comuns_redbelt_mod = 0;
+Q.cup_redbelt_mod = 0;
+Q.psc_redbelt_mod = 0;
+Q.erc_interior_mod = 0;
+Q.cup_interior_mod = 0;
+Q.fnc_interior_mod = 0;
+Q.ciu_interior_mod = 0;
+
+// Local weights
+
+Q.RB_DEFAULTS = {
+    "cs_im_coeff":              0.90,
+    "cs_spa_coeff":             0.70,
+    "cs_diss_coeff":            0.30,
+    "erc_trust_coeff":          1.20,
+    "erc_im_coeff":             0.60,
+    "erc_no_outreach_penalty":  10.0,
+    "comuns_diss_coeff":        0.60,
+    "comuns_pp_scale":          15.0,
+    "comuns_welf_coeff":        0.40,
+}
+
+Q.INT_DEFAULTS = {
+  // Ciu decay
+    "decay_base":          8.0,
+    "decay_corr_coeff":   20.0,  
+    "decay_welf_coeff":   0.60,
+    "decay_pdcat_bonus":   8.0,   
+    "decay_unio_bonus":    5.0,   
+  // Contenders interior
+    "erc_trust_coeff":    0.75,
+    "erc_im_coeff":       0.30,
+    "erc_build_bonus":    28.0,
+    "erc_base_bonus":      5.0,
+    "cup_imtrust_coeff":  0.60,
+    "cup_diss_coeff":     0.50,
+    "holdout_base":      95.0,
+}
+
+Q.LOCAL_BCN_MATRICES = {
+  BCN_MEAN_REVERSION_SPEED: 0.012,
+
+  // Flat number per party. ICR parties (ciu/cdc/dl/jxcat/junts) all share the "ciu" key.
+  BCN_BASELINE: {
+    "bcomu":     29.0,
+    "ciu":       12.5,
+    "erc":       11.0,
+    "psc":       16.5,
+    "cs":        13.5,
+    "cup":        7.0,
+    "pp":        10.5,
+    "primaries":  0.0,
+  },
+
+  // [d_im, d_it, d_sd, d_welfare, d_cat_spa, d_unemployment, podemos_pulse]
+  BCN_SENSITIVITY: {
+    "bcomu":    [ 0.02,  0.00,  0.22, -0.10,  0.00,  0.05,  0.10],
+    "ciu":      [ 0.08,  0.15, -0.10,  0.05,  0.05, -0.05, -0.05],
+    "erc":      [ 0.15,  0.15,  0.05, -0.05,  0.05,  0.05,  0.04],
+    "psc":      [ 0.00, -0.15, -0.05,  0.18, -0.30, -0.05, -0.05],
+    "cs":       [ 0.08, -0.05, -0.05,  0.05, -0.10, -0.05, -0.02],
+    "cup":      [ 0.08, -0.10,  0.12, -0.10, -0.05,  0.10,  0.05],
+    "pp":       [-0.12, -0.05, -0.05,  0.05,  0.20, -0.05, -0.04],
+    "primaries":[ 0.00,  0.00,  0.00,  0.00,  0.00,  0.00,  0.00],
+  },
+};
 
 
 // International opinions
@@ -327,9 +446,44 @@ Q.congreso_urban_bias = {
     'cs': 1.0
 };
 
+// As of congreso 2011
 
-Q.ciu_congreso_s = 16;
+Q.abstain_congreso_pv = 31.06;
+Q.ciu_congreso_s = 16; // Was CiU
+Q.ciu_congreso_pv = 4.17;
+Q.ciu_congreso_pv_cat = 29.35;
 Q.erc_congreso_s = 3;
+Q.erc_congreso_pv = 1.05;
+Q.erc_congreso_pv_cat = 7.06;
+Q.pp_congreso_s = 186;
+Q.pp_congreso_pv = 44.63;
+Q.pp_congreso_pv_cat = 20.71;
+Q.psoe_congreso_s = 110;
+Q.psoe_congreso_pv = 28.76;
+Q.psoe_congreso_pv_cat = 26.63;
+Q.iu_congreso_s = 11;
+Q.iu_congreso_pv = 6.92;
+Q.iu_congreso_pv_cat = 8.09;
+Q.upyd_congreso_s = 5;
+Q.upyd_congreso_pv = 4.7;
+Q.upyd_congreso_pv_cat = 1.14;
+Q.pnv_congreso_s = 5;
+Q.pnv_congreso_pv = 1.33;
+Q.bng_congreso_s = 2; // Was BNG
+Q.bng_congreso_pv = 0.75;
+Q.bng_congreso_pv_true = 11.18;
+Q.cc_congreso_s = 2;
+Q.cc_congreso_pv = 0.59;
+Q.compromis_congreso_s = 1;
+Q.compromis_congreso_pv = 0.51;
+Q.fac_congreso_s = 1;
+Q.fac_congreso_pv = 0.41;
+Q.prc_congreso_s = 0;
+Q.prc_congreso_pv = 0.18;
+Q.gbai_congreso_s = 1;
+Q.gbai_congreso_pv = 0.17;
+Q.amaiur_congreso_s = 7;
+Q.amaiur_congreso_pv = 1.37;
 
 
 !}
