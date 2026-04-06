@@ -21,7 +21,10 @@ for (var constituency of Q.congreso_constituencies) {
         Q[p + '_congreso_' + constituency + '_support'] = 0;
     }
 }
-
+for (var p of Q.parties_bcn) {
+    Q[p + '_local_barcelona_s'] = 0;
+    Q[p + '_local_barcelona_pv'] = 0;
+}
 !}
 call: root.start_menu
 set-jump: post_election_sim
