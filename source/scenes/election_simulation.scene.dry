@@ -56,6 +56,8 @@ on-arrival: {!
     Q.erc_local_barcelona_pv = 5.59;
     Q.jxcat_local_barcelona_s = 0; 
     Q.jxcat_local_barcelona_pv = 0;
+    Q.cs_local_barcelona_s = 0;
+    Q.cs_local_barcelona_pv = 0;
 
     // status as of 2015
     Q.gdp_growth = 1.21;
