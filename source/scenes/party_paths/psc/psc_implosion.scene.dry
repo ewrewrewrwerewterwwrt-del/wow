@@ -1,0 +1,60 @@
+title: A PSC implosion?
+view-if: psc_implosion_trigger 
+# TODO: the countdown for psc_implosion should start on the Parlament vote on soverignty
+face-image: img/events/psc_implosion.jpg
+new-page: true
+max-visits: 1
+tags: event
+
+The recent Parlament vote on Catalan soverignty has been for the PSC the last push needed for a major internal crisis which may very well define the party's future for years to come. The moderate center-left party has historically been a proud and staunch defender of Catalan identity, culture, language, and autonomy while rejecting outright independence. 
+
+The current leadership under Pere Navarro has been playing an impossible balancing act of defending a federalist position (opposed by it's own brother party, the PSOE) while opposing any push for further Catalan soverignty. This has not only perfomed poorly electorally, but also created a major rift within the party's Catalan base. With major names already breaking with the party line in the Parlament's vote, whatever comes from this crisis is bound to be decisive in what the PSC even means. 
+
+- @psc_implosion_more: Are there even any alternatives to Pere Navarro's leadership?
+
+@psc_implosion_more
+
+The party's most Catalan wing failed to gain significant enough support during 2010 party congress after the electoral disaster post-tripartite with ICV-EUiA and ERC. Despite grouping some of the old guard of the party, with names like Montserrat Tura and Ernest Maragall, the position of the Nou Cicle ("New Cycle") demanded big changes. Changes like a younger leadership, more leftist positions, and a general goal of building bridges to their left without losing its Catalan party identity. However, the lack of clear leadership resulted them failing to transform their internal pressure coalition into an actual alternative leadership proposition.
+
+Nowadays, their influence has waned a bit, and the most vocal opposition within the PSC is that represented by angel ros, mayor of Lleida. Sharing with the Nou Cicle the ideas of a more independent PSC no longer necessarily tied to the PSOE, its turn to the left is definitely more moderate. Nonetheless, his candidacy still did not manage to gain enough grassroots support to dislodge Pere Navarro in the 2011 party congress. 
+
+Even in the current state of absolute crisis within the PSC, any real alternative to Pere Navarro will require significant organization effort in a short amount of time.
+
+- @perenavarro_leadership: Pere Navarro keeps the leadership.
+- @angelros_leadership: We should lend a hand to angel ros, the most realistic alternative.
+- @montserrattura_leadership: The "Nou Cicle" ideas need to be ressurrected! Let's bet on a Montserrat Tura leadership.
+
+@perenavarro_leadership
+subtitle: Without PSC's internal opposition being organized enough, the current leadership remains in place.
+on-arrival: {!
+    Q.countdowns.push("ernest_maragall_erc");
+    Q.ernest_maragall_erc_countdown = 3;
+!}
+
+# TODO: Actual text
+
+@angelros_leadership
+choose-if: party_resources >= 1 and psc_relations >= 40
+unavailable-subtitle: [? if party_resources < 1: Not enough resources. ?][? if psc_relations < 40: We don't have good enough relations with the PSC. ?]
+subtitle: -1 resources
+on-arrival: {!
+    Q.countdowns.push("ernest_maragall_erc");
+    Q.ernest_maragall_erc_countdown = 3;
+    Q.psc_leader = "Àngel Ros";
+    Q.psc_ideology = "Centrist Social Democracy, Plurinationalism";
+    Q.psc_recovery_mult = 1.5;
+!}
+
+# TODO: Actual text
+
+@montserrattura_leadership
+choose-if: party_resources >= 2 and psc_relations >= 55
+unavailable-subtitle: [? if party_resources < 2: Not enough resources. ?][? if psc_relations < 55: We don't have good enough relations with the PSC. ?]
+subtitle: -2 resources
+on-arrival: {!
+    Q.psc_leader = "Montserrat Tura";
+    Q.psc_ideology = "Social Democracy, Plurinationalism";
+    Q.psc_recovery_mult = 1.75;
+!}
+
+# TODO: Actual text

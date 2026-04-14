@@ -24,14 +24,14 @@ Whether or not we are in an electoral campaign, the party is always trying to br
 
 @workers
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 unavailable-subtitle: Not enough resources.
 on-arrival: {!
     Q.erc_parlament_barcelona_ind_support += (1-Q.erc_dissent/100); 
     Q.erc_parlament_girona_ind_support += 6*(1-Q.erc_dissent/100);
     Q.erc_parlament_lleida_ind_support += 6*(1-Q.erc_dissent/100);
     Q.erc_parlament_tarragona_ind_support += 2*(1-Q.erc_dissent/100);
-    Q.erc_resources -= 1; 
+    Q.party_resources -= 1; 
     if (Q.unemployment >= 20 && (Q.erc_supporting == 1 || Q.erc_in_gob == 1)) {
         Q.erc_parlament_barcelona_ind_support -= 1;
         Q.erc_parlament_girona_ind_support -= 1;
@@ -51,12 +51,12 @@ We have increased our campaigning among industrial workers across Catalonia, but
 @redbelt
 subtitle: -1 resources
 view-if: gabriel_rufian_advisor = 1 or erc_break_red_belt = 1
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 unavailable-subtitle: Not enough resources.
 on-arrival: {!
     Q.erc_parlament_barcelona_ind_support += 6*(1-Q.erc_dissent/100) + 2*Q.gabriel_rufian_advisor; 
     Q.erc_parlament_tarragona_ind_support += 4*(1-Q.erc_dissent/100) + Q.gabriel_rufian_advisor;
-    Q.erc_resources -= 1; 
+    Q.party_resources -= 1; 
     if (Q.unemployment >= 20 && (Q.erc_supporting == 1 || Q.erc_in_gob == 1)) {
         Q.erc_parlament_barcelona_ind_support -= 1;
         Q.erc_parlament_tarragona_ind_support -= 1;
@@ -71,14 +71,14 @@ We have increased our campaigning efforts among industrial workers, specially ar
 
 @middle
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 unavailable-subtitle: Not enough resources.
 on-arrival: {!
     Q.erc_parlament_barcelona_middle_support += 6*(1-Q.erc_dissent/100) + Q.joan_josep_nuet_advisor + Q.joan_laporta_advisor;
     Q.erc_parlament_girona_middle_support += 6*(1-Q.erc_dissent/100) + Q.raul_romeva_advisor;
     Q.erc_parlament_lleida_middle_support += 6*(1-Q.erc_dissent/100) + Q.raul_romeva_advisor;
     Q.erc_parlament_tarragona_middle_support += 6*(1-Q.erc_dissent/100);
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     if (Q.unemployment >= 20 && (Q.erc_supporting == 1 || Q.erc_in_gob == 1)) {
         Q.erc_parlament_barcelona_middle_support -= 1;
         Q.erc_parlament_girona_middle_support -= 1;
@@ -97,14 +97,14 @@ We have increased our campaigning among the middle class. [? if unemployed >= 20
 
 @business
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 unavailable-subtitle: Not enough resources.
 on-arrival: {!
     Q.erc_parlament_barcelona_business_support += (Q.erc_pragmatic_strength/100)*(1-Q.erc_dissent/100) + Q.joan_laporta_advisor; 
     Q.erc_parlament_girona_business_support += (Q.erc_pragmatic_strength/100)*(1-Q.erc_dissent/100) + Q.joan_laporta_advisor;
     Q.erc_parlament_lleida_business_support += (Q.erc_pragmatic_strength/100)*(1-Q.erc_dissent/100) + Q.joan_laporta_advisor;
     Q.erc_parlament_tarragona_business_support += (Q.erc_pragmatic_strength/100)*(1-Q.erc_dissent/100) + Q.joan_laporta_advisor;
-    Q.erc_resources -= 1; 
+    Q.party_resources -= 1; 
     if (Q.broken_roadmap == 1) {
         Q.erc_parlament_barcelona_business_support -= 1;
         Q.erc_parlament_girona_business_support -= 1;
@@ -123,14 +123,14 @@ We have increased our campaigning among the business community. [? if erc_pragma
 
 @rural
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 unavailable-subtitle: Not enough resources.
 on-arrival: {!
     Q.erc_parlament_barcelona_rural_support += 6*(1-Q.erc_dissent/100) + Q.teresa_jorda_advisor;
     Q.erc_parlament_girona_rural_support += 6*(1-Q.erc_dissent/100) + Q.teresa_jorda_advisor;
     Q.erc_parlament_lleida_rural_support += 6*(1-Q.erc_dissent/100) + Q.teresa_jorda_advisor;
     Q.erc_parlament_tarragona_rural_support += 6*(1-Q.erc_dissent/100) + Q.teresa_jorda_advisor;
-    Q.erc_resources -= 1; 
+    Q.party_resources -= 1; 
     if (Q.unemployment >= 20 && (Q.erc_supporting == 1 || Q.erc_in_gob == 1)) {
         Q.erc_parlament_barcelona_rural_support -= 6;
         Q.erc_parlament_girona_rural_support -= 6;
@@ -150,14 +150,14 @@ We have increased our campaigning efforts in rural Catalonia. [? if unemployment
 
 @unemployed
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 unavailable-subtitle: Not enough resources.
 on-arrival: {!
     Q.erc_parlament_barcelona_unemployed_support += 6*(1-Q.erc_dissent/100) + Q.joan_josep_nuet_advisor; 
     Q.erc_parlament_girona_unemployed_support += 6*(1-Q.erc_dissent/100) + Q.joan_josep_nuet_advisor;
     Q.erc_parlament_lleida_unemployed_support += 6*(1-Q.erc_dissent/100) + Q.joan_josep_nuet_advisor;
     Q.erc_parlament_tarragona_unemployed_support += 6*(1-Q.erc_dissent/100) + Q.joan_josep_nuet_advisor;
-    Q.erc_resources -= 1; 
+    Q.party_resources -= 1; 
     if (Q.broken_roadmap == 1) {
         Q.erc_parlament_barcelona_unemployed_support -= 8;
         Q.erc_parlament_girona_unemployed_support -= 8;

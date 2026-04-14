@@ -37,11 +37,11 @@ ERC cannot govern by itself yet. Because we do not have an electoral majority, w
 
 @si_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 view-if: si_parlament_s > 0
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     Q.si_relations += 10*(1 - Q.erc_dissent/100);
 !}
 
@@ -49,11 +49,11 @@ SI are already quite aligned with us, and already eager to work together. Let's 
 
 @jxsi_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 view-if: jxsi_formed and erc_in_jxsi
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     for (var party in Q.jxsi_parties) {
         if (party === "erc") continue;
         Q[party + "_relations"] += 8*(1 - Q.erc_dissent/100);
@@ -76,11 +76,11 @@ The JxSí coalition is a naturally unstable one, but in the name of National Uni
 
 @jxcat_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 view-if: jxcat_formed and erc_in_jxcat
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     for (var party in Q.jxcat_parties) {
         if (party === "erc") continue;
         Q[party + "_relations"] += 8*(1 - Q.erc_dissent/100);
@@ -104,11 +104,11 @@ Just as with JxSí, the JxCat coalition is not the epitome of stability. But now
 
 @ciu_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1 
+choose-if: party_resources >= 1 
 view-if: not ciu_dissolved
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     if (Q.erc_supporting && Q.cat_coalition.includes("ciu")) {
         Q.ciu_relations += 7*(1 - Q.erc_dissent/100);
         Q.cup_realations -= 2;
@@ -136,11 +136,11 @@ on-arrival: {!
 
 @pdcat_nosplit_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1 
+choose-if: party_resources >= 1 
 view-if: pdcat_formed and not pdcat_split and not pdcat_in_jxcat and not pdcat_in_jxsi
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     if (Q.erc_supporting && Q.cat_coalition.includes("pdcat")) {
         Q.pdcat_relations += 7*(1 - Q.erc_dissent/100);
         Q.cup_realations -= 2;
@@ -168,11 +168,11 @@ on-arrival: {!
 
 @cdc_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1 
+choose-if: party_resources >= 1 
 view-if: cdc_formed and not cdc_in_jxsi and not cdc_in_jxcat
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     if (Q.erc_supporting && Q.cat_coalition.includes("cdc")) {
         Q.cdc_relations += 7*(1 - Q.erc_dissent/100);
         Q.cup_realations -= 2;
@@ -200,11 +200,11 @@ on-arrival: {!
 
 @dl_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1 
+choose-if: party_resources >= 1 
 view-if: dl_formed and not dl_in_jxcat and not dl_in_jxsi
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     if (Q.erc_supporting && Q.cat_coalition.includes("dl")) {
         Q.dl_relations += 7*(1 - Q.erc_dissent/100);
         Q.cup_realations -= 2;
@@ -232,11 +232,11 @@ on-arrival: {!
 
 @jxcat_noerc_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1 
+choose-if: party_resources >= 1 
 view-if: jxcat_formed and not erc_in_jxcat
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     if (Q.erc_supporting && Q.cat_coalition.includes("jxcat")) {
         Q.jxcat_relations += 7*(1 - Q.erc_dissent/100);
         Q.cup_realations -= 2;
@@ -264,11 +264,11 @@ on-arrival: {!
 
 @junts_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1 
+choose-if: party_resources >= 1 
 view-if: junts_formed
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     if (Q.erc_supporting && Q.cat_coalition.includes("junts")) {
         Q.junts_relations += 7*(1 - Q.erc_dissent/100);
         Q.cup_realations -= 2;
@@ -296,11 +296,11 @@ on-arrival: {!
 
 @cup_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 view-if: not cup_in_jxsi and not cup_in_jxcat
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     if (Q.cup_supporting && Q.cat_coalition.includes("erc")) {
         Q.cup_relations += 5*(1 - Q.erc_dissent/100);
     } else if (Q.erc_in_gob && Q.cat_coalition.includes("cup")) {
@@ -317,11 +317,11 @@ on-arrival: {!
 
 @icv_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 view-if: not csqp_formed and not ceccp_formed and not ecp_formed
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     if (Q.icv_supporting && Q.cat_coalition.includes("erc")) {
         Q.icv_relations += 5*(1 - Q.erc_dissent/100);
     } else if (Q.erc_in_gob && Q.cat_coalition.includes("icv") || Q.cat_coalition.includes("icv") && Q.erc_supporting || Q.icv_supporting && Q.erc_supporting) {
@@ -354,11 +354,11 @@ ICV-EUiA has been a longstanding ally of ERC, we a lot of shared goals on Republ
 
 @csqp_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 view-if: csqp_formed
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     if (Q.csqp_supporting && Q.cat_coalition.includes("erc")) {
         Q.csqp_relations += 5*(1 - Q.erc_dissent/100);
     } else if (Q.erc_in_gob && Q.cat_coalition.includes("csqp")) {
@@ -391,11 +391,11 @@ CSQP feels like a natural ally of ERC in many ways. We a lot of shared goals on 
 
 @cecp_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 view-if: cecp_formed
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     if (Q.cecp_supporting && Q.cat_coalition.includes("erc")) {
         Q.cecp_relations += 5*(1 - Q.erc_dissent/100);
     } else if (Q.erc_in_gob && Q.cat_coalition.includes("cecp")) {
@@ -428,11 +428,11 @@ CECP feels like a natural ally of ERC in many ways. We a lot of shared goals on 
 
 @ecp_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 view-if: ecp_formed
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     if (Q.ecp_supporting && Q.cat_coalition.includes("erc")) {
         Q.ecp_relations += 3*(1 - Q.erc_dissent/100);
     } else if (Q.erc_in_gob && Q.cat_coalition.includes("ecp")) {
@@ -465,11 +465,11 @@ ECP feels less like a natural ally of ERC than its predecessors. We still have a
 
 @psc_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 view-if: not psc_dissolved
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     if (Q.junts_formed) {
         Q.junts_relations -= 2;
     } else if (Q.jxcat_formed && !Q.erc_in_jxcat) {
@@ -489,7 +489,7 @@ on-arrival: {!
     Q.cat_coalition_includes_psc = Q.cat_coalition.includes("psc");
     Q.cat_coalition_includes_erc = Q.cat_coalition.includes("erc");
 !}
-go-to: psc_relations_iceta if psc_leader = "Miquel Iceta"; psc_relations_parlon if psc_leader = "Nuria Parlón"; psc_relations_navarro if psc_leader = "Pere Navarro"; psc_relations_ros if psc_leader = "Àngel Ros"; psc_relations_tura if psc_leader = "Monsterrat Tura"
+go-to: psc_relations_iceta if psc_leader = "Miquel Iceta"; psc_relations_parlon if psc_leader = "Nuria Parlon"; psc_relations_navarro if psc_leader = "Pere Navarro"; psc_relations_ros if psc_leader = "Àngel Ros"; psc_relations_tura if psc_leader = "Monsterrat Tura"
 
 @psc_relations_iceta
 on-arrival: {!
@@ -580,11 +580,11 @@ Montserrat Tura has taken the PSC through a bold and commendable reform. Not onl
 
 @pdcat_split_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 view-if: pdcat_split
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     Q.pdcat_relations += 5*(1 - Q.erc_dissent/100);
     if (Q.junts_formed) {
         Q.junts_relations -= 2;
@@ -621,11 +621,11 @@ The move to improve our relations with the now-separated, unapologetically bourg
 
 @unio_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 view-if: unio_split and not unio_dissolved
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     Q.unio_relations += 5*(1 - Q.erc_dissent/100);
     if (Q.junts_formed) {
         Q.junts_relations -= 2;
@@ -662,11 +662,11 @@ The move to improve our relations with the now-separated, christian democratic u
 
 @pxc_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 view-if: not pxc_dissolved
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     Q.pxc_relations += 5*(1 - Q.erc_dissent/100);
     if (Q.csqp_formed) {
         Q.csqp_relations -= 5;
@@ -698,11 +698,11 @@ The Catalan far-right of PxC is not only very marginal, but it is also very much
 
 @fnc_relations
 subtitle: -1 resources
-choose-if: erc_resources >= 1
+choose-if: party_resources >= 1
 view-if: fnc_formed
 unavailable-subtitle: Not enough resources
 on-arrival: {!
-    Q.erc_resources -= 1;
+    Q.party_resources -= 1;
     Q.fnc_relations += 5*(1 - Q.erc_dissent/100);
         if (Q.csqp_formed) {
         Q.csqp_relations -= 5;

@@ -1,0 +1,29 @@
+title: New faces in the party
+subtitle: Major PSC names are jumping ship, and some are even joining us
+view-if: ernest_maragall_erc_trigger and (player_party = "erc" or player_was = "erc")
+face-image: img/erc/ernestmaragall.jpg
+new-page: true
+max-visits: 1
+tags: event
+
+With PSC's continuous turn away from its traditional Catalanist moderate-left positions and into more centrist and PSOE-like ones, many of the party's most prominent figures have left in the last few years. Some retired, some founded their own parties or pressure groups, some found new positions elsewhere, like CDC or [? if icv_parlament_s > 0: ICV-EUiA?][? if csqp_parlament_s > 0: CSQP?][? if cecp_parlament_s > 0: CECP?][?if ecp_parlament_s > 0: ECP?]. 
+
+Many, nonetheless, are now knocking at our door. A heavy weight among them: Ernest Maragall. The borther of former President Pasqual Maragall, he's been a figure who has constantly pushed for a more self-centered Catalan left. Already leaving the PSC in 2012, he has not been quiet about his criticism for the party's current position, and has been steadily building a minor party focused on building left-wing independence momentum. There's a true chance now to integrate them into our ranks, which would do wonders for our chances, specially in the Barcelona metropolitan area.
+
+- @ernest_maragall_joins: Welcome to the party!
+
+@ernest_maragall_joins
+subtitle: Ernest Maragall will now be available as an advisor.
+on-arrival: {!
+    Q.ernest_maragall_advisor_available = 1;
+    Q.erc_local_barcelona_support += 2;
+    Q.erc_parlament_barcelona_ind_support += 2;
+    Q.psc_parlament_barcelona_ind_support -= 2;
+    Q.erc_parlament_barcelona_middle_support += 1;
+    Q.psc_parlament_barcelona_middle_support -= 1;
+    Q.erc_parlament_barcelona_unemployed_support += 1;
+    Q.psc_parlament_barcelona_unemployed_support -= 1;
+    Q.erc_pragmatic_strength += 5;
+    Q.erc_pragmatic_dissent -= 5;
+!}
+go-to: post_event

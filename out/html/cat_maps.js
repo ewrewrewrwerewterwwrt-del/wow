@@ -58,7 +58,7 @@
     "Mollet del Vallès": "mollet-del-valles",
     Mataró: "mataro",
     Badalona: "badalona",
-    "Santa Coloma de Gramenet": "santa-coloma-de-gramenet",
+    "Santa Coloma de Gramenet": "santacolomadegramenet",
     Balaguer: "balaguer",
     "Sant Vicenç dels Horts": "sant-vicenc-dels-horts",
     Martorell: "martorell",
@@ -805,7 +805,7 @@
         <circle r="10" id="granollers" cx="555" cy="445" />
         <circle r="10" id="mollet-del-valles" cx="545" cy="465" />
         <circle r="10" id="mataro" cx="615" cy="460" />
-        <circle r="10" id="santa-coloma-de-gramenet" cx="535" cy="499" />
+        <circle r="10" id="santacolomadegramenet" cx="535" cy="499" />
         <circle r="10" id="figueres" cx="720" cy="250" />
         <circle r="10" id="vic" cx="550" cy="340" />
         <circle r="10" id="igualada" cx="390" cy="460" />

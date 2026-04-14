@@ -1,0 +1,19 @@
+title: Pere Navarro resigns
+subtitle: What will happen with the PSC?
+view-if: year == 2014 and month == 6 and psc_leader == "Pere Navarro"
+face-image: img/events/psc_implosion.jpg
+new-page: true
+max-visits: 1
+tags: event
+
+After achieving the worst electoral results in the party's history and failing to mend the major internal rifts within the PSC, Pere Navarro has finally resigned. The party faces now a future of deep uncertainty that puts into question even its financial viability. All the major left-wing figures, as well as the Catalan core of the party have already either retired or left the party during the last couple of years. Local elections were already hard to deal with due to a severe lack of local and regional leadership and grasroots support, and without clear figures to rally around, one can only guess what's next for the PSC.
+
+- @iceta_leadership: A lone candidacy stands
+
+@iceta_leadership
+subtitle: Miquel Iceta will take the role of party leader undisputed
+on-arrival: {!
+    Q.psc_leader = "Miquel Iceta";
+    Q.psc_ideology = "Social Democracy, Autonomism";
+    Q.psc_recovery_mult = 1;
+!}

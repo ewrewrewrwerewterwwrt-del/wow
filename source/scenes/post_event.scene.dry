@@ -123,6 +123,20 @@ if (has_time_passed) {
         'unemployment': Q.unemployment,
         'generalitat_surplus': Q.generalitat_surplus,
     })
+
+
+    // 2.5. Countdown updating.
+    for (var countdown in Q.countdowns) {
+        if (Q[countdown] >= 0) {
+            Q[countdown + "_countdown"] -= 1;
+            // countdowns at -1 are actually usefull for visualizations
+        }
+        if (Q[countdown] == 0) {
+            Q[countdown] = -1;
+            console.info("Countdown for " + countdown + " reached trigger.");
+            Q[countdown + '_trigger'] = 1;
+        }
+    }
 }
 
 // 3. re-calculate dissent.

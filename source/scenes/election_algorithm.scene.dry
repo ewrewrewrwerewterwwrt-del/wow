@@ -726,11 +726,11 @@ var LOCS_RB = [
     ["mollet-del-valles",        67, "cs",  null,  999],
     ["mataro",                   80, "erc", null,  999],
     ["badalona",                 80, "cs",  "erc", 50 ],
-    ["santa-coloma-de-gramenet", 95, "cs",  null,  999],
+    ["santacolomadegramenet",    95, "cs",  null,  999],
     ["balaguer",                 28, "erc", null,  999],
-    ["sant-vicenc-dels-horts",  32, "erc", null,  999],
-    ["martorell",               38, "ciu", null,  999],
-    ["vilafranca-del-penedes",  40, "ciu", null,  999],
+    ["sant-vicenc-dels-horts",   32, "erc", null,  999],
+    ["martorell",                38, "ciu", null,  999],
+    ["vilafranca-del-penedes",   40, "ciu", null,  999],
 ];
 // id, res, primary, secondary, sec_threshold
 

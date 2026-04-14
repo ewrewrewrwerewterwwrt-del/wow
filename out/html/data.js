@@ -598,7 +598,7 @@ const tooltipList = [
     searchString: ["Pere Navarro", "Pere Navarro i Morera"],
     mainText: "Pere Navarro i Morera",
     img: "img/other_leaders/pere_navarro.jpg",
-    ideology: "Social Democracy, Federalism",
+    ideology: "Centrist Social Democracy, Federalism",
     allegiances: (Q) => {
       let list = ["<span style='color: var(--psc)'>PSC</span>"];
       if (Q.psc_leader != "Pere Navarro")
@@ -622,7 +622,7 @@ const tooltipList = [
     searchString: ["Joan Herrera", "Joan Herrera i Torres"],
     mainText: "Joan Herrera i Torres",
     img: "img/other_leaders/joan_herrera.jpg",
-    ideology: "Green Left, Federalism",
+    ideology: "Green Left, Plurinationalism",
     allegiances: (Q) => {
       let list = ["<span style='color: var(--icv)'>ICV-EUiA</span>"];
       if (Q.csqp_formed)
@@ -682,6 +682,89 @@ const tooltipList = [
         list.push("<span style='color: var(--cecp)'>CECP</span>");
       if (Q.ecp_formed) list.push("<span style='color: var(--ecp)'>ECP</span>");
       return list;
+    },
+  },
+  {
+    searchString: ["Àngel Ros", "Angel Ros", "angel ros"],
+    mainText: "Àngel Ros i Domingo",
+    img: "img/other_leaders/angel_ros.jpg",
+    ideology: "Centrist Social Democracy, Plurinationalism",
+    allegiances: (Q) => {
+      return ["<span style='color: var(--psc)'>PSC</span>"];
+    },
+  },
+  {
+    searchString: ["Montserrat Tura", "montserrat tura"],
+    mainText: "Montserrat Tura i Camafreita",
+    img: "img/other_leaders/montserrat_tura.jpg",
+    ideology: "Social Democracy, Plurinationalism",
+    allegiances: (Q) => {
+      let list = [];
+      if (
+        !(Q.psc_implosion_countdown < 0) ||
+        Q.psc_leader == "Montserrat Tura" ||
+        Q.psc_leader == "Àngel Ros"
+      ) {
+        list.push("<span style='color: var(--psc)'>PSC</span>");
+      } else {
+        list.push("<span style='color: var(--psc)'>PSC</span> (former)");
+        list.push("<span style='color: var(--indp)'>indp.</span>");
+      }
+      return list;
+    },
+  },
+  {
+    searchString: ["Ernest Maragall", "ernest maragall"],
+    mainText: "Ernest Maragall i Mira",
+    img: "img/erc/ernestmaragall.jpg",
+    ideology: "Social Democracy, Pragmatic Independence",
+    allegiances: (Q) => {
+      let list = [];
+      if (Q.psc_leader == "Montserrat Tura") {
+        list.push("<span style='color: var(--psc)'>PSC</span>");
+      } else {
+        list.push("<span style='color: var(--psc)'>PSC</span> (former)");
+      }
+      if (Q.ernest_maragall_advisor_available) {
+        list.push("<span style='color: var(--erc)'>ERC</span>");
+      } else {
+        list.push("<span style='color: var(--indp)'>indp.</span>");
+      }
+      return list;
+    },
+  },
+  {
+    searchString: ["Pasqual Maragall", "pasqual maragall"],
+    mainText: "Pasqual Maragall i Mira",
+    img: "img/other_leaders/pasqual_maragall.jpg",
+    ideology: "Social Democracy, Pragmatic Independence",
+    allegiances: (Q) => {
+      return ["<span style='color: var(--psc)'>PSC</span>"];
+    },
+  },
+  {
+    searchString: ["Núria Parlon", "Nuria Parlon", "nuria parlon"],
+    mainText: "Núria Parlon i Gil",
+    img: "img/other_leaders/nuria_parlon.jpg",
+    ideology: "Centrist Social Democracy, Federalism",
+    allegiances: (Q) => {
+      if (Q.art155_ever) {
+        return [
+          "<span style='color: var(--psc)'>PSC</span> (former)",
+          "<span style='color: var(--indp)'>indp.</span>",
+        ];
+      } else {
+        return ["<span style='color: var(--psc)'>PSC</span>"];
+      }
+    },
+  },
+  {
+    searchString: ["Miquel Iceta", "miquel iceta"],
+    mainText: "Miquel Iceta i Llorens",
+    img: "img/other_leaders/miquel_iceta.jpg",
+    ideology: "Centrist Social Democracy, Autonomism",
+    allegiances: (Q) => {
+      return ["<span style='color: var(--psc)'>PSC</span>"];
     },
   },
 ];
@@ -1163,5 +1246,35 @@ const colourList = [
   {
     words: ["Ada Colau"],
     colour: "var(--bcomu)",
+  },
+  {
+    words: ["Àngel Ros", "Angel Ros", "angel ros"],
+    colour: "var(--psc)",
+    transform: "Àngel Ros",
+  },
+  {
+    words: ["Montserrat Tura", "montserrat tura"],
+    colour: "var(--psc)",
+    transform: "Montserrat Tura",
+  },
+  {
+    words: ["Ernest Maragall", "ernest maragall"],
+    colour: "var(--erc)",
+    transform: "Ernest Maragall",
+  },
+  {
+    words: ["Pasqual Maragall", "pasqual maragall"],
+    colour: "var(--psc)",
+    transform: "Pasqual Maragall",
+  },
+  {
+    words: ["Núria Parlon", "Nuria Parlon", "nuria parlon"],
+    colour: "var(--psc)",
+    transform: "Núria Parlon",
+  },
+  {
+    words: ["Miquel Iceta", "miquel iceta"],
+    colour: "var(--psc)",
+    transform: "Miquel Iceta",
   },
 ];

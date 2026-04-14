@@ -16,10 +16,10 @@ Q.unemployment_dataviz = Q.unemployment.toFixed(1);
 
 [? if player_party != 0 and position_disp != 0: [+ player_party +] position: [+ position_disp +] ?]
 
-[? if player_party == "erc": Party resources: [+ erc_resources +] ?]
-[? if player_party == "jxsi": Party resources: [+ jxsi_resources +] ?]
-[? if player_party == "ciu": Party resources: [+ ciu_resources +] ?]
-[? if player_party == "cup": Party resources: [+ cup_resources +] ?]
+[? if player_party == "erc": Party resources: [+ party_resources +] ?]
+[? if player_party == "jxsi": Party resources: [+ party_resources +] ?]
+[? if player_party == "ciu": Party resources: [+ party_resources +] ?]
+[? if player_party == "cup": Party resources: [+ party_resources +] ?]
 
 [? if player_party == "erc": Internal dissent: [+ erc_dissent : dissent +] ?]
 [? if player_party == "jxsi": Internal dissent: [+ jxsi_dissent : dissent +] ?]

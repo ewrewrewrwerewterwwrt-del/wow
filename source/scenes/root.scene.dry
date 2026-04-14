@@ -173,7 +173,7 @@ Q.ppc_leader = "Alícia Sánchez-Camacho";
 Q.ppc_ideology = "Conservatism, Centralism";
 
 Q.icv_leader = "Joan Herrera";
-Q.icv_ideology = "Green Left, Federalism";
+Q.icv_ideology = "Green Left, Plurinationalism";
 Q.comuns_name = "icv";
 
 // Initial ideologies for all parties, also future ones, just in case
@@ -221,7 +221,7 @@ Q.mpais_ideology = "Social Democracy, Federalism";
 Q.sumar_leader = "Yolanda Díaz";
 Q.sumar_ideology = "Social Democracy, Autonomism";
 Q.up_leader = "Pablo Iglesias";
-Q.up_ideology = "Anti-austerity left, Federalism";
+Q.up_ideology = "Anti-austerity left, Plurinationalism";
 
 Q.pnv_leader = "Íñigo Urkullu";
 Q.pnv_ideology = "Christian Democracy, Basque Pact-Pragmatism";
@@ -242,7 +242,7 @@ Q.ccpnc_ideology = "Centrist Liberalism, Canarian Regionalism";
 Q.compromis_leader = "Joan Baldoví";
 Q.compromis_ideology = "Social Democracy, Valencian Regionalism";
 Q.mes_leader = "Biel Barceló";
-Q.mes_ideology = "Left Social Democracy, Balearic Federalism";
+Q.mes_ideology = "Left Social Democracy, Balearic Regionalism";
 Q.bng_leader = "Ana Pontón";
 Q.bng_ideology = "Social Democracy, Galician Independence";
 Q.nos_leader = "Carlos Morais";
@@ -2352,7 +2352,7 @@ Q.roger_torrent_advisor_available = 1;
 Q.alfred_bosch_advisor = 0;
 Q.alfred_bosch_advisor_available = 1;
 Q.ernest_maragall_advisor = 0;
-Q.ernest_maragall_advisor_available = 1;
+Q.ernest_maragall_advisor_available = 0;
 // Civic Nationalists
 Q.joan_laporta_advisor = 0;
 Q.carles_mundo_advisor = 0;
@@ -2401,21 +2401,21 @@ For more information on the politics, government, and recent history of Cataloni
 
 @easy_mode
 title: Begin - Easy
-on-arrival: difficulty = -1; erc_resources = 4; ciu_resources = 4; cup_resources = 5; m_k_relation = 50; m_sr_relation = 62; sr_k_relation = 50; m_split_threshold = 65; sr_split_threshold = 65; m_support_change = 10; sr_support_change = 10; m_discipline_change = 8; sr_discipline_change = 8; max_advisors = 5; ipr_change = 8;
+on-arrival: difficulty = -1; party_resources = 4; party_resources = 4; party_resources = 5; m_k_relation = 50; m_sr_relation = 62; sr_k_relation = 50; m_split_threshold = 65; sr_split_threshold = 65; m_support_change = 10; sr_support_change = 10; m_discipline_change = 8; sr_discipline_change = 8; max_advisors = 5; ipr_change = 8;
 go-to: party_selection
 
 What party shall you lead?
 
 @normal_mode
 title: Begin - Normal
-on-arrival: difficulty = 0; erc_resources = 3; ciu_resources = 3; cup_resources = 3; m_k_relation = 40; m_sr_relation = 55; sr_k_relation = 40; m_split_threshold = 60; sr_split_threshold = 60; m_support_change = 7; sr_support_change = 7; m_discipline_change = 6; sr_discipline_change = 6; max_advisors = 4; ipr_change = 6;
+on-arrival: difficulty = 0; party_resources = 3; party_resources = 3; party_resources = 3; m_k_relation = 40; m_sr_relation = 55; sr_k_relation = 40; m_split_threshold = 60; sr_split_threshold = 60; m_support_change = 7; sr_support_change = 7; m_discipline_change = 6; sr_discipline_change = 6; max_advisors = 4; ipr_change = 6;
 go-to: party_selection
 
 What party shall you lead?
 
 @hard_mode
 title: Begin - Hard
-on-arrival: difficulty = 1; erc_resources = 2; ciu_resources = 2; cup_resources = 2; m_k_relation = 30; m_sr_relation = 40; sr_k_relation = 30; m_split_threshold = 50; sr_split_threshold = 50; m_support_change = 5; sr_support_change = 5; m_discipline_change = 4; sr_discipline_change = 4; max_advisors = 3; ipr_change = 5;
+on-arrival: difficulty = 1; party_resources = 2; party_resources = 2; party_resources = 2; m_k_relation = 30; m_sr_relation = 40; sr_k_relation = 30; m_split_threshold = 50; sr_split_threshold = 50; m_support_change = 5; sr_support_change = 5; m_discipline_change = 4; sr_discipline_change = 4; max_advisors = 3; ipr_change = 5;
 go-to: party_selection
 
 What party shall you lead?
@@ -2473,7 +2473,7 @@ Q.raul_romera_advisor = 0;
 Q.pere_aragones_advisor_available = 0; // Post referendum?
 Q.roger_torrent_advisor_available = 1;
 Q.alfred_bosch_advisor_available = 1;
-Q.ernest_maragall_advisor_available = 1;
+Q.ernest_maragall_advisor_available = 0; // Post PSC implosion
 // Civic Nationalists
 Q.joan_laporta_advisor_available = 1; // locked post 2012? 2015?
 Q.carles_mundo_advisor_available = 1;
