@@ -30,6 +30,7 @@ max-cards: 5
 - @party_erc
 - @party_cup
 - @cat_gov
+- @parlament_deck
 - #advisor
 - @erc_shuffle_leadership_pinned
 - @cup_shuffle_leadership_pinned
@@ -65,6 +66,7 @@ max-cards: 6
 - @party_erc
 - @party_cup
 - @cat_gov
+- @parlament_deck
 - #advisor
 - @erc_shuffle_leadership_pinned
 - @cup_shuffle_leadership_pinned
@@ -101,6 +103,7 @@ max-cards: 3
 - @party_erc
 - @party_cup
 - @cat_gov
+- @parlament_deck
 - #advisor
 
 
@@ -125,3 +128,11 @@ title: Generalitat
 view-if: (player_party = "erc" and erc_in_gov)
 card-image: img/generalitat.jpg
 is-deck: true
+
+@parlament_deck
+title: Parlament
+view-if: year > 2012
+card-image: img/parlament_card.jpg
+is-deck: true
+
+- #parlament_card

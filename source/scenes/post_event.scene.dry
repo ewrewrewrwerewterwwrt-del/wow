@@ -126,16 +126,17 @@ if (has_time_passed) {
 
 
     // 2.5. Countdown updating.
-    for (var countdown in Q.countdowns) {
-        if (Q[countdown] >= 0) {
+    for (var countdown of Q.countdowns) {
+        if (Q[countdown + "_countdown"] >= 0) {
             Q[countdown + "_countdown"] -= 1;
             // countdowns at -1 are actually usefull for visualizations
         }
-        if (Q[countdown] == 0) {
-            Q[countdown] = -1;
+        if (Q[countdown + "_countdown"] == 0) {
+            Q[countdown + "_countdown"] = -1;
             console.info("Countdown for " + countdown + " reached trigger.");
             Q[countdown + '_trigger'] = 1;
         }
+        console.log("Countdown " + countdown + ": " + Q[countdown + "_countdown"] + " ticks remaining.");
     }
 }
 
@@ -160,7 +161,6 @@ for (var p of Q.parties) {
             total_dissent += Q[p + '_' + c + '_dissent']*Q[p + '_' + c + '_strength']/total_strength;
         }
         Q[p+'_dissent'] = total_dissent;
-        console.log(p+'_dissent', Q[p+'_dissent']);
     }
 }
 

@@ -17,6 +17,7 @@ if (Q.next_election_month >= 13) {
 Q.next_election_time = Q.time + 2;
 Q.cat_coalition_disp_old = Q.cat_coalition_disp;
 Q.cat_coalition_disp = Q.president_party + "<span style=\"font-style:italic;\"> caretaker gov.</span>";
+Q.cat_caretaker_gov = true;
 console.info("Set new election date for ", Q.next_election_month, Q.next_election_year, ", week", Q.next_election_week);
 !}
 
@@ -24,6 +25,6 @@ console.info("Set new election date for ", Q.next_election_month, Q.next_electio
 
 President [+ president +] seems to have run out of options, and the current [+ cat_coalition_disp_old +] will be no more. The Parlament has now been disolved, and the next elections will be held in two months time, on [+ next_election_month : month +], [+ next_election_year +].
 
-Until then, the funcitons of the Generalitat will be limitted, and handled by a [+ cat_coalition_disp +].
+Until then, the functions of the Generalitat will be limited, and handled by a [+ cat_coalition_disp +].
 
 - @post_event: May this be our chance!

@@ -10,6 +10,7 @@ Q.year = 2012;
 Q.month = 8;
 Q.week = 1;
 Q.rubicon = 0;
+Q.countdowns = [];
 
 // start situation
 Q.president = "Artur Mas";
@@ -2308,6 +2309,7 @@ Q.n_advisors = 3;
 // these get _timer and _rubicon_timer appended
 Q.timers = [
   "advisor_action",
+  "parlament",
   //erc_party
   'erc_media',
   'erc_shuffle_leadership',
@@ -2381,13 +2383,42 @@ Q.dolors_sabater_advisor = 0;
 Q.gabriela_serra_advisor = 0;
 Q.pau_juvilla_advisor = 0;
 
+
+Q.random_seed = (new Date().getSeconds() / 10).toFixed(0); // Random number between 0 and 5
+console.log("Random Seed: " + Q.random_seed);
+
+switch (Q.random_seed) {
+  default:
+    Q.random_seed_quote_text = "I like Catalan people because they do \"stuff\".";
+    Q.random_seed_author = "Mariano Rajoy, Presidente del Gobierno, 2017";
+  case 0:
+    Q.random_seed_quote_text = "We deserve to be stompped by all the sons of Aznar and Don Pelayo if we don't manage to agree with eachother.";
+    Q.random_seed_author = "Gabriel Rufian, ERC MP at the Congreso, 2019";
+    break;
+  case 1:
+    Q.random_seed_quote_text = "We were going slow, because we were going far.";
+    Q.random_seed_author = "CUP's post-election negotiation motto, circa 2015";
+    break;
+  case 2:
+    Q.random_seed_quote_text = "Everything is ready for the desconnection* \[independence\]. *All that will be needed is to press a button."
+    Q.random_seed_author = "Carles Viver Pi-Sunyer, Parlament's Comissioner for the National Transition, 2015";
+    break;
+  case 3:
+    Q.random_seed_quote_text = "I am not asking for a single euro, just for an agreement.";
+    Q.random_seed_author = "Artur Mas, President de la Generalitat, 2012";
+    break;
+  case 4:
+    Q.random_seed_quote_text = "\"What cannot be, cannot be, on top of that it is impossible.\"";
+    Q.random_seed_author = "Mariano Rajoy, Presidente del Gobierno, 2017";
+    break;
+}
 !}
 set-bg: img/3rd_October_2017.jpg
 new-page: true
 
-> * I like Catalan people because \[...\] they do stuff. *
+> *[+ random_seed_quote_text +]*
 
- - Mariano Rajoy, President of the Government of Spain, 2015
+ - [+ random_seed_author +]
 
 This is a game of alternate history. While historical accuracy is a major concern, keep in mind that this is a *game*, and that any divergence from actual events will necessarily have to involve some element of make-believe. Nevertheless, please let the author know if there are any glaring mistakes.
 
@@ -2500,7 +2531,7 @@ go-to: intros
 title: Convergence and Union (CiU)
 face-image: img/parties/logo_ciu.png
 choose-if: 1==0
-unavailable-subtitle: Comming soon! (hopefully...)
+unavailable-subtitle: Coming soon! (hopefully...)
 
 **Convergence and Union - CiU**
 

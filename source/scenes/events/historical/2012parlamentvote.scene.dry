@@ -18,7 +18,7 @@ The text will express the necessity for a vote the future of Catalonia to be dec
 @sovereign
 title: Self-determination should be based on the sovereignty of the Catalan people
 choose-if: 1==0
-unavailable-subtitle: House Speaker [+ speaker +] ([+ speaker_party +]) is unwilling to make a sovereignty-based declaration in the eves of the upcoming elections.
+unavailable-subtitle: Speaker of the House [+ speaker +] ([+ speaker_party +]) is unwilling to make a sovereignty-based declaration in the eves of the upcoming elections.
 
 @abstract
 title: Self-determination should arise from broad consensuses

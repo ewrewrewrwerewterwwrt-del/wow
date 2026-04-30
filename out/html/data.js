@@ -767,6 +767,15 @@ const tooltipList = [
       return ["<span style='color: var(--psc)'>PSC</span>"];
     },
   },
+  {
+    searchString: ["Gabriel Rufian", "gabriel rufian", "Gabriel Rufián"],
+    mainText: "Gabriel Rufian i Romero",
+    img: "img/erc/rufian.png",
+    ideology: "Left Social Democracy, Independence",
+    allegiances: (Q) => {
+      return ["<span style='color: var(--erc)'>ERC</span>"];
+    },
+  },
 ];
 
 const colourList = [
@@ -1276,5 +1285,10 @@ const colourList = [
     words: ["Miquel Iceta", "miquel iceta"],
     colour: "var(--psc)",
     transform: "Miquel Iceta",
+  },
+  {
+    words: ["Gabriel Rufian", "gabriel rufian", "Grabriel Rufián"],
+    colour: "var(--erc)",
+    transform: "Gabriel Rufián",
   },
 ];

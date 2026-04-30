@@ -1,0 +1,300 @@
+title: Parlament
+new-page: true
+view-if: parlament_timer <= 0 and year > 2012
+on-arrival: parlament_timer += 6; month_actions += 1; coming_from_parlament = false;
+is-card: true
+card-image: img/parlament_card.jpg
+tags: erc_party cup_party parlament_card
+go-to: parlament_options
+
+
+@parlament_options
+title: Parlament
+new-page: true
+on-display: {!
+    const data = [];
+
+    if (Q.si_parlament_s) {
+        data.push({
+            "id": "si",
+            "legend": "SI",
+            "name": "SI",
+            "seats": Q.si_parlament_s,
+        });
+    }
+
+    if (Q.cup_parlament_s) {
+        data.push({
+            "id": "cup",
+            "legend": "CUP",
+            "name": "CUP",
+            "seats": Q.cup_parlament_s,
+        });
+    }
+
+    if (Q.jxsi_parlament_s) {
+        data.push({
+            "id": "jxsi",
+            "legend": "JxSí",
+            "name": "JxSí",
+            "seats": Q.jxsi_parlament_s,
+        });
+    }
+
+    if (Q.icv_parlament_s) {
+        data.push({
+            "id": "icv",
+            "legend": "ICV-EUiA",
+            "name": "ICV-EUiA",
+            "seats": Q.icv_parlament_s,
+        });
+    }
+
+    if (Q.cecp_parlament_s) {
+        data.push({
+            "id": "cecp",
+            "legend": "CECP",
+            "name": "CECP",
+            "seats": Q.cecp_parlament_s,
+        });
+    }
+
+    if(Q.ecp_parlament_s) {
+        data.push({
+            "id": "ecp",
+            "legend": "ECP-PEC",
+            "name": "ECP-PEC",
+            "seats": Q.ecp_parlament_s,
+        });
+    }
+
+    if (Q.erc_parlament_s) {
+        data.push({
+            "id": "erc",
+            "legend": "ERC",
+            "name": "ERC",
+            "seats": Q.erc_parlament_s,
+        });
+    }
+
+    if (Q.csqp_parlament_s) {
+        data.push({
+            "id": "csqp",
+            "legend": "CSQP",
+            "name": "CSQP",
+            "seats": Q.csqp_parlament_s,
+        });
+    }
+
+    if (Q.psc_parlament_s) {
+        data.push({
+            "id": "psc",
+            "legend": "PSC",
+            "name": "PSC",
+            "seats": Q.psc_parlament_s,
+        });
+    }
+
+    if (Q.jxcat_parlament_s) {
+        data.push({
+            "id": "jxcat",
+            "legend": "JxCat",
+            "name": "JxCat",
+            "seats": Q.jxcat_parlament_s,
+        });
+    }
+
+    if (Q.junts_parlament_s) {
+        data.push({
+            "id": "junts",
+            "legend": "Junts",
+            "name": "Junts",
+            "seats": Q.junts_parlament_s,
+        });
+    }
+
+    if (Q.cdc_parlament_s) {
+        data.push({
+            "id": "cdc",
+            "legend": "CDC",
+            "name": "CDC",
+            "seats": Q.cdc_parlament_s,
+        });
+    }
+
+    if (Q.pdcat_parlament_s) {
+        data.push({
+            "id": "pdcat",
+            "legend": "PDeCAT",
+            "name": "PDeCAT",
+            "seats": Q.pdcat_parlament_s,
+        });
+    }
+
+    if (Q.cs_parlament_s) {
+        data.push({
+            "id": "cs",
+            "legend": "Cs",
+            "name": "Cs",
+            "seats": Q.cs_parlament_s,
+        });
+    }
+
+    if (Q.ciu_parlament_s) {
+        data.push({
+            "id": "ciu",
+            "legend": "CiU",
+            "name": "CiU",
+            "seats": Q.ciu_parlament_s,
+        });
+    }
+
+    if (Q.unio_parlament_s) {
+        data.push({
+            "id": "unio",
+            "legend": "UDC",
+            "name": "UDC",
+            "seats": Q.unio_parlament_s,
+        });
+    }
+
+    if (Q.ppc_parlament_s) {
+        data.push({
+            "id": "ppc",
+            "legend": "PPC",
+            "name": "PPC",
+            "seats": Q.ppc_parlament_s,
+        });
+    }
+
+    if (Q.pxc_parlament_s) {
+        data.push({
+            "id": "pxc",
+            "legend": "PxC",
+            "name": "PxC",
+            "seats": Q.pxc_parlament_s,
+        });
+    }
+
+    if (Q.fnc_parlament_s) {
+        data.push({
+            "id": "fnc",
+            "legend": "FNC",
+            "name": "FNC",
+            "seats": Q.fnc_parlament_s,
+        });
+    }
+
+    if (Q.vox_parlament_s) {
+        data.push({
+            "id": "vox",
+            "legend": "Vox",
+            "name": "Vox",
+            "seats": Q.vox_parlament_s,
+        });
+    }
+
+    if (window && d3) {
+        var width = 500;
+        var height = 500;
+        var screenWidth =  document.getElementById('content').offsetWidth;
+        if (screenWidth < width - 50) {
+            width = screenWidth - 50;
+            height = width;
+            document.getElementById("parlament").style.height = screenWidth/2 + "px";
+        }
+        var parliament = d3.parliament();
+        parliament.width(width).height(height).innerRadiusCoef(0.4);
+        parliament.enter.fromCenter(true).smallToBig(false);
+        parliament.exit.toCenter(false).bigToSmall(false);
+        parliament.highlightedParty(Q.player_party);
+        d3.select("#parlament").datum(data).call(parliament);
+    }
+!}
+# face-image: img/parlament_de_catalunya.jpg
+
+= Parlament de Catalunya
+
+{!<svg id="parlament" style="width: 500px; height: 250px;"> </svg>!}
+{!<div style='margin-top: -2em; width: 100%; font-style: italic; text-align: center'>!} Majority: [+ parlament_s_majority +]{!</div>!}
+{!<div style='margin-top: -1em; width: 100%; text-align: center'>!} Speaker of the House:<br/>[+ speaker +] ([+ speaker_party +]){!</div>!}
+
+As a party with representation in the Parlament, we have the opportunity to use our seats to make our voice heard and push for new initiatives and legislation.
+
+- @politica_social
+- @rights
+- @finances
+- @soverignty
+- @budget
+- @root: We don't need to do anything in the Parlament right now
+- @easy_discard
+
+
+@politica_social
+title: Política social
+subtitle: We have long championed the need for more social policies
+
+**Política Social**
+
+[Text]
+
+- @parlament_energy_poverty
+- @parlament_housing
+- @parlament_climate_change
+- @parlament_urbanism
+- @parlament_options: Let us consider other options
+
+@rights
+title: Rights and Liberties
+subtitle: As a left party, pushing for further freedoms is something that has always been on the agenda
+
+**Rights and Liberties**
+
+[Text]
+
+- @parlament_civil_law
+- @parlament_women
+- @parlament_lgbt
+- @parlament_digital
+- @parlament_options: Let us consider other options
+
+@finances
+title: Finances and Economy
+subtitle: Nothing is free, and in finances lay many levers for a more just society
+
+**Finances and Economy**
+
+[Text]
+
+- @parlament_comerce
+- @parlament_inheritance_tax
+- @parlament_bank_taxes
+- @parlament_energy_tax
+- @parlament_options: Let us consider other options
+
+@soverignty
+title: Catalan Sovereignty
+subtitle: No other institutional lever is as symbolic and powerful as pushing for further soverignty than the Parlament
+on-arrival: coming_from_parlament = true;
+
+**On Catalan Sovereignty**
+
+Despite the Parlament being legally limited in its powers, it is still symbolically the highest representative body of the Catalan people. Using that, we can still push for further action within its walls by passing laws allowing the Generalitat and other official bodies more options. It's no secret that, no matter how water-tight we make these, the Constitutional Court will most probably strike them down. 
+
+- @parlament_soverignty_declaration
+- @parlament_international
+- @parlament_local
+- @parlament_non_binding_consultations
+- @parlament_referendum
+- @parlament_dui
+- @parlament_options: Let us consider other options
+
+@budget
+title: Pass the Generalitat's budget
+subtitle: Ensuring government stability may be more important at this moment
+
+**Generalitat's Budget**
+
+[Text]
+
+- @parlament_options: Let us consider other options

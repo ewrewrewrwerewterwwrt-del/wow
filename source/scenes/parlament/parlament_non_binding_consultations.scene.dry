@@ -1,0 +1,12 @@
+title: Law for the allowance of non-binding consultations
+new-page: true
+choose-if: party_resources > 0 and parlament_soverignty_declaration and roadmap != 3 and not parlament_non_binding_consultations
+on-arrival: {!
+    if (Q.coming_from_parlament) {
+        Q.party_resources -= 1;
+    } else {
+
+    }
+!}
+unavailable-subtitle: [? if parlament_non_binding_consultations : Already approved! ?][? if (not parlament_non_binding_consultations) and (roadmap == 3) : Our roadmap to independence is about unilateralism, this is too chill of a path for the party. ?][? if (not parlament_non_binding_consultations) and (not parlament_soverignty_declaration) : A parlamentary Declaration of Sovereignty is required first. ?][? if (not parlament_non_binding_consultations) and (party_resources < 1) : Not enough resources.?]
+subtitle: [? if coming_from_parlament : -1 resources ?]

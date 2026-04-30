@@ -1,6 +1,5 @@
 title: A PSC implosion?
 view-if: psc_implosion_trigger 
-# TODO: the countdown for psc_implosion should start on the Parlament vote on soverignty
 face-image: img/events/psc_implosion.jpg
 new-page: true
 max-visits: 1
