@@ -1851,6 +1851,12 @@ Q.parlament_tarragona_ind_pop = 105120.43076267577;
 // Previous election results (2010)
 Q.abstain_parlament_pv = 25.05; // Voter turnout 74.95% in 2015
 
+Q.ciu_parlament_s = 0;
+Q.ciu_parlament_pv = 0;
+Q.si_parlament_s = 0;
+Q.si_parlament_pv = 0;
+Q.icv_parlament_s = 0;
+Q.icv_parlament_pv = 0;
 Q.cs_parlament_s = 25;
 Q.cs_parlament_pv = 17.9;
 Q.psc_parlament_s = 14;

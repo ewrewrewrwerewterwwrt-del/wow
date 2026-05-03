@@ -372,12 +372,21 @@ on-arrival: {!
                 ]
             },
             {
-                label:   "Constitutionalist Coalition",
+                label:   "Grand Unity Pact",
                 condition: function(s) { return s("psc") > s("cs") && s("ppc") > 0 },
                 members: [
                     { party: "psc", type: "government" },
                     { party: "cs",  type: "support"    },
                     { party: "ppc", type: "support"    }
+                ]
+            },
+            {
+                label:   "Unity Pact",
+                condition: function(s) { return s("psc") > s("cs") && s("ppc") > 0 },
+                members: [
+                    { party: "psc", type: "government" },
+                    { party: "cs",  type: "support"    },
+                    { party: "ppc", type: "abstain"    }
                 ]
             },
             {
