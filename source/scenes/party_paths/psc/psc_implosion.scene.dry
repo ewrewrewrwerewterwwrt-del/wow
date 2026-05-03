@@ -5,9 +5,9 @@ new-page: true
 max-visits: 1
 tags: event
 
-The recent Parlament vote on Catalan soverignty has been for the PSC the last push needed for a major internal crisis which may very well define the party's future for years to come. The moderate center-left party has historically been a proud and staunch defender of Catalan identity, culture, language, and autonomy while rejecting outright independence. 
+The recent Parlament vote on Catalan sovereignty has been for the PSC the last push needed for a major internal crisis which may very well define the party's future for years to come. The moderate center-left party has historically been a proud and staunch defender of Catalan identity, culture, language, and autonomy while rejecting outright independence. 
 
-The current leadership under Pere Navarro has been playing an impossible balancing act of defending a federalist position (opposed by it's own brother party, the PSOE) while opposing any push for further Catalan soverignty. This has not only perfomed poorly electorally, but also created a major rift within the party's Catalan base. With major names already breaking with the party line in the Parlament's vote, whatever comes from this crisis is bound to be decisive in what the PSC even means. 
+The current leadership under Pere Navarro has been playing an impossible balancing act of defending a federalist position (opposed by it's own brother party, the PSOE) while opposing any push for further Catalan sovereignty. This has not only perfomed poorly electorally, but also created a major rift within the party's Catalan base. With major names already breaking with the party line in the Parlament's vote, whatever comes from this crisis is bound to be decisive in what the PSC even means. 
 
 - @psc_implosion_more: Are there even any alternatives to Pere Navarro's leadership?
 
@@ -52,6 +52,7 @@ unavailable-subtitle: [? if party_resources < 2: Not enough resources. ?][? if p
 subtitle: -2 resources
 on-arrival: {!
     Q.psc_leader = "Montserrat Tura";
+    Q.psc_leader_gender = "f";
     Q.psc_ideology = "Social Democracy, Plurinationalism";
     Q.psc_recovery_mult = 1.75;
 !}

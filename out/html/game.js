@@ -268,12 +268,6 @@
   window.onNewPage = function () {
     var scene = window.dendryUI.dendryEngine.state.sceneId;
     console.log("New page: " + scene);
-    if (scene != "root" && !window.justLoaded) {
-      window.dendryUI.autosave();
-    }
-    if (window.justLoaded) {
-      window.justLoaded = false;
-    }
     initCataloniaPolls(
       "cat-polls-widget",
       dendryUI.dendryEngine.state.qualities,
@@ -287,7 +281,18 @@
       "catalonia-local-map",
       dendryUI.dendryEngine.state.qualities,
     );
+    initCatCoalitions(
+      "parlament-coalition-widget",
+      window._cvParlement,
+      dendryUI.dendryEngine.state.qualities,
+    );
     addTooltipEventListeners();
+    if (scene != "root" && !window.justLoaded) {
+      window.dendryUI.autosave();
+    }
+    if (window.justLoaded) {
+      window.justLoaded = false;
+    }
   };
 
   // tabbed browsing
@@ -311,6 +316,11 @@
     );
     initCatLocalMap(
       "catalonia-local-map",
+      dendryUI.dendryEngine.state.qualities,
+    );
+    initCatCoalitions(
+      "parlament-coalition-widget",
+      window._cvParlement,
       dendryUI.dendryEngine.state.qualities,
     );
     addTooltipEventListeners();
@@ -397,7 +407,11 @@
       "catalonia-local-map",
       dendryUI.dendryEngine.state.qualities,
     );
-
+    initCatCoalitions(
+      "parlament-coalition-widget",
+      window._cvParlement,
+      dendryUI.dendryEngine.state.qualities,
+    );
     addTooltipEventListeners();
   };
 

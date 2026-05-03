@@ -3,43 +3,12 @@ tags: election
 view-if: year = next_election_year and month = next_election_month and (week = next_election_week or not rubicon)
 new-page: true
 set-bg: img/parlament_de_catalunya.jpg
-# face-image: img/parlament_card.jpg
-
-And thus, the [+ next_election_month : month +] [+ next_election_year +] Parlament elections have come. 
-
-- @parlament_election_fire: May we do our best...
-
-@parlament_election_fire
 go-to: election_algorithm.cat_parlament
 set-jump: parlament_election.post_election
 
 @post_election
 new-page: true
 on-arrival: {!
-
-    // TODO: this should happen after we display results, otherwise its weird.
-    const clean_boost_parties = ["pxc", "fnc", "vox", "pdcat", "cup", "si", "unio"];
-    for (var p of clean_boost_parties) {
-        if (Q[p + "_parlament_s"] > 0 && Q[p + "_parlament_s"] < 5 && !Q[p + "_parlament_boosted_postelection"]) {
-            for (var c of Q.parlament_constituencies) {
-                for (var d of Q.parlament_demographics) {
-                    Q[p + "_parlament_" + c + "_" + d + "_support"] = 1.25*Q[p + "_parlament_" + c + "_" + d + "_support"];
-                }
-            }
-            Q[p + "_parlament_boosted_postelection"] = true;
-        } else if (Q[p + "_parlament_s"] < 0) {
-            for (var c of Q.parlament_constituencies) {
-                for (var d of Q.parlament_demographics) {
-                    if (Q[p + "_parlament_" + c + "_" + d + "_support"] < 0.25) {
-                        Q[p + "_parlament_" + c + "_" + d + "_support"] = 0;
-                    } else {
-                        Q[p + "_parlament_" + c + "_" + d + "_support"] = 0.1*Q[p + "_parlament_" + c + "_" + d + "_support"];
-                    }
-                }
-            }
-        }
-    }
-
     Q.next_election_year += 4;
     Q.next_election_time += 48;
 !}
@@ -306,9 +275,4 @@ on-display: {!
 
 {!<svg id="party_support_history" style="width: 500px; height: 400px;"> </svg>!}
 
-
-- @back
-
-@back
-title: Continue...
-go-to: main if difficulty = 0; main.main_easy if difficulty = -1; main.main_hard if difficulty = 1
+- @parlament_coalition: Let's see what options this give us...

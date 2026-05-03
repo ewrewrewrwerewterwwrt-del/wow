@@ -1,0 +1,9 @@
+title: parlament left tripartite negotiations phase 0
+
+You should not be here? Report a bug if you see this text.
+
+@erc
+title: Left Tripartite government (ERC-PSC-[+ parlament_current_icv +])
+choose-if: parlament_coalition_erc_psc_icv_s >= parlament_s_majority and ((parlament_current_icv == "icv" and icv_relations > 55) or (parlament_current_icv == "csqp" and csqp_relations > 55) or (parlament_current_icv == "cecp" and cecp_relations > 55) or (parlament_current_icv == "ecp" and ecp_relations > 55) or (parlament_current_icv_leader == "Arcadi Oliveres") and (psc_relations > 55 or (psc_leader == "Montserrat Tura" or psc_leader == "Àngel Ros") and psc_relations > 40))
+view-if: parlament_coalition_erc_psc_icv_s and player_party == "erc"
+unavailable-subtitle: [? if parlament_coalition_erc_psc_icv_s < parlament_s_majority: Not enough parliamentary support. ?][? if not ((parlament_current_icv == "icv" and icv_relations > 55) or (parlament_current_icv == "csqp" and csqp_relations > 55) or (parlament_current_icv == "cecp" and cecp_relations > 55) or (parlament_current_icv == "ecp" and ecp_relations > 55) or (parlament_current_icv_leader == "Arcadi Oliveres")): [+ parlament_current_icv +] does not trust us enough. ?][? if not ((psc_relations > 55 or (psc_leader == "Montserrat Tura" or psc_leader == "Àngel Ros") and psc_relations > 40)): PSC does not trust us enough.?]

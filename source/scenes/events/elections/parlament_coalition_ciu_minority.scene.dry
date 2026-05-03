@@ -1,0 +1,25 @@
+title: parlament coalition ciu minority negotiations phase 0
+
+You should not be here? Report a bug if you see this text.
+
+@erc
+title: [+ parlament_current_ciu +] <span style="font-style: italic;color: [? if parlament_current_ciu = 'ciu': var(--ciu)?][? if parlament_current_ciu = 'cdc': var(--cdc)?][? if parlament_current_ciu = 'dl': var(--dl)?][? if parlament_current_ciu = 'pdcat': var(--pdcat)?][? if parlament_current_ciu = 'jxcat': var(--jxcat)?][? if parlament_current_ciu = 'junts': var(--junts)?]">minority government</span> (with ERC support)
+choose-if: parlament_coalition_ciu_erc_s >= parlament_s_majority and parlament_current_ciu_s > erc_parlament_s and ((parlament_current_ciu == "ciu" and ciu_roadmap != 0) or (parlament_current_ciu == "pdcat" and pdcat_roadmap != 0) or (parlament_current_ciu == "cdc" and cdc_roadmap != 0) or (parlament_current_ciu == "dl" and dl_roadmap != 0) or (parlament_current_ciu == "jxcat" and jxcat_roadmap != 0) or (parlament_current_ciu == "junts" and junts_roadmap != 0)) and (player_party == "erc" and ((parlament_current_ciu == "ciu" and ciu_relations > 40) or (parlament_current_ciu == "pdcat" and pdcat_relations > 40) or (parlament_current_ciu == "cdc" and cdc_relations > 40) or (parlament_current_ciu == "dl" and dl_relations > 40) or (parlament_current_ciu == "jxcat" and jxcat_relations > 40) or (parlament_current_ciu == "junts" and junts_relations > 40)))
+view-if: parlament_coalition_ciu_erc_s
+unavailable-subtitle: [? if parlament_coalition_ciu_erc_s < parlament_s_majority: Not enough parliamentary support. ?][? if (player_party == "erc" and not ((parlament_current_ciu == "ciu" and ciu_relations > 40) or (parlament_current_ciu == "pdcat" and pdcat_relations > 40) or (parlament_current_ciu == "cdc" and cdc_relations > 40) or (parlament_current_ciu == "dl" and dl_relations > 40) or (parlament_current_ciu == "jxcat" and jxcat_relations > 40) or (parlament_current_ciu == "junts" and junts_relations > 40))): [+ parlament_current_ciu +] does not trust us enough to form a government together. ?][? if not ((parlament_current_ciu == "ciu" and ciu_roadmap != 0) or (parlament_current_ciu == "pdcat" and pdcat_roadmap != 0) or (parlament_current_ciu == "cdc" and cdc_roadmap != 0) or (parlament_current_ciu == "dl" and dl_roadmap != 0) or (parlament_current_ciu == "jxcat" and jxcat_roadmap != 0) or (parlament_current_ciu == "junts" and junts_roadmap != 0)): [+ parlament_current_ciu +] has no Roadmap for Independence. ?]
+subtitle: [? if parlament_current_ciu_s > 40 and player_party == "erc": Given the results, we're expected to support [+ parlament_current_ciu_leader +] ?][? if parlament_current_ciu_s <= 40 and player_party == "erc": [+ parlament_current_ciu +] expects a coalition government given the results. ?][? if player_party != "erc": Push for [+ parlament_current_ciu +] and ERC to reach an agreement. ?]
+
+Blah blah
+
+- @post_event: WIP!
+
+@ppc
+title: [+ parlament_current_ciu +] <span style="font-style: italic;color: [? if parlament_current_ciu = 'ciu': var(--ciu)?][? if parlament_current_ciu = 'cdc': var(--cdc)?][? if parlament_current_ciu = 'dl': var(--dl)?][? if parlament_current_ciu = 'pdcat': var(--pdcat)?][? if parlament_current_ciu = 'jxcat': var(--jxcat)?][? if parlament_current_ciu = 'junts': var(--junts)?]">minority government</span> (with PPC [? if unio_parlament_s > 0: + unio?] support)
+choose-if: parlament_coalition_ciu_ppc_unio_s >= parlament_s_majority and ((parlament_current_ciu == "ciu" and ciu_roadmap == 0) or (parlament_current_ciu == "pdcat" and pdcat_roadmap == 0) or (parlament_current_ciu == "cdc" and cdc_roadmap == 0) or (parlament_current_ciu == "dl" and dl_roadmap == 0) or (parlament_current_ciu == "jxcat" and jxcat_roadmap == 0) or (parlament_current_ciu == "junts" and junts_roadmap == 0)) and cat_spa_relation > 50
+view-if: parlament_coalition_ciu_ppc_unio_s
+unavailable-subtitle: [? if parlament_coalition_ciu_ppc_unio_s < parlament_s_majority: Not enough parliamentary support. ?][? if (parlament_current_ciu == "ciu" and ciu_roadmap == 0) or (parlament_current_ciu == "pdcat" and pdcat_roadmap == 0) or (parlament_current_ciu == "cdc" and cdc_roadmap == 0) or (parlament_current_ciu == "dl" and dl_roadmap == 0) or (parlament_current_ciu == "jxcat" and jxcat_roadmap == 0) or (parlament_current_ciu == "junts" and junts_roadmap == 0): [+ parlament_current_ciu +] has an ongoing Roadmap to Independence, which the PPC will not tolerate. ?][? if cat_spa_relation <= 50: Catalonia-Spain relations are too strained. ?]
+subtitle: Let the Right reach an undestanding like the "good" old times. Pujolism will be back.
+on-arrival: {!
+    // TODO: What happens here
+!}
+go-to: post_event

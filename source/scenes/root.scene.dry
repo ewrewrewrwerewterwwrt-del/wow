@@ -150,30 +150,40 @@ Q.abstain_parlament_pv = 41.2;
 Q.ciu_ideology = "Liberal-Conservatism, Pact-Pragmatism";
 Q.ciu_leader = "Artur Mas";
 Q.cdc_leader = "Artur Mas";
+Q.cdc_leader_gender = "m";
+Q.ciu_leader_gender = "m";
 Q.cdc_ideology = "Centre-right Liberalism, Pact-Pragmatism";
 
 Q.unio_leader = "Josep Antoni Duran i Lleida";
+Q.unio_leader_gender = "m";
 Q.unio_ideology = "Christian Democracy, Pact-Pragmatism";
 
 Q.erc_ideology = "Social Democracy, Independence";
 Q.erc_leader = "Oriol Junqueras";
+Q.erc_leader_gender = "m";
 
 Q.cup_ideology = "Anticapitalism, Unilateralism";
 Q.cup_leader = "David Fernàndez";
+Q.cup_leader_gender = "m";
 
 Q.cs_leader = "Albert Rivera";
 Q.cs_ideology = "Neo-liberalism, Centralism";
+Q.cs_leader_gender = "m";
 
 Q.si_leader = "Alfons López Tena";
 Q.si_ideology = "Transversal single-issue, Unilateralism";
+Q.si_leader_gender = "m";
 
 Q.psc_leader = "Pere Navarro";
+Q.psc_leader_gender = "m";
 Q.psc_ideology = "Centrist Social Democracy, Federalism";
 
 Q.ppc_leader = "Alícia Sánchez-Camacho";
+Q.ppc_leader_gender = "f";
 Q.ppc_ideology = "Conservatism, Centralism";
 
 Q.icv_leader = "Joan Herrera";
+Q.icv_leader_gender = "m";
 Q.icv_ideology = "Green Left, Plurinationalism";
 Q.comuns_name = "icv";
 

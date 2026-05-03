@@ -224,7 +224,7 @@ As a party with representation in the Parlament, we have the opportunity to use 
 - @politica_social
 - @rights
 - @finances
-- @soverignty
+- @sovereignty
 - @budget
 - @root: We don't need to do anything in the Parlament right now
 - @easy_discard
@@ -272,16 +272,16 @@ subtitle: Nothing is free, and in finances lay many levers for a more just socie
 - @parlament_energy_tax
 - @parlament_options: Let us consider other options
 
-@soverignty
+@sovereignty
 title: Catalan Sovereignty
-subtitle: No other institutional lever is as symbolic and powerful as pushing for further soverignty than the Parlament
+subtitle: No other institutional lever is as symbolic and powerful as pushing for further sovereignty than the Parlament
 on-arrival: coming_from_parlament = true;
 
 **On Catalan Sovereignty**
 
 Despite the Parlament being legally limited in its powers, it is still symbolically the highest representative body of the Catalan people. Using that, we can still push for further action within its walls by passing laws allowing the Generalitat and other official bodies more options. It's no secret that, no matter how water-tight we make these, the Constitutional Court will most probably strike them down. 
 
-- @parlament_soverignty_declaration
+- @parlament_sovereignty_declaration
 - @parlament_international
 - @parlament_local
 - @parlament_non_binding_consultations

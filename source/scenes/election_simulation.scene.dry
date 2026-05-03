@@ -2714,11 +2714,11 @@ if (window && d3) {
 
 **Government Formation**
 
-[? if ciu_parlament_showviz: CiU will be able to form a <span style='color: #002782; font-style: italic;'>minority government</span> with ERC's support. ?]
+[? if ciu_parlament_showviz: CiU will be able to form a <span style='color: var(--ciu); font-style: italic;'>minority government</span> with ERC's support. ?]
 
-[? if jxsi_parlament_showviz: jxsi will need CUP's support to form a <span style='color: #3ab6a5; font-style: italic;'>Sovereignty government</span>. ?]
+[? if jxsi_parlament_showviz: jxsi will need CUP's support to form a <span style='color: var(--jxsi); font-style: italic;'>Sovereignty government</span>. ?]
 
-[? if jxcat_parlament_showviz: JxCat and ERC will form a <span style='color: #bfa62d; font-style: italic;'>sovereignty government</span> with CUP's support. ?]
+[? if jxcat_parlament_showviz: JxCat and ERC will form a <span style='color: var(--jxcat); font-style: italic;'>sovereignty</span> <span style='color: var(--erc); font-style: italic;'>government</span> with CUP's support. ?]
 [? if not (ciu_parlament_showviz or jxsi_parlament_showviz or jxcat_parlament_showviz): How did we get here??? ?]
 
 - @election_simulation: Reset simulation

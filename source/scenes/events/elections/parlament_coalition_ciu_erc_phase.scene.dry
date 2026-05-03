@@ -1,0 +1,468 @@
+title: [? if ciu_erc_coalition_phase = 3: Yet another ?][+ parlament_current_ciu +][?if ciu_erc_coalition_phase <2 : 's?] [? if ciu_erc_coalition_phase = 2: new ?] coalition proposal 
+subtitle: [? if ciu_erc_coalition_phase = 2: [+ parlament_current_ciu +]-ERC coalition negotiations advance.?][? if ciu_erc_coalition_phase = 3: This is set to be the final round of [+ parlament_current_ciu +]-ERC negotiations.?]
+tags: event
+new-page: true
+view-if: ciu_erc_coalition_phase != 0 and player_party == "erc"
+on-arrival: {!    
+    Q.parlament_coalition_changes = false;
+    Q.parlament_coalition_concessions_social = 0;
+    Q.parlament_coalition_concessions_indy = 0;
+    Q.parlament_coalition_concessions = false;
+    
+    Q.parlament_coalition_leverage = Math.max(10, 30 - (Q.parlament_current_ciu_s - Q.erc_parlament_s));
+    if (Q.speaker_party == Q.parlament_current_ciu) {
+        if (Q.parlament_current_ciu_s > 40) {
+            Q.parlament_coalition_leverage += 3;
+        } else {
+            Q.parlament_coalition_leverage += 10;
+        }
+    } else {
+        if (Q.parlament_current_ciu_s > 40) {
+            Q.parlament_coalition_leverage -= 10;
+        } else {
+            Q.parlament_coalition_leverage -= 5;
+        }
+    }
+
+    if (Q.parlament_coalition_push == 1) {
+        Q.parlament_coalition_leverage += 4;
+    } else if (Q.parlament_coalition_push == 2) {
+        Q.parlament_coalition_leverage += 8;
+    }
+
+    var ciu_proposal_leverage = Q.parlament_coalition_leverage - 3 + Q.ciu_erc_coalition_phase;
+
+    Q.parlament_coalition_proposal_president = Q.parlament_current_ciu;
+    if (Q.parlament_coalition_leverage > 20) {
+        Q.parlament_coalition_proposal_vp = "erc";
+        ciu_proposal_leverage -= 20;
+    } else {
+        Q.parlament_coalition_proposal_vp = Q.parlament_current_ciu;
+    }
+    Q.parlament_coalition_proposal_interior = Q.parlament_current_ciu;
+    Q.parlament_coalition_proposal_economy = Q.parlament_current_ciu;
+    Q.parlament_coalition_proposal_foreign = Q.parlament_current_ciu;
+    Q.parlament_coalition_proposal_health = Q.parlament_current_ciu;
+    Q.parlament_coalition_proposal_education = Q.parlament_current_ciu;
+    Q.parlament_coalition_proposal_territory = Q.parlament_current_ciu;
+    Q.parlament_coalition_proposal_bnl = Q.parlament_current_ciu;
+
+    if (Q[Q.parlament_current_ciu + "_roadmap"] < 3 && Q[Q.parlament_current_ciu + "_roadmap"] > 0 && ciu_proposal_leverage > 7) {
+        Q.parlament_coalition_concessions_indy = 1;
+        switch (Q[Q.parlament_current_ciu + "_roadmap"]) {
+            case 1:
+                if (Q.referendum_held) {
+                    Q.parlament_coalition_concessions_indy_text = "The government commits to respect the results of the Independence Referendum and defend its results, even if it goes beyond the limits of possible negotiations with the Spanish government.";
+                } else {
+                    Q.parlament_coalition_concessions_indy_text = "The government commits to holding an independence consultation within the legislature's mandate.";
+                }
+                break;
+            case 2:
+                if (Q.referendum_held) {
+                    Q.parlament_coalition_concessions_indy_text = "The government commits to respect the results of the Independence Referendum and defend its results, being open to unilateraly declaring independence if there's no other choice.";
+                } else {
+                    Q.parlament_coalition_concessions_indy_text = "The government commits to holding a binding independence referendum within the legislature's mandate.";
+                }
+                break;
+        }
+        ciu_proposal_leverage -= 2;
+    }
+
+    if (Q.parlament_coalition_proposal_bnl != "erc" && ciu_proposal_leverage > 5) {
+        Q.parlament_coalition_proposal_bnl = "erc";
+        ciu_proposal_leverage -= 5;
+    }
+    if (Q.parlament_coalition_proposal_territory != "erc" && ciu_proposal_leverage > 5) {
+        Q.parlament_coalition_proposal_territory = "erc";
+        ciu_proposal_leverage -= 5;
+    }
+    if (Q.parlament_coalition_proposal_education != "erc" && ciu_proposal_leverage > 7) {
+        Q.parlament_coalition_proposal_education = "erc";
+        ciu_proposal_leverage -= 7;
+    }
+    if (Q.parlament_coalition_proposal_health != "erc" && ciu_proposal_leverage > 7) {
+        Q.parlament_coalition_proposal_health = "erc";
+        ciu_proposal_leverage -= 7;
+    }
+    if (Q.parlament_coalition_proposal_foreign != "erc" && ciu_proposal_leverage > 6) {
+        Q.parlament_coalition_proposal_foreign = "erc";
+        ciu_proposal_leverage -= 6;
+    }
+    if (Q.parlament_coalition_proposal_economy != "erc" && ciu_proposal_leverage > 10) {
+        Q.parlament_coalition_proposal_economy = "erc";
+        ciu_proposal_leverage -= 10;
+    } 
+    if (Q.parlament_coalition_proposal_interior != "erc" && ciu_proposal_leverage > 10) {
+        Q.parlament_coalition_proposal_interior = "erc";
+        ciu_proposal_leverage -= 10;
+    } 
+
+    Q.parlament_coalition_leverage = ciu_proposal_leverage + 3 - Q.ciu_erc_coalition_phase;
+!}
+go-to: phase_text
+
+@phase_text
+go-to: parlament_coalition_setnames
+set-jump: choices
+
+@choices
+new-page: true
+
+[? if not parlament_coalition_changes: The representatives of [+ parlament_current_ciu +] have come forward with a [?if ciu_erc_coalition_phase > 1: new?] proposal for the formation of a new coalition government: ?][? if parlament_coalition_changes: After our ammendments, the proposal for the formation of a new coalition government looks like this: ?]
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content:center"><img src="img/cat_seal.svg"></div><div style="width:80%; padding-left: 1em;"> **M.H.** [? if parlament_coalition_proposal_president_gender = "m": **President** ?][? if parlament_coalition_proposal_president_gender = "f": **Presidenta** ?] **[+ parlament_coalition_proposal_president_name +]** ([+ parlament_coalition_proposal_president +])<br/> <span style="font-size:0.9em;"> [? if parlament_coalition_proposal_vp_gender = "m": **H. Vicepresident** ?][? if parlament_coalition_proposal_vp_gender = "f": **H. Vicepresidenta** ?] [+ parlament_coalition_proposal_vp_name +] ([+ parlament_coalition_proposal_vp +])</span></div></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/economy_icon.svg"/></div><div> **Economy** ([+ parlament_coalition_proposal_economy +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_economy_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/health_icon.svg"/></div><div> **Health** ([+ parlament_coalition_proposal_health +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_health_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/education_icon.svg"/></div><div> **Education** ([+ parlament_coalition_proposal_education +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_education_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/interior_icon.svg"/></div><div> **Interior** ([+ parlament_coalition_proposal_interior +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_interior_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/international_icon.svg"/></div><div> **Foreign Affairs** ([+ parlament_coalition_proposal_foreign +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_foreign_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;width:105%"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/labour_icon.svg"/></div><div> **Business & Labour** ([+ parlament_coalition_proposal_bnl +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_bnl_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/territory_icon.svg"/></div><div> **Territory** ([+ parlament_coalition_proposal_territory +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_territory_name +]</span></div></div>
+
+
+[? if parlament_coalition_concessions_social or parlament_coalition_concessions_indy: **Policy Concessions**?]
+
+[? if parlament_coalition_concessions_social: - We've added policy requirements pushing for less austerity and more social spending to our proposal.?]
+
+[? if parlament_coalition_concessions_indy: - [+ parlament_coalition_concessions_indy_text +] ?]
+
+[? if not parlament_coalition_concessions: Even if we accept this proposal, we can still negotiate policy concessions.?]
+
+- @policy_concessions
+- @changes
+- @send_back
+- @accept
+
+@policy_concessions
+title: Propose Policy Commitments
+
+- @social_concessions
+- @indy_concessions
+- @push_leverage_concessions
+- @phase_text: Finish proposing policies
+
+@social_concessions
+title: Social Policies
+go-to: policy_concessions
+choose-if: parlament_coalition_concessions_social < 1 and parlament_coalition_leverage >= 5
+unavailable-subtitle: [? if parlament_coalition_concessions_social >= 1: We've already proposed social policy concessions.?][? if parlament_coalition_leverage < 5: We don't have enough leverage to propose more concessions.?]
+on-arrival: {!
+    Q.parlament_coalition_concessions = true;
+    Q.parlament_coalition_concessions_social += 1;
+!}
+
+We've added policy requirements pushing for less austerity and more social spending to our proposal.
+
+@indy_concessions
+title: Catalan Independence Policies
+go-to: policy_concessions
+choose-if: parlament_coalition_concessions_indy < 1 and parlament_coalition_leverage >= 5
+unavailable-subtitle: [? if parlament_coalition_concessions_indy >= 1: We've already proposed independence-related concessions.?][? if parlament_coalition_leverage < 5: We don't have enough leverage to propose more concessions.?]
+on-arrival: {!
+    Q.parlament_coalition_concessions = true;
+    Q.parlament_coalition_concessions_indy += 1;
+
+    switch (Q[Q.parlament_current_ciu + "_roadmap"]) {
+        case 1:
+            if (Q.referendum_held) {
+                Q.parlament_coalition_concessions_indy_text = "We've proposed that the government commits to respect the results of the Independence Referendum and defend its results, even if it goes beyond the limits of possible negotiations with the Spanish government.";
+            } else {
+                Q.parlament_coalition_concessions_indy_text = "We've proposed that the government commits to holding an independence consultation within the legislature's mandate.";
+            }
+            break;
+        case 2:
+            if (Q.referendum_held) {
+                Q.parlament_coalition_concessions_indy_text = "We've proposed that the government commits to respect the results of the Independence Referendum and defend its results, being open to unilateraly declaring independence if there's no other choice.";
+            } else {
+                Q.parlament_coalition_concessions_indy_text = "We've proposed that the government commits to holding a binding independence referendum within the legislature's mandate.";
+            }
+            break;
+        case 3:
+            if (Q.referendum_held) {
+                Q.parlament_coalition_concessions_indy_text = "We've proposed that the government commits to respect the results of the Independence Referendum and push for an unilateral declaration of independence.";
+            } else {
+                Q.parlament_coalition_concessions_indy_text = "We've proposed that the government commits to holding a binding independence referendum within the legislature's mandate, and to respect its results no matter what.";
+            }
+            break;
+    }
+!}
+
+[+ parlament_coalition_concessions_indy_text +]
+
+@push_leverage_concessions
+title: Push for more concessions
+view-if: parlament_coalition_leverage < 10
+choose-if: parlament_coalition_push < ciu_erc_coalition_phase and ciu_erc_coalition_phase < 3
+unavailable-subtitle: We've already pushed for more demands. [? if ciu_erc_coalition_phase < 3: We'll have to wait for the next round of negotiations to try again. ?]
+on-arrival: {!
+    if (Q.ciu_erc_coalition_phase == 1) {
+        Q.parlament_coalition_leverage += 4;
+        Q[Q.parlament_current_ciu + "_relations"] -= 5;
+    } else {
+        Q.parlament_coalition_leverage += 4;
+        Q[Q.parlament_current_ciu + "_relations"] -= 3;
+    }
+    Q.parlament_coalition_push += 1;
+!}
+go-to: policy_concessions
+
+@changes
+title: Propose an alternative Government Composition
+
+[? if not parlament_coalition_changes: We can try to propose a different distribution of ministeries, but there's no guarantee that it will be accepted. ?]
+
+- @vp
+- @economy
+- @health
+- @education
+- @interior
+- @foreign
+- @territory
+- @bnl
+- @push_leverage_positions
+- @phase_text: Finish proposing changes
+
+@vp
+title: [? if parlament_coalition_proposal_vp != "erc": Demand the Vice-Presidency ?][? if parlament_coalition_proposal_vp = "erc": Give up the Vice-Presidency ?]
+choose-if: (parlament_coalition_proposal_vp != "erc" and parlament_coalition_leverage >= 10 and (parlament_coalition_proposal_interior = "erc" or parlament_coalition_proposal_economy = "erc" or parlament_coalition_proposal_health = "erc" or parlament_coalition_proposal_education = "erc" or parlament_coalition_proposal_foreign = "erc" or parlament_coalition_proposal_territory = "erc" or parlament_coalition_proposal_bnl = "erc")) or (parlament_coalition_proposal_vp = "erc")
+unavailable-subtitle: [? if parlament_coalition_leverage < 10: We don't have enough leverage to demand the Vice-Presidency. ?][? if parlament_coalition_leverage >= 10: It's not possible for us to demand *only* the Vice-Presidency. ?]
+on-arrival: {!
+    Q.parlament_coalition_changes = true;
+    if (Q.parlament_coalition_proposal_vp != "erc") {
+        Q.parlament_coalition_proposal_vp = "erc";
+        Q.parlament_coalition_leverage -= 20;
+    } else {
+        Q.parlament_coalition_proposal_vp = Q.parlament_current_ciu;
+        Q.parlament_coalition_leverage += 20;
+    }
+!}
+go-to: changes
+
+[? if parlament_coalition_proposal_vp = "erc": We've added the Vice-Presidency to our proposal.?][? if parlament_coalition_proposal_vp != "erc": We've proposed giving up the Vice-Presidency to [+ parlament_current_ciu +].?]
+
+@economy
+title: [? if parlament_coalition_proposal_economy != "erc": Demand the Economy Ministry ?][? if parlament_coalition_proposal_economy = "erc": Give up the Economy Ministry ?]
+choose-if: (parlament_coalition_proposal_economy != "erc" and parlament_coalition_leverage >= 10) or (parlament_coalition_proposal_economy = "erc")
+unavailable-subtitle: We don't have enough leverage to demand the Economy Ministry.
+on-arrival: {!
+    Q.parlament_coalition_changes = true;
+    if (Q.parlament_coalition_proposal_economy != "erc") {
+        Q.parlament_coalition_proposal_economy = "erc";
+        Q.parlament_coalition_leverage -= 10;
+    } else {
+        Q.parlament_coalition_proposal_economy = Q.parlament_current_ciu;
+        Q.parlament_coalition_leverage += 10;
+    }
+!}
+go-to: changes
+
+[? if parlament_coalition_proposal_economy = "erc": We've added the Economy Ministry to our proposal.?][? if parlament_coalition_proposal_economy != "erc": We've proposed giving up the Economy Ministry to [+ parlament_current_ciu +].?]
+
+@health
+title: [? if parlament_coalition_proposal_health != "erc": Demand the Health Ministry ?][? if parlament_coalition_proposal_health = "erc": Give up the Health Ministry ?]
+choose-if: (parlament_coalition_proposal_health != "erc" and parlament_coalition_leverage >= 7) or (parlament_coalition_proposal_health = "erc")
+unavailable-subtitle: We don't have enough leverage to demand the Health Ministry.
+on-arrival: {!
+    Q.parlament_coalition_changes = true;
+    if (Q.parlament_coalition_proposal_health != "erc") {
+        Q.parlament_coalition_proposal_health = "erc";
+        Q.parlament_coalition_leverage -= 7;
+    } else {
+        Q.parlament_coalition_proposal_health = Q.parlament_current_ciu;
+        Q.parlament_coalition_leverage += 7;
+    }
+!}
+go-to: changes
+
+[? if parlament_coalition_proposal_health = "erc": We've added the Health Ministry to our proposal.?][? if parlament_coalition_proposal_health != "erc": We've proposed giving up the Health Ministry to [+ parlament_current_ciu +].?]
+
+@education
+title: [? if parlament_coalition_proposal_education != "erc": Demand the Education Ministry ?][? if parlament_coalition_proposal_education = "erc": Give up the Education Ministry ?]
+choose-if: (parlament_coalition_proposal_education != "erc" and parlament_coalition_leverage >= 7) or (parlament_coalition_proposal_education = "erc")
+unavailable-subtitle: We don't have enough leverage to demand the Education Ministry.
+on-arrival: {!
+    Q.parlament_coalition_changes = true;
+    if (Q.parlament_coalition_proposal_education != "erc") {
+        Q.parlament_coalition_proposal_education = "erc";
+        Q.parlament_coalition_leverage -= 7;
+    } else {
+        Q.parlament_coalition_proposal_education = Q.parlament_current_ciu;
+        Q.parlament_coalition_leverage += 7;
+    }
+!}
+go-to: changes
+
+[? if parlament_coalition_proposal_education = "erc": We've added the Education Ministry to our proposal.?][? if parlament_coalition_proposal_education != "erc": We've proposed giving up the Education Ministry to [+ parlament_current_ciu +].?]
+
+@interior
+title: [? if parlament_coalition_proposal_interior != "erc": Demand the Interior Ministry ?][? if parlament_coalition_proposal_interior = "erc": Give up the Interior Ministry ?]
+choose-if: (parlament_coalition_proposal_interior != "erc" and parlament_coalition_leverage >= 10) or (parlament_coalition_proposal_interior = "erc")
+unavailable-subtitle: We don't have enough leverage to demand the Interior Ministry.
+on-arrival: {!
+    Q.parlament_coalition_changes = true;
+    if (Q.parlament_coalition_proposal_interior != "erc") {
+        Q.parlament_coalition_proposal_interior = "erc";
+        Q.parlament_coalition_leverage -= 10;
+    } else {
+        Q.parlament_coalition_proposal_interior = Q.parlament_current_ciu;
+        Q.parlament_coalition_leverage += 10;
+    }
+!}
+go-to: changes
+
+[? if parlament_coalition_proposal_interior = "erc": We've added the Interior Ministry to our proposal.?][? if parlament_coalition_proposal_interior != "erc": We've proposed giving up the Interior Ministry to [+ parlament_current_ciu +].?]
+
+@foreign
+title: [? if parlament_coalition_proposal_foreign != "erc": Demand the Foreign Affairs Ministry ?][? if parlament_coalition_proposal_foreign = "erc": Give up the Foreign Affairs Ministry ?]
+choose-if: (parlament_coalition_proposal_foreign != "erc" and parlament_coalition_leverage >= 6) or (parlament_coalition_proposal_foreign = "erc")
+unavailable-subtitle: We don't have enough leverage to demand the Foreign Affairs Ministry.
+on-arrival: {!
+    Q.parlament_coalition_changes = true;
+    if (Q.parlament_coalition_proposal_foreign != "erc") {
+        Q.parlament_coalition_proposal_foreign = "erc";
+        Q.parlament_coalition_leverage -= 6;
+    } else {
+        Q.parlament_coalition_proposal_foreign = Q.parlament_current_ciu;
+        Q.parlament_coalition_leverage += 6;
+    }
+!}
+go-to: changes
+
+[? if parlament_coalition_proposal_foreign = "erc": We've added the Foreign Affairs Ministry to our proposal.?][? if parlament_coalition_proposal_foreign != "erc": We've proposed giving up the Foreign Affairs Ministry to [+ parlament_current_ciu +].?]
+
+@territory
+title: [? if parlament_coalition_proposal_territory != "erc": Demand the Territory Ministry ?][? if parlament_coalition_proposal_territory = "erc": Give up the Territory Ministry ?]
+choose-if: (parlament_coalition_proposal_territory != "erc" and parlament_coalition_leverage >= 5) or (parlament_coalition_proposal_territory = "erc")
+unavailable-subtitle: We don't have enough leverage to demand the Territory Ministry.
+on-arrival: {!
+    Q.parlament_coalition_changes = true;
+    if (Q.parlament_coalition_proposal_territory != "erc") {
+        Q.parlament_coalition_proposal_territory = "erc";
+        Q.parlament_coalition_leverage -= 5;
+    } else {
+        Q.parlament_coalition_proposal_territory = Q.parlament_current_ciu;
+        Q.parlament_coalition_leverage += 5;
+    }
+!}
+go-to: changes
+
+[? if parlament_coalition_proposal_territory = "erc": We've added the Territory Ministry to our proposal.?][? if parlament_coalition_proposal_territory != "erc": We've proposed giving up the Territory Ministry to [+ parlament_current_ciu +].?]
+
+@bnl
+title: [? if parlament_coalition_proposal_bnl != "erc": Demand the Business & Labour Ministry ?][? if parlament_coalition_proposal_bnl = "erc": Give up the Business & Labour Ministry ?]
+choose-if: (parlament_coalition_proposal_bnl != "erc" and parlament_coalition_leverage >= 5) or (parlament_coalition_proposal_bnl = "erc")
+unavailable-subtitle: We don't have enough leverage to demand the Business & Labour Ministry.
+on-arrival: {!
+    Q.parlament_coalition_changes = true;
+    if (Q.parlament_coalition_proposal_bnl != "erc") {
+        Q.parlament_coalition_proposal_bnl = "erc";
+        Q.parlament_coalition_leverage -= 5;
+    } else {
+        Q.parlament_coalition_proposal_bnl = Q.parlament_current_ciu;
+        Q.parlament_coalition_leverage += 5;
+    }
+!}
+go-to: changes
+
+[? if parlament_coalition_proposal_bnl = "erc": We've added the Business & Labour Ministry to our proposal.?][? if parlament_coalition_proposal_bnl != "erc": We've proposed giving up the Business & Labour Ministry to [+ parlament_current_ciu +].?]
+
+@push_leverage_positions
+title: Push for more positions
+view-if: parlament_coalition_leverage < 10
+choose-if: parlament_coalition_push < ciu_erc_coalition_phase and ciu_erc_coalition_phase < 3
+unavailable-subtitle: We've already pushed for more demands. [? if ciu_erc_coalition_phase < 3: We'll have to wait for the next round of negotiations to try again. ?]
+on-arrival: {!
+    if (Q.ciu_erc_coalition_phase == 1) {
+        Q.parlament_coalition_leverage += 4;
+        Q[Q.parlament_current_ciu + "_relations"] -= 5;
+    } else {
+        Q.parlament_coalition_leverage += 4;
+        Q[Q.parlament_current_ciu + "_relations"] -= 3;
+    }
+    Q.parlament_coalition_push += 1;
+!}
+go-to: changes
+
+@send_back
+title: Send this counter-proposal
+view-if: parlament_coalition_changes or parlament_coalition_concessions
+subtitle: [?if parlament_coalition_push >= ciu_erc_coalition_phase: Back-and-forth negotiations will take some time, but may give us the extra edge needed for a better deal. ?]
+on-arrival: {!
+    Q.parlament_coalition_proposal_accept = true;
+    if (Q.parlament_coalition_push >= Q.ciu_erc_coalition_phase) {
+        Q.parlament_coalition_proposal_accept = false;
+    } else {
+        if (Q.parlament_current_ciu_s > 40) {
+            Q[Q.parlament_current_ciu + "_relations"] -= 2;
+            if (Q.parlament_coalition_proposal_vp == "erc" || Q.parlament_coalition_proposal_interior == "erc" || Q.parlament_coalition_proposal_economy == "erc") {
+                Q.parlament_coalition_proposal_accept = false;
+            }
+        } else {
+            if (Q.parlament_coalition_proposal_vp != "erc" && Q.ciu_erc_coalition_phase != 3) {
+                Q.parlament_coalition_proposal_accept = false;
+            } 
+            if ((Q.parlament_coalition_proposal_interior == "erc" || Q.parlament_coalition_proposal_economy == "erc") && Q.ciu_erc_coalition_phase != 3) {
+                Q.parlament_coalition_proposal_accept = false;
+            }
+        }
+    }
+!}
+go-to: decision
+
+@decision
+title: decision
+go-to: accept if parlament_coalition_proposal_accept; next_phase if parlament_coalition_proposal_accept = false
+
+@next_phase
+title: next phase
+go-to: new_elections if ciu_erc_coalition_phase >= 3; new_phase_2 if not ciu_erc_coalition_phase >= 3
+
+@new_phase_2
+on-arrival: {!
+    Q.ciu_erc_coalition_phase += 1;
+    Q.month_actions += 1;
+    Q.independence_trust -= 5;
+!} 
+
+[+ parlament_current_ciu +]'s representatives were initially dubious about our new proposal[? if parlament_current_ciu_s > 40 and parlament_coalition_proposal_vp = "erc" or parlament_coalition_proposal_economy = "erc" or parlament_coalition_proposal_interior = "erc": . Given the parliamentary arithmetics, they were reticent about ?][? if parlament_current_ciu_s <= 40 and parlament_coalition_proposal_vp != "erc" or parlament_coalition_proposal_economy = "erc" or parlament_coalition_proposal_interior = "erc": . They seemed reticent about ?][? if parlament_coalition_proposal_vp = "erc" and parlament_current_ciu_s > 40: giving up the Vice-Presidency?][? if parlament_coalition_proposal_vp != "erc" and parlament_current_ciu_s <= 40: us giving up the Vice-Presidency?][? if parlament_coalition_proposal_interior = "erc": [? if parlament_coalition_proposal_vp = "erc" : [? if parlament_coalition_proposal_economy != "erc": and ?][? if parlament_coalition_proposal_economy = "erc": , ?]?]giving up Interior ?][? if parlament_coalition_proposal_economy = "erc": [? if parlament_coalition_proposal_interior = "erc" or parlament_coalition_proposal_vp = "erc": and ?] giving up Economy ?]. We will have to wait until the [+ parlament_current_ciu +] and ERC negotiating teams reconvine to advance negotiations.
+
+- @post_event: And so, time passes...
+
+
+@accept
+title: Accept proposal
+choose-if: not parlament_coalition_changes and not parlament_coalition_concessions
+unavailable-subtitle: We have proposed changes, which will require approval by [+ parlament_current_ciu +].
+on-arrival: {!
+    Q.ciu_erc_coalition_phase = 0;
+    Q.cat_coalition_disp = "<span style='color: var(--" + Q.parlament_current_ciu + "); font-style: italic;'>Sovereignty</span> <span style='color: var(--erc); font-style: italic;'>government</span>";
+    Q.erc_in_gob = true;
+    Q.cat_coalition = [Q.parlament_current_ciu, "erc"];
+    Q.cat_coalition_dissent = 0;
+!}
+
+After some ardous negotiations, we have finally reached an agreement with [+ parlament_current_ciu +] to form a [+ cat_coalition_disp +]. Let's hope cooperation continues during this legislature, and that promises are kept!
+
+- @parlament_coalition_resolve: A new government is formed
+
+
+@new_elections
+title: new elections
+on-arrival: {!
+    Q.ciu_erc_coalition_phase = 0;
+    Q[Q.parlament_current_ciu + "_relations"] -= 5;
+    Q.independence_trust -= 10;
+    // TO-DO: Move some votes to CUP, some to CiU
+!}
+call: snap_election
+
+After three rounds of negotiations, we've reached the end of the road. With no agreement in sight and no more time for back-and-forth, the only option left is to call for new elections and hope for a better result. Needless to say, neither [+ parlament_current_ciu +] nor the pro-independence groups are happy about this outcome.
+
+- @post_event: We'll have to see if we fare any better this time...

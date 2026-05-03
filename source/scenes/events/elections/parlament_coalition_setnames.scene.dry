@@ -1,0 +1,277 @@
+title: set coalition names
+on-arrival: {!
+    // TODO: Add more party support
+    
+
+    Q.parlament_coalition_proposal_president_gender = Q[Q.parlament_coalition_proposal_president + "_leader_gender"];
+    Q.parlament_coalition_proposal_president_name = Q[Q.parlament_coalition_proposal_president + "_leader"];
+    
+    console.log("Stuff:", Q.parlament_coalition_proposal_president, Q.ciu_leader_gender, Q[Q.parlament_coalition_proposal_president + "_leader_gender"], Q.parlament_coalition_proposal_president_gender);
+
+    if (Q.parlament_coalition_proposal_vp == Q.parlament_coalition_proposal_president) {
+        switch (Q.parlament_coalition_proposal_vp) {
+            case "ciu":
+            case "cdc":
+                Q.parlament_coalition_proposal_vp_name = "Neus Munté";
+                Q.parlament_coalition_proposal_vp_gender = "f";
+                break;
+            case "dl":
+                Q.parlament_coalition_proposal_vp_name = "Francesc Homs";
+                Q.parlament_coalition_proposal_vp_gender = "m";
+                break;
+            case "pdcat":
+                Q.parlament_coalition_proposal_vp_name = "Marta Pascal";
+                Q.parlament_coalition_proposal_vp_gender = "f";
+                break;
+            case "jxcat":
+                if (!Q.erc_in_jxcat) {
+                    if (Q.jxcat_bcnleader == "Elsa Artadi") {
+                        Q.parlament_coalition_proposal_vp_name = "Jordi Turull";
+                        Q.parlament_coalition_proposal_vp_gender = "m";
+                    } else {
+                        Q.parlament_coalition_proposal_vp_name = "Elsa Artadi";
+                        Q.parlament_coalition_proposal_vp_gender = "f";
+                    }
+                } else {
+                    // FIXME: with ERC in JxCAT, the VP should be decided based on whatever the jxcat composition ends up being
+                    Q.parlament_coalition_proposal_vp_name = "JXCAT WHO?";
+                    Q.parlament_coalition_proposal_vp_gender = "?";
+                }
+                break;
+            case "junts":
+                if (Q.junts_leader == "Laura Borràs") {
+                    Q.parlament_coalition_proposal_vp_name = "Jordi Sànchez";
+                    Q.parlament_coalition_proposal_vp_gender = "m";
+                } else {
+                    Q.parlament_coalition_proposal_vp_name = "Laura Borràs";
+                    Q.parlament_coalition_proposal_vp_gender = "f";
+                }
+                break;
+            case "erc":
+                if (Q.erc_leader != "Marta Rovira") {
+                    Q.parlament_coalition_proposal_vp_name = "Marta Rovira";
+                    Q.parlament_coalition_proposal_vp_gender = "f";
+                } else {
+                    Q.parlament_coalition_proposal_vp_name = "Pere Aragonès";
+                    Q.parlament_coalition_proposal_vp_gender = "m";
+                }
+        }
+    } else {
+        Q.parlament_coalition_proposal_vp_gender = Q[Q.parlament_coalition_proposal_vp + "_leader_gender"];
+        Q.parlament_coalition_proposal_vp_name = Q[Q.parlament_coalition_proposal_vp + "_leader"];
+    }
+
+    switch (Q.parlament_coalition_proposal_economy) {
+        case "ciu":
+        case "cdc":
+        case "dl":
+        case "pdcat":
+        case "junts":
+            if (Q.year < 2018) {
+                Q.parlament_coalition_proposal_economy_name = "Andreu Mas-Colell";
+                Q.parlament_coalition_proposal_economy_gender = "m";
+            } else {
+                Q.parlament_coalition_proposal_economy_name = "Jaume Giró";
+                Q.parlament_coalition_proposal_economy_gender = "m";
+            }
+            break;
+        case "jxcat":
+            if (Q.erc_in_jxcat) {
+                Q.parlament_coalition_proposal_economy_name = "Pere Aragonès";
+                Q.parlament_coalition_proposal_economy_gender = "m";
+            } else {
+                Q.parlament_coalition_proposal_economy_name = "Jaume Giró";
+                Q.parlament_coalition_proposal_economy_gender = "m";
+            }
+            break;
+        case "erc":
+            if (Q.year > 2016) {
+                Q.parlament_coalition_proposal_economy_name = "Pere Aragonès";
+                Q.parlament_coalition_proposal_economy_gender = "m";
+            } else if (Q.parlament_coalition_proposal_vp_name != "Marta Rovira" && Q.erc_leader != "Marta Rovira") {
+                Q.parlament_coalition_proposal_economy_name = "Marta Rovira";
+                Q.parlament_coalition_proposal_economy_gender = "f";
+            } else {
+                Q.parlament_coalition_proposal_economy_name = "Josep Huguet";
+                Q.parlament_coalition_proposal_economy_gender = "m";
+            }
+            break;
+    }
+
+    switch (Q.parlament_coalition_proposal_interior) {
+        case "ciu":
+        case "cdc":
+        case "dl":
+        case "pdcat":
+        case "junts":
+            if (Q.year < 2018) {
+                Q.parlament_coalition_proposal_interior_name = "Felip Puig";
+                Q.parlament_coalition_proposal_interior_gender = "m";
+            } else {
+                Q.parlament_coalition_proposal_interior_name = "Miquel Buch";
+                Q.parlament_coalition_proposal_interior_gender = "m";
+            }
+            break;
+        case "jxcat":
+            Q.parlament_coalition_proposal_interior_name = "Joaquim Forn";
+            Q.parlament_coalition_proposal_interior_gender = "m";
+            break;
+        case "erc":
+            if (Q.psc_leader != "Àngel Ros" && Q.psc_leader != "Montserrat Tura") {
+                Q.parlament_coalition_proposal_interior_name = "Joan Ignasi Elena";
+                Q.parlament_coalition_proposal_interior_gender = "m";
+            } else {
+                Q.parlament_coalition_proposal_interior_name = "Carles Mundó";
+                Q.parlament_coalition_proposal_interior_gender = "m";
+            }
+    }
+
+    switch (Q.parlament_coalition_proposal_health) {
+        case "indp.":
+            Q.parlament_coalition_proposal_health_name = "Boi Ruiz";
+            Q.parlament_coalition_proposal_health_gender = "m";
+            break;
+        case "ciu":
+        case "cdc":
+        case "dl":
+        case "pdcat":
+        case "junts":
+            if (Q.year < 2016) {
+                Q.parlament_coalition_proposal_health_name = "Boi Ruiz";
+                Q.parlament_coalition_proposal_health_gender = "m";
+                Q.parlament_coalition_proposal_health = "indp.";
+            } else {
+                Q.parlament_coalition_proposal_health_name = "Toni Comín";
+                Q.parlament_coalition_proposal_health_gender = "m";
+            }
+            break;
+        case "jxcat":
+            Q.parlament_coalition_proposal_health_name = "Toni Comín";
+            Q.parlament_coalition_proposal_health_gender = "m";
+            break;
+        case "erc":
+            if (Q.year < 2016) {
+                Q.parlament_coalition_proposal_health_name = "Manel Balcells";
+                Q.parlament_coalition_proposal_health_gender = "m";
+            } else {
+                Q.parlament_coalition_proposal_health_name = "Alba Vergés";
+                Q.parlament_coalition_proposal_health_gender = "f";
+            }
+            break;
+    }
+
+    switch (Q.parlament_coalition_proposal_education) {
+        case "ciu":
+        case "cdc":
+        case "dl":
+        case "pdcat":
+            if (Q.year < 2016) {
+                Q.parlament_coalition_proposal_education_name = "Irene Rigau";
+                Q.parlament_coalition_proposal_education_gender = "f";
+            } else {
+                Q.parlament_coalition_proposal_education_name = "Meritxell Ruiz";
+                Q.parlament_coalition_proposal_education_gender = "f";
+            }
+            break;
+        case "jxcat":
+        case "junts":
+            Q.parlament_coalition_proposal_education_name = "Meritxell Ruiz";
+            Q.parlament_coalition_proposal_education_gender = "f";
+            break;
+        case "erc":
+            if (Q.erc_leader == "Oriol Junqueras") {
+                Q.parlament_coalition_proposal_education_name = "Josep Bargalló";
+                Q.parlament_coalition_proposal_education_gender = "m";
+            } else {
+                Q.parlament_coalition_proposal_education_name = "Josep Gonzàlez-Cambray";
+                Q.parlament_coalition_proposal_education_gender = "m";
+            }
+    }
+
+    switch (Q.parlament_coalition_proposal_bnl) {
+        case "ciu":
+        case "cdc":
+        case "dl":
+        case "pdcat":
+            Q.parlament_coalition_proposal_bnl_name = "Àngels Chacón";
+            Q.parlament_coalition_proposal_bnl_gender = "f";
+            break;
+        case "jxcat":
+        case "junts":
+            Q.parlament_coalition_proposal_bnl_name = "Jordi Baiget";
+            Q.parlament_coalition_proposal_bnl_gender = "m";
+            break;
+        case "erc":
+            if (Q.speaker != "Roger Torrent" && Q.year > 2016) {
+                Q.parlament_coalition_proposal_bnl_name = "Roger Torrent";
+                Q.parlament_coalition_proposal_bnl_gender = "m";
+            } else {
+                Q.parlament_coalition_proposal_bnl_name = "Dolors Bassa";
+                Q.parlament_coalition_proposal_bnl_gender = "f";
+            }
+            break;
+    }
+
+    switch (Q.parlament_coalition_proposal_foreign) {
+        case "ciu":
+        case "cdc":
+        case "dl":
+        case "pdcat":
+            Q.parlament_coalition_proposal_foreign_name = "Meritxell Borràs";
+            Q.parlament_coalition_proposal_foreign_gender = "f";
+            break;
+        case "jxcat":
+            if (Q.erc_in_jxcat) {
+                Q.parlament_coalition_proposal_foreign_name = "Raül Romeva";
+                Q.parlament_coalition_proposal_foreign_gender = "m";
+            } else {
+                Q.parlament_coalition_proposal_foreign_name = "Victòria Alsina";
+                Q.parlament_coalition_proposal_foreign_gender = "f";
+            }
+            break;
+        case "junts":
+            Q.parlament_coalition_proposal_foreign_name = "Victòria Alsina";
+            Q.parlament_coalition_proposal_foreign_gender = "f";
+            break;
+        case "erc":
+            if (Q.raul_romeva_advisor_available) {
+                Q.parlament_coalition_proposal_foreign_name = "Raül Romeva";
+                Q.parlament_coalition_proposal_foreign_gender = "m";
+            } else if (Q.alfred_bosch_advisor_available) {
+                Q.parlament_coalition_proposal_foreign_name = "Alfred Bosch";
+                Q.parlament_coalition_proposal_foreign_gender = "m";
+            } else {
+                Q.parlament_coalition_proposal_foreign_name = "Meritxell Serret";
+                Q.parlament_coalition_proposal_foreign_gender = "f";
+            }
+            break;
+    }
+
+    switch (Q.parlament_coalition_proposal_territory) {
+        case "ciu":
+        case "cdc":
+        case "dl":
+        case "pdcat":
+            Q.parlament_coalition_proposal_territory_name = "Santi Vila";
+            Q.parlament_coalition_proposal_territory_gender = "m";
+            break;
+        case "jxcat":
+            Q.parlament_coalition_proposal_territory_name = "Josep Rull";
+            Q.parlament_coalition_proposal_territory_gender = "m";
+            break;
+        case "junts":
+            Q.parlament_coalition_proposal_territory_name = "Damià Calvet";
+            Q.parlament_coalition_proposal_territory_gender = "m";
+            break;
+        case "erc":
+            if (Q.year < 2017 && Q.parlament_coalition_proposal_foreign_name != "Meritxell Serret") {
+                Q.parlament_coalition_proposal_territory_name = "Meritxell Serret";
+                Q.parlament_coalition_proposal_territory_gender = "f";
+            } else {
+                Q.parlament_coalition_proposal_territory_name = "Juli Fernández";
+                Q.parlament_coalition_proposal_territory_gender = "m";
+            }
+            break;
+    }
+!}
+go-to: jumpScene

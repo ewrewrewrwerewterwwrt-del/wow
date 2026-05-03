@@ -8,6 +8,7 @@ on-arrival: {!
 Q.cat_coalition_disp_old = Q.cat_coalition_disp;
 Q.cat_coalition_disp = Q.president_party + "<span style=\"font-style:italic;\"> caretaker gov.</span>";
 Q.cat_caretaker_gov = true;
+console.info("Set new election date for ", Q.next_election_month, Q.next_election_year, ", week", Q.next_election_week);
 !}
 
 = New Parlament elections called!

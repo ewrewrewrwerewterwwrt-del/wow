@@ -184,11 +184,10 @@ if (choices && choices[0].title != "Continue...") {
 !}
 on-departure: {!
 // TODO: set historical/international events. Hardcoded ones are easier to handle as qdisplays.
-if (Q.year == 2012 && Q.month == 9) {
-    Q.historical_event = "After Artur Mas' fall-out with the PPC, there's no hope for any agreement on budget, let alone anything else for this legislature. Elections have been scheduled for November.";
-} else {
-    Q.historical_event = 0;
-}
+if (Q.historical_event == Q.last_historical_event) {
+    Q.historical_event = 0;  
+} 
+Q.last_historical_event = Q.historical_event;
 !}
 go-to: events_choice if has_event = 1; elections_choice if has_election = 1; main if has_event = 0 and has_election = 0 and difficulty = 0; main.main_easy if has_event = 0 and has_election = 0 and difficulty < 0; main.main_hard if has_event = 0 and has_election = 0 and difficulty > 0
 

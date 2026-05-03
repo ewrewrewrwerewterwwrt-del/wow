@@ -125,7 +125,7 @@ view-if: player_party = "cup"
 
 @cat_gov
 title: Generalitat
-view-if: (player_party = "erc" and erc_in_gov)
+view-if: (player_party = "erc" and erc_in_gob)
 card-image: img/generalitat.jpg
 is-deck: true
 

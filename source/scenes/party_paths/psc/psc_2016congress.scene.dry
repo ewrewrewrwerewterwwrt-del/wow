@@ -47,5 +47,12 @@ on-arrival: party_resources -= 1; psc_relations += 5;
 choose-if: (psc_leader != "Miquel Iceta" and psc_parlament_s < 24) or (psc_leader = "Miquel Iceta" and psc_parlament_s < 10 and party_resources >= 1 and psc_relations >= 40)
 unavailable-subtitle: [? if party_resources < 1: Not enough party resources. ?][? if psc_relations < 40: We don't have good enough relations with the PSC. ?]
 subtitle: [? if (psc_leader != "Miquel Iceta" and psc_parlament_s < 24): With current electoral performance less satisfactory than expected, she is likely to take over the leadership without any intervention. ?] [? if (psc_leader = "Miquel Iceta" and psc_parlament_s < 10): With the current poor electoral results, she is likely to take over the leadership without any intervention. ?][? if party_resources >= 1 and ((psc_leader != "Miquel Iceta" and psc_parlament_s < 24) or (psc_leader = "Miquel Iceta" and psc_parlament_s < 10)): [-1 resources] ?]
+on-arrival: {!
+    Q.party_resources -= 1;
+    Q.psc_leader = "Núria Parlon";
+    Q.psc_leader_gender = "f";
+    Q.psc_ideology = "Centrist Social Democracy, Federalism";
+    Q.psc_recovery_mult = 1.15;
+!}
 
-# TODO: Actual text
+# TODO: Actual text + acutally maintaining Tura or Ros should cost against Parlon.
