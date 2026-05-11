@@ -11,6 +11,11 @@ new-page: true
 on-arrival: {!
     Q.next_election_year += 4;
     Q.next_election_time += 48;
+    if (Q.player_party == "cup" && Q.cup_parlament_s > 0) {
+        Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
+    } else {
+        Q.game_over_trigger = true;
+    }
 !}
 on-display: {!
     const data = [];

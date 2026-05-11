@@ -5,10 +5,15 @@ new-page: true
 tags: event
 view-if: (next_election_year = year and next_election_month = month - 2 and next_election_week = week) or (next_election_year = year + 1 and ((next_election_month = 2 and month = 12) or (next_election_month = 1 and month = 11)) and next_election_week = week)
 on-arrival: {!
-Q.cat_coalition_disp_old = Q.cat_coalition_disp;
-Q.cat_coalition_disp = Q.president_party + "<span style=\"font-style:italic;\"> caretaker gov.</span>";
-Q.cat_caretaker_gov = true;
-console.info("Set new election date for ", Q.next_election_month, Q.next_election_year, ", week", Q.next_election_week);
+    Q.cat_coalition_disp_old = Q.cat_coalition_disp;
+    Q.cat_coalition_disp = Q.president_party + "<span style=\"font-style:italic;\"> caretaker gov.</span>";
+    Q.cat_caretaker_gov = true;
+
+    if (Q[Q.player_party + "_in_gob"] && !(Q.president_party == Q.player_party)) {
+        Q.position_disp = "<span style='font-style: italic'>Government Support</span>";
+    }
+
+    console.info("Set new election date for ", Q.next_election_month, Q.next_election_year, ", week", Q.next_election_week)
 !}
 
 = New Parlament elections called!

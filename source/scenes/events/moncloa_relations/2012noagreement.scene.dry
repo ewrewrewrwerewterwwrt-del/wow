@@ -28,5 +28,5 @@ go-to: post_event
 
 @no_agreement_cup
 view-if: player_party = "cup"
-title: Trouble for burgoise parties may give us a chance
+title: Trouble for bourgeois parties may give us a chance
 go-to: post_event

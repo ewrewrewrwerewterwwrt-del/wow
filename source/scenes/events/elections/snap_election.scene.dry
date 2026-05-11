@@ -5,20 +5,25 @@ new-page: true
 tags: event
 view-if: parlament_snap_election = 1
 on-arrival: {!
-Q.parlament_snap_election = 0;
-Q.next_election_week = Q.week;
-Q.next_election_month = Q.month + 2;
-if (Q.next_election_month >= 13) {
-    Q.next_election_month = Q.next_election_month % 12;
-    Q.next_election_year = Q.year + 1;
-} else {
-    Q.next_election_year = Q.year;
-}
-Q.next_election_time = Q.time + 2;
-Q.cat_coalition_disp_old = Q.cat_coalition_disp;
-Q.cat_coalition_disp = Q.president_party + "<span style=\"font-style:italic;\"> caretaker gov.</span>";
-Q.cat_caretaker_gov = true;
-console.info("Set new election date for ", Q.next_election_month, Q.next_election_year, ", week", Q.next_election_week);
+    Q.parlament_snap_election = 0;
+    Q.next_election_week = Q.week;
+    Q.next_election_month = Q.month + 2;
+    if (Q.next_election_month >= 13) {
+        Q.next_election_month = Q.next_election_month % 12;
+        Q.next_election_year = Q.year + 1;
+    } else {
+        Q.next_election_year = Q.year;
+    }
+    Q.next_election_time = Q.time + 2;
+    Q.cat_coalition_disp_old = Q.cat_coalition_disp;
+    Q.cat_coalition_disp = Q.president_party + "<span style=\"font-style:italic;\"> caretaker gov.</span>";
+    Q.cat_caretaker_gov = true;
+
+    if (Q[Q.player_party + "_in_gob"] && !(Q.president_party == Q.player_party)) {
+        Q.position_disp = "<span style='font-style: italic'>Government Support</span>";
+    }
+
+    console.info("Set new election date for ", Q.next_election_month, Q.next_election_year, ", week", Q.next_election_week);
 !}
 
 = New Parlament elections called!

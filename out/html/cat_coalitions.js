@@ -112,7 +112,7 @@
 
       /* majority line */
       ".cv-line{position:absolute;top:-3px;bottom:-3px;width:2px;",
-      "background:var(--text-color,#ccc);z-index:5}",
+      "background:var(--text-color,#ccc);z-index:2}",
       ".cv-line-label{position:absolute;top:-1.5em;left:50%;transform:translateX(-50%);",
       "font-size:.8em;white-space:nowrap;color:var(--muted-color,#888)}",
     ].join("");
@@ -121,7 +121,7 @@
 
   // ── render one coalition entry ─────────────────────────────────────────────
 
-  function renderEntry(def, config, seats) {
+  function renderEntry(def, config, seats, Q) {
     // condition gate
     var condOk =
       def.condition == null
@@ -158,12 +158,13 @@
       if (m.type === "abstain") abstainSeats += m.seats;
     });
     var yesSeats = govSeats + supportSeats;
-    var effectiveSeats = yesSeats + abstainSeats;
+    var effectiveSeats = Math.floor(yesSeats + abstainSeats / 2);
     var delta = effectiveSeats - majority;
 
+    var alwaysShow = !!def.alwaysShow || !!Q.debug;
+
     // visibility gate
-    if (!def.alwaysShow && effectiveSeats < majority && delta < -near)
-      return null;
+    if (!alwaysShow && effectiveSeats < majority && delta < -near) return null;
 
     // status
     var countClass, countText;
@@ -178,7 +179,7 @@
       countText = `${yesSeats} / ${majority} (tolerated)`;
     } else {
       countClass = "cv-count-muted";
-      countText = `${effectiveSeats} / <strong>${majority}</strong>`;
+      countText = `${yesSeats} / <strong>${majority}</strong>`;
     }
 
     // ── DOM construction ───────────────────────────────────────────────────
@@ -279,7 +280,7 @@
     var wrap = document.createElement("div");
     wrap.className = "cv-wrap";
     (config.coalitions || []).forEach(function (def) {
-      var el = renderEntry(def, config, seats);
+      var el = renderEntry(def, config, seats, Q);
       if (el) wrap.appendChild(el);
     });
     return wrap;

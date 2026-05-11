@@ -1,15 +1,12 @@
 title: set coalition names
 on-arrival: {!
-    // TODO: Add more party support
-    
-
+    // TODO: Missing unió, pxc/fnc
     Q.parlament_coalition_proposal_president_gender = Q[Q.parlament_coalition_proposal_president + "_leader_gender"];
     Q.parlament_coalition_proposal_president_name = Q[Q.parlament_coalition_proposal_president + "_leader"];
     
-    console.log("Stuff:", Q.parlament_coalition_proposal_president, Q.ciu_leader_gender, Q[Q.parlament_coalition_proposal_president + "_leader_gender"], Q.parlament_coalition_proposal_president_gender);
 
     if (Q.parlament_coalition_proposal_vp == Q.parlament_coalition_proposal_president) {
-        switch (Q.parlament_coalition_proposal_vp) {
+        switch (Q.parlament_coalition_proposal_vp) {  
             case "ciu":
             case "cdc":
                 Q.parlament_coalition_proposal_vp_name = "Neus Munté";
@@ -55,13 +52,54 @@ on-arrival: {!
                     Q.parlament_coalition_proposal_vp_name = "Pere Aragonès";
                     Q.parlament_coalition_proposal_vp_gender = "m";
                 }
+                break;
+            case "psc":
+                if (Q.psc_leader == "Àngel Ros") {
+                    Q.parlament_coalition_proposal_vp_name = "Montserrat Tura";
+                    Q.parlament_coalition_proposal_vp_gender = "f";
+                } else if (Q.psc_leader == "Montserrat Tura") {
+                    Q.parlament_coalition_proposal_vp_name = "Àngel Ros";
+                    Q.parlament_coalition_proposal_vp_gender = "m";
+                } else {
+                    Q.parlament_coalition_proposal_vp_name = "Eva Granados";
+                    Q.parlament_coalition_proposal_vp_gender = "f";
+                }
+                break;
+            case Q.parlament_current_icv:
+                Q.parlament_coalition_proposal_vp_name = "Gerardo Pisarello";
+                Q.parlament_coalition_proposal_vp_gender = "m";
+                break;
+            case "cs":
+                Q.parlament_coalition_proposal_vp_name = "Carlos Carrizosa";
+                Q.parlament_coalition_proposal_vp_gender = "m";
+                break;
+            case "ppc":
+                if (Q.ppc_leader == "Xavier García Albiol") {
+                    Q.parlament_coalition_proposal_vp_name = "Alejandro Fernández";
+                    Q.parlament_coalition_proposal_vp_gender = "m";
+                } else {
+                    Q.parlament_coalition_proposal_vp_name = "Xavier García Albiol";
+                    Q.parlament_coalition_proposal_vp_gender = "m";
+                }
+                break;
+            case "vox":
+                Q.parlament_coalition_proposal_vp_name = "Antonio Gallego";
+                Q.parlament_coalition_proposal_vp_gender = "m";
+                break;
         }
+    } else if (Q.parlament_coalition_proposal_vp === null) {
+        Q.parlament_coalition_proposal_vp_name = "<span style='font-style: italics'>To be filled by coalition partners</span>";
+        Q.parlament_coalition_proposal_vp_gender = "f";
     } else {
         Q.parlament_coalition_proposal_vp_gender = Q[Q.parlament_coalition_proposal_vp + "_leader_gender"];
         Q.parlament_coalition_proposal_vp_name = Q[Q.parlament_coalition_proposal_vp + "_leader"];
     }
 
     switch (Q.parlament_coalition_proposal_economy) {
+        case null:
+            Q.parlament_coalition_proposal_economy_name = "<span style='font-style: italics'>To be filled by coalition partners</span>";
+            Q.parlament_coalition_proposal_economy_gender = "f";
+            break;
         case "ciu":
         case "cdc":
         case "dl":
@@ -96,9 +134,46 @@ on-arrival: {!
                 Q.parlament_coalition_proposal_economy_gender = "m";
             }
             break;
+        case "psc":
+            if (Q.parlament_coalition_proposal_vp_name != "Eva Granados") {
+                Q.parlament_coalition_proposal_economy_name = "Eva Granados";
+                Q.parlament_coalition_proposal_economy_gender = "f";
+            } else {
+                Q.parlament_coalition_proposal_economy_name = "Antoni Castells";
+                Q.parlament_coalition_proposal_economy_gender = "m";
+            }
+            break;
+        case "icv":
+            Q.parlament_coalition_proposal_economy_name = "Marc Vidal";
+            Q.parlament_coalition_proposal_economy_gender = "m";
+            break;
+        case "csqp":
+        case "cecp":
+        case "ecp":
+            if (Q.parlament_coalition_proposal_vp_name != "Xavier Domènech" && Q.parlament_coalition_proposal_president_name != "Xavier Domènech") {
+                Q.parlament_coalition_proposal_economy_name = "Xavier Domènech";
+                Q.parlament_coalition_proposal_economy_gender = "m";
+            } else {
+                Q.parlament_coalition_proposal_economy_name = "Hortensia Grau";
+                Q.parlament_coalition_proposal_economy_gender = "f";
+            }
+            break;
+        case "cs":
+            Q.parlament_coalition_proposal_economy_name = "José Manuel Villegas";
+            Q.parlament_coalition_proposal_economy_gender = "m";
+            break;
+        case "ppc":
+            Q.parlament_coalition_proposal_economy_name = "Manuel Reyes";
+            Q.parlament_coalition_proposal_economy_gender = "m";
+            break;
+        case "vox":
     }
 
     switch (Q.parlament_coalition_proposal_interior) {
+        case null:
+            Q.parlament_coalition_proposal_interior_name = "<span style='font-style: italics'>To be filled by coalition partners</span>";
+            Q.parlament_coalition_proposal_interior_gender = "f";
+            break;
         case "ciu":
         case "cdc":
         case "dl":
@@ -124,9 +199,49 @@ on-arrival: {!
                 Q.parlament_coalition_proposal_interior_name = "Carles Mundó";
                 Q.parlament_coalition_proposal_interior_gender = "m";
             }
+        case "psc":
+            if (Q.year < 2015) {
+                Q.parlament_coalition_proposal_interior_name = "Xavier Sabaté";
+                Q.parlament_coalition_proposal_interior_gender = "m";
+            } else if (Q.psc_leader == "Àngel Ros") {
+                Q.parlament_coalition_proposal_interior_name = "Montserrat Tura";
+                Q.parlament_coalition_proposal_interior_gender = "f";
+            } else if (Q.psc_leader != "Núria Parlon") {
+                Q.parlament_coalition_proposal_interior_name = "Núria Parlon";
+                Q.parlament_coalition_proposal_interior_gender = "f";
+            } else {
+                Q.parlament_coalition_proposal_interior_name = "David Pérez Ibáñez";
+                Q.parlament_coalition_proposal_interior_gender = "m";
+            }
+            break;
+        case Q.parlament_current_icv:
+            Q.parlament_coalition_proposal_interior_name = "David Cid Colomer";
+            Q.parlament_coalition_proposal_interior_gender = "m";
+            break;
+        case "cs":
+            Q.parlament_coalition_proposal_interior_name = "Carlos Sánchez";
+            Q.parlament_coalition_proposal_interior_gender = "m";
+            break;
+        case "ppc":
+            Q.parlament_coalition_proposal_interior_name = "Alberto Villagrasa";
+            Q.parlament_coalition_proposal_interior_gender = "m";
+            break;
+        case "vox":
+            if (Q.parlament_coalition_proposal_vp_name != "Ignacio Garriga" && Q.parlament_coalition_proposal_president_name != "Ignacio Garriga") {
+                Q.parlament_coalition_proposal_interior_name = "Ignacio Garriga";
+                Q.parlament_coalition_proposal_interior_gender = "m";
+            } else {
+                Q.parlament_coalition_proposal_interior_name = "Juan Garriga";
+                Q.parlament_coalition_proposal_interior_gender = "m";
+            }
+            break;
     }
 
     switch (Q.parlament_coalition_proposal_health) {
+        case null:
+            Q.parlament_coalition_proposal_health_name = "<span style='font-style: italics'>To be filled by coalition partners</span>";
+            Q.parlament_coalition_proposal_health_gender = "f";
+            break;
         case "indp.":
             Q.parlament_coalition_proposal_health_name = "Boi Ruiz";
             Q.parlament_coalition_proposal_health_gender = "m";
@@ -158,9 +273,38 @@ on-arrival: {!
                 Q.parlament_coalition_proposal_health_gender = "f";
             }
             break;
+        case "psc":
+            if (Q.parlament_coalition_proposal_interior_name == "David Pérez Ibáñez") {
+                Q.parlament_coalition_proposal_health_name = "David Pérez Ibáñez";
+                Q.parlament_coalition_proposal_health_gender = "m";
+            } else {
+                Q.parlament_coalition_proposal_health_name = "Salvador Illa";
+                Q.parlament_coalition_proposal_health_gender = "m";
+            }
+            break;
+        case Q.parlament_current_icv:
+            Q.parlament_coalition_proposal_health_name = "Marta Ribas Frías";
+            Q.parlament_coalition_proposal_health_gender = "f";
+            break;
+        case "cs":
+            Q.parlament_coalition_proposal_health_name = "Jorge Soler";
+            Q.parlament_coalition_proposal_health_gender = "m";
+            break;
+        case "ppc":
+            Q.parlament_coalition_proposal_health_name = "Àngels Olmedo";
+            Q.parlament_coalition_proposal_health_gender = "f";
+            break;
+        case "vox":
+            Q.parlament_coalition_proposal_health_name = "Maria Elisa García";
+            Q.parlament_coalition_proposal_health_gender = "f";
+            break;
     }
 
     switch (Q.parlament_coalition_proposal_education) {
+        case null:
+            Q.parlament_coalition_proposal_education_name = "<span style='font-style: italics'>To be filled by coalition partners</span>";
+            Q.parlament_coalition_proposal_education_gender = "f";
+            break;
         case "ciu":
         case "cdc":
         case "dl":
@@ -186,9 +330,45 @@ on-arrival: {!
                 Q.parlament_coalition_proposal_education_name = "Josep Gonzàlez-Cambray";
                 Q.parlament_coalition_proposal_education_gender = "m";
             }
+            break;
+        case "psc":
+            Q.parlament_coalition_proposal_education_name = "Esther Niubó";
+            Q.parlament_coalition_proposal_education_gender = "f";
+            break;
+        case "icv":
+        case "csqp":
+            Q.parlament_coalition_proposal_education_name = "Laura Massana";
+            Q.parlament_coalition_proposal_education_gender = "f";
+            break;
+        case "cecp":
+        case "ecp":
+            if (Q.parlament_coalition_proposal_vp != "Jéssica Albiach" && Q.parlament_coalition_proposal_president != "Jéssica Albiach") {
+                Q.parlament_coalition_proposal_education_name = "Jéssica Albiach";
+                Q.parlament_coalition_proposal_education_gender = "f";
+            } else {
+                Q.parlament_coalition_proposal_education_name = "Joan Mena";
+                Q.parlament_coalition_proposal_education_gender = "m";
+            }
+            break;
+        case "cs":
+            Q.parlament_coalition_proposal_education_name = "Susana Beltrán";
+            Q.parlament_coalition_proposal_education_gender = "f";
+            break;
+        case "ppc":
+            Q.parlament_coalition_proposal_education_name = "Elisa de Mata";
+            Q.parlament_coalition_proposal_education_gender = "f";
+            break;
+        case "vox":
+            Q.parlament_coalition_proposal_education_name = "Manuel Acosta";
+            Q.parlament_coalition_proposal_education_gender = "m";
+            break;
     }
 
     switch (Q.parlament_coalition_proposal_bnl) {
+        case null:
+            Q.parlament_coalition_proposal_bnl_name = "<span style='font-style: italics'>To be filled by coalition partners</span>";
+            Q.parlament_coalition_proposal_bnl_gender = "f";
+            break;
         case "ciu":
         case "cdc":
         case "dl":
@@ -210,9 +390,43 @@ on-arrival: {!
                 Q.parlament_coalition_proposal_bnl_gender = "f";
             }
             break;
+        case "psc":
+            if (Q.barcelona_mayor != "Jaume Collboni") {
+                Q.parlament_coalition_proposal_bnl_name = "Jaume Collboni";
+                Q.parlament_coalition_proposal_bnl_gender = "m";
+            } else {
+                Q.parlament_coalition_proposal_bnl_name = "Jordi Martí";
+                Q.parlament_coalition_proposal_bnl_gender = "m";
+            }
+            break;
+        case Q.parlament_current_icv:
+            Q.parlament_coalition_proposal_bnl_name = "Joan Coscubiela";
+            Q.parlament_coalition_proposal_bnl_gender = "m";
+            break;
+        case "cs":
+            if (Q.parlament_coalition_proposal_vp_name != "Carlos Carrizosa" && Q.parlament_coalition_proposal_president_name != "Carlos Carrizosa") {
+                Q.parlament_coalition_proposal_bnl_name = "Carlos Carrizosa";
+                Q.parlament_coalition_proposal_bnl_gender = "m";
+            } else {
+                Q.parlament_coalition_proposal_bnl_name = "José María Espejo-Saavedra";
+                Q.parlament_coalition_proposal_bnl_gender = "m";
+            }
+            break;
+        case "ppc":
+            Q.parlament_coalition_proposal_bnl_name = "Santi Rodríguez";
+            Q.parlament_coalition_proposal_bnl_gender = "m";
+            break;
+        case "vox":
+            Q.parlament_coalition_proposal_bnl_name = "Isabel Lázaro";
+            Q.parlament_coalition_proposal_bnl_gender = "f";
+            break;
     }
 
     switch (Q.parlament_coalition_proposal_foreign) {
+        case null:
+            Q.parlament_coalition_proposal_foreign_name = "<span style='font-style: italics'>To be filled by coalition partners</span>";
+            Q.parlament_coalition_proposal_foreign_gender = "f";
+            break;
         case "ciu":
         case "cdc":
         case "dl":
@@ -245,9 +459,38 @@ on-arrival: {!
                 Q.parlament_coalition_proposal_foreign_gender = "f";
             }
             break;
+        case "psc":
+            Q.parlament_coalition_proposal_foreign_name = "Ferran Pedret";
+            Q.parlament_coalition_proposal_foreign_gender = "m";
+            break;
+        case Q.parlament_current_icv:
+            if (Q.speaker == "Dolors Camats") {
+                Q.parlament_coalition_proposal_foreign_name = "Joan Herrera";
+                Q.parlament_coalition_proposal_foreign_gender = "m";
+            } else {
+                Q.parlament_coalition_proposal_foreign_name = "Dolors Camats";
+                Q.parlament_coalition_proposal_foreign_gender = "f";
+            }
+            break;
+        case "cs":
+            Q.parlament_coalition_proposal_foreign_name = "Lorena Roldán";
+            Q.parlament_coalition_proposal_foreign_gender = "f";
+            break;
+        case "ppc":
+            Q.parlament_coalition_proposal_foreign_name = "Daniel Serrano";
+            Q.parlament_coalition_proposal_foreign_gender = "m";
+            break;
+        case "vox":
+            Q.parlament_coalition_proposal_foreign_name = "Sergio Macián";
+            Q.parlament_coalition_proposal_foreign_gender = "m";
+            break;
     }
 
     switch (Q.parlament_coalition_proposal_territory) {
+        case null:
+            Q.parlament_coalition_proposal_territory_name = "<span style='font-style: italics'>To be filled by coalition partners</span>";
+            Q.parlament_coalition_proposal_territory_gender = "f";
+            break;
         case "ciu":
         case "cdc":
         case "dl":
@@ -271,6 +514,26 @@ on-arrival: {!
                 Q.parlament_coalition_proposal_territory_name = "Juli Fernández";
                 Q.parlament_coalition_proposal_territory_gender = "m";
             }
+            break;
+        case "psc":
+            Q.parlament_coalition_proposal_territory_name = "Carles Martí Jufresa";
+            Q.parlament_coalition_proposal_territory_gender = "m";
+            break;
+        case Q.parlament_current_icv:
+            Q.parlament_coalition_proposal_territory_name = "Josep Vendrell";
+            Q.parlament_coalition_proposal_territory_gender = "m";
+            break;
+        case "cs":
+            Q.parlament_coalition_proposal_territory_name = "Sergio Sanz";
+            Q.parlament_coalition_proposal_territory_gender = "m";
+            break;
+        case "ppc":
+            Q.parlament_coalition_proposal_territory_name = "Tomas Castells";
+            Q.parlament_coalition_proposal_territory_gender = "m";
+            break;
+        case "vox":
+            Q.parlament_coalition_proposal_territory_name = "Antonio Ramón López";
+            Q.parlament_coalition_proposal_territory_gender = "m";
             break;
     }
 !}

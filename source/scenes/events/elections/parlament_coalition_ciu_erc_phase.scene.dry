@@ -88,14 +88,6 @@ on-arrival: {!
         Q.parlament_coalition_proposal_foreign = "erc";
         ciu_proposal_leverage -= 6;
     }
-    if (Q.parlament_coalition_proposal_economy != "erc" && ciu_proposal_leverage > 10) {
-        Q.parlament_coalition_proposal_economy = "erc";
-        ciu_proposal_leverage -= 10;
-    } 
-    if (Q.parlament_coalition_proposal_interior != "erc" && ciu_proposal_leverage > 10) {
-        Q.parlament_coalition_proposal_interior = "erc";
-        ciu_proposal_leverage -= 10;
-    } 
 
     Q.parlament_coalition_leverage = ciu_proposal_leverage + 3 - Q.ciu_erc_coalition_phase;
 !}
@@ -112,20 +104,19 @@ new-page: true
 
 <div style="display:flex; align-content:center;"><div style="width: 2em; align-content:center"><img src="img/cat_seal.svg"></div><div style="width:80%; padding-left: 1em;"> **M.H.** [? if parlament_coalition_proposal_president_gender = "m": **President** ?][? if parlament_coalition_proposal_president_gender = "f": **Presidenta** ?] **[+ parlament_coalition_proposal_president_name +]** ([+ parlament_coalition_proposal_president +])<br/> <span style="font-size:0.9em;"> [? if parlament_coalition_proposal_vp_gender = "m": **H. Vicepresident** ?][? if parlament_coalition_proposal_vp_gender = "f": **H. Vicepresidenta** ?] [+ parlament_coalition_proposal_vp_name +] ([+ parlament_coalition_proposal_vp +])</span></div></div></div>
 
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/economy_icon.svg"/></div><div> **Economy** ([+ parlament_coalition_proposal_economy +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_economy_name +]</span></div></div>
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/economy_icon.svg"/></div><div style="width: 100%"> **Economy** ([+ parlament_coalition_proposal_economy +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_economy_name +]</span></div></div>
 
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/health_icon.svg"/></div><div> **Health** ([+ parlament_coalition_proposal_health +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_health_name +]</span></div></div>
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/health_icon.svg"/></div><div style="width: 100%"> **Health** ([+ parlament_coalition_proposal_health +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_health_name +]</span></div></div>
 
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/education_icon.svg"/></div><div> **Education** ([+ parlament_coalition_proposal_education +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_education_name +]</span></div></div>
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/education_icon.svg"/></div><div style="width: 100%"> **Education** ([+ parlament_coalition_proposal_education +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_education_name +]</span></div></div>
 
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/interior_icon.svg"/></div><div> **Interior** ([+ parlament_coalition_proposal_interior +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_interior_name +]</span></div></div>
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/interior_icon.svg"/></div><div style="width: 100%"> **Interior** ([+ parlament_coalition_proposal_interior +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_interior_name +]</span></div></div>
 
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/international_icon.svg"/></div><div> **Foreign Affairs** ([+ parlament_coalition_proposal_foreign +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_foreign_name +]</span></div></div>
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/international_icon.svg"/></div><div style="width: 100%"> **Foreign Affairs** ([+ parlament_coalition_proposal_foreign +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_foreign_name +]</span></div></div>
 
-<div style="display:flex; align-content:center;width:105%"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/labour_icon.svg"/></div><div> **Business & Labour** ([+ parlament_coalition_proposal_bnl +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_bnl_name +]</span></div></div>
+<div style="display:flex; align-content:center;width:105%"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/labour_icon.svg"/></div><div style="width: 100%"> **Business & Labour** ([+ parlament_coalition_proposal_bnl +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_bnl_name +]</span></div></div>
 
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/territory_icon.svg"/></div><div> **Territory** ([+ parlament_coalition_proposal_territory +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_territory_name +]</span></div></div>
-
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/territory_icon.svg"/></div><div style="width: 100%"> **Territory** ([+ parlament_coalition_proposal_territory +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_territory_name +]</span></div></div>
 
 [? if parlament_coalition_concessions_social or parlament_coalition_concessions_indy: **Policy Concessions**?]
 
@@ -431,7 +422,7 @@ on-arrival: {!
     Q.independence_trust -= 5;
 !} 
 
-[+ parlament_current_ciu +]'s representatives were initially dubious about our new proposal[? if parlament_current_ciu_s > 40 and parlament_coalition_proposal_vp = "erc" or parlament_coalition_proposal_economy = "erc" or parlament_coalition_proposal_interior = "erc": . Given the parliamentary arithmetics, they were reticent about ?][? if parlament_current_ciu_s <= 40 and parlament_coalition_proposal_vp != "erc" or parlament_coalition_proposal_economy = "erc" or parlament_coalition_proposal_interior = "erc": . They seemed reticent about ?][? if parlament_coalition_proposal_vp = "erc" and parlament_current_ciu_s > 40: giving up the Vice-Presidency?][? if parlament_coalition_proposal_vp != "erc" and parlament_current_ciu_s <= 40: us giving up the Vice-Presidency?][? if parlament_coalition_proposal_interior = "erc": [? if parlament_coalition_proposal_vp = "erc" : [? if parlament_coalition_proposal_economy != "erc": and ?][? if parlament_coalition_proposal_economy = "erc": , ?]?]giving up Interior ?][? if parlament_coalition_proposal_economy = "erc": [? if parlament_coalition_proposal_interior = "erc" or parlament_coalition_proposal_vp = "erc": and ?] giving up Economy ?]. We will have to wait until the [+ parlament_current_ciu +] and ERC negotiating teams reconvine to advance negotiations.
+[+ parlament_current_ciu +]'s representatives were initially dubious about our new proposal[? if parlament_current_ciu_s > 40 and parlament_coalition_proposal_vp = "erc" or parlament_coalition_proposal_economy = "erc" or parlament_coalition_proposal_interior = "erc": . Given the parliamentary arithmetics, they were reticent about ?][? if parlament_current_ciu_s <= 40 and parlament_coalition_proposal_vp != "erc" or parlament_coalition_proposal_economy = "erc" or parlament_coalition_proposal_interior = "erc": . They seemed reticent about ?][? if parlament_coalition_proposal_vp = "erc" and parlament_current_ciu_s > 40: giving up the Vice-Presidency?][? if parlament_coalition_proposal_vp != "erc" and parlament_current_ciu_s <= 40: us giving up the Vice-Presidency?][? if parlament_coalition_proposal_interior = "erc": [? if parlament_coalition_proposal_vp = "erc" : [? if parlament_coalition_proposal_economy != "erc": and ?][? if parlament_coalition_proposal_economy = "erc": , ?]?]giving up Interior ?][? if parlament_coalition_proposal_economy = "erc": [? if parlament_coalition_proposal_interior = "erc" or parlament_coalition_proposal_vp = "erc": and ?] giving up Economy ?]. We will have to wait until the [+ parlament_current_ciu +] and ERC negotiating teams reconvene to advance negotiations.
 
 - @post_event: And so, time passes...
 
@@ -444,8 +435,14 @@ on-arrival: {!
     Q.ciu_erc_coalition_phase = 0;
     Q.cat_coalition_disp = "<span style='color: var(--" + Q.parlament_current_ciu + "); font-style: italic;'>Sovereignty</span> <span style='color: var(--erc); font-style: italic;'>government</span>";
     Q.erc_in_gob = true;
+    Q.erc_supporting = true;
     Q.cat_coalition = [Q.parlament_current_ciu, "erc"];
     Q.cat_coalition_dissent = 0;
+
+    Q.position_disp = "Generalitat";
+
+    Q.cup_in_gob = false;
+    Q.cup_supporting = false;
 !}
 
 After some ardous negotiations, we have finally reached an agreement with [+ parlament_current_ciu +] to form a [+ cat_coalition_disp +]. Let's hope cooperation continues during this legislature, and that promises are kept!
@@ -459,7 +456,7 @@ on-arrival: {!
     Q.ciu_erc_coalition_phase = 0;
     Q[Q.parlament_current_ciu + "_relations"] -= 5;
     Q.independence_trust -= 10;
-    // TO-DO: Move some votes to CUP, some to CiU
+    // TODO: Move some votes to CUP, some to CiU
 !}
 call: snap_election
 

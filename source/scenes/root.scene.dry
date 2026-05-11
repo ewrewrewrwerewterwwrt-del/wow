@@ -517,6 +517,8 @@ go-to: start_menu_2
 choose-if: 1==0
 unavailable-subtitle: Route to Ítaca is currently in its early development stages. Check back soon(-ish) for the full experience!
 on-arrival: {!
+Q.debug = true; // TODO: set false
+
 Q.started = 1;
 // time elapsed (in months)
 Q.time = 1;
@@ -2483,7 +2485,7 @@ The left-wing republican party advocates for Catalan independence, socialism, an
 @esquerra_2
 on-arrival: {!
 Q.player_party = "erc";
-Q.position_disp = "<span style='font-style: italic;'>opposition</span>"; 
+Q.position_disp = "<span style='font-style: italic;'>Opposition</span>"; 
 
 Q.ciu_relations = 55;
 Q.cup_relations = 70;
@@ -2541,7 +2543,7 @@ go-to: intros
 title: Convergence and Union (CiU)
 face-image: img/parties/logo_ciu.png
 choose-if: 1==0
-unavailable-subtitle: Coming soon! (hopefully...)
+unavailable-subtitle: Coming soon! (maybe?)
 
 **Convergence and Union - CiU**
 
@@ -2552,7 +2554,7 @@ The center-right nationalist federation of the liberal Democratic Convergence of
 
 
 @ciu_2
-on-arrival: player_party = "ciu"; position_disp = "<span style='color: var(--ciu);'>Generalitat (minority government)</span>";
+on-arrival: player_party = "ciu"; position_disp = "Generalitat";
 go-to: intros
 
 @cup

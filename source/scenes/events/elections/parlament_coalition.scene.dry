@@ -1,6 +1,11 @@
 title: parlament coalition
 new-page: true
 on-arrival: {!
+    // DEBUG REMOVE
+    Q.erc_parlament_s += 10;
+    Q.ciu_parlament_s -= 10;
+    Q.psc_relations += 30;
+
     // Post-election happenings
     const clean_boost_parties = ["pxc", "fnc", "vox", "pdcat", "cup", "si", "unio"];
     for (var p of clean_boost_parties) {
@@ -33,6 +38,18 @@ on-arrival: {!
     Q.parlament_coalition_push = 0;
 
     Q.ciu_erc_coalition_phase = 0;
+    Q.ciu_min_coalition_phase = 0;
+    Q.left_tripartite_coalition_phase = 0;
+
+    Q.parlament_coalition_proposal_president = null;
+    Q.parlament_coalition_proposal_vp = null;
+    Q.parlament_coalition_proposal_economy = null;
+    Q.parlament_coalition_proposal_health = null;
+    Q.parlament_coalition_proposal_education = null;
+    Q.parlament_coalition_proposal_interior = null;
+    Q.parlament_coalition_proposal_foreign = null;
+    Q.parlament_coalition_proposal_bnl = null;
+    Q.parlament_coalition_proposal_territory = null;
 
     Q.parlament_coalition_erc_critical = false;
     Q.parlament_coalition_cup_critical = false;
@@ -67,18 +84,22 @@ on-arrival: {!
         Q.parlament_current_icv = "icv";
         Q.parlament_current_icv_s = Q.icv_parlament_s;
         Q.parlament_current_icv_leader = Q.icv_leader;
+        Q.parlament_current_icv_relations = Q.icv_relations;
     } else if (Q.csqp_parlament_s > 0) {
         Q.parlament_current_icv = "csqp";
         Q.parlament_current_icv_s = Q.csqp_parlament_s;
         Q.parlament_current_icv_leader = Q.csqp_leader;
+        Q.parlament_current_icv_relations = Q.csqp_relations;
     } else if (Q.cecp_parlament_s > 0) {
         Q.parlament_current_icv = "cecp";
         Q.parlament_current_icv_s = Q.cecp_parlament_s;
         Q.parlament_current_icv_leader = Q.cecp_leader;
+        Q.parlament_current_icv_relations = Q.cecp_relations;
     } else {
         Q.parlament_current_icv = "ecp";
         Q.parlament_current_icv_s = Q.ecp_parlament_s;
         Q.parlament_current_icv_leader = Q.ecp_leader;
+        Q.parlament_current_icv_relations = Q.ecp_relations;
     }
 
     // Coalition seat totals
@@ -204,6 +225,30 @@ on-arrival: {!
                 ]
             },
             {
+                label: "National Concentration Government",
+                condition: function(s) { return s("cup") > 0 && s("jxsi") < Q.parlament_s_majority && s("jxsi") > 0; },
+                members: [
+                    { party: "jxsi", type: "government" },
+                    { party: "cup",  type: "government" }
+                ]
+            },
+            {
+                label: "JxCat minority Government",
+                condition: function(s) { return s("cup") > 0 && s("jxcat") < Q.parlament_s_majority && Q.erc_in_jxcat; },
+                members: [
+                    { party: "jxcat", type: "government" },
+                    { party: "cup",   type: "support"    }
+                ]
+            },
+            {
+                label: "National Concentration Government",
+                condition: function(s) { return s("cup") > 0 && s("jxcat") < Q.parlament_s_majority && Q.erc_in_jxcat; },
+                members: [
+                    { party: "jxcat", type: "government" },
+                    { party: "cup",  type: "government" }
+                ]
+            },
+            {
                 label: "ERC minority Government",
                 condition: function(s) { return s("erc") > 40 && s("erc") < Q.parlament_s_majority; },
                 members: [
@@ -213,7 +258,7 @@ on-arrival: {!
             },
             {
                 label:   "Sovereignty Coalition",
-                condition: function(s) { return s("ciu_alias") > s("erc"); },
+                condition: function(s) { return s("ciu_alias") >= s("erc") && s("erc") > 0; },
                 members: [
                     { party: "ciu_alias", type: "government" },
                     { party: "erc",       type: "government" }
@@ -221,7 +266,7 @@ on-arrival: {!
             },
             {
                 label:   "Sovereignty Government",
-                condition: function(s) { return s("ciu_alias") > s("erc") && s("cup") > 0 && s("ciu_alias") + s("erc") < Q.parlament_s_majority; },
+                condition: function(s) { return s("ciu_alias") >= s("erc") && s("cup") > 0 && s("ciu_alias") + s("erc") < Q.parlament_s_majority && s("erc") > 0; },
                 members: [
                     { party: "ciu_alias", type: "government" },
                     { party: "erc",       type: "government" },
@@ -230,7 +275,16 @@ on-arrival: {!
             },
             {
                 label:   "Sovereignty Government",
-                condition: function(s) { return s("erc") > s("ciu_alias"); },
+                condition: function(s) { return s("ciu_alias") >= s("erc") && s("cup") > 0 && s("ciu_alias") + s("erc") < Q.parlament_s_majority && s("erc") > 0; },
+                members: [
+                    { party: "ciu_alias", type: "government" },
+                    { party: "erc",       type: "government" },
+                    { party: "cup",       type: "support"    }
+                ]
+            },
+            {
+                label:   "Sovereignty Government",
+                condition: function(s) { return s("erc") > s("ciu_alias") && s("ciu_alias") > 0; },
                 members: [
                     { party: "erc",       type: "government" },
                     { party: "ciu_alias", type: "government" }
@@ -238,7 +292,7 @@ on-arrival: {!
             },
             {
                 label:   "Sovereignty Government",
-                condition: function(s) { return s("erc") > s("ciu_alias") && s("cup") > 0 && s("erc") + s("ciu_alias") < Q.parlament_s_majority; },
+                condition: function(s) { return s("erc") > s("ciu_alias") && s("cup") > 0 && s("erc") + s("ciu_alias") < Q.parlament_s_majority && s("ciu_alias") > 0; },
                 members: [
                     { party: "erc",       type: "government" },
                     { party: "ciu_alias", type: "government" },
@@ -246,24 +300,25 @@ on-arrival: {!
                 ]
             },
             {
-                label:   "JxSí + CUP",
-                condition: function(s) { return s("jxsi") > 0 && s("cup") > 0; },
+                label:   "Sovereignty Government",
+                condition: function(s) { return s("erc") > s("ciu_alias") && s("cup") > 0 && s("ciu_alias") + s("erc") < Q.parlament_s_majority && s("ciu_alias") > 0; },
                 members: [
-                    { party: "jxsi", type: "government" },
-                    { party: "cup",  type: "support"    }
+                    { party: "erc", type: "government" },
+                    { party: "ciu_alias",       type: "government" },
+                    { party: "cup",       type: "support"    }
                 ]
             },
             {
-                label:   "ERC + CUP",
+                label:   "Left-Independence Government",
                 condition: function(s) { return s("erc") > 0 && s("cup") > 0; },
                 members: [
                     { party: "erc", type: "government" },
-                    { party: "cup", type: "support"    }
+                    { party: "cup", type: "government" }
                 ]
             },
             {
                 label:   "Soft-Sovereignty Government",
-                condition: function(s) { return s("ciu_alias") > s("erc") && s("pdcat") > 0; },
+                condition: function(s) { return s("ciu_alias") >= s("erc") && s("pdcat") > 0; },
                 members: [
                     { party: "ciu_alias", type: "government" },
                     { party: "erc",       type: "government" },
@@ -272,7 +327,7 @@ on-arrival: {!
             },
             {
                 label:   "New Tripartite",
-                condition: function(s) { return s("psc") > s("erc"); },
+                condition: function(s) { return s("psc") >= s("erc") && s("erc") > 0 && s("icv_alias") > 0; },
                 members: [
                     { party: "psc",       type: "government" },
                     { party: "erc",       type: "government" },
@@ -281,7 +336,7 @@ on-arrival: {!
             },
             {
                 label:   "Left Tripartite",
-                condition: function(s) { return s("erc") > s("psc"); },
+                condition: function(s) { return s("erc") > s("psc") && s("psc") > 0 && s("icv_alias") > 0; },
                 members: [
                     { party: "erc",       type: "government" },
                     { party: "psc",       type: "government" },
@@ -290,15 +345,24 @@ on-arrival: {!
             },
             {
                 label:   "Progressist Government",
-                condition: function(s) { return s("psc") > 0 && s("icv_alias") > 0; },
+                condition: function(s) { return s("psc") >= s("icv_alias") && s("icv_alias") > 0; },
                 members: [
                     { party: "psc",       type: "government" },
                     { party: "icv_alias", type: "government" }
                 ]
             },
             {
+                label:   "Progressist Government",
+                condition: function(s) { return s("psc") >= s("icv_alias") && s("icv_alias") > 0 && s("erc") > 0; },
+                members: [
+                    { party: "psc",       type: "government" },
+                    { party: "icv_alias", type: "government" },
+                    { party: "erc",       type: "abstain"    }
+                ]
+            },
+            {
                 label:   "Republican Government",
-                condition: function(s) { return s("erc") > 0 && s("icv_alias") > 0 && s("cup") > 0; },
+                condition: function(s) { return s("erc") >= s("icv_alias") && s("icv_alias") > 0 && s("cup") > 0; },
                 members: [
                     { party: "erc",       type: "government" },
                     { party: "icv_alias", type: "government" },
@@ -333,14 +397,77 @@ on-arrival: {!
                     { party: "icv_alias", type: "government" },                    
                     { party: "cup",       type: "abstain"    },
                 ]
+            },        
+            {
+                label:   "Moderation Government",
+                condition: function(s) { return s("unio") > 0 && s("psc") > s("cs"); },
+                members: [
+                    { party: "psc",  type: "government" },
+                    { party: "cs",   type: "support"    },
+                    { party: "unio", type: "support"    }
+                ]
             },
             {
-                label:   "Constitutionalist Government",
+                label:   "Moderation Government",
+                condition: function(s) { return s("unio") > 0 && s("psc") > s("cs"); },
+                members: [
+                    { party: "psc",  type: "government" },
+                    { party: "cs",   type: "support"    },
+                    { party: "unio", type: "support"    },
+                    { party: "ppc",  type: "abstain"    }
+                ]
+            },
+            {
+                label: "CiU 2.0 - Back Together",
+                condition: function(s) { return s("unio") > 0 && s("ciu_alias") + s("unio") > 50; },
+                members: [
+                    { party: "ciu_alias", type: "government" },
+                    { party: "unio",      type: "government" },
+                ]
+            },
+            {
+                label:   "Cs-led Constitutionalist Pact",
                 condition: function(s) { return s("cs") > s("ppc") && s("ppc") > 0; },
                 alwaysShow: Q.cs_parlament_s > Q.ppc_parlament_s && Q.ppc_parlament_s + Q.cs_parlament_s > 20,
                 members: [
                     { party: "cs",  type: "government" },
                     { party: "ppc", type: "support" }
+                ]
+            },
+            {
+                label:   "Cs-led Unity Pact",
+                condition: function(s) { return s("cs") > s("psc") && s("ppc") > 0 && s("cs") + s("ppc") + s("psc")/2 < Q.parlament_s_majority; },
+                members: [
+                    { party: "cs",  type: "government" },
+                    { party: "ppc", type: "support"    },
+                    { party: "psc", type: "abstain"    }
+                ]
+            },
+            {
+                label:   "Cs-led Grand Unity Pact",
+                condition: function(s) { return s("cs") > s("psc") && s("ppc") > 0 && s("cs") + s("ppc") + s("psc")/2 < Q.parlament_s_majority; },
+                members: [
+                    { party: "cs",  type: "government" },
+                    { party: "psc", type: "support"    },
+                    { party: "ppc", type: "support"    }
+                ]
+            },
+            {
+                label:   "PSC-led Unity Pact",
+                condition: function(s) { return s("psc") > s("cs") && s("ppc") > 0 },
+                members: [
+                    { party: "psc", type: "government" },
+                    { party: "cs",  type: "support"    },
+                    { party: "ppc", type: "abstain"    }
+                ]
+            },
+            {
+                label:   "PSC-led Grand Unity Pact",
+                condition: function(s) { return s("psc") > s("cs") && s("ppc") > 0 },
+                members: [
+                    { party: "psc", type: "government" },
+                    { party: "cs",  type: "support"    },
+                    { party: "ppc", type: "support"    }
                 ]
             },
             {
@@ -363,49 +490,31 @@ on-arrival: {!
                 ]
             },
             {
-                label:   "Constitutionalist Coalition",
-                condition: function(s) { return s("cs") > s("psc") && s("ppc") > 0 && s("cs") + s("ppc") + s("psc")/2 < Q.parlament_s_majority; },
+                label:   "Unity Pact",
+                condition: function(s) { return s("ppc") > s("cs") && s("cs") > 0 && s("cs") + s("ppc") + s("psc")/2 < Q.parlament_s_majority; },
                 members: [
                     { party: "cs",  type: "government" },
-                    { party: "psc", type: "support"    },
-                    { party: "ppc", type: "support"    }
+                    { party: "ppc", type: "government" },
+                    { party: "psc", type: "abstain"    }
                 ]
             },
             {
                 label:   "Grand Unity Pact",
-                condition: function(s) { return s("psc") > s("cs") && s("ppc") > 0 },
-                members: [
-                    { party: "psc", type: "government" },
-                    { party: "cs",  type: "support"    },
-                    { party: "ppc", type: "support"    }
-                ]
-            },
-            {
-                label:   "Unity Pact",
-                condition: function(s) { return s("psc") > s("cs") && s("ppc") > 0 },
-                members: [
-                    { party: "psc", type: "government" },
-                    { party: "cs",  type: "support"    },
-                    { party: "ppc", type: "abstain"    }
-                ]
-            },
-            {
-                label:   "Constitutionalist Coalition",
-                condition: function(s) { return s("cs") > s("psc") && s("ppc") > 0 && s("cs") + s("ppc") + s("psc")/2 >= Q.parlament_s_majority; },
-                members: [
-                    { party: "cs", type: "government" },
-                    { party: "psc",  type: "abstain"  },
-                    { party: "ppc", type: "support"   }
-                ]
-            },
-            {
-                label:   "Unthinkably Grand Coalition",
-                condition: function(s) { return s("vox") > 0 && s("cs") > 0 && s("psc") > 0 && s("ppc") > 0 && s("cs") + s("ppc") + s("vox") + s("psc") / 2 < Q.parlament_s_majority },
+                condition: function(s) { return s("ppc") > s("cs") && s("cs") > 0 && s("cs") + s("ppc") + s("psc") < Q.parlament_s_majority; },
                 members: [
                     { party: "cs",  type: "government" },
-                    { party: "psc", type: "support"    },
                     { party: "ppc", type: "government" },
-                    { party: "vox", type: "support"    }
+                    { party: "psc", type: "support"    }
+                ]
+            },
+            {
+                label: "Unthinkably Grand Coalition",
+                condition: function(s) { return s("vox") > 0 && s("cs") > 0 && s("psc") > 0 && s("ppc") > 0 && s("cs") + s("ppc") + s("vox") / 2 + s("psc") < Q.parlament_s_majority },
+                members: [
+                    { party: "cs",  type: "government" },
+                    { party: "ppc", type: "government" },
+                    { party: "psc", type: "support"    },
+                    { party: "vox", type: "abstain"    }
                 ]
             },
             {
@@ -413,26 +522,19 @@ on-arrival: {!
                 condition: function(s) { return s("vox") > 0 && s("cs") > 0 && s("psc") > 0 && s("ppc") > 0 && s("cs") + s("ppc") + s("vox") + s("psc") / 2 >= Q.parlament_s_majority; },
                 members: [
                     { party: "cs",  type: "government" },
-                    { party: "psc", type: "abstain"    },
                     { party: "ppc", type: "government" },
-                    { party: "vox", type: "support"    }
+                    { party: "vox", type: "support"    },
+                    { party: "psc", type: "abstain"    }
                 ]
             },
             {
-                label:   "Moderation Government",
-                condition: function(s) { return s("unio") > 0 && s("psc") > s("cs"); },
+                label: "Salvation Government",
+                condition: function(s) { return s("vox") > 0 && s("cs") > 0 && s("psc") > 0 && s("ppc") > 0 && s("cs") + s("ppc") + s("vox") + s("psc") >= Q.parlament_s_majority; },
                 members: [
-                    { party: "psc",  type: "government" },
-                    { party: "cs",   type: "support"    },
-                    { party: "unio", type: "support"    }
-                ]
-            },
-            {
-                label: "CiU 2.0 - Back Together",
-                condition: function(s) { return s("unio") > 0 && s("ciu_alias") + s("unio") > 50; },
-                members: [
-                    { party: "ciu_alias", type: "government" },
-                    { party: "unio",      type: "government" },
+                    { party: "cs",  type: "government" },
+                    { party: "ppc", type: "government" },
+                    { party: "vox", type: "support"    },
+                    { party: "psc", type: "support"    }
                 ]
             }
         ]
@@ -449,10 +551,12 @@ Given the election results, different coalition arithmetics can be imagined. Now
 
 
 - @parlament_coalition_ciu_minority.erc
-- @parlament_coalition_ciu_minority.ppc 
+- @parlament_coalition_ciu_minority.cup
+- @parlament_coalition_ciu_minority.ppc_any 
 - @parlament_coalition_ciu_erc.erc
 - @parlament_coalition_ciu_erc.cup
 - @parlament_coalition_left_tripartite.erc
+- @parlament_coalition_left_tripartite.cup
 - @refuse_negotiations
 
 @refuse_negotiations
@@ -461,5 +565,19 @@ choose-if: (parlament_coalition_erc_critical and player_party == "erc") or (parl
 subtitle: This will be disliked by pretty much everyone, and will most probably result in new elections.
 unavailable-subtitle: Sadly, we're not that critical. There are coalition options without our votes.
 on-arrival: {!
-    // TO-DO: Penalties for refusing to negotiate
+    // TODO: Penalties for refusing to negotiate
+    Q.next_election_week = Q.week;
+    Q.next_election_month = Q.month + 3;
+    if (Q.next_election_month >= 13) {
+        Q.next_election_month = Q.next_election_month % 12;
+        Q.next_election_year = Q.year + 1;
+    } else {
+        Q.next_election_year = Q.year;
+    }
+    Q.next_election_time = Q.time + 3;
 !}
+
+No one is thrilled about another election round, and the general public seems to think that governent formation was in our hands. We'll have to do some level of reconvincing before the next elections.
+
+- @post_event: Let's hope this was for the better...
+
