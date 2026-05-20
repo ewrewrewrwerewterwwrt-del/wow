@@ -8,6 +8,9 @@ on-arrival: {!
     if (Q.parlament_coalition_proposal_vp == Q.parlament_coalition_proposal_president) {
         switch (Q.parlament_coalition_proposal_vp) {  
             case "ciu":
+                Q.parlament_coalition_proposal_vp_name = "Joana Ortega";
+                Q.parlament_coalition_proposal_vp_gender = "f";
+                break;
             case "cdc":
                 Q.parlament_coalition_proposal_vp_name = "Neus Munté";
                 Q.parlament_coalition_proposal_vp_gender = "f";
@@ -85,6 +88,10 @@ on-arrival: {!
             case "vox":
                 Q.parlament_coalition_proposal_vp_name = "Antonio Gallego";
                 Q.parlament_coalition_proposal_vp_gender = "m";
+                break;
+            case "cup":
+                Q.parlament_coalition_proposal_vp_name = "Dolors Sabter";
+                Q.parlament_coalition_proposal_vp_gender = "f";
                 break;
         }
     } else if (Q.parlament_coalition_proposal_vp === null) {
@@ -166,6 +173,10 @@ on-arrival: {!
             Q.parlament_coalition_proposal_economy_name = "Manuel Reyes";
             Q.parlament_coalition_proposal_economy_gender = "m";
             break;
+        case "cup":
+            Q.parlament_coalition_proposal_economy_name = "Benet Salellas";
+            Q.parlament_coalition_proposal_economy_gender = "m";
+            break;
         case "vox":
     }
 
@@ -235,6 +246,10 @@ on-arrival: {!
                 Q.parlament_coalition_proposal_interior_gender = "m";
             }
             break;
+        case "cup":
+            Q.parlament_coalition_proposal_interior_name = "Gabriela Serra";
+            Q.parlament_coalition_proposal_interior_gender = "f";
+            break;
     }
 
     switch (Q.parlament_coalition_proposal_health) {
@@ -296,6 +311,10 @@ on-arrival: {!
             break;
         case "vox":
             Q.parlament_coalition_proposal_health_name = "Maria Elisa García";
+            Q.parlament_coalition_proposal_health_gender = "f";
+            break;
+        case "cup":
+            Q.parlament_coalition_proposal_health_name = "Eulàlia Reguant";
             Q.parlament_coalition_proposal_health_gender = "f";
             break;
     }
@@ -362,6 +381,10 @@ on-arrival: {!
             Q.parlament_coalition_proposal_education_name = "Manuel Acosta";
             Q.parlament_coalition_proposal_education_gender = "m";
             break;
+        case "cup":
+            Q.parlament_coalition_proposal_education_name = "Mireia Vehí";
+            Q.parlament_coalition_proposal_education_gender = "f";
+            break;
     }
 
     switch (Q.parlament_coalition_proposal_bnl) {
@@ -419,6 +442,10 @@ on-arrival: {!
         case "vox":
             Q.parlament_coalition_proposal_bnl_name = "Isabel Lázaro";
             Q.parlament_coalition_proposal_bnl_gender = "f";
+            break;
+        case "cup":
+            Q.parlament_coalition_proposal_bnl_name = "Vidal Aragonès";
+            Q.parlament_coalition_proposal_bnl_gender = "m";
             break;
     }
 
@@ -484,6 +511,10 @@ on-arrival: {!
             Q.parlament_coalition_proposal_foreign_name = "Sergio Macián";
             Q.parlament_coalition_proposal_foreign_gender = "m";
             break;
+        case "cup":
+            Q.parlament_coalition_proposal_foreign_name = "Albert Botran";
+            Q.parlament_coalition_proposal_foreign_gender = "m";
+            break;
     }
 
     switch (Q.parlament_coalition_proposal_territory) {
@@ -533,6 +564,10 @@ on-arrival: {!
             break;
         case "vox":
             Q.parlament_coalition_proposal_territory_name = "Antonio Ramón López";
+            Q.parlament_coalition_proposal_territory_gender = "m";
+            break;
+        case "cup":
+            Q.parlament_coalition_proposal_territory_name = "Mireia Boya";
             Q.parlament_coalition_proposal_territory_gender = "m";
             break;
     }

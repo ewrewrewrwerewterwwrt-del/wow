@@ -56,7 +56,7 @@ new-page: true
 @changes
 title: Propose a[? if left_tripartite_coalition_phase > 1 or parlament_coalition_changes:n alternative?] Government Composition
 
-[? if not parlament_coalition_changes: We can try to propose a different distribution of ministeries, but there's no guarantee that it will be accepted. ?]
+[? if not parlament_coalition_changes: We can try to propose a different distribution of ministries, but there's no guarantee that it will be accepted. ?]
 
 - @vp
 - @economy
@@ -469,7 +469,7 @@ choose-if: not parlament_coalition_changes
 unavailable-subtitle: We have proposed changes, which will require approval by both the PSC and [+ parlament_current_icv +].
 on-arrival: {!
     Q.left_tripartite_coalition_phase = 0;
-    Q.cat_coalition_disp = +`<span style="color: var(--erc); font-style: italic;">Left</span> <span style="color: [? if parlament_current_icv = 'icv': var(--icv)?][? if parlament_current_icv = 'csqp': var(--csqp)?][? if parlament_current_icv = 'cecp': var(--cecp)?][? if parlament_current_icv = 'ecp': var(--ecp)?]; font-style: italic;">Tri</span><span style='color: var(--psc); font-style: italic;'>partite</span>`;
+    Q.cat_coalition_disp = `<span style="color: var(--erc); font-style: italic;">Left</span> <span style="color: [? if parlament_current_icv = 'icv': var(--icv)?][? if parlament_current_icv = 'csqp': var(--csqp)?][? if parlament_current_icv = 'cecp': var(--cecp)?][? if parlament_current_icv = 'ecp': var(--ecp)?]; font-style: italic;">Tri</span><span style='color: var(--psc); font-style: italic;'>partite</span>`;
     Q.erc_in_gob = true;
     Q.erc_supporting = true;
     Q.cat_coalition = ["psc", "erc", Q.parlament_current_icv];

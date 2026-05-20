@@ -1,0 +1,264 @@
+title: parlament unionist coalition
+
+You should not be here? Report a bug if you see this text.
+
+@cs_ppc
+title: <span style="color: var(--cs); font-style: italic;">Cs</span>-led <span style="color: var(--ppc); font-style: italic;">Constitutionalist</span> Pact
+view-if: parlament_coalition_cs_ppc_s > 0
+choose-if: parlament_coalition_cs_ppc_s >= parlament_s_majority
+unavailable-subtitle: CS and PPC together do not have a combined majority.
+subtitle: [? if player_party == "erc": A bleak option for the future of Catalonia. ?][? if player_party == "cup": The worst outcome both for the nation and for class struggle.?]
+on-arrival: {!
+    Q.erc_in_gob = false;
+    Q.erc_supporting = false;
+    Q.cup_in_gob = false;
+    Q.cup_supporting = false;
+    Q.cat_coalition_dissent = 0;
+    Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
+    Q.month_actions += 1;
+    Q.independence_momentum += 10;
+    Q.independence_trust -= 15;
+
+    Q.cat_coalition = ["cs", "ppc"];
+    Q.cat_coalition_disp = "<span style='color: var(--cs); font-style: italic;'>Constitutionalist</span> Pact";
+    Q.parlament_coalition_proposal_president = "cs";
+    Q.parlament_coalition_proposal_vp = "ppc";
+    Q.speaker_party = "ppc";
+    Q.speaker = Q.ppc_leader;
+    Q.speaker_gender = Q.ppc_leader_gender;
+
+    Q.parlament_coalition_proposal_economy = "cs";
+    Q.parlament_coalition_proposal_interior = "cs";
+    Q.parlament_coalition_proposal_foreign = "cs";
+    Q.parlament_coalition_proposal_health = "cs";
+    Q.parlament_coalition_proposal_education = "ppc";
+    Q.parlament_coalition_proposal_territory = "ppc";
+    Q.parlament_coalition_proposal_bnl = "ppc";
+
+    var ppc_leverage = (Q.ppc_parlament_s / (Q.cs_parlament_s + Q.ppc_parlament_s)) * 55;
+    if (ppc_leverage > 20) {
+        Q.parlament_coalition_proposal_health = "ppc";
+        Q.parlament_coalition_proposal_bnl = "cs";
+    }
+!}
+go-to: parlament_coalition_setnames
+set-jump: display_government
+
+@ppc_cs
+title: <span style="color: var(--ppc); font-style: italic;">Constitutionalist</span> Government
+view-if: parlament_coalition_ppc_cs_s > 0
+choose-if: parlament_coalition_ppc_cs_s >= parlament_s_majority
+unavailable-subtitle: PPC and CS together do not have a combined majority.
+subtitle: [? if player_party == "erc": A bleak option for the future of Catalonia. ?][? if player_party == "cup": The worst outcome both for the nation and for class struggle.?]
+on-arrival: {!
+    Q.erc_in_gob = false;
+    Q.erc_supporting = false;
+    Q.cup_in_gob = false;
+    Q.cup_supporting = false;
+    Q.cat_coalition_dissent = 0;
+    Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
+    Q.month_actions += 1;
+    Q.independence_momentum += 10;
+    Q.independence_trust -= 15;
+
+    Q.cat_coalition = ["ppc", "cs"];
+    Q.cat_coalition_disp = "<span style='color: var(--ppc); font-style: italic;'>PPC</span>-<span style='color: var(--cs); font-style: italic;'>Cs</span> <span style='font-style: italic;'>Constitutionalist</span> Government";
+    Q.parlament_coalition_proposal_president = "ppc";
+    Q.parlament_coalition_proposal_vp = "cs";
+    Q.speaker_party = "cs";
+    Q.speaker = Q.cs_leader;
+    Q.speaker_gender = "m";
+
+    Q.parlament_coalition_proposal_economy = "ppc";
+    Q.parlament_coalition_proposal_interior = "ppc";
+    Q.parlament_coalition_proposal_foreign = "ppc";
+    Q.parlament_coalition_proposal_health = "ppc";
+    Q.parlament_coalition_proposal_education = "cs";
+    Q.parlament_coalition_proposal_territory = "cs";
+    Q.parlament_coalition_proposal_bnl = "cs";
+
+    var cs_leverage = (Q.cs_parlament_s / (Q.cs_parlament_s + Q.ppc_parlament_s)) * 55;
+    if (cs_leverage > 20) {
+        Q.parlament_coalition_proposal_health = "cs";
+        Q.parlament_coalition_proposal_bnl = "ppc";
+    }
+!}
+go-to: parlament_coalition_setnames
+set-jump: display_government
+
+@cs_ppc_vox
+title: <span style="color: var(--cs); font-style: italic;">Right</span>-<span style="color: var(--vox); font-style: italic;">Union</span> Coalition
+view-if: parlament_coalition_cs_ppc_vox_s > 0
+choose-if: parlament_coalition_cs_ppc_vox_s >= parlament_s_majority
+unavailable-subtitle: The right bloc does not have a combined majority.
+subtitle: [? if player_party == "erc": A bleak option for the future of Catalonia. ?][? if player_party == "cup": The worst outcome both for the nation and for class struggle.?]
+on-arrival: {!
+    Q.erc_in_gob = false;
+    Q.erc_supporting = false;
+    Q.cup_in_gob = false;
+    Q.cup_supporting = false;
+    Q.cat_coalition_dissent = 0;
+    Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
+    Q.month_actions += 1;
+    Q.independence_momentum += 10;
+    Q.independence_trust -= 15;
+
+    var right_pres = Q.cs_parlament_s >= Q.ppc_parlament_s ? "cs" : "ppc";
+    var right_vp = Q.cs_parlament_s >= Q.ppc_parlament_s ? "ppc" : "cs";
+
+    Q.cat_coalition = [right_pres, right_vp, "vox"];
+    Q.cat_coalition_disp = "<span style='color: var(--cs); font-style: italic;'>Right</span>-<span style='color: var(--vox); font-style: italic;'>Union</span> Coalition";
+    Q.parlament_coalition_proposal_president = right_pres;
+    Q.parlament_coalition_proposal_vp = right_vp;
+    Q.speaker_party = "vox";
+    Q.speaker = Q.vox_leader;
+    Q.speaker_gender = "m";
+
+    Q.parlament_coalition_proposal_economy = right_pres;
+    Q.parlament_coalition_proposal_interior = right_pres;
+    Q.parlament_coalition_proposal_foreign = right_pres;
+    Q.parlament_coalition_proposal_health = right_vp;
+    Q.parlament_coalition_proposal_education = right_vp;
+    Q.parlament_coalition_proposal_territory = "vox";
+    Q.parlament_coalition_proposal_bnl = "vox";
+
+    var vox_leverage = (Q.vox_parlament_s / (Q.cs_parlament_s + Q.ppc_parlament_s + Q.vox_parlament_s)) * 55;
+    if (vox_leverage > 15) {
+        Q.parlament_coalition_proposal_interior = "vox";
+        Q.parlament_coalition_proposal_territory = right_vp;
+    }
+!}
+go-to: parlament_coalition_setnames
+set-jump: display_government
+
+@cs_minority
+title: <span style="color: var(--cs); font-style: italic;">CS</span> Minority Government
+view-if: cs_parlament_s > 0 and cs_parlament_s < parlament_s_majority
+choose-if: cs_parlament_s > 40
+unavailable-subtitle: CS does not have enough seats to sustain a minority government.
+subtitle: [? if player_party == "erc": A bleak option for the future of Catalonia. ?][? if player_party == "cup": The worst outcome both for the nation and for class struggle.?]
+on-arrival: {!
+    Q.erc_in_gob = false;
+    Q.erc_supporting = false;
+    Q.cup_in_gob = false;
+    Q.cup_supporting = false;
+    Q.cat_coalition_dissent = 0;
+    Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
+    Q.month_actions += 1;
+    Q.independence_momentum += 10;
+    Q.independence_trust -= 15;
+
+    Q.cat_coalition = ["cs"];
+    Q.cat_coalition_disp = "<span style='color: var(--cs); font-style: italic;'>CS</span> Minority Government";
+    Q.parlament_coalition_proposal_president = "cs";
+    Q.parlament_coalition_proposal_vp = "cs";
+    Q.speaker_party = Q.ppc_parlament_s > 0 ? "ppc" : "cs";
+    Q.speaker = Q.ppc_parlament_s > 0 ? Q.ppc_leader : Q.cs_leader;
+    Q.speaker_gender = Q.ppc_parlament_s > 0 ? Q.ppc_leader_gender : "m";
+    Q.parlament_coalition_proposal_economy = "cs";
+    Q.parlament_coalition_proposal_interior = "cs";
+    Q.parlament_coalition_proposal_health = "cs";
+    Q.parlament_coalition_proposal_foreign = "cs";
+    Q.parlament_coalition_proposal_education = "cs";
+    Q.parlament_coalition_proposal_territory = "cs";
+    Q.parlament_coalition_proposal_bnl = "cs";
+!}
+go-to: parlament_coalition_setnames
+set-jump: display_government
+
+@ppc_minority
+title: <span style="color: var(--ppc); font-style: italic;">PPC</span> Minority Government
+view-if: ppc_parlament_s > 0 and ppc_parlament_s < parlament_s_majority
+choose-if: ppc_parlament_s > 40
+unavailable-subtitle: PPC does not have enough seats to sustain a minority government.
+subtitle: [? if player_party == "erc": A bleak option for the future of Catalonia. ?][? if player_party == "cup": The worst outcome both for the nation and for class struggle.?]
+on-arrival: {!
+    Q.erc_in_gob = false;
+    Q.erc_supporting = false;
+    Q.cup_in_gob = false;
+    Q.cup_supporting = false;
+    Q.cat_coalition_dissent = 0;
+    Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
+    Q.month_actions += 1;
+    Q.independence_momentum += 10;
+    Q.independence_trust -= 15;
+
+    Q.cat_coalition = ["ppc"];
+    Q.cat_coalition_disp = "<span style='color: var(--ppc); font-style: italic;'>PPC</span> Minority Government";
+    Q.parlament_coalition_proposal_president = "ppc";
+    Q.parlament_coalition_proposal_vp = "ppc";
+    Q.speaker_party = Q.cs_parlament_s > 0 ? "cs" : "ppc";
+    Q.speaker = Q.cs_parlament_s > 0 ? Q.cs_leader : Q.ppc_leader;
+    Q.speaker_gender = "m";
+    Q.parlament_coalition_proposal_economy = "ppc";
+    Q.parlament_coalition_proposal_interior = "ppc";
+    Q.parlament_coalition_proposal_health = "ppc";
+    Q.parlament_coalition_proposal_foreign = "ppc";
+    Q.parlament_coalition_proposal_education = "ppc";
+    Q.parlament_coalition_proposal_territory = "ppc";
+    Q.parlament_coalition_proposal_bnl = "ppc";
+!}
+go-to: parlament_coalition_setnames
+set-jump: display_government
+
+@cs_psc_ppc
+title: <span style="color: var(--cs); font-style: italic;">CS</span>-led Unity Pact (CS + PSC + PPC)
+view-if: parlament_coalition_cs_psc_ppc_s > 0 and parlament_coalition_cs_ppc_s < parlament_s_majority and parlament_coalition_ppc_cs_s < parlament_s_majority
+choose-if: parlament_coalition_cs_psc_ppc_s >= parlament_s_majority
+unavailable-subtitle: CS, PSC, and PPC together do not have a combined majority.
+subtitle: [? if player_party == "erc": A constitutional bloc against the independence project. ?][? if player_party == "cup": An anti-independence grand coalition.?]
+go-to: cs_ppc
+
+@psc_cs_ppc
+title: <span style="color: var(--psc); font-style: italic;">PSC</span>-led Unity Pact (PSC + CS + PPC)
+view-if: parlament_coalition_psc_cs_ppc_s > 0 and parlament_coalition_cs_ppc_s < parlament_s_majority and parlament_coalition_ppc_cs_s < parlament_s_majority
+choose-if: parlament_coalition_psc_cs_ppc_s >= parlament_s_majority
+unavailable-subtitle: PSC, CS, and PPC together do not have a combined majority.
+subtitle: [? if player_party == "erc": A Spanish-nationalist bloc, PSC-led. ?][? if player_party == "cup": The worst kind of social-democrat betrayal.?]
+go-to: ppc_cs
+
+@cs_psc_ppc_vox
+title: <span style="color: var(--cs); font-style: italic;">Right</span>-<span style="color: var(--vox); font-style: italic;">Union</span> Grand Coalition
+view-if: parlament_coalition_cs_psc_ppc_vox_s > 0 and parlament_coalition_cs_ppc_vox_s < parlament_s_majority and parlament_coalition_cs_ppc_s < parlament_s_majority and parlament_coalition_ppc_cs_s < parlament_s_majority
+choose-if: parlament_coalition_cs_psc_ppc_vox_s >= parlament_s_majority
+unavailable-subtitle: The constitutionalist and PSC bloc does not have a combined majority.
+subtitle: [? if player_party == "erc": An unprecedented anti-independence bloc. ?][? if player_party == "cup": As bad as it gets.?]
+go-to: cs_ppc_vox
+
+@cs_psc_unio
+title: <span style="color: var(--cs); font-style: italic;">CS</span>-<span style="color: var(--psc); font-style: italic;">PSC</span>-<span style="color: var(--unio); font-style: italic;">Unió</span> Moderation Pact
+view-if: parlament_coalition_cs_psc_unio_s > 0 and parlament_coalition_cs_ppc_s < parlament_s_majority and parlament_coalition_ppc_cs_s < parlament_s_majority
+choose-if: parlament_coalition_cs_psc_unio_s >= parlament_s_majority
+unavailable-subtitle: CS, PSC, and Unió together do not have a combined majority.
+subtitle: [? if player_party == "erc": A centrist bloc without us. ?][? if player_party == "cup": Moderation-speak for blocking independence.?]
+go-to: cs_ppc
+
+@psc_cs_unio
+title: <span style="color: var(--psc); font-style: italic;">PSC</span>-led Moderation Pact (PSC + CS + Unió)
+view-if: parlament_coalition_psc_cs_unio_s > 0 and parlament_coalition_cs_ppc_s < parlament_s_majority and parlament_coalition_ppc_cs_s < parlament_s_majority
+choose-if: parlament_coalition_psc_cs_unio_s >= parlament_s_majority
+unavailable-subtitle: PSC, CS, and Unió together do not have a combined majority.
+subtitle: [? if player_party == "erc": A centrist unionist government. ?][? if player_party == "cup": Another form of blocking independence.?]
+go-to: ppc_cs
+
+@display_government
+
+The unionist parties have agreed to form a [+ cat_coalition_disp +]. The Speaker of the House will be [+ speaker +] ([+ speaker_party +]).
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content:center"><img src="img/cat_seal.svg"></div><div style="width:80%; padding-left: 1em;"> **M.H.** [? if parlament_coalition_proposal_president_gender = "m": **President** ?][? if parlament_coalition_proposal_president_gender = "f": **Presidenta** ?] **[+ parlament_coalition_proposal_president_name +]** ([+ parlament_coalition_proposal_president +])<br/> <span style="font-size:0.9em;"> [? if parlament_coalition_proposal_vp_gender = "m": **H. Vicepresident** ?][? if parlament_coalition_proposal_vp_gender = "f": **H. Vicepresidenta** ?] [+ parlament_coalition_proposal_vp_name +] ([+ parlament_coalition_proposal_vp +])</span></div></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/economy_icon.svg"/></div><div style="width: 100%"> **Economy** ([+ parlament_coalition_proposal_economy +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_economy_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/health_icon.svg"/></div><div style="width: 100%"> **Health** ([+ parlament_coalition_proposal_health +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_health_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/education_icon.svg"/></div><div style="width: 100%"> **Education** ([+ parlament_coalition_proposal_education +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_education_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/interior_icon.svg"/></div><div style="width: 100%"> **Interior** ([+ parlament_coalition_proposal_interior +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_interior_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/international_icon.svg"/></div><div style="width: 100%"> **Foreign Affairs** ([+ parlament_coalition_proposal_foreign +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_foreign_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;width:105%"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/labour_icon.svg"/></div><div style="width: 100%"> **Business & Labour** ([+ parlament_coalition_proposal_bnl +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_bnl_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/territory_icon.svg"/></div><div style="width: 100%"> **Territory** ([+ parlament_coalition_proposal_territory +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_territory_name +]</span></div></div>
+
+- @parlament_coalition_resolve: We can only hope this does not last long...

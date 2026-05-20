@@ -1,11 +1,6 @@
 title: parlament coalition
 new-page: true
 on-arrival: {!
-    // DEBUG REMOVE
-    Q.erc_parlament_s += 10;
-    Q.ciu_parlament_s -= 10;
-    Q.psc_relations += 30;
-
     // Post-election happenings
     const clean_boost_parties = ["pxc", "fnc", "vox", "pdcat", "cup", "si", "unio"];
     for (var p of clean_boost_parties) {
@@ -40,6 +35,12 @@ on-arrival: {!
     Q.ciu_erc_coalition_phase = 0;
     Q.ciu_min_coalition_phase = 0;
     Q.left_tripartite_coalition_phase = 0;
+    Q.erc_min_coalition_phase = 0;
+    Q.erc_ciu_coalition_phase = 0;
+    Q.erc_cup_coalition_phase = 0;
+    Q.psc_tripartite_coalition_phase = 0;
+    Q.republican_coalition_phase = 0;
+    Q.left_indy_front_coalition_phase = 0;
 
     Q.parlament_coalition_proposal_president = null;
     Q.parlament_coalition_proposal_vp = null;
@@ -123,6 +124,7 @@ on-arrival: {!
     Q.parlament_coalition_cs_psc_unio_s = (Q.unio_parlament_s > 0 && Q.cs_parlament_s > Q.psc_parlament_s) ? Q.cs_parlament_s + Q.psc_parlament_s + Q.unio_parlament_s : 0;
     Q.parlament_coalition_psc_cs_unio_s = (Q.unio_parlament_s > 0 && Q.psc_parlament_s > Q.cs_parlament_s) ? Q.cs_parlament_s + Q.psc_parlament_s + Q.unio_parlament_s : 0;
     Q.parlament_coalition_ciu_ppc_unio_s = (Q[Q.parlament_current_ciu + "_parlament_s"] + Q.ppc_parlament_s + Q.unio_parlament_s > 40 && Q[Q.parlament_current_ciu + "_parlament_s"] < Q.parlament_s_majority) ? Q[Q.parlament_current_ciu + "_parlament_s"] + Q.ppc_parlament_s + Q.unio_parlament_s : 0;
+    Q.parlament_coalition_erc_psc_icv_cup_s = (Q.erc_parlament_s > Q.psc_parlament_s && Q.cup_parlament_s > 0) ? Q.erc_parlament_s + Q.psc_parlament_s + Q[Q.parlament_current_icv + "_parlament_s"] + Q.cup_parlament_s : 0;
 
     if (
         (Q.parlament_current_ciu_s < Q.parlament_s_majority) &&
@@ -257,7 +259,7 @@ on-arrival: {!
                 ]
             },
             {
-                label:   "Sovereignty Coalition",
+                label:   "Sovereignty Government",
                 condition: function(s) { return s("ciu_alias") >= s("erc") && s("erc") > 0; },
                 members: [
                     { party: "ciu_alias", type: "government" },
@@ -552,11 +554,26 @@ Given the election results, different coalition arithmetics can be imagined. Now
 
 - @parlament_coalition_ciu_minority.erc
 - @parlament_coalition_ciu_minority.cup
-- @parlament_coalition_ciu_minority.ppc_any 
+- @parlament_coalition_ciu_minority.ppc_any
 - @parlament_coalition_ciu_erc.erc
 - @parlament_coalition_ciu_erc.cup
+- @parlament_coalition_erc_ciu.erc
+- @parlament_coalition_erc_ciu.cup
 - @parlament_coalition_left_tripartite.erc
 - @parlament_coalition_left_tripartite.cup
+- @parlament_coalition_psc_tripartite.erc
+- @parlament_coalition_psc_tripartite.cup
+- @parlament_coalition_progressist.any
+- @parlament_coalition_unionist.cs_minority
+- @parlament_coalition_unionist.ppc_minority
+- @parlament_coalition_unionist.cs_ppc
+- @parlament_coalition_unionist.ppc_cs
+- @parlament_coalition_unionist.cs_ppc_vox
+- @parlament_coalition_unionist.cs_psc_ppc
+- @parlament_coalition_unionist.psc_cs_ppc
+- @parlament_coalition_unionist.cs_psc_ppc_vox
+- @parlament_coalition_unionist.cs_psc_unio
+- @parlament_coalition_unionist.psc_cs_unio
 - @refuse_negotiations
 
 @refuse_negotiations

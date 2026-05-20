@@ -1,0 +1,172 @@
+title: psc tripartite coalition negotiations phase 0
+
+You should not be here? Report a bug if you see this text.
+
+@erc
+title: <span style="color: var(--psc); font-style: italic;">New</span> <span style="color: var(--erc); font-style: italic;">Tri</span><span style="color: [? if parlament_current_icv = 'icv': var(--icv)?][? if parlament_current_icv = 'csqp': var(--csqp)?][? if parlament_current_icv = 'cecp': var(--cecp)?][? if parlament_current_icv = 'ecp': var(--ecp)?]; font-style: italic;">partite</span> (PSC-ERC-[+ parlament_current_icv +])
+view-if: parlament_coalition_psc_erc_icv_s and player_party == "erc"
+choose-if: parlament_coalition_psc_erc_icv_s >= parlament_s_majority and (psc_relations > 55 or ((psc_leader == "Montserrat Tura" or psc_leader == "Àngel Ros" or party_resources > 1) and psc_relations > 40)) and (parlament_current_icv_relations > 55 or ((parlament_current_icv_leader == "Arcadi Oliveres" or party_resources > 1) and parlament_current_icv_relations > 40))
+unavailable-subtitle: [? if parlament_coalition_psc_erc_icv_s < parlament_s_majority: Not enough parliamentary support. ?][? if psc_relations <= 40: The PSC does not trust us enough. ?][? if parlament_current_icv_relations <= 40: [+ parlament_current_icv +] does not trust us enough. ?][? if party_resources < 1: Not enough resources. ?]
+subtitle: We'll be going back to the 2000's formula. [[? if (psc_relations <= 55 and not (psc_leader == "Montserrat Tura" or psc_leader == "Àngel Ros")) and (parlament_current_icv_relations <= 55 and not (parlament_current_icv_leader == "Arcadi Oliveres")): -2?][? if ((psc_relations <= 55 and not (psc_leader == "Montserrat Tura" or psc_leader == "Àngel Ros")) or (parlament_current_icv_relations <= 55 and not (parlament_current_icv_leader == "Arcadi Oliveres"))) and not ((psc_relations <= 55 and not (psc_leader == "Montserrat Tura" or psc_leader == "Àngel Ros")) and (parlament_current_icv_relations <= 55 and not (parlament_current_icv_leader == "Arcadi Oliveres"))): -1?] resources]
+on-arrival: {!
+    if (Q.parlament_current_icv_leader != "Arcadi Oliveres" && Q.parlament_current_icv_relations <= 55) {
+        Q.party_resources -= 1;
+    }
+    if (Q.psc_leader != "Montserrat Tura" && Q.psc_leader != "Àngel Ros" && Q.psc_relations <= 55) {
+        Q.party_resources -= 1;
+    }
+    Q.month_actions += 1;
+    Q.psc_tripartite_coalition_phase = 1;
+    Q.parlament_coalition_leverage = Math.max(10, (Q.erc_parlament_s / Q.parlament_coalition_psc_erc_icv_s) * 55);
+    if (Q.psc_relations < 50) {
+        Q.parlament_coalition_leverage -= Math.floor((50 - Q.psc_relations) * 0.4);
+    }
+    if (Q.parlament_current_icv_relations < 50) {
+        Q.parlament_coalition_leverage -= Math.floor((50 - Q.parlament_current_icv_relations) * 0.2);
+    }
+    Q.parlament_coalition_leverage = Math.max(5, Q.parlament_coalition_leverage);
+!}
+
+Before the formal negotiations for the formation of a <span style="color: var(--psc); font-style: italic;">New</span> <span style="color: var(--erc); font-style: italic;">Tri</span><span style="color: [? if parlament_current_icv = 'icv': var(--icv)?][? if parlament_current_icv = 'csqp': var(--csqp)?][? if parlament_current_icv = 'cecp': var(--cecp)?][? if parlament_current_icv = 'ecp': var(--ecp)?]; font-style: italic;">partite</span> government can begin, the Parlament needs to convene. The first order of business is the Speaker of the House. The PSC has agreed to yield it to the coalition partners, but who gets to take it?
+
+- @erc_speaker: Push for the Speaker of the House for ERC
+- @icv_speaker: Yield the Speaker of the House to [+ parlament_current_icv +]
+
+@erc_speaker
+choose-if: parlament_coalition_leverage > 12
+unavailable-subtitle: Given the results, claiming the Speaker of the House will leave us no leverage for government positions.
+on-arrival: {!
+    Q.speaker_party = "erc";
+    if (Q.year < 2016) {
+        Q.speaker = "Anna Simó";
+        Q.speaker_gender = "f";
+    } else {
+        Q.speaker = "Roger Torrent";
+        Q.speaker_gender = "m";
+    }
+    Q.psc_relations -= 3;
+    Q.parlament_coalition_leverage -= 5;
+!}
+go-to: post_speaker
+
+@icv_speaker
+on-arrival: {!
+    Q.speaker_party = Q.parlament_current_icv;
+    if (Q.parlament_current_icv_leader == "Lluís Rabell") {
+        Q.speaker = "Dolors Camats";
+        Q.speaker_gender = "f";
+    } else {
+        Q.speaker = "Lluís Rabell";
+        Q.speaker_gender = "m";
+    }
+    Q[Q.parlament_current_icv + "_relations"] += 2;
+    Q.parlament_coalition_leverage += 3;
+!}
+go-to: post_speaker
+
+@post_speaker
+
+[+ speaker +] will be the Speaker of the House for this legislature. Officially the second authority of the country, [+ speaker_party +] will now have a decisive role in the legislative agenda moving forwards.
+
+- @post_event: And so, time passes...
+
+
+@cup
+title: <span style="color: var(--psc); font-style: italic;">New</span> <span style="color: var(--erc); font-style: italic;">Tri</span><span style="color: [? if parlament_current_icv = 'icv': var(--icv)?][? if parlament_current_icv = 'csqp': var(--csqp)?][? if parlament_current_icv = 'cecp': var(--cecp)?][? if parlament_current_icv = 'ecp': var(--ecp)?]; font-style: italic;">partite</span> Government (PSC-ERC-[+ parlament_current_icv +])
+view-if: parlament_coalition_psc_erc_icv_s and player_party == "cup"
+choose-if: parlament_coalition_psc_erc_icv_s >= parlament_s_majority and (erc_roadmap < 1 or erc_relations > 55 or (erc_relations > 40 and erc_relations <= 55 and party_resources > 1))
+unavailable-subtitle: [? if parlament_coalition_psc_erc_icv_s < parlament_s_majority: Not enough parliamentary support. ?][? if erc_roadmap >= 1 and erc_relations <= 55: ERC is pushing for independence, and thus uninterested in a new tripartite. [? if erc_relations <= 40: We lack good enough relations with them to push them into this. ?][? if party_resources < 1 and erc_relations > 40: Not enough resources. ?] ?]
+subtitle: [? if erc_roadmap < 1: ERC having abandoned any plans for independence does help in forming such a coalition.?][? if erc_roadmap >= 1 and erc_relations > 40: We'll have to push ERC into this arrangement. [? if erc_relations < 55: [-1 resources]?]?]
+on-arrival: {!
+    Q.month_actions += 1;
+    Q.cat_coalition_disp = "<span style='color: var(--psc); font-style: italic;'>New</span> <span style='color: var(--erc); font-style: italic;'>Tri</span><span style='color: var(--" + Q.parlament_current_icv + "); font-style: italic;'>partite</span> Government";
+    Q.erc_in_gob = true;
+    Q.erc_supporting = true;
+    Q.cup_in_gob = false;
+    Q.cup_supporting = false;
+    Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
+    Q.cat_coalition = ["psc", "erc", Q.parlament_current_icv];
+    Q.cat_coalition_dissent = 0;
+    Q.independence_momentum -= 10;
+    Q.independence_trust -= 15;
+
+    Q.parlament_coalition_proposal_president = "psc";
+    Q.parlament_coalition_proposal_economy = "psc";
+    Q.parlament_coalition_proposal_interior = "psc";
+    Q.parlament_coalition_proposal_health = "psc";
+    Q.parlament_coalition_proposal_foreign = "erc";
+    Q.parlament_coalition_proposal_bnl = "erc";
+    Q.parlament_coalition_proposal_education = Q.parlament_current_icv;
+    Q.parlament_coalition_proposal_territory = Q.parlament_current_icv;
+
+    if (Q.erc_roadmap <= 1 && Q.erc_relations < 55) {
+        Q.party_resources -= 1;
+    }
+
+    var psc_leverage = (Q.psc_parlament_s / Q.parlament_coalition_psc_erc_icv_s) * 55;
+    var erc_leverage = (Q.erc_parlament_s / Q.parlament_coalition_psc_erc_icv_s) * 55;
+    var icv_leverage = (Q.parlament_current_icv_s / Q.parlament_coalition_psc_erc_icv_s) * 55;
+
+    if (Q.erc_parlament_s >= Q.parlament_current_icv_s) {
+        Q.parlament_coalition_proposal_vp = "erc";
+    } else {
+        Q.parlament_coalition_proposal_vp = Q.parlament_current_icv;
+    }
+
+    if (erc_leverage > 7) {
+        Q.parlament_coalition_proposal_education = "erc";
+    }
+    if (erc_leverage > 15) {
+        Q.parlament_coalition_proposal_health = "erc";
+    }
+    if (icv_leverage > 15) {
+        Q.parlament_coalition_proposal_territory = Q.parlament_current_icv;
+    }
+    if (icv_leverage > 7) {
+        Q.parlament_coalition_proposal_bnl = Q.parlament_current_icv;
+    }
+
+    if (Q.erc_parlament_s > Q.parlament_current_icv_s) {
+        Q.speaker_party = Q.parlament_current_icv;
+        if (Q.parlament_current_icv_leader == "Lluís Rabell") {
+            Q.speaker = "Dolors Camats";
+            Q.speaker_gender = "f";
+        } else {
+            Q.speaker = "Lluís Rabell";
+            Q.speaker_gender = "m";
+        }
+    } else {
+        Q.speaker_party = "erc";
+        if (Q.year < 2016) {
+            Q.speaker = "Anna Simó";
+            Q.speaker_gender = "f";
+        } else {
+            Q.speaker = "Roger Torrent";
+            Q.speaker_gender = "m";
+        }
+    }
+!}
+go-to: parlament_coalition_setnames
+set-jump: cup_display
+
+@cup_display
+
+ERC has joined the PSC and [+ parlament_current_icv +] in a [+ cat_coalition_disp +]. The Speaker of the House will be [+ speaker +] ([+ speaker_party +]). The new executive in the Generalitat looks as follows:
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content:center"><img src="img/cat_seal.svg"></div><div style="width:80%; padding-left: 1em;"> **M.H.** [? if parlament_coalition_proposal_president_gender = "m": **President** ?][? if parlament_coalition_proposal_president_gender = "f": **Presidenta** ?] **[+ parlament_coalition_proposal_president_name +]** ([+ parlament_coalition_proposal_president +])<br/> <span style="font-size:0.9em;"> [? if parlament_coalition_proposal_vp_gender = "m": **H. Vicepresident** ?][? if parlament_coalition_proposal_vp_gender = "f": **H. Vicepresidenta** ?] [+ parlament_coalition_proposal_vp_name +] ([+ parlament_coalition_proposal_vp +])</span></div></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/economy_icon.svg"/></div><div style="width: 100%"> **Economy** ([+ parlament_coalition_proposal_economy +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_economy_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/health_icon.svg"/></div><div style="width: 100%"> **Health** ([+ parlament_coalition_proposal_health +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_health_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/education_icon.svg"/></div><div style="width: 100%"> **Education** ([+ parlament_coalition_proposal_education +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_education_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/interior_icon.svg"/></div><div style="width: 100%"> **Interior** ([+ parlament_coalition_proposal_interior +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_interior_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/international_icon.svg"/></div><div style="width: 100%"> **Foreign Affairs** ([+ parlament_coalition_proposal_foreign +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_foreign_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;width:105%"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/labour_icon.svg"/></div><div style="width: 100%"> **Business & Labour** ([+ parlament_coalition_proposal_bnl +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_bnl_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/territory_icon.svg"/></div><div style="width: 100%"> **Territory** ([+ parlament_coalition_proposal_territory +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_territory_name +]</span></div></div>
+
+- @parlament_coalition_resolve: A new government is formed.

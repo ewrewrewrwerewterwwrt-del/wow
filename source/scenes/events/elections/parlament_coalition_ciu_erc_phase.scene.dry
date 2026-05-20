@@ -207,7 +207,7 @@ go-to: policy_concessions
 @changes
 title: Propose an alternative Government Composition
 
-[? if not parlament_coalition_changes: We can try to propose a different distribution of ministeries, but there's no guarantee that it will be accepted. ?]
+[? if not parlament_coalition_changes: We can try to propose a different distribution of ministries, but there's no guarantee that it will be accepted. ?]
 
 - @vp
 - @economy

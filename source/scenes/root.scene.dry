@@ -517,7 +517,7 @@ go-to: start_menu_2
 choose-if: 1==0
 unavailable-subtitle: Route to Ítaca is currently in its early development stages. Check back soon(-ish) for the full experience!
 on-arrival: {!
-Q.debug = true; // TODO: set false
+Q.debug = false; // TODO: set false
 
 Q.started = 1;
 // time elapsed (in months)

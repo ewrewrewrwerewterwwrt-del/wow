@@ -1,0 +1,206 @@
+title: erc-ciu sovereignty coalition negotiations phase 0
+
+You should not be here? Report a bug if you see this text.
+
+@erc
+title: ERC-[+ parlament_current_ciu +] <span style="font-style: italic;color: var(--erc);">Sovereignty</span> <span style="font-style: italic;color: [? if parlament_current_ciu = 'ciu': var(--ciu)?][? if parlament_current_ciu = 'cdc': var(--cdc)?][? if parlament_current_ciu = 'dl': var(--dl)?][? if parlament_current_ciu = 'pdcat': var(--pdcat)?][? if parlament_current_ciu = 'jxcat': var(--jxcat)?][? if parlament_current_ciu = 'junts': var(--junts)?]">government</span>
+view-if: parlament_coalition_erc_ciu_s and player_party == "erc"
+choose-if: parlament_coalition_erc_ciu_s >= parlament_s_majority and erc_parlament_s > parlament_current_ciu_s and ((parlament_current_ciu == "ciu" and ciu_roadmap != 0) or (parlament_current_ciu == "pdcat" and pdcat_roadmap != 0) or (parlament_current_ciu == "cdc" and cdc_roadmap != 0) or (parlament_current_ciu == "dl" and dl_roadmap != 0) or (parlament_current_ciu == "jxcat" and jxcat_roadmap != 0) or (parlament_current_ciu == "junts" and junts_roadmap != 0)) and ((parlament_current_ciu == "ciu" and ciu_relations > 40) or (parlament_current_ciu == "pdcat" and pdcat_relations > 40) or (parlament_current_ciu == "cdc" and cdc_relations > 40) or (parlament_current_ciu == "dl" and dl_relations > 40) or (parlament_current_ciu == "jxcat" and jxcat_relations > 40) or (parlament_current_ciu == "junts" and junts_relations > 40))
+unavailable-subtitle: [? if parlament_coalition_erc_ciu_s < parlament_s_majority: Not enough parliamentary support. ?][? if not ((parlament_current_ciu == "ciu" and ciu_relations > 40) or (parlament_current_ciu == "pdcat" and pdcat_relations > 40) or (parlament_current_ciu == "cdc" and cdc_relations > 40) or (parlament_current_ciu == "dl" and dl_relations > 40) or (parlament_current_ciu == "jxcat" and jxcat_relations > 40) or (parlament_current_ciu == "junts" and junts_relations > 40)): [+ parlament_current_ciu +] does not trust us enough to form a government together. ?][? if not ((parlament_current_ciu == "ciu" and ciu_roadmap != 0) or (parlament_current_ciu == "pdcat" and pdcat_roadmap != 0) or (parlament_current_ciu == "cdc" and cdc_roadmap != 0) or (parlament_current_ciu == "dl" and dl_roadmap != 0) or (parlament_current_ciu == "jxcat" and jxcat_roadmap != 0) or (parlament_current_ciu == "junts" and junts_roadmap != 0)): [+ parlament_current_ciu +] has no Roadmap for Independence. ?]
+subtitle: [+ parlament_current_ciu +] expects us to reach an agreement to continue the push for independence.
+on-arrival: {!
+    Q.month_actions += 1;
+    Q.erc_ciu_coalition_phase = 1;
+!}
+
+Before actual negotiations for the formation of an ERC-[+ parlament_current_ciu +] sovereignty government start, the Parlament needs to convene under a new or renewed mandate. Having a majority together, the first order of business is deciding on the Speaker of the House. [? if erc_parlament_s <= 40: Given the results, [+ parlament_current_ciu +] is expecting us to yield this position to them. ?]
+
+- @erc_speaker: Push for an ERC Speaker of the House
+- @ciu_speaker: [? if erc_parlament_s > 40: Yield the Speaker of the House to [+ parlament_current_ciu +]?][? if erc_parlament_s <= 40: Agree to yield the Speaker of the House to [+ parlament_current_ciu +]?]
+
+@erc_speaker
+on-arrival: {!
+    Q.speaker_party = "erc";
+    if (Q.year < 2016) {
+        Q.speaker = "Anna Simó";
+        Q.speaker_gender = "f";
+    } else {
+        Q.speaker = "Roger Torrent";
+        Q.speaker_gender = "m";
+    }
+    if (Q.erc_parlament_s > 40) {
+        Q[Q.parlament_current_ciu + "_relations"] -= 1;
+    } else {
+        Q[Q.parlament_current_ciu + "_relations"] -= 3;
+    }
+!}
+go-to: post_speaker
+
+@ciu_speaker
+on-arrival: {!
+    Q.speaker_party = Q.parlament_current_ciu;
+    switch (Q.parlament_current_ciu) {
+        case "ciu":
+            Q.speaker = "Núria de Gispert";
+            Q.speaker_gender = "f";
+            break;
+        case "cdc":
+        case "dl":
+            Q.speaker = "Carles Campuzano";
+            Q.speaker_gender = "m";
+            break;
+        case "pdcat":
+            Q.speaker = "Lluís Corominas";
+            Q.speaker_gender = "m";
+            break;
+        case "jxcat":
+        case "junts":
+            if (Q.junts_leader != "Laura Borràs") {
+                Q.speaker = "Laura Borràs";
+                Q.speaker_gender = "f";
+            } else {
+                Q.speaker = "Albert Batet";
+                Q.speaker_gender = "m";
+            }
+            break;
+        default:
+            Q.speaker = "Elsa Artadi";
+            Q.speaker_gender = "f";
+            break;
+    }
+    Q[Q.parlament_current_ciu + "_relations"] += 3;
+!}
+go-to: post_speaker
+
+@post_speaker
+
+[+ speaker +] will be the Speaker of the House for this legislature. Officially the second authority of the country, [+ speaker_party +] will now have a decisive role in the legislative agenda moving forwards. 
+
+- @post_event: And so, time passes...
+
+
+@cup
+title: ERC-[+ parlament_current_ciu +] <span style="font-style: italic;color: var(--erc);">Sovereignty</span> <span style="font-style: italic;color: [? if parlament_current_ciu = 'ciu': var(--ciu)?][? if parlament_current_ciu = 'cdc': var(--cdc)?][? if parlament_current_ciu = 'dl': var(--dl)?][? if parlament_current_ciu = 'pdcat': var(--pdcat)?][? if parlament_current_ciu = 'jxcat': var(--jxcat)?][? if parlament_current_ciu = 'junts': var(--junts)?]">government</span>
+new-page: true
+view-if: parlament_coalition_erc_ciu_s and player_party == "cup"
+choose-if: parlament_coalition_erc_ciu_s >= parlament_s_majority and erc_parlament_s > parlament_current_ciu_s and ((parlament_current_ciu == "ciu" and ciu_roadmap != 0) or (parlament_current_ciu == "pdcat" and pdcat_roadmap != 0) or (parlament_current_ciu == "cdc" and cdc_roadmap != 0) or (parlament_current_ciu == "dl" and dl_roadmap != 0) or (parlament_current_ciu == "jxcat" and jxcat_roadmap != 0) or (parlament_current_ciu == "junts" and junts_roadmap != 0)) and ((parlament_current_ciu == "ciu" and ciu_relations > 40) or (parlament_current_ciu == "pdcat" and pdcat_relations > 40) or (parlament_current_ciu == "cdc" and cdc_relations > 40) or (parlament_current_ciu == "dl" and dl_relations > 40) or (parlament_current_ciu == "jxcat" and jxcat_relations > 40) or (parlament_current_ciu == "junts" and junts_relations > 40)) and erc_relations > 40
+unavailable-subtitle: [? if parlament_coalition_erc_ciu_s < parlament_s_majority: Not enough parliamentary support. ?][? if not ((parlament_current_ciu == "ciu" and ciu_roadmap != 0) or (parlament_current_ciu == "pdcat" and pdcat_roadmap != 0) or (parlament_current_ciu == "cdc" and cdc_roadmap != 0) or (parlament_current_ciu == "dl" and dl_roadmap != 0) or (parlament_current_ciu == "jxcat" and jxcat_roadmap != 0) or (parlament_current_ciu == "junts" and junts_roadmap != 0)): [+ parlament_current_ciu +] has no Roadmap for Independence. ?][? if erc_relations <= 40: We don't have good enough relations with ERC to push them into this coalition. ?]
+subtitle: Push ERC and [+ parlament_current_ciu +] to reach a sovereignty coalition with ERC in the lead.
+on-arrival: {!
+    Q.cat_coalition_disp = "<span style='color: var(--erc); font-style: italic;'>Sovereignty</span> <span style='color: var(--" + Q.parlament_current_ciu + "); font-style: italic;'>government</span>";
+    Q.erc_in_gob = true;
+    Q.erc_supporting = true;
+    Q.cup_in_gob = false;
+    Q.cup_supporting = false;
+    Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
+    Q.cat_coalition = ["erc", Q.parlament_current_ciu];
+    Q.cat_coalition_dissent = 0;
+
+    Q.parlament_coalition_proposal_president = "erc";
+    var erc_proposal_leverage = Math.max(10, 30 - (Q.erc_parlament_s - Q[Q.parlament_current_ciu + "_parlament_s"])) - 3;
+
+    if (Q.erc_parlament_s > 40) {
+        Q[Q.parlament_current_ciu + "_relations"] += 2;
+        Q.erc_relations -= 2;
+        Q.speaker_party = "erc";
+        if (Q.year < 2016) {
+            Q.speaker = "Anna Simó";
+            Q.speaker_gender = "f";
+        } else {
+            Q.speaker = "Roger Torrent";
+            Q.speaker_gender = "m";
+        }
+        Q.parlament_coalition_proposal_vp = "erc";
+    } else {
+        Q[Q.parlament_current_ciu + "_relations"] += 2;
+        Q.erc_relations += 2;
+        Q.speaker_party = Q.parlament_current_ciu;
+        switch (Q.parlament_current_ciu) {
+            case "ciu":
+                Q.speaker = "Núria de Gispert";
+                Q.speaker_gender = "f";
+                break;
+            case "cdc":
+            case "dl":
+                Q.speaker = "Carles Campuzano";
+                Q.speaker_gender = "m";
+                break;
+            case "pdcat":
+                Q.speaker = "Lluís Corominas";
+                Q.speaker_gender = "m";
+                break;
+            case "jxcat":
+            case "junts":
+                if (Q.junts_leader != "Laura Borràs") {
+                    Q.speaker = "Laura Borràs";
+                    Q.speaker_gender = "f";
+                } else {
+                    Q.speaker = "Albert Batet";
+                    Q.speaker_gender = "m";
+                }
+                break;
+            default:
+                Q.speaker = "Elsa Artadi";
+                Q.speaker_gender = "f";
+                break;
+        }
+        Q.parlament_coalition_proposal_vp = Q.parlament_current_ciu;
+        erc_proposal_leverage -= 10;
+    }
+
+    Q.parlament_coalition_proposal_economy = "erc";
+    Q.parlament_coalition_proposal_interior = "erc";
+    Q.parlament_coalition_proposal_foreign = "erc";
+    Q.parlament_coalition_proposal_health = "erc";
+    Q.parlament_coalition_proposal_education = "erc";
+    Q.parlament_coalition_proposal_territory = "erc";
+    Q.parlament_coalition_proposal_bnl = "erc";
+
+    if (Q.parlament_coalition_proposal_bnl != Q.parlament_current_ciu && erc_proposal_leverage > 5) {
+        Q.parlament_coalition_proposal_bnl = Q.parlament_current_ciu;
+        erc_proposal_leverage -= 5;
+    }
+    if (Q.parlament_coalition_proposal_territory != Q.parlament_current_ciu && erc_proposal_leverage > 5) {
+        Q.parlament_coalition_proposal_territory = Q.parlament_current_ciu;
+        erc_proposal_leverage -= 5;
+    }
+    if (Q.parlament_coalition_proposal_education != Q.parlament_current_ciu && erc_proposal_leverage > 7) {
+        Q.parlament_coalition_proposal_education = Q.parlament_current_ciu;
+        erc_proposal_leverage -= 7;
+    }
+    if (Q.parlament_coalition_proposal_health != Q.parlament_current_ciu && erc_proposal_leverage > 7) {
+        Q.parlament_coalition_proposal_health = Q.parlament_current_ciu;
+        erc_proposal_leverage -= 7;
+    }
+    if (Q.parlament_coalition_proposal_foreign != Q.parlament_current_ciu && erc_proposal_leverage > 6) {
+        Q.parlament_coalition_proposal_foreign = Q.parlament_current_ciu;
+        erc_proposal_leverage -= 6;
+    }
+!}
+go-to: parlament_coalition_setnames
+set-jump: cup_resolve
+
+@cup_resolve
+
+Thanks to our efforts, ERC and [+ parlament_current_ciu +] have reached an agreement to form a [+ cat_coalition_disp +]. The Speaker of the House will be [+ speaker +] ([+ speaker_party +]), and the government has taken the following shape:
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content:center"><img src="img/cat_seal.svg"></div><div style="width:80%; padding-left: 1em;"> **M.H.** [? if parlament_coalition_proposal_president_gender = "m": **President** ?][? if parlament_coalition_proposal_president_gender = "f": **Presidenta** ?] **[+ parlament_coalition_proposal_president_name +]** ([+ parlament_coalition_proposal_president +])<br/> <span style="font-size:0.9em;"> [? if parlament_coalition_proposal_vp_gender = "m": **H. Vicepresident** ?][? if parlament_coalition_proposal_vp_gender = "f": **H. Vicepresidenta** ?] [+ parlament_coalition_proposal_vp_name +] ([+ parlament_coalition_proposal_vp +])</span></div></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/economy_icon.svg"/></div><div style="width: 100%"> **Economy** ([+ parlament_coalition_proposal_economy +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_economy_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/health_icon.svg"/></div><div style="width: 100%"> **Health** ([+ parlament_coalition_proposal_health +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_health_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/education_icon.svg"/></div><div style="width: 100%"> **Education** ([+ parlament_coalition_proposal_education +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_education_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/interior_icon.svg"/></div><div style="width: 100%"> **Interior** ([+ parlament_coalition_proposal_interior +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_interior_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/international_icon.svg"/></div><div style="width: 100%"> **Foreign Affairs** ([+ parlament_coalition_proposal_foreign +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_foreign_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;width:105%"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/labour_icon.svg"/></div><div style="width: 100%"> **Business & Labour** ([+ parlament_coalition_proposal_bnl +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_bnl_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/territory_icon.svg"/></div><div style="width: 100%"> **Territory** ([+ parlament_coalition_proposal_territory +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_territory_name +]</span></div></div>
+
+
+[? if erc_parlament_s > 40: The government under President [+ erc_leader +] will be quite unequal, with [+ parlament_current_ciu +] holding the Vice-Presidency and the Speaker of the House.?][? if erc_parlament_s <= 40: The government under President [+ erc_leader +] will be balanced enough, with ERC holding both the Vice-Presidency and the Speaker of the House.?] Some promises on independence commitments have been made, we'll have to monitor them closely as the legislature progresses.
+
+- @parlament_coalition_resolve: New faces in the Generalitat...

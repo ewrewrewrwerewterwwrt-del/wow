@@ -1,0 +1,72 @@
+title: parlament progressist coalition
+
+You should not be here? Report a bug if you see this text.
+
+@any
+title: <span style="color: var(--psc); font-style: italic;">Progressist</span> <span style="color: [? if parlament_current_icv = 'icv': var(--icv)?][? if parlament_current_icv = 'csqp': var(--csqp)?][? if parlament_current_icv = 'cecp': var(--cecp)?][? if parlament_current_icv = 'ecp': var(--ecp)?]; font-style: italic;">Government</span> (PSC-[+ parlament_current_icv +])
+view-if: parlament_coalition_psc_icv_s
+choose-if: parlament_coalition_psc_icv_s >= parlament_s_majority
+unavailable-subtitle: Not enough parliamentary support for a PSC-[+ parlament_current_icv +] government.
+subtitle: [? if player_party == "erc": A centre-left government without us.?][? if player_party == "cup": A reformist coalition firmly against national liberation.?]
+on-arrival: {!
+    Q.cat_coalition_disp = "<span style='color: var(--psc); font-style: italic;'>Progressist</span> <span style='color: var(--" + Q.parlament_current_icv + "); font-style: italic;'>Government</span> ";
+    Q.erc_in_gob = false;
+    Q.erc_supporting = false;
+    Q.cup_in_gob = false;
+    Q.cup_supporting = false;
+    Q.cat_coalition = ["psc", Q.parlament_current_icv];
+    Q.cat_coalition_dissent = 0;
+    Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
+    Q.month_actions += 1;
+    Q.independence_trust -= 10;
+
+    Q.parlament_coalition_proposal_president = "psc";
+    Q.parlament_coalition_proposal_vp = Q.parlament_current_icv;
+    Q.parlament_coalition_proposal_economy = "psc";
+    Q.parlament_coalition_proposal_interior = "psc";
+    Q.parlament_coalition_proposal_health = "psc";
+    Q.parlament_coalition_proposal_foreign = "psc";
+    Q.parlament_coalition_proposal_education = Q.parlament_current_icv;
+    Q.parlament_coalition_proposal_territory = Q.parlament_current_icv;
+    Q.parlament_coalition_proposal_bnl = "psc";
+
+    var icv_leverage = (Q.parlament_current_icv_s / Q.parlament_coalition_psc_icv_s) * 55;
+    if (icv_leverage > 12) {
+        Q.parlament_coalition_proposal_health = Q.parlament_current_icv;
+    } else if (icv_leverage > 7) {
+        Q.parlament_coalition_proposal_bnl = Q.parlament_current_icv;
+    }
+
+    if (Q.parlament_current_icv_leader == "Lluís Rabell") {
+        Q.speaker = "Dolors Camats";
+        Q.speaker_gender = "f";
+    } else {
+        Q.speaker = "Lluís Rabell";
+        Q.speaker_gender = "m";
+    }
+    Q.speaker_party = Q.parlament_current_icv;
+!}
+go-to: parlament_coalition_setnames
+set-jump: display_government
+
+@display_government
+
+The PSC and [+ parlament_current_icv +] have reached an agreement to form a [+ cat_coalition_disp +]. The Speaker of the House will be [+ speaker +] ([+ speaker_party +]).
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content:center"><img src="img/cat_seal.svg"></div><div style="width:80%; padding-left: 1em;"> **M.H.** [? if parlament_coalition_proposal_president_gender = "m": **President** ?][? if parlament_coalition_proposal_president_gender = "f": **Presidenta** ?] **[+ parlament_coalition_proposal_president_name +]** ([+ parlament_coalition_proposal_president +])<br/> <span style="font-size:0.9em;"> [? if parlament_coalition_proposal_vp_gender = "m": **H. Vicepresident** ?][? if parlament_coalition_proposal_vp_gender = "f": **H. Vicepresidenta** ?] [+ parlament_coalition_proposal_vp_name +] ([+ parlament_coalition_proposal_vp +])</span></div></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/economy_icon.svg"/></div><div style="width: 100%"> **Economy** ([+ parlament_coalition_proposal_economy +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_economy_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/health_icon.svg"/></div><div style="width: 100%"> **Health** ([+ parlament_coalition_proposal_health +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_health_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/education_icon.svg"/></div><div style="width: 100%"> **Education** ([+ parlament_coalition_proposal_education +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_education_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/interior_icon.svg"/></div><div style="width: 100%"> **Interior** ([+ parlament_coalition_proposal_interior +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_interior_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/international_icon.svg"/></div><div style="width: 100%"> **Foreign Affairs** ([+ parlament_coalition_proposal_foreign +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_foreign_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;width:105%"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/labour_icon.svg"/></div><div style="width: 100%"> **Business & Labour** ([+ parlament_coalition_proposal_bnl +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_bnl_name +]</span></div></div>
+
+<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/territory_icon.svg"/></div><div style="width: 100%"> **Territory** ([+ parlament_coalition_proposal_territory +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_territory_name +]</span></div></div>
+
+- @parlament_coalition_resolve: A new government is formed.

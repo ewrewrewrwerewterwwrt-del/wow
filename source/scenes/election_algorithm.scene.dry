@@ -554,7 +554,7 @@ function _resolveProvince(province, gironaBoost, isCapital = false) {
         if (t > 0) for (var f in s) s[f] = s[f] / t * 100;
     }
     var total = Object.values(s).reduce(function(a,b){return a+b;}, 0);
-    if (total === 0) return _activeIcr;  // parliament not yet initialised — safe default
+    if (total === 0) return _activeIcr;  // parliament not yet initialised, safe default
     var winner = Object.keys(s).reduce(function(a,b){ return s[a]>s[b]?a:b; });
     return winner === "icr" ? _activeIcr : winner;
 }
@@ -886,7 +886,7 @@ if ((Q.psc_leader == "Miquel Iceta" || Q.psc_leader == "Pere Navarro") && Q.art1
 }
 
 // Vielha e Mijaran: UA-PSC vs CDA duopoly
-// CDA wins if IM is surging OR PSC is weak — UA-PSC only holds when both conditions fail
+// CDA wins if IM is surging OR PSC is weak, UA-PSC only holds when both conditions fail
 var _lleidaFamilies = _provinceFamilySupport("lleida");
 var _icrLleida = _lleidaFamilies.icr || 0;
 var vielha_winner = (im > 65 || _icrLleida >= 40 || Q.art155_ever) ? "cda-pna" : "ua-psc";
