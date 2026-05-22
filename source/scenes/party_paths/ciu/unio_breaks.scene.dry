@@ -1,0 +1,133 @@
+title: CiU breaks up
+subtitle: Unthinkable just a few years ago, it seems like UDC and CDC will go on their separate ways.
+view-if: (ciu_roadmap > 1 or unio_breakup_trigger or (year>=2016 and ciu_roadmap != 0)) and player_party != "ciu"
+face-image: img/events/unio_breakup.jpg
+new-page: true
+max-visits: 1
+tags: event
+on-arrival: {!
+    // TODO: unio_breakup_trigger (and countdown) needs to be set at some point (post 9N?)
+
+    Q.unio_split = true;
+
+    Q.cdc_roadmap = Q.ciu_roadmap;
+    Q.unio_roadmap = 0;
+    Q.cdc_ideology = "Centre-right Liberalism, Pragmatic Independence"
+
+    Q.cdc_parlament_s = Math.ceil(Q.ciu_parlament_s * 0.75);
+    Q.cdc_parlament_pv = 0;
+    Q.unio_parlament_s = Math.floor(Q.ciu_parlament_s * 0.25);
+    Q.unio_parlament_pv = 0;
+    
+    Q.ciu_parlament_s = 0;
+    Q.ciu_parlament_pv = 0;
+
+    Q.cdc_congreso_s = Math.ceil(Q.ciu_congreso_s * 0.75);
+    Q.cdc_congreso_pv = 0;
+    Q.cdc_congreso_pv_cat = 0;
+    Q.unio_congreso_s = Math.floor(Q.ciu_congreso_s * 0.25);
+    Q.unio_congreso_pv = 0;
+    Q.unio_congreso_pv_cat = 0;
+    Q.ciu_congreso_s = 0;
+    Q.ciu_congreso_pv = 0;
+    Q.ciu_congreso_pv_cat = 0;
+
+    Q.cdc_dissent = Q.ciu_dissent;
+    Q.ciu_dissent = 0;
+
+    for (var prov of Q.parlament_constituencies)  {
+        for (var demo of Q.parlament_demographics) {
+            Q["cdc_parlament_" + prov + "_" + demo + "_support"] = Q["ciu_parlament_" + prov + "_" + demo + "_support"] * 0.9;
+            Q["unio_parlament_" + prov + "_" + demo + "_support"] = Q["ciu_parlament_" + prov + "_" + demo + "_support"] * 0.1;
+            Q["ciu_parlament_" + prov + "_" + demo + "_support"] = 0;
+        }
+    }
+    Q.cdc_congreso_catalunya_support = Q.ciu_congreso_catalunya_support * 0.9;
+    Q.unio_congreso_catalunya_support = Q.ciu_congreso_catalunya_support * 0.1;
+    Q.ciu_congreso_catalunya_support = 0;
+
+    // transferring support
+    Q.cdc_local_barcelona_support = Q.ciu_local_barcelona_support;
+    Q.ciu_local_barcelona_support = 0;
+    Q.cdc_local_barcelona_s = Q.ciu_local_barcelona_s;
+    Q.ciu_local_barcelona_s = 0;
+    Q.cdc_local_barcelona_pv = Q.ciu_local_barcelona_pv;
+    Q.ciu_local_barcelona_pv = 0;
+    
+
+    // governing stuff
+
+    if  (Q.president_party == "ciu") {
+        Q.president_party = "cdc";
+    }
+
+    if (Q.vicepresident_party == "ciu") {
+        Q.vicepresident_party = "cdc";
+        Q.vicepresident = "Neus Munté";
+    }
+
+    if (Q.economy_minister_party == "ciu") {
+        Q.economy_minister_party = "cdc";
+    }
+
+    if (Q.interior_minister_party == "ciu") {
+        Q.interior_minister_party = "cdc";
+        Q.interior_minister = "Felip Puig";
+    }
+
+    if (Q.health_minister_party == "ciu") {
+        Q.health_minister_party = "cdc";
+    }
+
+    if (Q.education_minister_party == "ciu") {
+        Q.education_minister_party = "cdc";
+    }
+
+    if (Q.territory_minister_party == "ciu") {
+        Q.territory_minister_party = "cdc";
+    }
+
+    if (Q.foreign_minister_party == "ciu") {
+        Q.foreign_minister_party = "cdc";
+    }
+
+    if (Q.bnl_minister_party == "ciu") {
+        Q.bnl_minister_party = "cdc";
+    }
+
+    if (Q.speaker == "Núria de Gispert") {
+        Q.speaker_party = "unio";
+    } else if (Q.speaker_party == "ciu") {
+        Q.speaker_party = "cdc";
+        // idk how this would happen but just in case
+    }
+
+    Q.cdc_relations = Q.ciu_relations;
+    switch (Q.player_party) {
+        case "erc":
+            Q.unio_relations = Math.floor(Q.ciu_relations * 0.5);
+            break;
+        case "cup":
+            Q.unio_relations = 10;
+            break;
+        default:
+            Q.unio_relations = Q.ciu_relations;
+            break;
+    }
+
+    if (Q.cat_coalition.includes("ciu")) {
+        Q.cat_coalition = Q.cat_coalition.map(item => item === "ciu" ? "cdc" : item);
+        Q.cat_coalition_disp = Q.cat_coalition_disp.replaceAll("CiU", "CDC").replaceAll("ciu", "cdc");
+    }
+
+    Q.dl_formation_countdown = 6;
+    Q.countdowns.push("dl_formation");
+!}
+
+= The breakup of ​CiU
+
+After four decades of alliance, the two parties forming the dominant political force in Catalonia since Franco's death, CDC and UDC, seem to have drifted too far apart. Artur Mas' steering of CDC towards a openly pro-independence stance has been sowing a conflict that now seems impossible to mend. UDC's more moderate position has even started to feel like an electoral drag for many, with some CDC town mayors going as far as calling them an *"obstacle to independence"*. 
+
+The so-called *"orderly deconstruction"* of the coalition will mean the exit of any UDC members of the executive, while Duran i Lleida, as well as the rest of the executive, have already said that they will not compromise any CiU majority be it at the local or Parlament levels.
+
+- @post_event: So long, classic Catalan bourgeois coalition.

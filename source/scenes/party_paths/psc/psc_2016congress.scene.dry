@@ -6,6 +6,8 @@ new-page: true
 max-visits: 1
 tags: event
 
+= ​PSC 2016 Party Congress
+
 After the rollercoaster of events that have been shaking the PSC this decade, it is hardly a surprise that the party is still struggling with leadership issues. [? if psc_leader = "Miquel Iceta": Recently elected unopposed Miquel Iceta is still consolidating his position, which is far from a stable one. With ideas that would have been unthinkable a decade ago, he is looking to ditch any support for self-determination or a referendum, and yield further party autonomy to the PSOE.?][? if psc_leader = "Montserrat Tura": After her unorthodox takover, Montserrat Tura has been building on the "Nou Cicle" program, moving the party to the left and reviving its Catalan spirit, which has no doubt resulted in some animosity amongst party profiles closer to the PSOE.?][? if psc_leader = "Àngel Ros": After his unexpected rise, angel ros has been attempting to balance the party's Catalan identity with its new relationship with the PSOE, with more independence. A process that no doubt has risen many eyebrows amongst the party.?]
 
 In the midst of all this, a new figure may be steadily gaining support and climbing the party ranks. From deep in the Red Belt, Nuria Parlon has been building a profile that, while moderate, does not renounce federalism and a renewed relationship with the PSOE with autonomy but not outright separation for Congreso lists. With her spectacular retention of her position as mayor of Santa Coloma de Gramanet, she is now putting forward a candidacy to dispute the current party leadership. [? if (psc_leader != "Miquel Iceta" and psc_parlament_s < 24) or (psc_leader = "Miquel Iceta" and psc_parlament_s >= 10 ): However, without grassroots support outside of her local area, it is not going to be an easy run without extra support. ?][? if psc_leader = "Miquel Iceta" and psc_parlament_s < 10: Without any intervention, she is likely to succeed given the PSC's poor electoral results (and why would we intervene?). ?]
@@ -23,6 +25,8 @@ subtitle: [? if psc_parlament_s >= 10: Without any intervention, that's bound to
 on-arrival: party_resources -= 1; psc_relations += 5;
 
 # TODO: Actual text
+
+- @post_event
  
 @tura_remains
 view-if: psc_leader = "Montserrat Tura"
@@ -33,6 +37,8 @@ on-arrival: party_resources -= 1; psc_relations += 5;
 
 # TODO: Actual text
 
+- @post_event
+
 @ros_remains
 view-if: psc_leader = "Àngel Ros"
 choose-if: psc_parlament_s >= 24 or (party_resources >= 1 and psc_relations >= 40)
@@ -42,6 +48,8 @@ on-arrival: party_resources -= 1; psc_relations += 5;
 
 
 # TODO: Actual text
+
+- @post_event
 
 @parlon_takes_over
 choose-if: (psc_leader != "Miquel Iceta" and psc_parlament_s < 24) or (psc_leader = "Miquel Iceta" and psc_parlament_s < 10 and party_resources >= 1 and psc_relations >= 40)
@@ -56,3 +64,5 @@ on-arrival: {!
 !}
 
 # TODO: Actual text + acutally maintaining Tura or Ros should cost against Parlon.
+
+- @post_event

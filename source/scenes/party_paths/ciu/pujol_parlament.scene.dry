@@ -1,0 +1,27 @@
+title: Jordi Pujol addresses the Parlament
+subtitle: The former President will testify about his financial holdings abroad
+view-if: month == 9 and year == 2014
+face-image: img/events/pujol_parlament.jpg
+new-page: true
+max-visits: 1
+tags: event
+on-arrival: {!
+    Q.pujol_parlament_happened = true;
+    Q.corruption_events_ciu += 1;
+    Q.independence_trust -= 10;
+
+    // TODO: move some votes arround
+
+    // Reset DL formation trigger so it does not happen the same month
+    if (Q.countdowns.includes("dl_formation") && Q.dl_formation_countdown < 3 && !Q.dl_formation_trigger) {
+        Q.dl_formation_countdown = 3;
+        Q.dl_formation_trigger = false;
+    }
+
+!}
+
+= ​Jordi Pujol addresses the Parlament
+
+TODO: text, Pujol talks to the Parlament about his financial holdings, it's a complete shitshow as he starts scolding MPs who question him, his wife and suspected main financial manager, Marta Ferrusola, concludes with "Catalunya no s'ho mereix això!" (Catalonia does not deserve this!) which is both ridiculous and insulting.
+
+- @post_event: What even was that?

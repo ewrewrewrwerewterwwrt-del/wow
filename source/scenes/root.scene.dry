@@ -101,7 +101,7 @@ Q.parlament_constituencies = ["barcelona", "girona", "lleida", "tarragona"];
 Q.parlament_size = 135;
 Q.parlament_s_majority = Math.floor(Q.parlament_size/2) + 1;
 
-Q.parties = ['ciu', 'erc', 'psc', 'ppc', 'icv', 'cs', 'cup', 'si', 'cdc', 'unio', 'jxsi', 'junts', 'jxcat', 'pdcat', 'csqp', 'cecp', 'ecp', 'vox', 'fnc', 'pxc'];
+Q.parties = ['ciu', 'erc', 'psc', 'ppc', 'icv', 'cs', 'cup', 'si', 'cdc', 'unio', 'dl', 'jxsi', 'junts', 'jxcat', 'pdcat', 'csqp', 'cecp', 'ecp', 'vox', 'fnc', 'pxc'];
 
 Q.ciu_parlament_pv = 40;
 Q.ciu_parlament_s = 62;
@@ -122,10 +122,14 @@ Q.cup_parlament_pv = 0.0;
 Q.cup_parlament_s = 0;
 Q.cdc_parlament_pv = 0.0;
 Q.cdc_parlament_s = 0;
+Q.dl_parlament_s = 0;
+Q.dl_parlament_pv = 0;
 Q.unio_parlament_pv = 0.0;
 Q.unio_parlament_s = 0;
 Q.jxsi_parlament_pv = 0.0;
 Q.jxsi_parlament_s = 0;
+Q.jxcat_parlament_pv = 0.0;
+Q.jxcat_parlament_s = 0;
 Q.pdcat_parlament_pv = 0.0;
 Q.pdcat_parlament_s = 0;
 Q.junts_parlament_pv = 0.0;
@@ -517,7 +521,7 @@ go-to: start_menu_2
 choose-if: 1==0
 unavailable-subtitle: Route to Ítaca is currently in its early development stages. Check back soon(-ish) for the full experience!
 on-arrival: {!
-Q.debug = false; // TODO: set false
+Q.debug = false;
 
 Q.started = 1;
 // time elapsed (in months)

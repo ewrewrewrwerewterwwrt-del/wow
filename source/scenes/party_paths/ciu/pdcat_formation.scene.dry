@@ -1,0 +1,107 @@
+title: DL's continued identity crisis
+subtitle: The burden of dl's legacy continues to weigh down on the Catalan centre-right
+view-if: player_party != "dl" and pdcat_formation_trigger
+face-image: img/events/pdcat_founding.jpg
+new-page: true
+max-visits: 1
+tags: event
+on-arrival: {!
+    Q.pdcat_formed = true;
+
+    Q.pdcat_roadmap = Q.dl_roadmap
+    Q.pdcat_ideology = Q.dl_ideology
+    
+    Q.pdcat_leader = Q.dl_leader;
+    Q.pdcat_leader_gender = Q.dl_leader_gender;
+
+    Q.pdcat_parlament_s = Q.dl_parlament_s;
+    Q.pdcat_parlament_pv = Q.dl_parlament_pv;
+    Q.dl_parlament_s = 0;
+    Q.dl_parlament_pv = 0;
+
+    Q.pdcat_congreso_s = Q.dl_congreso_s;
+    Q.pdcat_congreso_pv = Q.dl_congreso_pv_cat;
+    Q.pdcat_congreso_pv_cat = Q.dl_congreso_pv_cat;
+    Q.dl_congreso_s = 0;
+    Q.dl_congreso_pv = 0;
+    Q.dl_congreso_pv_cat = 0;
+
+    Q.pdcat_dissent = Q.dl_dissent;
+    Q.dl_dissent = 0;
+
+    for (var prov of Q.parlament_constituencies)  {
+        for (var demo of Q.parlament_demographics) {
+            Q["pdcat_parlament_" + prov + "_" + demo + "_support"] = Q["dl_parlament_" + prov + "_" + demo + "_support"] * 0.95;
+            Q["dl_parlament_" + prov + "_" + demo + "_support"] = 0;
+        }
+    }
+    Q.pdcat_congreso_catalunya_support = Q.dl_congreso_catalunya_support * 0.95;
+    Q.dl_congreso_catalunya_support = 0;
+
+    // transferring support
+    Q.pdcat_local_barcelona_support = Q.dl_local_barcelona_support;
+    Q.dl_local_barcelona_support = 0;
+    Q.pdcat_local_barcelona_s = Q.dl_local_barcelona_s;
+    Q.dl_local_barcelona_s = 0;
+    Q.pdcat_local_barcelona_pv = Q.dl_local_barcelona_pv;
+    Q.dl_local_barcelona_pv = 0;
+    
+
+    // governing stuff
+
+    if (Q.president_party == "dl") {
+        Q.president_party = "pdcat";
+    }
+
+    if (Q.vicepresident_party == "dl") {
+        Q.vicepresident_party = "pdcat"
+    }
+
+    if (Q.economy_minister_party == "dl") {
+        Q.economy_minister_party = "pdcat";
+    }
+
+    if (Q.interior_minister_party == "dl") {
+        Q.interior_minister_party = "pdcat";
+    }
+
+    if (Q.health_minister_party == "dl") {
+        Q.health_minister_party = "pdcat";
+    }
+
+    if (Q.education_minister_party == "dl") {
+        Q.education_minister_party = "pdcat";
+    }
+
+    if (Q.territory_minister_party == "dl") {
+        Q.territory_minister_party = "pdcat";
+    }
+
+    if (Q.foreign_minister_party == "dl") {
+        Q.foreign_minister_party = "pdcat";
+    }
+
+    if (Q.bnl_minister_party == "dl") {
+        Q.bnl_minister_party = "pdcat";
+    }
+
+    if (Q.speaker_party == "dl") {
+        Q.speaker_party = "pdcat";
+    }
+
+    Q.pdcat_relations = Q.dl_relations;
+
+    if (Q.cat_coalition.includes("dl")) {
+        Q.cat_coalition = Q.cat_coalition.map(item => item === "dl" ? "pdcat" : item);
+        Q.cat_coalition_disp = Q.cat_coalition_disp.replaceAll("dl", "pdcat").replaceAll("dl", "pdcat");
+    }
+
+    Q.pdcat_split_countdown = 9;
+    Q.countdowns.push("pdcat_split");
+!}
+
+= ​DL's continued identity crisis
+
+The usage of the DL brand so far has yielded mixed results at best, and has not landed the best of supports within the old CDC leadership and base. With a full refusal of any of the CDC-related brands presented by [+ cdc_leader +] at the party's congress, the final decision has landed pdcat as the new name for the CDC space. Unlike DL, pdcat has now been founded as a party with a full sturcture, no longer simply a different candidacy name for the same CDC. We can only wait and see how this will new project will fare.
+
+- @post_event: What does that name even mean?

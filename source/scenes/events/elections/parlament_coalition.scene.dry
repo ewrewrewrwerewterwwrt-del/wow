@@ -565,8 +565,6 @@ Given the election results, different coalition arithmetics can be imagined. Now
 - @parlament_coalition_psc_tripartite.cup
 - @parlament_coalition_progressist.any
 - @parlament_coalition_unionist.cs_minority
-- @parlament_coalition_unionist.ppc_minority
-- @parlament_coalition_unionist.cs_ppc
 - @parlament_coalition_unionist.ppc_cs
 - @parlament_coalition_unionist.cs_ppc_vox
 - @parlament_coalition_unionist.cs_psc_ppc

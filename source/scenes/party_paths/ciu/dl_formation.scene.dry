@@ -1,0 +1,110 @@
+title: CDC's identity crisis
+view-if: player_party != "cdc" and pujol_parlament_happened and (dl_formation_trigger)
+face-image: img/events/dl_formed.jpg
+new-page: true
+max-visits: 1
+tags: event
+on-arrival: {!
+    Q.dl_formed = true;
+
+    Q.dl_roadmap = Q.cdc_roadmap
+    Q.dl_ideology = Q.cdc_ideology
+    
+    Q.dl_leader = Q.cdc_leader;
+    Q.dl_leader_gender = Q.cdc_leader_gender;
+
+    Q.dl_parlament_s = Q.cdc_parlament_s;
+    Q.dl_parlament_pv = Q.cdc_parlament_pv;
+    Q.cdc_parlament_s = 0;
+    Q.cdc_parlament_pv = 0;
+
+    Q.dl_congreso_s = Q.cdc_congreso_s;
+    Q.dl_congreso_pv = Q.cdc_congreso_pv_cat;
+    Q.dl_congreso_pv_cat = Q.cdc_congreso_pv_cat;
+    Q.cdc_congreso_s = 0;
+    Q.cdc_congreso_pv = 0;
+    Q.cdc_congreso_pv_cat = 0;
+
+    Q.dl_dissent = Q.cdc_dissent;
+    Q.cdc_dissent = 0;
+
+    for (var prov of Q.parlament_constituencies)  {
+        for (var demo of Q.parlament_demographics) {
+            Q["dl_parlament_" + prov + "_" + demo + "_support"] = Q["cdc_parlament_" + prov + "_" + demo + "_support"] * 0.95;
+            console.log(prov, demo, Q["cdc_parlament_" + prov + "_" + demo + "_support"], Q["dl_parlament_" + prov + "_" + demo + "_support"]);
+            Q["cdc_parlament_" + prov + "_" + demo + "_support"] = 0;
+        }
+    }
+    Q.dl_congreso_catalunya_support = Q.cdc_congreso_catalunya_support * 0.95;
+    Q.cdc_congreso_catalunya_support = 0;
+
+    // transferring support
+    Q.dl_local_barcelona_support = Q.cdc_local_barcelona_support;
+    Q.cdc_local_barcelona_support = 0;
+    Q.dl_local_barcelona_s = Q.cdc_local_barcelona_s;
+    Q.cdc_local_barcelona_s = 0;
+    Q.dl_local_barcelona_pv = Q.cdc_local_barcelona_pv;
+    Q.cdc_local_barcelona_pv = 0;
+    
+
+    // governing stuff
+
+    if  (Q.president_party == "cdc") {
+        Q.president_party = "dl";
+    }
+
+    if (Q.vicepresident_party == "cdc") {
+        Q.vicepresident_party = "dl"
+    }
+
+    if (Q.economy_minister_party == "cdc") {
+        Q.economy_minister_party = "dl";
+    }
+
+    if (Q.interior_minister_party == "cdc") {
+        Q.interior_minister_party = "dl";
+    }
+
+    if (Q.health_minister_party == "cdc") {
+        Q.health_minister_party = "dl";
+    }
+
+    if (Q.education_minister_party == "cdc") {
+        Q.education_minister_party = "dl";
+    }
+
+    if (Q.territory_minister_party == "cdc") {
+        Q.territory_minister_party = "dl";
+    }
+
+    if (Q.foreign_minister_party == "cdc") {
+        Q.foreign_minister_party = "dl";
+    }
+
+    if (Q.bnl_minister_party == "cdc") {
+        Q.bnl_minister_party = "dl";
+    }
+
+    if (Q.speaker_party == "cdc") {
+        Q.speaker_party = "dl";
+    }
+
+    Q.dl_relations = Q.cdc_relations;
+
+    if (Q.cat_coalition.includes("cdc")) {
+        Q.cat_coalition = Q.cat_coalition.map(item => item === "cdc" ? "dl" : item);
+        Q.cat_coalition_disp = Q.cat_coalition_disp.replaceAll("CDC", "DL").replaceAll("cdc", "dl");
+    }
+
+    Q.pdcat_formation_countdown = 6;
+    Q.countdowns.push("pdcat_formation");
+!}
+
+= ​CDC's identity crisis
+
+After the dissolution of the CiU coalition, CDC has been strggling with its identity. While undoutably a Catalan party, they had been long standing champions of moderation, pragmatism, and strategic parnterships over out-right confrontation and breaking up with Spain. The very personification of that idea and of what the party represents, President for over two decades, Jordi Pujol, has also seen its figure tarnished by its admission to having hidden fortunes in tax havens for decades. 
+
+As things stand right now, CDC is both too popularly associated with this and other corruption scandals, and too distanced from the ideological goals that [+ cdc_leader +] seems to want to represent. A rebranding seems only natural. Yet only time will tell to what extent it will be successful in its attempt to showcase renewal and a break wih a past that seems still very much present. [? if psc_leader != "Montserrat Tura": If anything, this new party has at least managed to capture some support from disgruntled fromer PSC members. ?]
+
+- @post_event: DL is really not a great name though...
+

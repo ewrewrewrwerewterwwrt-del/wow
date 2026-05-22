@@ -92,21 +92,30 @@ view-if: player_party == "erc"
 subtitle: [? if not coming_from_parlament : Why are we not the ones proposing this? ?]
 on-arrival: {!
     if (Q.parlament_sovereignty_declaration_legality) {
-        Q.parlament_sovereignty_declaration_yes_cup = Math.min(Math.round(Q.cup_parlament_s * 0.33), Q.cup_parlament_s - 1);
-        Q.parlament_sovereignty_declaration_yes = Q.ciu_parlament_s + Q.erc_parlament_s + Q.icv_parlament_s + Q.parlament_sovereignty_declaration_yes_cup;
+        if (Q.cup_parlament_s > 0) {
+            Q.parlament_sovereignty_declaration_yes_cup = Math.min(Math.round(Q.cup_parlament_s * 0.33), Q.cup_parlament_s - 1);
+            Q.parlament_sovereignty_declaration_abst_cup = Math.max(Math.round(Q.cup_parlament_s * 0.67), 1);
+        } else {
+            Q.parlament_sovereignty_declaration_yes_cup = 0;
+            Q.parlament_sovereignty_declaration_abst_cup = 0;
+        }
+
+        console.log(Q.ciu_parlament_s, Q.erc_parlament_s, Q.icv_parlament_s, Q.parlament_sovereignty_declaration_yes_cup, Q.cdc_parlament_s, Q.pdcat_parlament_s, Q.jxsi_parlament_s, Q.jxcat_parlament_s, Q.junts_parlament_s, Q.dl_parlament_s);
+    
+        Q.parlament_sovereignty_declaration_yes = Q.ciu_parlament_s + Q.erc_parlament_s + Q.icv_parlament_s + Q.parlament_sovereignty_declaration_yes_cup + Q.cdc_parlament_s + Q.pdcat_parlament_s + Q.jxsi_parlament_s + Q.jxcat_parlament_s + Q.junts_parlament_s + Q.dl_parlament_s;
         Q.parlament_sovereignty_declaration_abst_psc = Math.max(Math.round(Q.psc_parlament_s * 0.25), 1);
-        Q.parlament_sovereignty_declaration_abst_cup = Math.max(Math.round(Q.cup_parlament_s * 0.67), 1);
-        Q.parlament_sovereignty_declaration_abst = Q.parlament_sovereignty_declaration_abst_psc + Q.parlament_sovereignty_declaration_abst_cup;
+        
+        Q.parlament_sovereignty_declaration_abst = Q.parlament_sovereignty_declaration_abst_psc + Q.parlament_sovereignty_declaration_abst_cup + Q.unio_parlament_s;
         Q.parlament_sovereignty_declaration_no_psc = Math.min(Math.round(Q.psc_parlament_s * 0.75), Q.psc_parlament_s - 1);
         Q.parlament_sovereignty_declaration_no = Q.ppc_parlament_s + Q.cs_parlament_s + Q.parlament_sovereignty_declaration_no_psc;
 
         Q.cup_relations -= 2;
     } else {
         Q.parlament_sovereignty_declaration_yes_ciu = Math.min(Math.round(Q.ciu_parlament_s * 0.67), Q.ciu_parlament_s - 1);
-        Q.parlament_sovereignty_declaration_yes = Q.parlament_sovereignty_declaration_yes_ciu + Q.erc_parlament_s + Q.cup_parlament_s;
+        Q.parlament_sovereignty_declaration_yes = Q.parlament_sovereignty_declaration_yes_ciu + Q.erc_parlament_s + Q.cup_parlament_s + Q.cdc_parlament_s + Q.pdcat_parlament_s + Q.jxsi_parlament_s + Q.jxcat_parlament_s + Q.junts_parlament_s + Q.dl_parlament_s;
         Q.parlament_sovereignty_declaration_abst_ciu = Math.max(Math.round(Q.ciu_parlament_s * 0.33), 1);
         Q.parlament_sovereignty_declaration_abst_psc = Math.max(Math.round(Q.psc_parlament_s * 0.15), 1);
-        Q.parlament_sovereignty_declaration_abst = Q.parlament_sovereignty_declaration_abst_ciu + Q.parlament_sovereignty_declaration_abst_psc + Q.icv_parlament_s;
+        Q.parlament_sovereignty_declaration_abst = Q.parlament_sovereignty_declaration_abst_ciu + Q.parlament_sovereignty_declaration_abst_psc + Q.icv_parlament_s + Q.unio_parlament_s;
         Q.parlament_sovereignty_declaration_no_psc = Math.min(Math.round(Q.psc_parlament_s * 0.85), Q.psc_parlament_s - 1);
         Q.parlament_sovereignty_declaration_no = Q.parlament_sovereignty_declaration_no_psc + Q.ppc_parlament_s + Q.cs_parlament_s + Q.unio_parlament_s;
 
@@ -154,7 +163,7 @@ go-to: calc_cup
 on-arrival: {!
     if (Q.parlament_sovereignty_declaration_critical_cup == 1) {
         Q.parlament_sovereignty_declaration_yes_cup = Math.min(Math.round(Q.cup_parlament_s * 0.33), Q.cup_parlament_s - 1);
-            Q.parlament_sovereignty_declaration_abst_cup = Math.max(Math.round(Q.cup_parlament_s * 0.67), 1);
+        Q.parlament_sovereignty_declaration_abst_cup = Math.max(Math.round(Q.cup_parlament_s * 0.67), 1);
 
         Q.erc_relations -= 5;
         Q.ciu_relations -= 7;
@@ -174,9 +183,9 @@ on-arrival: {!
         Q.icv_relations -= 5;
     }
 
-    Q.parlament_sovereignty_declaration_yes = Q.ciu_parlament_s + Q.erc_parlament_s + Q.icv_parlament_s + Q.parlament_sovereignty_declaration_yes_cup;
+    Q.parlament_sovereignty_declaration_yes = Q.ciu_parlament_s + Q.cdc_parlament_s + Q.pdcat_parlament_s + Q.jxsi_parlament_s + Q.jxcat_parlament_s + Q.junts_parlament_s + Q.erc_parlament_s + Q.icv_parlament_s + Q.parlament_sovereignty_declaration_yes_cup + Q.dl_parlament_s;
     Q.parlament_sovereignty_declaration_abst_psc = Math.max(Math.round(Q.psc_parlament_s * 0.25), 1);
-    Q.parlament_sovereignty_declaration_abst = Q.parlament_sovereignty_declaration_abst_psc + Q.parlament_sovereignty_declaration_abst_cup;
+    Q.parlament_sovereignty_declaration_abst = Q.parlament_sovereignty_declaration_abst_psc + Q.parlament_sovereignty_declaration_abst_cup + Q.icv_parlament_s + Q.unio_parlament_s;
     Q.parlament_sovereignty_declaration_no_psc = Math.min(Math.round(Q.psc_parlament_s * 0.75), Q.psc_parlament_s - 1);
     Q.parlament_sovereignty_declaration_no = Q.ppc_parlament_s + Q.cs_parlament_s + Q.parlament_sovereignty_declaration_no_psc;
 
@@ -195,11 +204,11 @@ go-to: results
 @results
 on-arrival: coming_from_parlament = false
 
-<table style='border-spacing: 0px; margin-right: 1em; margin-left: 1em; width:95%; table-layout: fixed;'><tr><td style='width: [+ parlament_sovereignty_declaration_yes_pc +]%'>Yes</td><td style='text-align: center; width: [+ parlament_sovereignty_declaration_abst_pc +]%'>Abstention</td><td style='text-align: right; width: [+ parlament_sovereignty_declaration_no_pc +]%'>No</td></tr><tr><td style='height: 2em; background-color: #008000; color: white; text-align: center; border-radius: 3px 0 0 3px;'>**[+ parlament_sovereignty_declaration_yes +]**</td><td style='background-color: #b1b0aeff; color: black; text-align: center'>**[+ parlament_sovereignty_declaration_abst +]**</td><td style='background-color: #c30000; color: white; text-align: center; border-radius: 0 3px 3px 0;'>**[+ parlament_sovereignty_declaration_no +]**</td></tr><tr style='vertical-align:top'><td>CiU [? if parlament_sovereignty_declaration_yes_ciu : ([+parlament_sovereignty_declaration_yes_ciu+])?]<br/>ERC [? if parlament_sovereignty_declaration_legality: <br/> ICV-EUiA ?] <br/> CUP [? if parlament_sovereignty_declaration_yes_cup: ([+ parlament_sovereignty_declaration_yes_cup +]) ?]</td><td>[? if parlament_sovereignty_declaration_abst_ciu: CiU ([+ parlament_sovereignty_declaration_abst_ciu +]) <br/> ?] PSC ([+ parlament_sovereignty_declaration_abst_psc +]) <br/> [? if not parlament_sovereignty_declaration_legality: ICV-EUiA <br/>?][? if parlament_sovereignty_declaration_abst_cup: CUP [? if  parlament_sovereignty_declaration_abst_cup != cup_parlament_s : ([+ parlament_sovereignty_declaration_abst_cup +])?] ?]</td><td style='text-align: right'>PSC ([+ parlament_sovereignty_declaration_no_psc +]) <br/>PPC<br/>Cs</td></tr></table>
+<table style='border-spacing: 0px; margin-right: 1em; margin-left: 1em; width:95%; table-layout: fixed;'><tr><td style='width: [+ parlament_sovereignty_declaration_yes_pc +]%'>Yes</td><td style='text-align: center; width: [+ parlament_sovereignty_declaration_abst_pc +]%'>Abstention</td><td style='text-align: right; width: [+ parlament_sovereignty_declaration_no_pc +]%'>No</td></tr><tr><td style='height: 2em; background-color: #008000; color: white; text-align: center; border-radius: 3px 0 0 3px;'>**[+ parlament_sovereignty_declaration_yes +]**</td><td style='background-color: #b1b0aeff; color: black; text-align: center'>**[+ parlament_sovereignty_declaration_abst +]**</td><td style='background-color: #c30000; color: white; text-align: center; border-radius: 0 3px 3px 0;'>**[+ parlament_sovereignty_declaration_no +]**</td></tr><tr style='vertical-align:top'><td>[? if ciu_parlament_s > 0: CiU [? if parlament_sovereignty_declaration_yes_ciu : ([+parlament_sovereignty_declaration_yes_ciu+])?]?][? if cdc_parlament_s > 0: CDC?][? if dl_parlament_s > 0: DL?][? if jxcat_parlament_s > 0: JxCat?][? if junts_parlament_s > 0: Junts?][? if pdcat_parlament_s > 0: [? if pdcat_split: <br/> ?] PDcat?]<br/>ERC [? if parlament_sovereignty_declaration_legality: <br/> ICV-EUiA ?][? if cup_parlament_s > 0: <br/> CUP [? if parlament_sovereignty_declaration_yes_cup: ([+ parlament_sovereignty_declaration_yes_cup +]) ?]?]</td><td>[? if parlament_sovereignty_declaration_abst_ciu and ciu_parlament_s > 0: CiU ([+ parlament_sovereignty_declaration_abst_ciu +]) <br/> ?] PSC ([+ parlament_sovereignty_declaration_abst_psc +]) <br/> [? if not parlament_sovereignty_declaration_legality: ICV-EUiA <br/>?][? if unio_parlament_s > 0 : UDC <br/>?][? if parlament_sovereignty_declaration_abst_cup and cup_parlament_s > 0: CUP [? if  parlament_sovereignty_declaration_abst_cup != cup_parlament_s: ([+ parlament_sovereignty_declaration_abst_cup +])?] ?]</td><td style='text-align: right'>PSC ([+ parlament_sovereignty_declaration_no_psc +]) <br/>PPC<br/>Cs</td></tr></table>
 
 [? if parlament_sovereignty_declaration : The Declaration of Sovereignty has been approved! ?][? if not parlament_sovereignty_declaration : The Parlament has rejected the proposed Declaration of Sovereignty. Wonder if we could've convinced anyone else to join in. ?]
 
-This has not been without its share bit of turbulence. [? if parlament_sovereignty_declaration_abst_cup and player_party != "cup": The anti-capitalist, unilateral CUP have supported the declaration with a "Critical Yes" (whatever that means), as they see this as clearly insufficient, and a start of a procés for national liberation full of concessions and compromises. ?][? if not parlament_sovereignty_declaration_legality: Despite initial support, ICV-EUiA has ended up abstainng due to the delcaration eluding any mention of dialogue. In the case of MPs of the CiU group, some have also abstained. Mostly those coming from the UDC part of the coalition, they see this as a protest against the "radicalization this represents". ?][? if player_party != "cup" : This aside, t?][? if player_party == "cup": T?]he true drama has come more from the center of the chamber. The official PSC line has been to vote against this "breaking with the law", yet not all have followed in with the party discipline. Big and small party profiles within the PSC have partook in this internal rebellion, including both old-school catalanist leaders and relatively newer ones critical with Pere Navarro's leadership.
+This has not been without its share bit of turbulence. [? if parlament_sovereignty_declaration_abst_cup and player_party != "cup": The anti-capitalist, unilateral CUP have supported the declaration with a "Critical Yes" (whatever that means), as they see this as clearly insufficient, and a start of a procés for national liberation full of concessions and compromises. ?][? if not parlament_sovereignty_declaration_legality: Despite initial support, ICV-EUiA has ended up abstainng due to the delcaration eluding any mention of dialogue. [? if ciu_parlament_s > 0: In the case of MPs of the CiU group, some have also abstained. Mostly those coming from the UDC part of the coalition, they see this as a protest against the *"radicalization this represents"*. ?]?][? if player_party != "cup" : This aside, t?][? if player_party == "cup": T?]he true drama has come more from the center of the chamber. The official PSC line has been to vote against this *"breaking with the law"*, yet not all have followed in with the party discipline. Big and small party profiles within the PSC have partook in this internal rebellion, including both old-school catalanist leaders and relatively newer ones critical with Pere Navarro's leadership.
 
 - @cracks_show: Cracks begin to show...
 

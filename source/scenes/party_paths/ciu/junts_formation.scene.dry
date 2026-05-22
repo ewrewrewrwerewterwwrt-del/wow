@@ -1,0 +1,107 @@
+title: A new era for JxCat
+subtitle: Will this be the last rebranding for the post-CDC space?
+view-if: player_party != "jxcat" and junts_formation_trigger and not erc_in_jxcat and pdcat_split
+face-image: img/events/junts_formed.jpg
+new-page: true
+max-visits: 1
+tags: event
+on-arrival: {!
+    Q.junts_formed = true;
+
+    Q.junts_roadmap = Q.jxcat_roadmap
+    Q.junts_ideology = Q.jxcat_ideology
+    
+    Q.junts_leader = Q.jxcat_leader;
+    Q.junts_leader_gender = Q.jxcat_leader_gender;
+
+    Q.junts_parlament_s = Q.jxcat_parlament_s;
+    Q.junts_parlament_pv = Q.jxcat_parlament_pv;
+    Q.jxcat_parlament_s = 0;
+    Q.jxcat_parlament_pv = 0;
+
+    Q.junts_congreso_s = Q.jxcat_congreso_s;
+    Q.junts_congreso_pv = Q.jxcat_congreso_pv_cat;
+    Q.junts_congreso_pv_cat = Q.jxcat_congreso_pv_cat;
+    Q.jxcat_congreso_s = 0;
+    Q.jxcat_congreso_pv = 0;
+    Q.jxcat_congreso_pv_cat = 0;
+
+    Q.junts_dissent = Q.jxcat_dissent;
+    Q.jxcat_dissent = 0;
+
+    for (var prov of Q.parlament_constituencies)  {
+        for (var demo of Q.parlament_demographics) {
+            Q["junts_parlament_" + prov + "_" + demo + "_support"] = Q["jxcat_parlament_" + prov + "_" + demo + "_support"] * 0.98;
+            Q["jxcat_parlament_" + prov + "_" + demo + "_support"] = 0;
+        }
+    }
+    Q.junts_congreso_catalunya_support = Q.jxcat_congreso_catalunya_support * 0.98;
+    Q.jxcat_congreso_catalunya_support = 0;
+
+    // transferring support
+    Q.junts_local_barcelona_support = Q.jxcat_local_barcelona_support;
+    Q.jxcat_local_barcelona_support = 0;
+    Q.junts_local_barcelona_s = Q.jxcat_local_barcelona_s;
+    Q.jxcat_local_barcelona_s = 0;
+    Q.junts_local_barcelona_pv = Q.jxcat_local_barcelona_pv;
+    Q.jxcat_local_barcelona_pv = 0;
+    
+
+    // governing stuff
+
+    if (Q.president_party == "jxcat") {
+        Q.president_party = "junts";
+    }
+
+    if (Q.vicepresident_party == "jxcat") {
+        Q.vicepresident_party = "junts"
+    }
+
+    if (Q.economy_minister_party == "jxcat") {
+        Q.economy_minister_party = "junts";
+    }
+
+    if (Q.interior_minister_party == "jxcat") {
+        Q.interior_minister_party = "junts";
+    }
+
+    if (Q.health_minister_party == "jxcat") {
+        Q.health_minister_party = "junts";
+    }
+
+    if (Q.education_minister_party == "jxcat") {
+        Q.education_minister_party = "junts";
+    }
+
+    if (Q.territory_minister_party == "jxcat") {
+        Q.territory_minister_party = "junts";
+    }
+
+    if (Q.foreign_minister_party == "jxcat") {
+        Q.foreign_minister_party = "junts";
+    }
+
+    if (Q.bnl_minister_party == "jxcat") {
+        Q.bnl_minister_party = "junts";
+    }
+
+    if (Q.speaker_party == "jxcat") {
+        Q.speaker_party = "junts";
+    }
+
+    Q.junts_relations = Q.jxcat_relations;
+
+    if (Q.cat_coalition.includes("jxcat")) {
+        Q.cat_coalition = Q.cat_coalition.map(item => item === "jxcat" ? "junts" : item);
+        Q.cat_coalition_disp = Q.cat_coalition_disp.replaceAll("JxCat", "junts").replaceAll("jxcat", "junts");
+    }
+
+    Q.junts_split_countdown = 9;
+    Q.countdowns.push("junts_split");
+!}
+
+= A new era for ​JxCat
+
+After the electoral coalition of JxCat has, in practice, become a one-party political space, the post-CDC political space has yet again found itself creating a new brand and party. This is both a practical and political necessity as the split with the more pragmatist and moderated PDeCAT means that the JxCat members are left with no tools for proper organization and representation. The new party, now simply Junts, will still be lead by [+ junts_leader +], and may finally be the chance for the Catalan centre-right to establish a clear identity and unapologetically pro-independence stance.
+
+- @post_event: Let's hope this really is the last rebranding

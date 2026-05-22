@@ -128,6 +128,15 @@ on-display: {!
         });
     }
 
+    if (Q.dl_parlament_s) {
+        data.push({
+            "id": "dl",
+            "legend": "DL",
+            "name": "DL",
+            "seats": Q.dl_parlament_s,
+        });
+    }
+
     if (Q.pdcat_parlament_s) {
         data.push({
             "id": "pdcat",
@@ -219,8 +228,8 @@ on-display: {!
 
         var lines_cat = d3.linegraph(true, true,
             Q.parties,
-            {'ciu': 'var(--ciu)', 'erc': 'var(--erc)', 'cs': 'var(--cs)', 'psc': 'var(--psc)', 'ppc': 'var(--ppc)', 'vox': 'var(--vox)', 'icv': 'var(--icv)', 'csqp': 'var(--csqp)', 'cecp': 'var(--cecp)', 'ecp': 'var(--ecp)', 'cup': 'var(--cup)', 'si': 'var(--si)', 'unio': 'var(--unio)', 'jxsi': 'var(--jxsi)', 'jxcat': 'var(--jxcat)', 'junts': 'var(--junts)', 'cdc': 'var(--cdc)', 'pdcat': 'var(--pdcat)', 'fnc': 'var(--fnc)', 'pxc': 'var(--pxc)'},
-            {'ciu': 'CiU', 'erc': 'ERC', 'cs': 'Cs', 'psc': 'PSC', 'ppc': 'PPC', 'vox': 'Vox', 'icv': 'ICV-EUiA', 'csqp': 'CSQP', 'cecp': 'CECP', 'ecp': 'ECP-PEC', 'cup': 'CUP', 'si': 'SI', 'unio': 'UDC', 'jxsi': 'JxSí', 'jxcat': 'JxCat', 'junts': 'Junts', 'cdc': 'CDC', 'pdcat': 'PDeCAT', 'fnc': "FNC", "pxc": "PxC"});
+            {'ciu': 'var(--ciu)', 'erc': 'var(--erc)', 'cs': 'var(--cs)', 'psc': 'var(--psc)', 'ppc': 'var(--ppc)', 'vox': 'var(--vox)', 'icv': 'var(--icv)', 'csqp': 'var(--csqp)', 'cecp': 'var(--cecp)', 'ecp': 'var(--ecp)', 'cup': 'var(--cup)', 'si': 'var(--si)', 'unio': 'var(--unio)', 'jxsi': 'var(--jxsi)', 'jxcat': 'var(--jxcat)', 'junts': 'var(--junts)', 'cdc': 'var(--cdc)', 'dl': 'var(--dl)', 'pdcat': 'var(--pdcat)', 'fnc': 'var(--fnc)', 'pxc': 'var(--pxc)'},
+            {'ciu': 'CiU', 'erc': 'ERC', 'cs': 'Cs', 'psc': 'PSC', 'ppc': 'PPC', 'vox': 'Vox', 'icv': 'ICV-EUiA', 'csqp': 'CSQP', 'cecp': 'CECP', 'ecp': 'ECP-PEC', 'cup': 'CUP', 'si': 'SI', 'unio': 'UDC', 'jxsi': 'JxSí', 'jxcat': 'JxCat', 'junts': 'Junts', 'cdc': 'CDC', 'dl': 'DL', 'pdcat': 'PDeCAT', 'fnc': "FNC", "pxc": "PxC"});
         lines_cat.width(width).height(400);
         d3.select("#party_support_history").datum(Q.party_support_records).call(lines_cat);
         console.log("party_support_records", Q.party_support_records);
@@ -236,6 +245,7 @@ on-display: {!
 {!<tr><td style='min-width: 6em; font-weight: bold;'>Party</td><td style='width: 7em; text-align: center; font-weight: bold;'>Popular Vote</td><td style='width: 7em; font-weight: bold;'>Change</td><td style='width: 3em; text-align: center; font-weight: bold;'>Seats</td><td style='width: 3em; font-weight: bold;'>Change</td></tr>!}
 [? if jxsi_parlament_showviz: {!<tr><td><div class="box" style='background-color: #3ab6a5;'> </div> !} jxsi {!</td><td style='text-align: right;'>!}[+ jxsi_parlament_pv +]% {!</td><td>!} [+ jxsi_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ jxsi_parlament_s +] {!</td><td>!} [+ jxsi_parlament_s_delta +] {!</td>!}?]
 [? if ciu_parlament_showviz: {!<tr><td><div class="box" style='background-color: #002782'> </div> !} CiU {!</td><td style='text-align: right;'>!}[+ ciu_parlament_pv +]% {!</td><td>!} [+ ciu_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ ciu_parlament_s +] {!</td><td>!} [+ ciu_parlament_s_delta +] {!</td>!}?]
+[? if dl_parlament_showviz: {!<tr><td><div class="box" style='background-color: var(--dl)'> </div> !} DL {!</td><td style='text-align: right;'>!}[+ dl_parlament_pv +]% {!</td><td>!} [+ dl_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ dl_parlament_s +] {!</td><td>!} [+ dl_parlament_s_delta +] {!</td>!}?]
 [? if jxcat_parlament_showviz: {!<tr><td><div class="box" style='background-color: #ed5975; font-weight:bold;'> </div> !} JxCat {!</td><td style='text-align: right;'>!}[+ jxcat_parlament_pv +]% {!</td><td>!} [+ jxcat_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ jxcat_parlament_s +] {!</td><td>!} [+ jxcat_parlament_s_delta +] {!</td>!}?]
 [? if junts_parlament_showviz: {!<tr><td><div class="box" style='background-color: #20c0b2; font-weight:bold;'> </div> !} Junts {!</td><td style='text-align: right;'>!}[+ junts_parlament_pv +]% {!</td><td>!} [+ junts_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ junts_parlament_s +] {!</td><td>!} [+ junts_parlament_s_delta +] {!</td>!}?]
 [? if cdc_parlament_showviz: {!<tr><td><div class="box" style='background-color: #002782'> </div> !} CDC {!</td><td style='text-align: right;'>!}[+ cdc_parlament_pv +]% {!</td><td>!} [+ cdc_parlament_pv_delta +] {!</td><td style='text-align: right;'>!} [+ cdc_parlament_s +] {!</td><td>!} [+ cdc_parlament_s_delta +] {!</td>!}?]

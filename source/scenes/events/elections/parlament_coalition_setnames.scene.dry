@@ -12,12 +12,9 @@ on-arrival: {!
                 Q.parlament_coalition_proposal_vp_gender = "f";
                 break;
             case "cdc":
+            case "dl":
                 Q.parlament_coalition_proposal_vp_name = "Neus Munté";
                 Q.parlament_coalition_proposal_vp_gender = "f";
-                break;
-            case "dl":
-                Q.parlament_coalition_proposal_vp_name = "Francesc Homs";
-                Q.parlament_coalition_proposal_vp_gender = "m";
                 break;
             case "pdcat":
                 Q.parlament_coalition_proposal_vp_name = "Marta Pascal";
@@ -186,6 +183,9 @@ on-arrival: {!
             Q.parlament_coalition_proposal_interior_gender = "f";
             break;
         case "ciu":
+            Q.parlament_coalition_proposal_interior_name = "Ramon Espadaler";
+            Q.parlament_coalition_proposal_interior_gender = "m";
+            break;
         case "cdc":
         case "dl":
         case "pdcat":

@@ -6,7 +6,7 @@ You should not be here? Report a bug if you see this text.
 title: <span style="color: var(--cs); font-style: italic;">Cs</span>-led <span style="color: var(--ppc); font-style: italic;">Constitutionalist</span> Pact
 view-if: parlament_coalition_cs_ppc_s > 0
 choose-if: parlament_coalition_cs_ppc_s >= parlament_s_majority
-unavailable-subtitle: CS and PPC together do not have a combined majority.
+unavailable-subtitle: Cs and PPC together do not have a combined majority.
 subtitle: [? if player_party == "erc": A bleak option for the future of Catalonia. ?][? if player_party == "cup": The worst outcome both for the nation and for class struggle.?]
 on-arrival: {!
     Q.erc_in_gob = false;
@@ -20,7 +20,7 @@ on-arrival: {!
     Q.independence_trust -= 15;
 
     Q.cat_coalition = ["cs", "ppc"];
-    Q.cat_coalition_disp = "<span style='color: var(--cs); font-style: italic;'>Constitutionalist</span> Pact";
+    Q.cat_coalition_disp = "<span style='color: var(--cs); font-style: italic;'>Constitutionalist</span> <span style='color: var(--ppc); font-style: italic;'>Pact</span>";
     Q.parlament_coalition_proposal_president = "cs";
     Q.parlament_coalition_proposal_vp = "ppc";
     Q.speaker_party = "ppc";
@@ -45,10 +45,10 @@ go-to: parlament_coalition_setnames
 set-jump: display_government
 
 @ppc_cs
-title: <span style="color: var(--ppc); font-style: italic;">Constitutionalist</span> Government
+title: PPC-Cs <span style="color: var(--ppc); font-style: italic;">Constitutionalist</span> <span style="color: var(--cs); font-style: italic;">Government</span>
 view-if: parlament_coalition_ppc_cs_s > 0
 choose-if: parlament_coalition_ppc_cs_s >= parlament_s_majority
-unavailable-subtitle: PPC and CS together do not have a combined majority.
+unavailable-subtitle: PPC and Cs together do not have a combined majority.
 subtitle: [? if player_party == "erc": A bleak option for the future of Catalonia. ?][? if player_party == "cup": The worst outcome both for the nation and for class struggle.?]
 on-arrival: {!
     Q.erc_in_gob = false;
@@ -62,7 +62,7 @@ on-arrival: {!
     Q.independence_trust -= 15;
 
     Q.cat_coalition = ["ppc", "cs"];
-    Q.cat_coalition_disp = "<span style='color: var(--ppc); font-style: italic;'>PPC</span>-<span style='color: var(--cs); font-style: italic;'>Cs</span> <span style='font-style: italic;'>Constitutionalist</span> Government";
+    Q.cat_coalition_disp = "<span style='color: var(--ppc); font-style: italic;'>Constitutionalist</span>  <span style='color: var(--cs); font-style: italic;'>Government</span>";
     Q.parlament_coalition_proposal_president = "ppc";
     Q.parlament_coalition_proposal_vp = "cs";
     Q.speaker_party = "cs";
@@ -132,9 +132,9 @@ go-to: parlament_coalition_setnames
 set-jump: display_government
 
 @cs_minority
-title: <span style="color: var(--cs); font-style: italic;">CS</span> Minority Government
-view-if: cs_parlament_s > 0 and cs_parlament_s < parlament_s_majority
-choose-if: cs_parlament_s > 40
+title: Cs Minority Government
+view-if: parlament_coalition_cs_ppc_s > 0
+choose-if: parlament_coalition_cs_ppc_s >= parlament_s_majority
 unavailable-subtitle: CS does not have enough seats to sustain a minority government.
 subtitle: [? if player_party == "erc": A bleak option for the future of Catalonia. ?][? if player_party == "cup": The worst outcome both for the nation and for class struggle.?]
 on-arrival: {!
@@ -162,41 +162,6 @@ on-arrival: {!
     Q.parlament_coalition_proposal_education = "cs";
     Q.parlament_coalition_proposal_territory = "cs";
     Q.parlament_coalition_proposal_bnl = "cs";
-!}
-go-to: parlament_coalition_setnames
-set-jump: display_government
-
-@ppc_minority
-title: <span style="color: var(--ppc); font-style: italic;">PPC</span> Minority Government
-view-if: ppc_parlament_s > 0 and ppc_parlament_s < parlament_s_majority
-choose-if: ppc_parlament_s > 40
-unavailable-subtitle: PPC does not have enough seats to sustain a minority government.
-subtitle: [? if player_party == "erc": A bleak option for the future of Catalonia. ?][? if player_party == "cup": The worst outcome both for the nation and for class struggle.?]
-on-arrival: {!
-    Q.erc_in_gob = false;
-    Q.erc_supporting = false;
-    Q.cup_in_gob = false;
-    Q.cup_supporting = false;
-    Q.cat_coalition_dissent = 0;
-    Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
-    Q.month_actions += 1;
-    Q.independence_momentum += 10;
-    Q.independence_trust -= 15;
-
-    Q.cat_coalition = ["ppc"];
-    Q.cat_coalition_disp = "<span style='color: var(--ppc); font-style: italic;'>PPC</span> Minority Government";
-    Q.parlament_coalition_proposal_president = "ppc";
-    Q.parlament_coalition_proposal_vp = "ppc";
-    Q.speaker_party = Q.cs_parlament_s > 0 ? "cs" : "ppc";
-    Q.speaker = Q.cs_parlament_s > 0 ? Q.cs_leader : Q.ppc_leader;
-    Q.speaker_gender = "m";
-    Q.parlament_coalition_proposal_economy = "ppc";
-    Q.parlament_coalition_proposal_interior = "ppc";
-    Q.parlament_coalition_proposal_health = "ppc";
-    Q.parlament_coalition_proposal_foreign = "ppc";
-    Q.parlament_coalition_proposal_education = "ppc";
-    Q.parlament_coalition_proposal_territory = "ppc";
-    Q.parlament_coalition_proposal_bnl = "ppc";
 !}
 go-to: parlament_coalition_setnames
 set-jump: display_government

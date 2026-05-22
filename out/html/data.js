@@ -529,11 +529,40 @@ const tooltipList = [
         "<span style='color: var(--cdc)'>CDC</span>",
         "<span style='color: var(--ciu)'>CiU</span>",
       ];
-      if (Q.dl_formed) list.push("<span style='color: var(--dl)'>DiL</span>");
+      if (Q.dl_formed) list.push("<span style='color: var(--dl)'>DL</span>");
       if (Q.jxsi_formed)
         list.push("<span style='color: var(--jxsi)'>JxSí</span>");
       if (Q.pdcat_formed)
         list.push("<span style='color: var(--pdcat)'>PDeCAT</span>");
+      if (Q.jxcat_formed && !Q.mas_ousted)
+        list.push("<span style='color: var(--jxcat)'>JxCat</span>");
+      if (Q.junts_formed && !Q.mas_ousted)
+        list.push("<span style='color: var(--junts)'>Junts</span>");
+      return list;
+    },
+  },
+  {
+    searchString: [
+      "Carles Puigdemont",
+      "carles puigdemont",
+      "Carles Puigdemont i Casamajó",
+    ],
+    mainText: "Carles Puigdemont i Casamajó",
+    img: "img/ciu/carlespuigdemont.jpg",
+    ideology: "Center-right Liberalism, Unilateralism",
+    allegiances: (Q) => {
+      let list = [
+        "<span style='color: var(--cdc)'>CDC</span>",
+        "<span style='color: var(--ciu)'>CiU</span>",
+      ];
+      if (Q.dl_formed) list.push("<span style='color: var(--dl)'>DL</span>");
+      if (Q.jxsi_formed)
+        list.push("<span style='color: var(--jxsi)'>JxSí</span>");
+      if (Q.pdcat_formed && !Q.pdcat_split) {
+        list.push("<span style='color: var(--pdcat)'>PDeCAT</span>");
+      } else if (Q.pdcat_formed) {
+        list.push("<span style='color: var(--pdcat)'>PDeCAT</span> (former)");
+      }
       if (Q.jxcat_formed)
         list.push("<span style='color: var(--jxcat)'>JxCat</span>");
       if (Q.junts_formed)
@@ -1203,6 +1232,10 @@ const colourList = [
   {
     words: ["Artur Mas", "Artur Mas i Gavarró"],
     colour: "var(--cdc)",
+  },
+  {
+    words: ["Carles Puigdemont", "Carles Puigdemont i Casamajó"],
+    colour: "var(--jxsi)",
   },
   {
     words: ["Oriol Junqueras", "Oriol Junqueras i Vies"],
