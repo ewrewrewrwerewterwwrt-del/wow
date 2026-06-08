@@ -16,7 +16,7 @@ on-arrival: {!
     Q.cat_coalition_dissent = 0;
     Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
     Q.month_actions += 1;
-    Q.independence_momentum += 10;
+    Q.independence_movement += 10;
     Q.independence_trust -= 15;
 
     Q.cat_coalition = ["cs", "ppc"];
@@ -58,7 +58,7 @@ on-arrival: {!
     Q.cat_coalition_dissent = 0;
     Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
     Q.month_actions += 1;
-    Q.independence_momentum += 10;
+    Q.independence_movement += 10;
     Q.independence_trust -= 15;
 
     Q.cat_coalition = ["ppc", "cs"];
@@ -100,7 +100,7 @@ on-arrival: {!
     Q.cat_coalition_dissent = 0;
     Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
     Q.month_actions += 1;
-    Q.independence_momentum += 10;
+    Q.independence_movement += 10;
     Q.independence_trust -= 15;
 
     var right_pres = Q.cs_parlament_s >= Q.ppc_parlament_s ? "cs" : "ppc";
@@ -135,7 +135,7 @@ set-jump: display_government
 title: Cs Minority Government
 view-if: parlament_coalition_cs_ppc_s > 0
 choose-if: parlament_coalition_cs_ppc_s >= parlament_s_majority
-unavailable-subtitle: CS does not have enough seats to sustain a minority government.
+unavailable-subtitle: Cs does not have enough seats to sustain a minority government.
 subtitle: [? if player_party == "erc": A bleak option for the future of Catalonia. ?][? if player_party == "cup": The worst outcome both for the nation and for class struggle.?]
 on-arrival: {!
     Q.erc_in_gob = false;
@@ -145,11 +145,11 @@ on-arrival: {!
     Q.cat_coalition_dissent = 0;
     Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
     Q.month_actions += 1;
-    Q.independence_momentum += 10;
+    Q.independence_movement += 10;
     Q.independence_trust -= 15;
 
     Q.cat_coalition = ["cs"];
-    Q.cat_coalition_disp = "<span style='color: var(--cs); font-style: italic;'>CS</span> Minority Government";
+    Q.cat_coalition_disp = "Cs <span style='color: var(--cs); font-style: italic;'>Minority Government</span>";
     Q.parlament_coalition_proposal_president = "cs";
     Q.parlament_coalition_proposal_vp = "cs";
     Q.speaker_party = Q.ppc_parlament_s > 0 ? "ppc" : "cs";
@@ -167,18 +167,18 @@ go-to: parlament_coalition_setnames
 set-jump: display_government
 
 @cs_psc_ppc
-title: <span style="color: var(--cs); font-style: italic;">CS</span>-led Unity Pact (CS + PSC + PPC)
+title: Cs-led Unity Pact (Cs + PSC + PPC)
 view-if: parlament_coalition_cs_psc_ppc_s > 0 and parlament_coalition_cs_ppc_s < parlament_s_majority and parlament_coalition_ppc_cs_s < parlament_s_majority
 choose-if: parlament_coalition_cs_psc_ppc_s >= parlament_s_majority
-unavailable-subtitle: CS, PSC, and PPC together do not have a combined majority.
+unavailable-subtitle: Cs, PSC, and PPC together do not have a combined majority.
 subtitle: [? if player_party == "erc": A constitutional bloc against the independence project. ?][? if player_party == "cup": An anti-independence grand coalition.?]
 go-to: cs_ppc
 
 @psc_cs_ppc
-title: <span style="color: var(--psc); font-style: italic;">PSC</span>-led Unity Pact (PSC + CS + PPC)
+title: PSC-led Unity Pact (PSC + Cs + PPC)
 view-if: parlament_coalition_psc_cs_ppc_s > 0 and parlament_coalition_cs_ppc_s < parlament_s_majority and parlament_coalition_ppc_cs_s < parlament_s_majority
 choose-if: parlament_coalition_psc_cs_ppc_s >= parlament_s_majority
-unavailable-subtitle: PSC, CS, and PPC together do not have a combined majority.
+unavailable-subtitle: PSC, Cs, and PPC together do not have a combined majority.
 subtitle: [? if player_party == "erc": A Spanish-nationalist bloc, PSC-led. ?][? if player_party == "cup": The worst kind of social-democrat betrayal.?]
 go-to: ppc_cs
 
@@ -191,18 +191,18 @@ subtitle: [? if player_party == "erc": An unprecedented anti-independence bloc. 
 go-to: cs_ppc_vox
 
 @cs_psc_unio
-title: <span style="color: var(--cs); font-style: italic;">CS</span>-<span style="color: var(--psc); font-style: italic;">PSC</span>-<span style="color: var(--unio); font-style: italic;">Unió</span> Moderation Pact
+title: Cs - PSC - UDC Moderation Pact
 view-if: parlament_coalition_cs_psc_unio_s > 0 and parlament_coalition_cs_ppc_s < parlament_s_majority and parlament_coalition_ppc_cs_s < parlament_s_majority
 choose-if: parlament_coalition_cs_psc_unio_s >= parlament_s_majority
-unavailable-subtitle: CS, PSC, and Unió together do not have a combined majority.
+unavailable-subtitle: Cs, PSC, and Unió together do not have a combined majority.
 subtitle: [? if player_party == "erc": A centrist bloc without us. ?][? if player_party == "cup": Moderation-speak for blocking independence.?]
 go-to: cs_ppc
 
 @psc_cs_unio
-title: <span style="color: var(--psc); font-style: italic;">PSC</span>-led Moderation Pact (PSC + CS + Unió)
+title: PSC-led Moderation Pact (PSC + Cs + Unió)
 view-if: parlament_coalition_psc_cs_unio_s > 0 and parlament_coalition_cs_ppc_s < parlament_s_majority and parlament_coalition_ppc_cs_s < parlament_s_majority
 choose-if: parlament_coalition_psc_cs_unio_s >= parlament_s_majority
-unavailable-subtitle: PSC, CS, and Unió together do not have a combined majority.
+unavailable-subtitle: PSC, Cs, and Unió together do not have a combined majority.
 subtitle: [? if player_party == "erc": A centrist unionist government. ?][? if player_party == "cup": Another form of blocking independence.?]
 go-to: ppc_cs
 

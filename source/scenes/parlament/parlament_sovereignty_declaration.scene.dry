@@ -49,9 +49,9 @@ on-arrival: {! //  TODO: CUP's case
         Q.parlament_sovereignty_declaration_legality = true;
     }
 !}
-choose-if: party_resources > 0 and not parlament_sovereignty_declaration and speaker_party != 'ppc' and speaker_party != 'cs' and speaker_party != 'unio' and speaker_party != 'psc'
+choose-if: party_resources > 0 and not parlament_sovereignty_declaration and speaker_party != 'ppc' and speaker_party != 'cs' and speaker_party != 'unio' and speaker_party != 'psc' and speaker_party != 'ecp'
 subtitle: [? if coming_from_parlament : -1 resources ?]
-unavailable-subtitle: [? if parlament_sovereignty_declaration : Already approved! ?][? if (not parlament_sovereignty_declaration) and (speaker_party == 'ppc' or speaker_party == 'cs' or speaker_party == 'unio' or speaker_party == 'psc') : Speaker of the House [+ speaker +] ([+ speaker_party +]) will not allow debating this.?][? if (not parlament_sovereignty_declaration) and (party_resources < 1) : Not enough resources.?]
+unavailable-subtitle: [? if parlament_sovereignty_declaration : Already approved! ?][? if (not parlament_sovereignty_declaration) and (speaker_party == 'ppc' or speaker_party == 'cs' or speaker_party == 'unio' or speaker_party == 'psc' or speaker_party == 'ecp') : Speaker of the House [+ speaker +] ([+ speaker_party +]) will not allow debating this.?][? if (not parlament_sovereignty_declaration) and (party_resources < 1) : Not enough resources.?]
 go-to: decisions_erc if coming_from_parlament and player_party == "erc"; decisions_cup if player_party == "cup"; no_parlament if not coming_from_parlament
 
 = Parlamentary Declaration of Sovereignty
@@ -216,9 +216,13 @@ This has not been without its share bit of turbulence. [? if parlament_sovereign
 on-arrival: {!
     Q.psc_implosion_countdown = 3;
     Q.countdowns.push("psc_implosion");
+    Q.congreso_decidir_countdown = 8;
+    Q.countdowns.push("congreso_decidir");
+    Q.constitutional_sovereignty_countdown = 12;
+    Q.countdowns.push("constitutional_sovereignty");
 !}
 
-Cracks are starting to show, but it is still early to tell what will this mean for the PSC. [? if not parlament_sovereignty_declaration: In the mean time, we may eventually want to try to convince more parties to join in for the next attempt at approving this declaration if we ever want to move forward with our roadmap. ?][? if parlament_sovereignty_declaration: In the mean time, this Declaration of sovereignty will also be passed for approval to local, county, and province levels for added relevance. We can expect it to pass with similar arithmetics. ?]
+Cracks are starting to show, but it is still early to tell what will this mean for the PSC. [? if not parlament_sovereignty_declaration: In the mean time, we may eventually want to try to convince more parties to join in for the next attempt at approving this declaration if we ever want to move forward with our roadmap. ?][? if parlament_sovereignty_declaration: In the mean time, this Declaration of sovereignty will also be passed for approval to local, county, and province levels for added relevance. We can expect it to pass with similar arithmetics. A delegation will also be sent to the Congreso to formally ask for a negotiated referendum on independence. ?]
 
 - @post_event: Continue...
 

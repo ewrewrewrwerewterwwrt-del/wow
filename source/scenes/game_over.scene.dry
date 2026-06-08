@@ -1,55 +1,13 @@
-title: Game Over.
+title: Game Over
 new-page: true
 go-to: eg_menu
-audio: music/TchaikovskyQuartet2.ogg
 on-arrival: {!
-// Achievements:
-this.achieve('game_completed');
-
-if (Q.revolutionary_victory && Q.player_party != 'b' && !Q.join_bolshevik) {
-    this.achieve('dustbin');
-}
-
-if (Q.revolutionary_victory && Q.player_party != 'b' && Q.join_bolshevik) {
-    this.achieve('junior_partner');
-}
-
-if (Q.revolutionary_victory && Q.player_party == 'b') {
-    this.achieve('red_october');
-}
-
-if (Q.ca_held) {
-    if (Q.player_party == "m") {
-        this.achieve('historical_materialism');
-    } else if (Q.player_party == "sr") {
-        this.achieve('land_and_liberty');
-    } else if (Q.player_party == "k") {
-        this.achieve('constitutional_democracy');
+    // Achievements
+    if (!Q.achievement_game_completed) {
+      window.achievementNotif('El Procés', 'img/flags/estelada.png', 1);
     }
-    if ((Q.player_party == "m" || Q.player_party == "sr" || Q.player_party == "k")) {
-        if (Q.difficulty >= 0) {
-            this.achieve('constituent_assembly');
-        }
-        if (Q.difficulty >= 1) {
-            this.achieve('free_russia');
-        }
-    }
-    if (Q.player_party == "m" && Q.m_leadership == 1 && Q.in_socialist_coalition && (Q.is_armistice || Q.is_peace)) {
-        this.achieve('martovs_dream');
-    }
-}
-
-if (Q.hunger < 11) {
-    this.achieve('end_famine');
-}
-
-if ((Q.is_armistice || Q.is_peace) && Q.hunger < 20 && Q.land_reform_progress >= 3) {
-    this.achieve('peace_land_bread');
-}
-
-if (Q.monthly_inflation < 3) {
-    this.achieve('low_inflation');
-}
+    this.achieve('game_completed');
+    
 !}
 
 = End
@@ -197,139 +155,149 @@ go-to: eg_menu
 
 The Germans have taken over Petrograd. The revolution is over. We have lost.
 
-
-@achievements
-title: Achievements
+@achievements_this_playthrough
+title: Playthrough Achievements
 view-if: achievement_game_completed == 1
 tags: endings
-go-to: eg_menu if started == 1; root.start_menu_2 if started == 0
+go-to: eg_menu
 
 = Completed Achievements in this Playthrough
 
-
-[? if game_achievement_dustbin : **Свалка истории (The Dustbin of History)** - defeated by the Bolshevik revolution. ?]
-
-[? if game_achievement_rev_failed : **Неудавшаяся революция (A Failed Revolution)** - as the Bolsheviks, launch the revolution and fail. ?]
-
-[? if game_achievement_constituent_assembly : **Учредительное собрание (Constituent Assembly)** - reach the end of the game as the Mensheviks, SRs, or Kadets on at least Normal difficulty. ?]
-
-[? if game_achievement_free_russia : **Свободная Россия (A Free Russia)** - reach the end of the game as the Mensheviks, SRs, or Kadets on Hard difficulty. ?]
-
-[? if game_achievement_red_october : **Красный Октябрь (Red October)** - as the Bolsheviks, launch the revolution and win. ?]
-
-[? if game_achievement_junior_partner : **Младший партнер (Junior Partner)** - join the Bolshevik revolution as a junior partner. ?]
-
-[? if game_achievement_historical_materialism : **Исторический материализм (Historical Materialism)** - reach the end of the game as the Mensheviks. ?]
-
-[? if game_achievement_land_and_liberty : **Земля и воля (Land and Liberty)** - reach the end of the game as the Socialist-Revolutionaries. ?]
-
-[? if game_achievement_constitutional_democracy : **Народная Свобода (People's Freedom)** - reach the end of the game as the Kadets. ?]
-
-[? if game_achievement_peace : **Циммервальд (Zimmerwald)** - sign an armistice with the Central Powers. ?]
-
-[? if game_achievement_no_peace_no_war: **Ни мира, ни войны (No peace, no war)** - sign an armistice, and then let the Central Powers declare war again. ?]
-
-[? if game_achievement_peace_2: **Брест-Литовск (Brest-Litovsk)** - sign a permanent peace treaty with the Central Powers. ?] 
-
-[? if game_achievement_victory : **Прорыв (Breakthrough)** - win at least one battle in the Great War. ?]
-
-[? if game_achievement_womens_battalion : **Женские батальоны смерти (Women's Battalion of Death)** - form the Women's Battalion of Death. ?]
-
-[? if game_achievement_martovs_dream : **Мечта Мартова (Martov's Dream)** - as the Mensheviks, form an all-socialist government, sign an armistice, and hold the Constituent Assembly elections. ?]
-
-[? if game_achievement_peace_land_bread : **Мир, земля, хлеб (Peace, Land, Bread)** - sign an armistice, commence land redistribution, and reduce hunger. ?]
-
-[? if game_achievement_end_famine : **Конец голода (The end of hunger)** - hunger has been reduced to a low level. ?]
-
-[? if game_achievement_low_inflation : **Прекращение эмиссии (Stopping the printers)** - inflation is somewhat under control. ?]
-
-[? if game_achievement_kornilovite : **Корниловцы (Kornilovite)** - successfully launch a military coup. ?]
-
-[? if game_achievement_coup_defeated: **Корниловцы разгромлены (Kornilovites defeated)** - attempt to launch a coup and fail. ?]
-
-= Completed Achievements Overall
-
-[? if achievement_dustbin : **Свалка истории (The Dustbin of History)** - defeated by the Bolshevik revolution. ?]
-
-[? if achievement_rev_failed : **Неудавшаяся революция (A Failed Revolution)** - as the Bolsheviks, launch the revolution and fail. ?]
-
-[? if achievement_constituent_assembly : **Учредительное собрание (Constituent Assembly)** - reach the end of the game as the Mensheviks, SRs, or Kadets on at least Normal difficulty. ?]
-
-[? if achievement_free_russia : **Свободная Россия (A Free Russia)** - reach the end of the game as the Mensheviks, SRs, or Kadets on Hard difficulty. ?]
-
-[? if achievement_red_october : **Красный Октябрь (Red October)** - as the Bolsheviks, launch the revolution and win. ?]
-
-[? if achievement_junior_partner : **Младший партнер (Junior Partner)** - join the Bolshevik revolution as a junior partner. ?]
-
-[? if achievement_historical_materialism : **Исторический материализм (Historical Materialism)** - reach the end of the game as the Mensheviks. ?]
-
-[? if achievement_land_and_liberty : **Земля и воля (Land and Liberty)** - reach the end of the game as the Socialist-Revolutionaries. ?]
-
-[? if achievement_constitutional_democracy : **Народная Свобода (People's Freedom)** - complete the game as the Kadets. ?]
-
-[? if achievement_peace : **Циммервальд (Zimmerwald)** - sign an armistice with the Central Powers. ?]
-
-[? if achievement_no_peace_no_war: **Ни мира, ни войны (No peace, no war)** - sign an armistice, and then let the Central Powers declare war again. ?]
-
-[? if achievement_peace_2: **Брест-Литовск (Brest-Litovsk)** - sign a permanent peace treaty with the Central Powers. ?] 
-
-[? if achievement_victory : **Прорыв (Breakthrough)** - win at least one battle in the Great War. ?]
-
-[? if achievement_womens_battalion : **Женские батальоны смерти (Women's Battalion of Death)** - form the Women's Battalion of Death. ?]
-
-[? if achievement_martovs_dream : **Мечта Мартова (Martov's Dream)** - as the Mensheviks, form an all-socialist government, sign an armistice, and hold the Constituent Assembly elections. ?]
-
-[? if achievement_peace_land_bread : **Мир, земля, хлеб (Peace, Land, Bread)** - sign an armistice, commence land redistribution, and reduce hunger. ?]
-
-[? if achievement_end_famine : **Конец голода (The end of hunger)** - hunger has been reduced to a low level. ?]
-
-[? if achievement_low_inflation : **Прекращение эмиссии (Stopping the printers)** - inflation is somewhat under control. ?]
-
-[? if achievement_kornilovite : **Корниловцы (Kornilovite)** - successfully launch a military coup. ?]
-
-[? if achievement_coup_defeated: **Корниловцы разгромлены (Kornilovites defeated)** - attempt to launch a coup and fail. ?]
-
-= Incomplete Achievements
-
-[? if not achievement_dustbin : **Свалка истории (The Dustbin of History)** - defeated by the Bolshevik revolution. ?]
-
-[? if not achievement_rev_failed : **Неудавшаяся революция (A Failed Revolution)** - as the Bolsheviks, launch the revolution and fail. ?]
-
-[? if not achievement_constituent_assembly : **Учредительное собрание (Constituent Assembly)** - hold the Constituent Assembly elections as the Mensheviks, SRs, or Kadets on at least Normal difficulty. ?]
-
-[? if not achievement_free_russia : **Свободная Россия (A Free Russia)** - reach the end of the game as the Mensheviks, SRs, or Kadets on Hard difficulty. ?]
-
-[? if not achievement_red_october : **Красный Октябрь (Red October)** - as the Bolsheviks, launch the revolution and win. ?]
-
-[? if not achievement_junior_partner : **Младший партнер (Junior Partner)** - join the Bolshevik revolution as a junior partner. ?]
-
-[? if not achievement_historical_materialism : **Исторический материализм (Historical Materialism)** - reach the end of the game as the Mensheviks. ?]
-
-[? if not achievement_land_and_liberty : **Земля и воля (Land and Liberty)** - reach the end of the game as the Socialist-Revolutionaries. ?]
-
-[? if not achievement_constitutional_democracy : **Народная Свобода (People's Freedom)** - reach the end of the game as the Kadets. ?]
-
-[? if not achievement_peace : **Циммервальд (Zimmerwald)** - sign an armistice with the Central Powers. ?]
-
-[? if not achievement_no_peace_no_war: **Ни мира, ни войны (No peace, no war)** - sign an armistice, and then let the Central Powers declare war again. ?]
-
-[? if not achievement_peace_2: **Брест-Литовск (Brest-Litovsk)** - sign a permanent peace treaty with the Central Powers. ?] 
-
-[? if not achievement_victory : **Прорыв (Breakthrough)** - win at least one battle in the Great War. ?]
-
-[? if not achievement_womens_battalion : **Женские батальоны смерти (Women's Battalion of Death)** - form the Women's Battalion of Death. ?]
-
-[? if not achievement_martovs_dream : **Мечта Мартова (Martov's Dream)** - as the Mensheviks, form an all-socialist government, sign an armistice, and hold the Constituent Assembly elections. ?]
-
-[? if not achievement_peace_land_bread : **Мир, земля, хлеб (Peace, Land, Bread)** - sign an armistice, commence land redistribution, and reduce hunger. ?]
-
-[? if not achievement_end_famine : **Конец голода (The end of hunger)** - hunger has been reduced to a low level. ?]
-
-[? if not achievement_low_inflation : **Прекращение эмиссии (Stopping the printers)** - inflation is somewhat under control. ?]
-
-[? if not achievement_kornilovite : **Корниловцы (Kornilovite)** - successfully launch a military coup. ?]
-
-[? if not achievement_coup_defeated: **Корниловцы разгромлены (Kornilovites defeated)** - attempt to launch a coup and fail. ?]
+TODO: Actually show here the achievements as well!
 
 @end_game
 game-over: true
+
+@achievements
+title: Achievements
+new-page: true
+
+= Achievements
+
+Note that your achievement progress is stored in your browser. Switching browsers or devices will reset it!
+
+{!
+<div class="achievement !}[? if achievement_game_completed : achievement--unlocked ?][? if not achievement_game_completed : achievement--locked ?]{!" style="display:flex">
+  <div class="achievement-image !}[? if achievement_game_completed : achievement-image--unlocked ?][? if not achievement_game_completed : achievement-image--locked ?]{!">
+    <img src="img/flags/estelada.png" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="achievement-body">
+    <div class="achievement-title !}[? if achievement_game_completed : achievement-title--unlocked ?][? if not achievement_game_completed : achievement-title--locked ?]{!">
+     <span> El Procés </span>
+        <div class="achievement-stars">
+            <span class="star--filled">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+        </div>
+    </div>
+    <div class="achievement-description !}[? if achievement_game_completed : achievement-description--unlocked ?][? if not achievement_game_completed : achievement-description--locked ?]{!">Finish the game.</div>
+  </div>
+</div>
+!}
+{!
+<div class="achievement !}[? if achievement_calcotada : achievement--unlocked ?][? if not achievement_calcotada : achievement--locked ?]{!" style="display:flex">
+  <div class="achievement-image !}[? if achievement_calcotada : achievement-image--unlocked ?][? if not achievement_calcotada : achievement-image--locked ?]{!">
+    <img src="img/achievements/calcotada.png" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="achievement-body">
+    <div class="achievement-title !}[? if achievement_calcotada : achievement-title--unlocked ?][? if not achievement_calcotada : achievement-title--locked ?]{!">
+     <span> Calçotada Popular </span>
+        <div class="achievement-stars">
+            <span class="star--filled">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+        </div>
+    </div>
+    <div class="achievement-description !}[? if achievement_calcotada : achievement-description--unlocked ?][? if not achievement_calcotada : achievement-description--locked ?]{!"> Hold a non-referendum, non-binding, participative process on independence. </div>
+  </div>
+</div>
+!}
+{!
+<div class="achievement !}[? if achievement_je_me_souviens : achievement--unlocked ?][? if not achievement_je_me_souviens : achievement--locked ?]{!" style="display:flex">
+  <div class="achievement-image !}[? if achievement_je_me_souviens : achievement-image--unlocked ?][? if not achievement_je_me_souviens : achievement-image--locked ?]{!">
+    <img src="img/achievements/quebec.svg" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="achievement-body">
+    <div class="achievement-title !}[? if achievement_je_me_souviens : achievement-title--unlocked ?][? if not achievement_je_me_souviens : achievement-title--locked ?]{!">
+     <span> Je me Souviens </span>
+        <div class="achievement-stars">
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+        </div>
+    </div>
+    <div class="achievement-description !}[? if achievement_je_me_souviens : achievement-description--unlocked ?][? if not achievement_je_me_souviens : achievement-description--locked ?]{!">Have an independence consultation with an almost incomprehensible question.</div>
+  </div>
+</div>
+!}
+{!
+<div class="achievement !}[? if achievement_mas_o_marc : achievement--unlocked ?][? if not achievement_mas_o_marc : achievement--locked ?]{!" style="display:flex">
+  <div class="achievement-image !}[? if achievement_mas_o_marc : achievement-image--unlocked ?][? if not achievement_mas_o_marc : achievement-image--locked ?]{!">
+    <img src="img/achievements/mas_o_marc.webp" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="achievement-body">
+    <div class="achievement-title !}[? if achievement_mas_o_marc : achievement-title--unlocked ?][? if not achievement_mas_o_marc : achievement-title--locked ?]{!">
+     <span> Mas o Març </span>
+        <div class="achievement-stars">
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+        </div>
+    </div>
+    <div class="achievement-description !}[? if achievement_mas_o_marc : achievement-description--unlocked ?][? if not achievement_mas_o_marc : achievement-description--locked ?]{!">Playing as a party part of the JxSí coalition, refuse to give up Artur Mas' leadership, resulting in new elections.</div>
+  </div>
+</div>
+!}
+{!
+<div class="achievement !}[? if achievement_paperera_de_la_historia : achievement--unlocked ?][? if not achievement_paperera_de_la_historia : achievement--locked ?]{!" style="display:flex">
+  <div class="achievement-image !}[? if achievement_paperera_de_la_historia : achievement-image--unlocked ?][? if not achievement_paperera_de_la_historia : achievement-image--locked ?]{!">
+    <img src="img/achievements/paperera_de_la_historia.png" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="achievement-body">
+    <div class="achievement-title !}[? if achievement_paperera_de_la_historia : achievement-title--unlocked ?][? if not achievement_paperera_de_la_historia : achievement-title--locked ?]{!">
+     <span> La Paperera de la Història </span>
+        <div class="achievement-stars">
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+        </div>
+    </div>
+    <div class="achievement-description !}[? if achievement_paperera_de_la_historia : achievement-description--unlocked ?][? if not achievement_paperera_de_la_historia : achievement-description--locked ?]{!">Playing as CUP and while not being part of the JxSí coalition, force Artur Mas to step aside.</div>
+  </div>
+</div>
+!}
+{!
+<div class="achievement !}[? if achievement_majoria_no_silenciosa : achievement--unlocked ?][? if not achievement_majoria_no_silenciosa : achievement--locked ?]{!" style="display:flex">
+  <div class="achievement-image !}[? if achievement_majoria_no_silenciosa : achievement-image--unlocked ?][? if not achievement_majoria_no_silenciosa : achievement-image--locked ?]{!">
+    <img src="img/achievements/majoria_silenciosa.jpg" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="achievement-body">
+    <div class="achievement-title !}[? if achievement_majoria_no_silenciosa : achievement-title--unlocked ?][? if not achievement_majoria_no_silenciosa : achievement-title--locked ?]{!">
+     <span> Majoria No Silenciosa </span>
+        <div class="achievement-stars">
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+        </div>
+    </div>
+    <div class="achievement-description !}[? if achievement_majoria_no_silenciosa : achievement-description--unlocked ?][? if not achievement_majoria_no_silenciosa : achievement-description--locked ?]{!">Somehow, manage to lose a non-agreement referndum or non-binding consultation to the "No" option.</div>
+  </div>
+</div>
+!}
+
+
+- @root: Back
+
+

@@ -42,14 +42,15 @@ for (var c of Q.parlament_constituencies) {
 // 1. update dates
 var has_time_passed = false;
 if (Q.rubicon) {
-    if (Q.week_actions > 0) {
+    if (Q.month_actions_last > Q.month_actions) {
         has_time_passed = true;
-        Q.week_actions = 0;
         Q.week += 1;
     }
     if (Q.month_actions >= 4) {
         Q.time += 1;
+        Q.month_actions = 0;
     }
+    Q.month_actions_last = Q.month_actions;
 } else {
     if (Q.month_actions >= 1) {
         has_time_passed = true;
@@ -57,7 +58,6 @@ if (Q.rubicon) {
         Q.time += 1;
         Q.month += 1;
     }
-
 } 
 if (Q.week >= 5) {
     Q.month += 1;
@@ -122,6 +122,15 @@ if (has_time_passed) {
         'public_debt': Q.public_debt,
         'unemployment': Q.unemployment,
         'generalitat_surplus': Q.generalitat_surplus,
+    })
+    Q.social_records.push({
+        'date': new Date(Q.year, Q.month-1, Q.week*7),
+        'independence_movement': Q.independence_movement,
+        'independence_trust': Q.independence_trust,
+        'social_dissent': Q.social_dissnet,
+        'cat_spa_relations': Q.cat_spa_relations,
+        'podemos_channeling': Q.podemos_channeling,
+        'welfare_index': Q.welfare_index
     })
 
 

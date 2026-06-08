@@ -1,0 +1,128 @@
+title: The Question of the Question
+subtitle: The non-binding consultation needs to ask a question, but which one?
+face-image: img/events/consultation_question.jpg
+new-page: true
+tags: event
+view-if: congreso_decidir_trigger and question_of_the_question_trigger and (not consultation_happened) and (president_party == "ciu" or president_party == "cdc" or president_party == "erc" or president_party == "cup" or president_party == "dl" or president_party == "pdcat")
+max-visits: 1
+on-arrival: {!
+    // TODO: Reach this from the Presidency card
+
+    Q.countdows.push("consultation_day");
+    Q.consulation_day_countdown = 3;
+!}
+
+= The Question of the Question
+
+[? if president_party == player_party: We are decided ?][? if president_party != player_party: [? if president_gender == "m": President?][? if president_gender == "f": Presidenta?] [+ president +] is decided ?] to make use of the recently-approved Law on Non-Binding Consulatations to organize a plebiscite on Catalan Independence. The big question, however, is what question to ask. 
+
+- @short
+- @double
+- @complex
+
+@short
+title: A single, short, and unequivocal question on Independences
+subtitle: [? if president_party != player_party: This will take some convincing [-1 resources] ?][? if president_party == player_party: Independence, yes or no. Why is this even a debate? ?]
+choose-if: (party_resources >= 1 or president_party == player_party) and ((player_party == "erc" and (erc_in_gob or erc_supporting)) or (player_party == "cup" and (cup_in_gob or cup_supporting)))
+unavailable-subtitle: [? if (player_party == "erc" and not (erc_in_gob or erc_supporting)) or (player_party == "cup" and not (cup_in_gob or cup_supporting)): We are in no position to push [? if president_gender == "m": President?][? if president_gender == "f": Presidenta?] [+ president +]. ?][? if party_resources < 1:  Not enough resources. ?]
+on-arrival: {!
+    if (Q.player_party != Q.president_party) {
+        Q.party_resources -= 1;
+    }
+    Q.consultation_question = 1;
+
+    Q.ciu_relations -= 5;
+    Q.cdc_relations -= 2;
+    Q.dl_relations -= 2;
+    if (Q.player_party == "erc") {
+        Q.cup_relations += 5;
+        Q.erc_civic_dissent -= 10;
+        Q.erc_civic_strength += 5;
+    }
+    if (Q.player_party == "cup") {
+        Q.erc_relations += 5;
+        Q.cup_poblelliure_dissent -= 5;
+        Q.cup_poblelliure_strength += 5;
+    }
+
+    Q.independence_trust += 5;
+!}
+
+A single, clear-cut question on independence. Just as a referendum should be just... well non-binding. The yes or no question to be asked, three months for now, as announounced by [? if president_gender == "m": President?][? if president_gender == "f": Presidenta?] [+ president +], will be:
+
+> *"Do you want Catalonia to become an independent state in the form of a republic?"*
+
+- @post_event: Time to campaign
+
+@double
+title: A double question on statehood and Independenes
+subtitle: This may gather extra favour amongst those hoping for a Constitutional reform rather than outright independence. [? if president_party != player_party and president_party != "cup" and parlamment_coalition_concessions_indy: The preferred option of [? if president_gender == "m": President?][? if president_gender == "f": Presidenta?] [+ president +]. ?][? if president_party != player_party and president_party != "cup" and not parlamment_coalition_concessions_indy: [-1 resources] ?]
+choose-if: party_resources >= 1 or parlament_coalition_concessions_indy or president_party == "cup" or president_party == player_party
+on-arrival: {!
+    if (Q.player_party != Q.president_party && Q.president_party != "cup" && !Q.parlamment_coalition_concessions_indy) {
+        Q.party_resources -= 1;
+    }
+    Q.consultation_question = 2;
+
+    if (Q.icv_parlament_s > 0) {
+        Q.icv_relations += 5;
+    } else if (Q.csqp_parlament_s > 0) {
+        Q.csqp_relations += 5;
+    } else if (Q.cecp_parlament_s > 0) {
+        Q.cecp_relations += 5;
+    } else {
+        Q.ecp_relations += 2;
+    }
+!}
+
+A question opening the door to a federal or confederal reform of Spain will always be more liked by [? if icv_parlament_s > 0: ICV-EUiA?][? if csqp_parlament_s > 0: CSQP?][? if cecp_parlament_s > 0: CECP?][? if ecp_parlament_s > 0: ECP?]. Yet it is not sacrificing clarity on independence, not too bad. Thus, the double yes or no question to be asked, three months for now, as announounced by [? if president_gender == "m": President?][? if president_gender == "f": Presidenta?] [+ president +], will be:
+
+> *"Do you want Catalonia to become a state?"*
+> *"In case of affirmative answer, do you want this state to become independent?"*
+
+- @post_event: Time to campaign for a yes-yes?
+
+@complex
+title: We don't need to ask on independence explicitly, right? Let's keep it vague enough
+subtitle: We *may* avoid some of the legal repercussions of holding such a consultation if we are careful enough with the wording and have plausible deniability. [? if president_party != player_party and president_party != "cup" and not parlamment_coalition_concessions_indy: The preferred option of [? if president_gender == "m": President?][? if president_gender == "f": Presidenta?] [+ president +]. ?]
+choose-if: not parlament_coalition_concessions_indy
+unavailable-subtitle: [? if president_gender == "m": President?][? if president_gender == "f": Presidenta?] [+ president +] has already taken a clear compromise to push for independence as part of coalition negotiations.
+on-arrival: {!
+    Q.consultation_question = 3;
+    if (!Q.achievement_je_me_souviens) {
+        window.achievementNotif('Je me Souviens', 'img/achievements/quebec.svg', 2);
+    }
+    this.achieve("je_me_souviens");
+    
+
+    if (Q.player_party == "cup") {
+        Q.cup_endavant_dissent += 5;
+        Q.cup_poblelliure_dissent += 10;
+        Q.cup_thirdsector_dissent += 5;
+        Q.erc_relations -= 7;
+        Q.ciu_relations += 5;
+        Q.cdc_relations += 5;
+        Q.dl_relations += 5;
+    } else if (Q.player_party == "erc") {
+        Q.erc_left_dissent += 3;
+        Q.erc_core_dissent += 5;
+        Q.erc_civic_dissent += 10;
+        Q.erc_pragmatic_dissent -= 10;
+        Q.erc_pragmatic_strength += 10;
+        Q.cup_relations -= 10;
+        Q.ciu_relations += 5;
+        Q.cdc_relations += 5;
+        Q.dl_relations += 5;
+    }
+
+    Q.independence_trust -= 10;
+    Q.independence_movement -= 5;
+!}
+
+If it worked for Québec, why not here? [? if ciu_parlament_s > 0 or cdc_parlament_s > 0 or dl_parlament_s > 0: Keeping it as moderated as possible is the preferred course of action of [? if ciu_parlament_s > 0: CiU?][? if cdc_parlament_s > 0: CDC?][? if dl_parlament_s > 0: DL?]. ?]The yes or no question to be asked, three months for now, as announounced by [? if president_gender == "m": President?][? if president_gender == "f": Presidenta?] [+ president +], will be:
+
+> *"Do you want Catalonia to exercise its right to self-determination and accede to full sovereignty, on the condition a new understanding of the relationship between Catalonia and Spain is first offered and negotiated with the Spanish State?"*
+
+[? if player_party == "cup": No one in our party seems very thrilled about this. ?][? if player_party == "erc": This convoluted question will definetly be heavily disliked by CUP and most pro-independence profiles within our own party. ?]
+
+- @post_event: Did it really work in Québec though?

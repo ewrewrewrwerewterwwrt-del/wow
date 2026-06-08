@@ -240,7 +240,10 @@ var total_national_census = 0;      // For Turnout/abstain stats
 var total_party_votes = {};
 var total_party_seats = {};
 var total_abstain_raw = 0;
-var congreso_size = 350;
+var congreso_size = 0;
+for (var constituency of Q.congreso_constituencies) {
+    congreso_size += Q.congreso_seats[constituency];
+}
 
 // Initialize party totals to 0
 for (var p of CONGRESO_PARTIES) {
@@ -993,7 +996,7 @@ for (var com of _provComarques) {
 Q["local_val-daran_wp"] = Q["local_vielha-e-mijaran_wp"];
 
 // ── 6. SPECIFIC COMARCA OVERRIDES ────────────────────────────────────────────
-// Maresme: CiU 2015 → ERC 2019 (independence bloc shift; PSC/CS never dominant here)
+// Maresme: CiU 2015 → ERC 2019 (independence bloc shift; PSC/Cs never dominant here)
 var maresme_winner = ciu_decay > 55 ? "erc" : _activeIcr;
 Q["local_maresme_wp"] = maresme_winner;
 Q[maresme_winner + "_local_interior_holdings"] += 3;

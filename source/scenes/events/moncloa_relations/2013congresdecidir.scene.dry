@@ -1,0 +1,61 @@
+title: The "Right to Decide", debated in the Congreso
+face-image: img/events/congreso_decidir.webp
+new-page: true
+tags: event
+view-if: congreso_decidir_trigger
+max-visits: 1
+on-arrival: {!
+    Q.cat_spa_relations -= 5;
+    Q.independence_movement += 5;
+
+    if (Q.question_of_the_question_trigger || Q.question_of_the_question_countdown < 3) {
+        Q.question_of_the_question_trigger == false;
+        Q.question_of_the_question_countdown = 3;
+    }
+!}
+
+= The "Right to Decide", debated in the Congreso
+
+After the Parlament's votes on the Declaration of Sovereignty of Catalonia and the show of an ample majority supporting a consultation on independence, matters have reached the Congreso. The parties that voted for both innitaitves in the Parlament and have representation in the Congreso have assembled a delegation are demanding a regonition of this "Right to Decide". Representing this push is the former MEP for ICV-EUiA Raul Romeva, who is seen as a neutral pick between the different pro-independence parties and has the extra value of comming from a non-openly-pro-independence party. However, the fact is that with the PP holding a comfortable majority in the Congreso, so chances of this being approved are, in essence, non-existing.
+
+- @calc: [? if player_party == "cup": What a waste of time ?][? if player_party != "cup": Well, let's at least try this out?]
+
+@calc
+subtitle: Not that anyone is expecting much from this
+on-arrival: {!
+    var psc_congreso = Math.ceil(Q.psoe_congreso_s / 10);
+    
+    Q.congreso_decidir_si = Q.ciu_congreso_s + Q.erc_congreso_s + Q.iu_congreso_s + Q.pnv_congreso_s + Q.amaiur_congreso_s + Q.compromis_congreso_s + Q.bng_congreso_s + Q.gbai_congreso_s;
+    Q.congreso_decidir_abst = Q.cc_congreso_s;
+
+    if (Q.psc_leader == "Montserrat Tura" || Q.psc_leader == "Àngel Ros") {
+        Q.congreso_decidir_si += psc_congreso;
+    } else {
+        Q.congreso_decidir_abst += psc_congreso;
+    }    
+    Q.congreso_decidir_no = (Q.psoe_congreso_s - psc_congreso) + Q.pp_congreso_s + Q.upyd_congreso_s + Q.fac_congreso_s;
+
+    var congreso_size = 0;
+    for (var constituency of Q.congreso_constituencies) {
+        congreso_size += Q.congreso_seats[constituency];
+    }
+
+    Q.congreso_decidir_no_pc = Math.round((Q.congreso_decidir_no / congreso_size) * 100);
+    Q.congreso_decidir_abst_pc = Math.round((Q.congreso_decidir_abst / congreso_size) * 100);
+    Q.congreso_decidir_si_pc = Math.round((Q.congreso_decidir_si / congreso_size) * 100);
+
+    if (Q.congreso_decidir_no >= Q.congreso_decidir_si) {
+        Q.non_binding_consultation_law_countdown = 9;
+        Q.countdowns.push("non_binding_consultation_law");
+    }
+
+    // TODO: What happens if successful constitutional reform
+!}
+
+<table style='border-spacing: 0px; margin-right: 1em; margin-left: 1em; width:95%; table-layout: fixed;'><tr><td style='width: [+ congreso_decidir_si_pc +]%'>Yes</td><td style='text-align: center; width: [+ congreso_decidir_abst_pc +]%'>Abstention</td><td style='text-align: right; width: [+ congreso_decidir_no_pc +]%'>No</td></tr><tr><td style='height: 2em; background-color: #008000; color: white; text-align: center; border-radius: 3px 0 0 3px;'>**[+ congreso_decidir_si +]**</td><td style='background-color: #b1b0aeff; color: black; text-align: center'>**[+ congreso_decidir_abst +]**</td><td style='background-color: #c30000; color: white; text-align: center; border-radius: 0 3px 3px 0;'>**[+ congreso_decidir_no +]**</td></tr><tr style='vertical-align:top'><td> CiU <br/> [? if psc_leader == "Montserrat Tura" or psc_leader == "Àngel Ros": PSC <br/> ?] ERC <br/> IU <br/> PNV <br/> Amaiur <br/> compromis <br/> BNG <br/> GBai </td><td> [? if not (psc_leader == "Montserrat Tura" or psc_leader == "Àngel Ros"): PSC <br/> ?] CC-PNC </td><td style='text-align: right'> PP <br/> PSOE (excluding PSC) <br/> UPyD <br/> FAC </td></tr></table>
+
+Surprising a total of zero people, the Congreso has rejected the proposal. And, following the innitiative by UPyD, it has actually passed a resolution with the same supports stating that *"under no circumstances can a part of the citizenry vote on territorial organization of the State"* \[...\] *"without including the rest"*. Presidente Mariano Rajoy has also made a statement: *"no referendum and no independence will happen while I am President"*.
+
+The big drama, as it seems usual at this point, has come from the PSOE and the PSC, with the representatives of the latter breaking voting discipline twice. [+ psoe_leader +] has naturally announced sanctions against all members who did not follow the party line, but needless to say this is hardly going to convince anyone that things are under control in the socialist group. Once again, only time will tell what the ripple effects will be. What is clear at least is that self-determination will need to find other paths.
+
+- @post_event: Continue...

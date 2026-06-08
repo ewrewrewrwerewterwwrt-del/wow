@@ -149,9 +149,6 @@ for (var party of Q.parties) {
 
 @international
 title: International Relations
-on-arrival: {!
-
-!}
 
 = INTERNATIONAL RELATIONS
 

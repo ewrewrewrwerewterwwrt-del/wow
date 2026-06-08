@@ -264,7 +264,7 @@
   // This function allows you to do something in response to signals.
   window.handleSignal = function (signal, event, scene_id) {};
 
-  // This function runs on a new page. Right now, this auto-saves.
+  // This function runs on a new page
   window.onNewPage = function () {
     var scene = window.dendryUI.dendryEngine.state.sceneId;
     console.log("New page: " + scene);
@@ -342,43 +342,192 @@
     tabButton.className += " active";
     window.statusTab = newTab;
     window.updateSidebar();
+    initCataloniaPolls(
+      "cat-polls-widget",
+      dendryUI.dendryEngine.state.qualities,
+    );
+    initCataloniaPolls(
+      "cat-polls-widget-wide",
+      dendryUI.dendryEngine.state.qualities,
+      true,
+    );
+    initCatLocalMap(
+      "catalonia-local-map",
+      dendryUI.dendryEngine.state.qualities,
+    );
+    initCatCoalitions(
+      "parlament-coalition-widget",
+      window._cvParlement,
+      dendryUI.dendryEngine.state.qualities,
+    );
     addTooltipEventListeners();
   };
 
   window.onDisplayContent = function () {
     window.updateSidebar();
+    initCataloniaPolls(
+      "cat-polls-widget",
+      dendryUI.dendryEngine.state.qualities,
+    );
+    initCataloniaPolls(
+      "cat-polls-widget-wide",
+      dendryUI.dendryEngine.state.qualities,
+      true,
+    );
+    initCatLocalMap(
+      "catalonia-local-map",
+      dendryUI.dendryEngine.state.qualities,
+    );
+    initCatCoalitions(
+      "parlament-coalition-widget",
+      window._cvParlement,
+      dendryUI.dendryEngine.state.qualities,
+    );
     addTooltipEventListeners();
   };
 
-  /*
-   * This function copied from the code for Infinite Space Battle Simulator
-   *
-   * quality - a number between max and min
-   * qualityName - the name of the quality
-   * max and min - numbers
-   * colors - if true/1, will use some color scheme - green to yellow to red for high to low
-   * */
-  window.generateBar = function (quality, qualityName, max, min, colors) {
-    var bar = document.createElement("div");
-    bar.className = "bar";
-    var value = document.createElement("div");
-    value.className = "barValue";
-    var width = (quality - min) / (max - min);
-    if (width > 1) {
-      width = 1;
-    } else if (width < 0) {
-      width = 0;
+  window._achievementStack = [];
+  window._achievementLabel = null;
+
+  function updateLabel() {
+    if (!window._achievementLabel) return;
+    const n = window._achievementStack.length;
+    window._achievementLabel.textContent =
+      n === 1 ? "Achievement Unlocked" : "Achievements Unlocked";
+  }
+
+  function getOrCreateLabel() {
+    if (!window._achievementLabel) {
+      const label = document.createElement("div");
+      label.style.cssText = `
+      position: fixed; right: 24px; z-index: 9999;
+      background: var(--card-bg-color);
+      border-radius: 8px; padding: 8px 14px;
+      font-family: 'UbuntuCustom', system-ui, -apple-system, BlinkMacSystemFont, Ubuntu, Cantarell, sans-serif;
+      font-size: .72em; font-weight: 700; letter-spacing: .14em;
+      color: var(--text-color); text-transform: uppercase;
+      width: fit-content; white-space: nowrap;
+      transition: bottom .35s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1);
+      transform: translateX(0);
+    `;
+      document.body.appendChild(label);
+      window._achievementLabel = label;
     }
-    value.style.width = Math.round(width * 100) + "%";
-    if (colors) {
-      value.style.backgroundColor = window.probToColor(width * 100);
+    return window._achievementLabel;
+  }
+
+  function restack() {
+    const GAP = 12;
+    let bottom = 24;
+    for (let i = window._achievementStack.length - 1; i >= 0; i--) {
+      window._achievementStack[i].style.bottom = bottom + "px";
+      bottom += window._achievementStack[i].offsetHeight + GAP;
     }
-    bar.textContent = qualityName + ": " + quality;
-    if (colors) {
-      bar.textContent += "/" + max;
+    if (window._achievementLabel) {
+      window._achievementLabel.style.bottom = bottom + "px";
     }
-    bar.appendChild(value);
-    return bar;
+  }
+
+  window.achievementNotif = function (title, img, stars) {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const beat = 60 / 180;
+    [
+      { freq: 293.66, delay: 0, dur: beat * 1.5 },
+      { freq: 329.63, delay: beat * 1.5, dur: beat * 0.5 },
+      { freq: 349.23, delay: beat * 2, dur: beat * 2.0 },
+    ].forEach(({ freq, delay, dur }) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = "sine";
+      osc.frequency.value = freq;
+      const t = ctx.currentTime + delay;
+      gain.gain.setValueAtTime(0, t);
+      gain.gain.linearRampToValueAtTime(0.25, t + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      osc.start(t);
+      osc.stop(t + dur);
+    });
+
+    const el = document.createElement("div");
+    el.className = "achievement achievement--unlocked";
+    el.style.cssText = `
+    position: fixed; right: 24px; z-index: 9999;
+    flex-direction: column; align-items: stretch;
+    gap: 10px; padding: 12px 14px;
+    border-top: none; border-radius: 8px;
+    background: var(--card-bg-color);
+    box-shadow:
+      0 0 0 1px rgba(220,150,0,.4),
+      0 0 14px rgba(220,150,0,.5),
+      0 0 28px rgba(220,150,0,.2);
+    width: 18em;
+    transform: translateX(calc(100% + 32px));
+    transition: transform .45s cubic-bezier(.16,1,.3,1), bottom .35s cubic-bezier(.16,1,.3,1);
+  `;
+
+    el.innerHTML = `
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div class="achievement-image achievement-image--unlocked" style="flex: 1 0 0; height: auto; aspect-ratio: 3/2; box-shadow: none;">
+        <img src="${img}" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div class="achievement-body" style="flex: 2 0 0; min-width: 0;">
+        <div class="achievement-title achievement-title--unlocked" style="display: block; margin-bottom: 6px;">${title}</div>
+        <div class="achievement-stars">
+          ${Array.from(
+            { length: 5 },
+            (_, i) =>
+              `<span class="${i < stars ? "star--filled" : "star--empty"}">★</span>`,
+          ).join("")}
+        </div>
+      </div>
+    </div>
+  `;
+
+    document.body.appendChild(el);
+    window._achievementStack.push(el);
+    getOrCreateLabel();
+    updateLabel();
+    restack();
+
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        el.style.transform = "translateX(0)";
+      }),
+    );
+
+    setTimeout(() => {
+      window._achievementStack = window._achievementStack.filter(
+        (e) => e !== el,
+      );
+
+      // if last card, slide label out together
+      if (window._achievementStack.length === 0 && window._achievementLabel) {
+        window._achievementLabel.style.transform =
+          "translateX(calc(100% + 32px))";
+        window._achievementLabel.addEventListener(
+          "transitionend",
+          () => {
+            window._achievementLabel?.remove();
+            window._achievementLabel = null;
+          },
+          { once: true },
+        );
+      } else {
+        updateLabel();
+        restack();
+      }
+
+      el.style.transform = "translateX(calc(100% + 32px))";
+      el.addEventListener(
+        "transitionend",
+        () => {
+          el.remove();
+        },
+        { once: true },
+      );
+    }, 4500);
   };
 
   window.justLoaded = true;

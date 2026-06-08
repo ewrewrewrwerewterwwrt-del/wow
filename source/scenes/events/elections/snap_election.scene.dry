@@ -3,8 +3,9 @@ subtitle: President [+ president +] sets the new election date for two months fr
 face-image: img/events/snapelection.jpg
 new-page: true
 tags: event
-view-if: parlament_snap_election = 1
+view-if: parlament_snap_election = 1 or countdown_parlament_snap_election_trigger
 on-arrival: {!
+    Q.countdown_parlament_snap_election_trigger = false;
     Q.parlament_snap_election = 0;
     Q.next_election_week = Q.week;
     Q.next_election_month = Q.month + 2;

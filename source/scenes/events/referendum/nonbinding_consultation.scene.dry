@@ -1,0 +1,262 @@
+title: Catalonia Votes on Independence
+subtitle: The non-binding consultation calls millions to the polls
+face-image: img/events/9n.jpg
+new-page: true
+tags: event
+view-if: consulation_day_trigger
+max-visits: 1
+on-arrival: {!
+    // TODO: How does the preparation event affect this?
+    // TODO: Roadmap updating if required?
+    if (!Q.achievement_calcotada) {
+        window.achievementNotif('Calçotada Popular', 'img/achievements/calcotada.png', 1);
+    }
+    this.achieve("calcotada");
+    Q.consultation_happened = true;
+    Q.consultation_pending = false;
+!}
+
+= Participative process of [+ month : month +] [+ year +]
+
+Today, all Catalan residents 16 and over have been called to vote on the non-binding consulation on the political future of Catalonia. Participation is not easy to predict as, following the ruling of the Constitutional Court against the law allowing this consultation, PP[? if vox_parlament_s > 0: , Cs, and Vox?] [? if not vox_parlament_s > 0: and Cs ?]have announced a complete boicot of the consultation. [? if psc_leader == "Àngel Ros" or psc_leader == "Montserrat Tura": The PSC, while not thrilled by the idea of this consultation without an agreement, is at least somwhat supporting.?][? if not (psc_leader == "Àngel Ros" or psc_leader == "Montserrat Tura"): The PSC is not thrilled by the idea of this consultation without an agreement and has taken an ambivalent position, neither boicotting nor openly calling for participating in it, in yet another impossible balancing act.?] [? if icv_parlament_s > 0: ICV-EUiA?][? if csqp_parlament_s > 0: CSQP?][? if cecp_parlament_s > 0: CECP?][? if ecp_parlament_s > 0: ECP?] is calling their voters to make their voice heard[? if consultation_question = 2: , while officially supporting a vote for the Yes/No option?]. All pro-independence party naturally are enthusiastic about seeing the results.
+
+- @direct
+- @double
+- @convoluted
+
+
+@direct
+title: Do you want Catalonia to become an independent state in the form of a republic?
+view-if: consultation_question = 1
+on-arrival: {!
+    Q.consultation_yes = 0;
+    Q.consultation_abst = 0;
+    Q.consultation_no = 0;
+
+    for (var constituency of Q.parlament_constituencies) {
+        for (var demo of Q.parlament_demographics) {
+            Q.consultation_yes += (Q["ciu_parlament_" + constituency + "_" + demo + "_support"] * 0.9 + Q["cdc_parlament_" + constituency + "_" + demo + "_support"] + Q["dl_parlament_" + constituency + "_" + demo + "_support"] + Q["pdcat_parlament_" + constituency + "_" + demo + "_support"] + Q["jxcat_parlament_" + constituency + "_" + demo + "_support"] + Q["junts_parlament_" + constituency + "_" + demo + "_support"] + Q["jxsi_parlament_" + constituency + "_" + demo + "_support"] + Q["erc_parlament_" + constituency + "_" + demo + "_support"] + Q["cup_parlament_" + constituency + "_" + demo + "_support"] + Q["fnc_parlament_" + constituency + "_" + demo + "_support"] + (Q["icv_parlament_" + constituency + "_" + demo + "_support"] + Q["csqp_parlament_" + constituency + "_" + demo + "_support"]) * 0.4 + Q["cecp_parlament_" + constituency + "_" + demo + "_support"] * 0.1) * Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+            Q.consultation_no += (Q["ciu_parlament_" + constituency + "_" + demo + "_support"] * 0.1 + Q["unio_parlament_" + constituency + "_" + demo + "_support"] + (Q["icv_parlament_" + constituency + "_" + demo + "_support"] + Q["csqp_parlament_" + constituency + "_" + demo + "_support"]) * 0.4 + Q["cecp_parlament_" + constituency + "_" + demo + "_support"] * 0.6) * Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+            Q.consultation_abst += ((Q["icv_parlament_" + constituency + "_" + demo + "_support"] + Q["csqp_parlament_" + constituency + "_" + demo + "_support"]) * 0.2 +  Q["cecp_parlament_" + constituency + "_" + demo + "_support"] * 0.3 +  Q["ppc_parlament_" + constituency + "_" + demo + "_support"] + Q["cs_parlament_" + constituency + "_" + demo + "_support"] + Q["vox_parlament_" + constituency + "_" + demo + "_support"] + Q["abstain_parlament_" + constituency + "_" + demo + "_support"]) * Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+            switch (Q.psc_leader) {
+                case "Àngel Ros":
+                    Q.consultation_abst += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.4)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_no += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.4)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_yes += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.2)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    break;
+                case "Montserrat Tura":
+                    Q.consultation_abst += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.3)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_no += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.4)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_yes += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.3)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    break;
+                default:
+                    Q.consultation_abst += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.85)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_no += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.1)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_yes += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.05)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    break;
+            }            
+        }
+    }
+    Q.consultation_yes = Math.ceil(Q.consultation_yes);
+    Q.consultation_abst = Math.ceil(Q.consultation_abst);
+    Q.consultation_no = Math.ceil(Q.consultation_no);
+
+    Q.consultation_total_votes = Q.consultation_no + Q.consultation_yes;
+    Q.consultation_participation_pc = Math.round((Q.consultation_total_votes/ (Q.consultation_total_votes + Q.consultation_abst)) * 1000) / 10;
+    Q.consultation_yes_pc = Math.round((Q.consultation_yes / Q.consultation_total_votes) * 1000) / 10;
+    Q.consultation_no_pc = Math.round((Q.consultation_no / Q.consultation_total_votes) * 1000) / 10;
+
+    // Add thousands notation
+    Q.consultation_yes = Q.consultation_yes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    Q.consultation_no = Q.consultation_no.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+!}
+
+**Do you want Catalonia to become an independent state in the form of a republic?**
+
+{!<table style='border-spacing: 0px; margin-right: 1em; width:95%; table-layout: fixed;'>!}
+{!<tr><td style='width: 4.5em'> YES </td><td style='height: 2em; background-color: #008000; border-radius: 0 3px 3px 0; color: white; text-align: center; width: !}[+ consultation_yes_pc +]{!%'>!}[?if consultation_yes_pc > 12 :[+ consultation_yes +] ?]{!</td><td style="padding-left:0.5em;">!}[?if consultation_yes_pc < 12 : <span style="font-size:0.9em">[+ consultation_yes +]</span> | ?][+ consultation_yes_pc +]{!%</td></tr>!}
+{!</table>!}
+{!<table style='border-spacing: 0px; margin-right: 1em; width:95%; table-layout: fixed;'>!}
+{!<tr><td style='width: 4.5em'> NO </td><td style='height: 2em; background-color: #c30000; border-radius: 0 3px 3px 0; color: white; text-align: center; width: !}[+ consultation_no_pc +]{!%'>!}[?if consultation_no_pc > 12 :[+ consultation_no +]?]{!</td><td style="padding-left:0.5em;">!}[?if consultation_no_pc < 12 : <span style="font-size:0.9em">[+ consultation_no +]</span> | ?] [+ consultation_no_pc +]{!%</td></tr>!}
+{!</table>!}
+{!<div style="width: 95%;text-align: center; margin-top:-0.75em;">!} **Turnout:**  [+ consultation_participation_pc +]% {!</div>!}
+{!<div style="width: 95%; justify-content: center; display:flex;"><div class="box" style="width: 70%; border-radius: 3px; background-color: #ccc"><div class="box" style=" height: 1em; background-color: dimgrey; margin-right: 0.5em; border-radius: 3px; width:!}[+ consultation_participation_pc +]{!%;"></div></div></div>!}
+
+- @after
+- @after_no
+
+@double
+title: Do you want Catalonia to become a state? In case of affirmative answer, do you want this state to become independent?
+view-if: consultation_question = 2
+on-arrival: {!
+    Q.consultation_yes = 0;
+    Q.consultation_yesno = 0;
+    Q.consultation_abst = 0;
+    Q.consultation_no = 0;
+
+    for (var constituency of Q.parlament_constituencies) {
+        for (var demo of Q.parlament_demographics) {
+            Q.consultation_yes += (Q["ciu_parlament_" + constituency + "_" + demo + "_support"] * 0.9 + Q["cdc_parlament_" + constituency + "_" + demo + "_support"] + Q["dl_parlament_" + constituency + "_" + demo + "_support"] + Q["pdcat_parlament_" + constituency + "_" + demo + "_support"] + Q["jxcat_parlament_" + constituency + "_" + demo + "_support"] + Q["junts_parlament_" + constituency + "_" + demo + "_support"] + Q["jxsi_parlament_" + constituency + "_" + demo + "_support"] + Q["erc_parlament_" + constituency + "_" + demo + "_support"] + Q["cup_parlament_" + constituency + "_" + demo + "_support"] + Q["fnc_parlament_" + constituency + "_" + demo + "_support"] + (Q["icv_parlament_" + constituency + "_" + demo + "_support"] + Q["csqp_parlament_" + constituency + "_" + demo + "_support"]) * 0.4 + Q["cecp_parlament_" + constituency + "_" + demo + "_support"] * 0.1) * Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+            Q.consultation_yesno += (Q["ciu_parlament_" + constituency + "_" + demo + "_support"] * 0.1 + Q["unio_parlament_" + constituency + "_" + demo + "_support"] + (Q["icv_parlament_" + constituency + "_" + demo + "_support"] + Q["csqp_parlament_" + constituency + "_" + demo + "_support"]) * 0.4 + Q["cecp_parlament_" + constituency + "_" + demo + "_support"] * 0.6) * Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+            Q.consultation_no += ((Q["icv_parlament_" + constituency + "_" + demo + "_support"] + Q["csqp_parlament_" + constituency + "_" + demo + "_support"]) * 0.1 + Q["cecp_parlament_" + constituency + "_" + demo + "_support"] * 0.1) * Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+            Q.consultation_abst += ((Q["icv_parlament_" + constituency + "_" + demo + "_support"] + Q["csqp_parlament_" + constituency + "_" + demo + "_support"]) * 0.1 + Q["cecp_parlament_" + constituency + "_" + demo + "_support"] * 0.2 +  Q["ppc_parlament_" + constituency + "_" + demo + "_support"] + Q["cs_parlament_" + constituency + "_" + demo + "_support"] + Q["vox_parlament_" + constituency + "_" + demo + "_support"] + Q["abstain_parlament_" + constituency + "_" + demo + "_support"]) * Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+            switch (Q.psc_leader) {
+                case "Àngel Ros":
+                    Q.consultation_abst += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.4)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_no += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.2)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_yesno += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.2)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_yes += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.2)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    break;
+                case "Montserrat Tura":
+                    Q.consultation_abst += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.3)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_no += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.1)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_yesno += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.3)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_yes += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.3)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    break;
+                default:
+                    Q.consultation_abst += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.75)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_no += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.1)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_yesno += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.1)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_yes += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.05)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    break;
+            }
+        }
+    }
+    
+    Q.consultation_yes = Math.ceil(Q.consultation_yes);
+    Q.consultation_yesno = Math.ceil(Q.consultation_yesno);
+    Q.consultation_abst = Math.ceil(Q.consultation_abst);
+    Q.consultation_no = Math.ceil(Q.consultation_no);
+
+    Q.consultation_total_votes = Q.consultation_no + Q.consultation_yes + Q.consultation_yesno;
+    Q.consultation_participation_pc = Math.round((Q.consultation_total_votes/ (Q.consultation_total_votes + Q.consultation_abst)) * 1000) / 10;
+    Q.consultation_yes_pc = Math.round((Q.consultation_yes / Q.consultation_total_votes) * 1000) / 10;
+    Q.consultation_yesno_pc = Math.round((Q.consultation_yesno / Q.consultation_total_votes) * 1000) / 10;
+    Q.consultation_no_pc = Math.round((Q.consultation_no / Q.consultation_total_votes) * 1000) / 10;
+
+    // Add thousands notation
+    Q.consultation_yes = Q.consultation_yes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    Q.consultation_yesno = Q.consultation_yesno.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    Q.consultation_no = Q.consultation_no.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+!}
+
+**Do you want Catalonia to become a state?**
+
+**In case of affirmative answer, do you want this state to become independent?**
+
+{!<table style='border-spacing: 0px; margin-right: 1em; width:95%; table-layout: fixed;'>!}
+{!<tr><td style='width: 4.5em'> YES </td><td style='height: 2em; background-color: #008000; border-radius: 0 3px 3px 0; color: white; text-align: center; width: !}[+ consultation_yes_pc +]{!%'>!}[?if consultation_yes_pc > 12 :[+ consultation_yes +]?]{!</td><td style="padding-left:0.5em;">!}[?if consultation_yes_pc < 12 : <span style="font-size:0.9em">[+ consultation_yes +]</span> | ?][+ consultation_yes_pc +]{!%</td></tr>!}
+{!</table>!}
+{!<table style='border-spacing: 0px; margin-right: 1em; width:95%; table-layout: fixed;'>!}
+{!<tr><td style='width: 4.5em'> YES/NO </td><td style='height: 2em; background-color: #c38f00; border-radius: 0 3px 3px 0; color: white; text-align: center; width: !}[+ consultation_yesno_pc +]{!%'>!}[?if consultation_yesno_pc > 12 : [+ consultation_yesno +]?]{!</td><td style="padding-left:0.5em;">!}[?if consultation_yesno_pc < 12 : <span style="font-size:0.9em">[+ consultation_yesno +]</span> | ?][+ consultation_yesno_pc +]{!%</td></tr>!}
+{!</table>!}
+{!</table>!}
+{!<table style='border-spacing: 0px; margin-right: 1em; width:95%; table-layout: fixed;'>!}
+{!<tr><td style='width: 4.5em'> NO </td><td style='height: 2em; background-color: #c30000; border-radius: 0 3px 3px 0; color: white; text-align: center; width: !}[+ consultation_no_pc +]{!%'>!}[?if consultation_no_pc > 12 :[+ consultation_no +]?]{!</td><td style="padding-left:0.5em;">!}[?if consultation_no_pc < 12 : <span style="font-size:0.9em">[+ consultation_no +]</span> | ?] [+ consultation_no_pc +]{!%</td></tr>!}
+{!</table>!}
+{!<div style="width: 95%;text-align: center; margin-top:-0.75em;">!} **Turnout:**  [+ consultation_participation_pc +]% {!</div>!}
+{!<div style="width: 95%; justify-content: center; display:flex;"><div class="box" style="width: 70%; border-radius: 3px; background-color: #ccc"><div class="box" style=" height: 1em; background-color: dimgrey; margin-right: 0.5em; border-radius: 3px; width:!}[+ consultation_participation_pc +]{!%;"></div></div></div>!}
+
+- @after
+- @after_no
+
+@convoluted
+title: Do you want Catalonia to exercise its right to self-determination and accede to full sovereignty, on the condition a new understanding of the relationship between Catalonia and Spain is first offered and negotiated with the Spanish State?
+view-if: consultation_question = 3
+on-arrival: {!
+    Q.consultation_yes = 0;
+    Q.consultation_abst = 0;
+    Q.consultation_no = 0;
+
+    for (var constituency of Q.parlament_constituencies) {
+        for (var demo of Q.parlament_demographics) {
+            Q.consultation_yes += (Q["ciu_parlament_" + constituency + "_" + demo + "_support"] * 0.9 + Q["cdc_parlament_" + constituency + "_" + demo + "_support"] + Q["dl_parlament_" + constituency + "_" + demo + "_support"] + Q["pdcat_parlament_" + constituency + "_" + demo + "_support"] + Q["jxcat_parlament_" + constituency + "_" + demo + "_support"] + Q["junts_parlament_" + constituency + "_" + demo + "_support"] + Q["jxsi_parlament_" + constituency + "_" + demo + "_support"] + Q["erc_parlament_" + constituency + "_" + demo + "_support"] + Q["cup_parlament_" + constituency + "_" + demo + "_support"] + Q["fnc_parlament_" + constituency + "_" + demo + "_support"] + (Q["icv_parlament_" + constituency + "_" + demo + "_support"] + Q["csqp_parlament_" + constituency + "_" + demo + "_support"]) * 0.4 + Q["cecp_parlament_" + constituency + "_" + demo + "_support"] * 0.1) * Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+            Q.consultation_no += (Q["ciu_parlament_" + constituency + "_" + demo + "_support"] * 0.1 + Q["unio_parlament_" + constituency + "_" + demo + "_support"] + (Q["icv_parlament_" + constituency + "_" + demo + "_support"] + Q["csqp_parlament_" + constituency + "_" + demo + "_support"]) * 0.4 + Q["cecp_parlament_" + constituency + "_" + demo + "_support"] * 0.6) * Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+            Q.consultation_abst += ((Q["icv_parlament_" + constituency + "_" + demo + "_support"] + Q["csqp_parlament_" + constituency + "_" + demo + "_support"]) * 0.2 +  Q["cecp_parlament_" + constituency + "_" + demo + "_support"] * 0.3 +  Q["ppc_parlament_" + constituency + "_" + demo + "_support"] + Q["cs_parlament_" + constituency + "_" + demo + "_support"] + Q["vox_parlament_" + constituency + "_" + demo + "_support"] + Q["abstain_parlament_" + constituency + "_" + demo + "_support"]) * Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+            switch (Q.psc_leader) {
+                case "Àngel Ros":
+                    Q.consultation_abst += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.4)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_no += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.4)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_yes += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.2)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    break;
+                case "Montserrat Tura":
+                    Q.consultation_abst += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.3)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_no += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.4)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_yes += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.3)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    break;
+                default:
+                    Q.consultation_abst += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.85)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_no += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.1)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    Q.consultation_yes += (Q["psc_parlament_" + constituency + "_" + demo + "_support"] * 0.05)* Q["parlament_" + constituency + "_" + demo + "_pop"]/100;
+                    break;
+            }            
+        }
+    }
+    // Apply penalty for shitty af question
+    Q.consultation_yes = Math.ceil(Q.consultation_yes * 0.7);
+    Q.consultation_abst = Math.ceil(Q.consultation_abst + Q.consultation_yes *0.3 + Q.consultation_no * 0.5);
+    Q.consultation_no = Math.ceil(Q.consultation_no * 0.5);
+
+    Q.consultation_total_votes = Q.consultation_no + Q.consultation_yes;
+    Q.consultation_participation_pc = Math.round((Q.consultation_total_votes/ (Q.consultation_total_votes + Q.consultation_abst)) * 1000) / 10;
+    Q.consultation_yes_pc = Math.round((Q.consultation_yes / Q.consultation_total_votes) * 1000) / 10;
+    Q.consultation_no_pc = Math.round((Q.consultation_no / Q.consultation_total_votes) * 1000) / 10;
+
+    // Add thousands notation
+    Q.consultation_yes = Q.consultation_yes.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    Q.consultation_no = Q.consultation_no.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+!}
+
+
+**Do you want Catalonia to exercise its right to self-determination and accede to full sovereignty, on the condition a new understanding of the relationship between Catalonia and Spain is first offered and negotiated with the Spanish State?**
+
+{!<table style='border-spacing: 0px; margin-right: 1em; width:95%; table-layout: fixed;'>!}
+{!<tr><td style='width: 4.5em'> YES/YES </td><td style='height: 2em; background-color: #008000; border-radius: 0 3px 3px 0; color: white; text-align: center; width: !}[+ consultation_yes_pc +]{!%'>!}[?if consultation_yes_pc > 12 :[+ consultation_yes +]?]{!</td><td style="padding-left:0.5em;">!}[?if consultation_yes_pc < 12 : <span style="font-size:0.9em">[+ consultation_yes +]</span> | ?][+ consultation_yes_pc +]{!%</td></tr>!}
+{!</table>!}
+{!<table style='border-spacing: 0px; margin-right: 1em; width:95%; table-layout: fixed;'>!}
+{!<tr><td style='width: 4.5em'> NO </td><td style='height: 2em; background-color: #c30000; border-radius: 0 3px 3px 0; color: white; text-align: center; width: !}[+ consultation_no_pc +]{!%'>!}[?if consultation_no_pc > 12 :[+ consultation_no +]?]{!</td><td style="padding-left:0.5em;">!}[?if consultation_no_pc < 12 : <span style="font-size:0.9em">[+ consultation_no +]</span> | ?] [+ consultation_no_pc +]{!%</td></tr>!}
+{!</table>!}
+{!<div style="width: 95%;text-align: center; margin-top:-0.75em;">!} **Turnout:**  [+ consultation_participation_pc +]% {!</div>!}
+{!<div style="width: 95%; justify-content: center; display:flex;"><div class="box" style="width: 70%; border-radius: 3px; background-color: #ccc"><div class="box" style=" height: 1em; background-color: dimgrey; margin-right: 0.5em; border-radius: 3px; width:!}[+ consultation_participation_pc +]{!%;"></div></div></div>!}
+
+- @after
+- @after_no
+
+@after
+title: Independence won!
+subtitle: ... what now?
+view-if: consultation_yes_pc > consultation_no_pc
+on-arrival: {!
+    Q.countdows.push("unio_breakup");
+    Q.countdows.push("jxsi_formation");
+    Q.unio_breakup_countdown = 5;
+    Q.jxsi_formation_countdown = 6;
+    Q.plebiscite_election_countdown = 3; // TODO: actual event lol
+!}
+
+After the celebration, it is clear what the question on everyone's mind right is: what now? A non-binding consultation does not force the Generalitat into any path of action, and it is not like the current [+ cat_coalition_disp +] has made any provisions for continuing any path towards independence after this. It may be time to re-think any roadmaps towards independence...
+
+- @post_event: Was everything just for this?
+
+@after_no
+title: This is no short of unexpected...
+on-arrival: {!
+    if (!Q.achievement_majoria_no_silenciosa) {
+        window.achievementNotif('Majoria No Silenciosa', 'img/achievements/majoria_silenciosa.jpg', 5);
+    }
+    this.achieve("majoria_no_sileciosa");
+
+    Q.independence_movement -= 30;
+    Q.independence_trust -= 30;
+    Q.cat_spa_relations += 25;
+
+    Q.countdowns.push("parlament_snap_election");
+    Q.parlament_snap_election_countdown = 1;
+
+    // TODO: ramifications of what happens here besides the snap election, specially for CiU. It's virutally impossible to get to this scene though.
+!}
+view-if: consultation_yes_pc <= consultation_no_pc
+
+This never-expected result has certainly caught everyone off-guard. [? if president_gender = "m": President ?][? if president_gender = "f": Presidenta ?][+ president +] is under heavy pressure now, with voices from all the Parlament's spectrum, including their own party, to hold elections. As for us, the future is as blurry as it can get. This may very well be the end of the independence movement for this generation.
+
+- @post_event: Was everything just for this?

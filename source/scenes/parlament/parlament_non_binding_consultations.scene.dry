@@ -1,12 +1,118 @@
-title: Law for the allowance of non-binding consultations
+title: Law on Non-Binding Consultations and other forms of Political Particiption
 new-page: true
-choose-if: party_resources > 0 and parlament_sovereignty_declaration and roadmap != 3 and not parlament_non_binding_consultations
+choose-if: party_resources > 0 and parlament_sovereignty_declaration and roadmap != 3 and not parlament_non_binding_consultations and (((speaker_party == "ciu" or speaker_party == "cdc" or speaker_party == "icv" or speaker_party == "csqp" or speaker_party == "cecp") and congreso_decidir_trigger) or speaker_party == "junts" or speaker_party == "erc" or speaker_party == "cup" or speaker_party == "dl" or speaker_party == "jxsi" or speaker_party == "pdcat" or speaker_party == "jxcat" )
 on-arrival: {!
     if (Q.coming_from_parlament) {
         Q.party_resources -= 1;
-    } else {
+    } else if (Q.player_party == "erc") {
+        // TODO: How do we trigger this to happen without player intervention?
+        Q.erc_parlament_barcelona_middle_support -= 1.5;
+        Q.erc_parlament_girona_middle_support -= 2.5;
+        Q.erc_parlament_lleida_middle_support -= 2.5;
+        Q.erc_parlament_tarragona_middle_support -= 0.5;
+        Q.erc_parlament_barcelona_rural_support -= 2;
+        Q.erc_parlament_girona_rural_support -= 3;
+        Q.erc_parlament_lleida_rural_support -= 3;
+        Q.erc_parlament_tarragona_rural_support -= 4;
+        function from_erc_to_ciu(ciu_name) {
+            Q[ciu_name + '_parlament_barcelona_middle_support'] += 1;
+            Q[ciu_name + '_parlament_girona_middle_support'] += 2;
+            Q[ciu_name + '_parlament_lleida_middle_support'] += 2;
+            Q[ciu_name + '_parlament_tarragona_middle_support'] += 0.5;
+            Q[ciu_name + '_parlament_barcelona_rural_support'] += 0.5;
+            Q[ciu_name + '_parlament_girona_rural_support'] += 1;
+            Q[ciu_name + '_parlament_lleida_rural_support'] += 1;
+            Q[ciu_name + '_parlament_tarragona_rural_support'] += 2;
+        }
 
+        if (Q.ciu_parlament_s > 0) {
+            from_erc_to_ciu('ciu');
+        } else if (Q.cdc_parlament_s > 0) {
+            from_erc_to_ciu('cdc');
+        } else if (Q.jxcat_parlament_s > 0) {
+            from_erc_to_ciu('jxcat');
+        } else if (Q.junts_parlament_s > 0) {
+            from_erc_to_ciu('junts');
+        } else if (Q.dl_parlament_s > 0) {
+            from_erc_to_ciu('dl');
+        } else if (Q.pdcat_parlament_s > 0) {
+            from_erc_to_ciu('pdcat');
+        }
+
+        Q.cup_parlament_barcelona_middle_support += 0.25;
+        Q.cup_parlament_barcelona_rural_support += 1;
+        Q.cup_parlament_girona_middle_support += 0.25;
+        Q.cup_parlament_girona_rural_support += 1;
+        Q.cup_parlament_lleida_middle_support += 0.25;
+        Q.cup_parlament_lleida_rural_support += 1;
+        Q.cup_parlament_tarragona_middle_support += 0.25;
+        Q.cup_parlament_tarragona_rural_support += 1;
     }
 !}
-unavailable-subtitle: [? if parlament_non_binding_consultations : Already approved! ?][? if (not parlament_non_binding_consultations) and (roadmap == 3) : Our roadmap to independence is about unilateralism, this is too chill of a path for the party. ?][? if (not parlament_non_binding_consultations) and (not parlament_sovereignty_declaration) : A parlamentary Declaration of Sovereignty is required first. ?][? if (not parlament_non_binding_consultations) and (party_resources < 1) : Not enough resources.?]
+unavailable-subtitle: [? if parlament_non_binding_consultations : Already approved! ?][? if (not parlament_non_binding_consultations) and (roadmap == 3) : Our roadmap to independence is about unilateralism, this is too chill of a path for the party. ?][? if (not parlament_non_binding_consultations) and (not parlament_sovereignty_declaration) : A parlamentary Declaration of Sovereignty is required first. ?][? if not (speaker_party == "ciu" or speaker_party == "cdc" or speaker_party == "junts" or speaker_party == "erc" or speaker_party == "cup" or speaker_party == "dl" or speaker_party == "jxsi" or speaker_party == "pdcat" or speaker_party == "jxcat" or speaker_party == "icv" or speaker_party == "csqp" or speaker_party == "cecp"): Speaker of the House [+ speaker +] ([+ speaker_party +]) will not allow debating this. ?][? if (speaker_party == "ciu" or speaker_party == "cdc" or speaker_party == "icv" or speaker_party == "csqp" or speaker_party == "cecp") and not congreso_decidir_trigger: Speaker of the House [+ speaker +] ([+ speaker_party +]) want to wait for the Congreso to vote on Catalonia's "Right to Decide" before passing our own laws. ?][? if (not parlament_non_binding_consultations) and (party_resources < 1) : Not enough resources. ?]
 subtitle: [? if coming_from_parlament : -1 resources ?]
+
+= Law on Non-Binding Consultations and other forms of Political Particiption
+
+Despite the Statute of Autonomy already having some minor provisions on the posibility of holding open consultations, this has never been formalized into proper law. The proposed *"Law on non-binding popular consultations and other forms of citizen participation"* aims to address this, allowing the President to call for any sort of non-binding consultation. It is bound to be a controversial law nonetheless. [? if spanish_pm_party == "pp": In October 2012, the Spanish government already warned against this, with Vicepresidenta Soraya Sáenz de Santamaría clearly stating that following the Spanish Constitution, referendums may only be called by the King himself following the Presidente's recommendations and approval by the Congreso. ?][? if spanish_pm_party == "podemos" or spanish_pm_party == "up": At least the current Spanish government under [+ spanish_pm +] should be more supportive of these sorts of innitiatives. ?]
+
+- @calc: Let's get this done!
+
+@calc
+subtitle: [? if not coming_from_parlament and player_party == "erc" : Why are we not the ones proposing this? ?]
+on-arrival: {!
+    Q.parlament_consultations_yes = Q.ciu_parlament_s + Q.erc_parlament_s + Q.icv_parlament_s + Q.cup_parlament_s + Q.cdc_parlament_s + Q.pdcat_parlament_s + Q.jxsi_parlament_s + Q.jxcat_parlament_s + Q.junts_parlament_s + Q.dl_parlament_s + Q.unio_parlament_s + Q.csqp_parlament_s + Q.cecp_parlament_s;
+
+    Q.parlament_consultations_abst = Q.ecp_parlament_s;
+    Q.parlament_consultations_no = Q.ppc_parlament_s + Q.cs_parlament_s + Q.vox_parlament_s;
+
+    switch (Q.psc_leader) {
+        default: 
+            Q.parlament_consultations_yes += Q.psc_parlament_s;
+            break;
+        case "Miquel Iceta":
+            Q.parlament_consultations_no += Q.psc_parlament_s;
+            Q.parlament_consultations_no_psc = true;
+            break;
+        case "Núria Parlón":
+            Q.parlament_consultations_abst += Q.psc_parlament_s;
+            Q.parlament_consultations_abst_psc = true;
+            break;
+    }
+
+    Q.parlament_consultations_yes_pc = Math.round((Q.parlament_consultations_yes / Q.parlament_size) * 100);
+    Q.parlament_consultations_abst_pc = Math.round((Q.parlament_consultations_abst / Q.parlament_size) * 100);
+    Q.parlament_consultations_no_pc = Math.round((Q.parlament_consultations_no / Q.parlament_size) * 100);
+
+    if (Q.parlament_consultations_yes > Q.parlament_consultations_no) {
+        Q.parlament_non_binding_consultations = true;
+        Q.countdowns.push("constitutional_consultations");
+        Q.constitutional_consultations_countdown = 2;
+
+        if (Q.president_party != Q.player_party) {
+            Q.consultation_pending = true;
+            Q.countdowns.push("question_of_the_question");
+                if (Q.congreso_decidir_countdown == 3) {
+                    Q.question_of_the_question_countdown = 6;    
+                } else {
+                    Q.question_of_the_question_countdown = 3;
+                }
+        }
+    } else {
+        Q.parlament_non_binding_consultations = false;
+    }
+    Q.coming_from_parlament = false;
+!}
+
+<table style='border-spacing: 0px; margin-right: 1em; margin-left: 1em; width:95%; table-layout: fixed;'><tr><td style='width: [+ parlament_consultations_yes_pc +]%'>Yes</td><td style='text-align: center; width: [+ parlament_consultations_abst_pc +]%'>Abstention</td><td style='text-align: right; width: [+ parlament_consultations_no_pc +]%'>No</td></tr><tr><td style='height: 2em; background-color: #008000; color: white; text-align: center; border-radius: 3px 0 0 3px;'>**[+ parlament_consultations_yes +]**</td><td style='background-color: #b1b0aeff; color: black; text-align: center'>**[+ parlament_consultations_abst +]**</td><td style='background-color: #c30000; color: white; text-align: center; border-radius: 0 3px 3px 0;'>**[+ parlament_consultations_no +]**</td></tr><tr style='vertical-align:top'><td>[? if ciu_parlament_s > 0: CiU [? if parlament_consultations_yes_ciu : ([+parlament_consultations_yes_ciu+])?]?][? if cdc_parlament_s > 0: CDC?][? if dl_parlament_s > 0: DL?][? if jxcat_parlament_s > 0: JxCat?][? if jxsi_parlament_s > 0: JxSí ?][? if junts_parlament_s > 0: Junts?][? if pdcat_parlament_s > 0: [? if pdcat_split: <br/> ?] PDcat?][? if erc_parlament_s > 0: <br/> ERC ?][? if not (parlament_consultations_no_psc) and not (parlament_consultations_abst_psc) : <br/> PSC ?] </br> [? if icv_parlament_s > 0: ICV-EUiA ?][? if csqp_parlament_s > 0: CSQP ?][? if cecp_parlament_s > 0: CECP ?][? if cup_parlament_s > 0: <br/> CUP ?][? if unio_parlament_s > 0 : <br/> UDC ?]</td><td>[? if parlament_consultations_abst_psc:  PSC <br/> ?][? if ecp_parlament_s > 0: ECP <br/>?]</td><td style='text-align: right'>[? if parlament_consultations_no_psc: PSC <br/> ?] PPC<br/> Cs <br/> [? if vox_parlament_s > 0: Vox <br/> ?] </td></tr></table>
+
+[? if parlament_non_binding_consultations : The Law has been approved! Now everything is in the hands of [? if president_gender = "m": President ?][? if president_gender = "f": Presidenta?] [+ president_name +] to organize the next steps. We'll have to also follow closely how the Spanish government responds to this... ?]
+[? if not parlament_non_binding_consultations : The Law has been rejected! How is this even possible? The parliamentary arithmetics are messed up this legislature man. ?]
+
+- @notice: Continue...
+
+@notice
+subtitle: [? if player_party == president_party: A new action has been unlocked in the Presidency card.?]
+go-to: post_event
+
+

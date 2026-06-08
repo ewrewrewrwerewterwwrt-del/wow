@@ -2,7 +2,7 @@ title: Return card to hand
 view-if: difficulty <= 0 and not last_advisor_action
 go-to: root
 on-arrival: {!
-Q.week_actions -= 1;
+Q.month_actions -= 1;
 // return card to hand
 var card = this.state.lastPlayedCard;
 card.image = card.cardImage;

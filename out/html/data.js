@@ -805,6 +805,46 @@ const tooltipList = [
       return ["<span style='color: var(--erc)'>ERC</span>"];
     },
   },
+  {
+    searchString: ["Soraya Sáenz de Santamaría", "soraya saenz de santamaria"],
+    mainText: "Soraya Sáenz de Santamaría",
+    img: "img/other_leaders/soraya.jpg",
+    ideology: "Conservatism, Centralism",
+    allegiances: (Q) => {
+      return ["<span style='color: var(--pp)'>PP</span>"];
+    },
+  },
+  {
+    searchString: ["Raül Romeva", "Raul Romeva", "raul romeva"],
+    mainText: "Raül Romeva i Rueda",
+    img: "img/erc/romeva.jpg",
+    ideology: "Social Democracy, Independence",
+    allegiances: (Q) => {
+      if (!Q.jxsi_formed) {
+        return ["<span style='color: var(--icv)'>ICV-EUiA</span>"];
+      } else {
+        if (Q.jxcat_formed && Q.erc_in_jxcat) {
+          return [
+            "<span style='color: var(--icv)'>ICV-EUiA</span> (former)",
+            "<span style='color: var(--jxsi)'>JxSí</span>",
+            "<span style='color: var(--jxcat)'>JxCat</span>",
+            "<span style='color: var(--erc)'>ERC</span>",
+          ];
+        } else if (Q.jxcat_formed && !Q.erc_in_jxcat) {
+          return [
+            "<span style='color: var(--icv)'>ICV-EUiA</span> (former)",
+            "<span style='color: var(--jxsi)'>JxSí</span>",
+            "<span style='color: var(--erc)'>ERC</span>",
+          ];
+        } else {
+          return [
+            "<span style='color: var(--icv)'>ICV-EUiA</span> (former)",
+            "<span style='color: var(--jxsi)'>JxSí</span>",
+          ];
+        }
+      }
+    },
+  },
 ];
 
 const colourList = [
@@ -1238,6 +1278,11 @@ const colourList = [
     colour: "var(--jxsi)",
   },
   {
+    words: ["Raül Romeva", "Raul Romeva", "Raül Romeva i Rueda", "raul romeva"],
+    transform: "Raül Romeva",
+    colour: "var(--jxsi)",
+  },
+  {
     words: ["Oriol Junqueras", "Oriol Junqueras i Vies"],
     colour: "var(--erc)",
   },
@@ -1271,6 +1316,10 @@ const colourList = [
   },
   {
     words: ["Mariano Rajoy", "Rajoy"],
+    colour: "var(--pp)",
+  },
+  {
+    words: ["Soraya Sáenz de Santamaría", "soraya saenz de santamaria"],
     colour: "var(--pp)",
   },
   {

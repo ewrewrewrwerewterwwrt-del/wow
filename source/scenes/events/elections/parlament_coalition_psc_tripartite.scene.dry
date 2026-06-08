@@ -87,7 +87,7 @@ on-arrival: {!
     Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
     Q.cat_coalition = ["psc", "erc", Q.parlament_current_icv];
     Q.cat_coalition_dissent = 0;
-    Q.independence_momentum -= 10;
+    Q.independence_movement -= 10;
     Q.independence_trust -= 15;
 
     Q.parlament_coalition_proposal_president = "psc";

@@ -1,0 +1,15 @@
+title: A United National Concentration list?
+subtitle: Artur Mas' hard-to-believe proposal
+view-if: (jxsi_formation_trigger or (unio_split and next_election_time < 9 and next_election_time > 3)) and not consultation_pending
+tags: event
+new-page: true
+max-visits: 1
+go-to: erc if player_party == "erc"; cup if player_party == "cup"
+
+= A United National Concentration list?
+
+[? if consultation_happened: After the very questionable outcome of the non-binding consultation, ?][? if not consultation_happened: After a legislature without much , ?]
+
+@erc
+
+@cup

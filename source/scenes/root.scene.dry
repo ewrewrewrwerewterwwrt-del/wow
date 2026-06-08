@@ -6,6 +6,23 @@ go-to: post_event if started = 1; start_menu if started = 0
 new-page: true
 set-bg: img/3rd_October_2017.jpg
 on-arrival: {!
+// check origin 
+// TODO: allow via url
+const valid_urls = [
+  // "https://broken-arrows.github.io/route_to_itaca",
+  // "https://broken-arrows.github.io/cami_a_itaca"
+];
+
+var local_file = window.location.protocol === 'file:' || window.location.hostname === 'localhost';
+var valid_url = valid_urls.some(url => window.location.href.startsWith(url));
+
+if (!valid_url) {
+  console.error("Page loaded from unexpected origin:", window.location.href);
+}
+
+Q.url_valid = local_file || valid_url;
+
+// setup
 Q.year = 2012;
 Q.month = 8;
 Q.week = 1;
@@ -290,20 +307,6 @@ Q.ua_psc_ideology = "Social Democracy, Aranese Regionalism";
 Q.cda_pna_leader = "Carles Barrera Sánchez";
 Q.cda_pna_ideology = "Liberal-Conservatism, Aranese Regionalism";
 
-Q.icv_local_barcelona_support    = 29.0;
-Q.ciu_local_barcelona_support  = 12.5;
-Q.cdc_local_barcelona_support  = 0;
-Q.dl_local_barcelona_support   = 0;
-Q.jxcat_local_barcelona_support = 0;
-Q.junts_local_barcelona_support = 0;
-Q.erc_local_barcelona_support      = 11.0;
-Q.psc_local_barcelona_support      = 16.5;
-Q.cs_local_barcelona_support       = 13.5;
-Q.cup_local_barcelona_support      =  7.0;
-Q.pp_local_barcelona_support       = 10.5;
-Q.primaries_local_barcelona_support =  0.0;
-
-
 // 2011 local elections results (for delta calcs)
 Q.ciu_local_barcelona_s = 14;
 Q.ciu_local_barcelona_pv = 28.73;
@@ -424,6 +427,7 @@ Q.parlament_tarragona_ind_pop = 82812.0;
 // Party support records for graphing
 Q.party_support_records = [];
 Q.economic_records = [];
+Q.social_records = [];
 
 // Congreso situation
 Q.congreso_seats = {
@@ -500,6 +504,22 @@ Q.gbai_congreso_pv = 0.17;
 Q.amaiur_congreso_s = 7;
 Q.amaiur_congreso_pv = 1.37;
 
+// Initialize ALL party suppports to zero
+for (var c of Q.parlament_constituencies) {
+  for (var d of Q.parlament_demographics) {
+    for (var p of Q.parties) {
+      Q[p + "_parlament_" + c + "_" + d + "_support"] = 0.0;
+    }
+  }
+}
+for (var c of Q.congreso_constituencies) {
+  for (var p of Q["congreso_parties_" + c]) {
+    Q[p + "_congreso_" + c + "_support"] = 0.0;
+  }
+}
+for (var p of Q.bcn_parties) {
+  Q[+ + "_local_barcelona_support"] = 0.0;
+}
 
 !}
 go-to: start_menu_2
@@ -509,33 +529,32 @@ go-to: start_menu_2
 
 @start_menu_2
 
+[? if not url_valid: **If you are playing this mod via the Mod Loader in base game, you may be using a broken build. For the intended experience, please play using <a class="link" href="https://broken-arrows.github.io/route_to_itaca/" style="color: #0077FF; text-de">this link</a>.** ?]
+
 - @start: <span style="font-size: 1.1em;">Start game</span>
+- @game_over.achievements: <span style="font-size: 1.1em;">Achievements</span>
 - @election_simulation: <span style="font-size: 1.1em;">Election simulation</span>
-# - @game_over.achievements: <span style="font-size: 1.1em;">Achievements</span>
 - @language: <span style="font-size: 1.1em;">Language</span>
-- @about: <span style="font-size: 1.1em;">About</span> <span style="margin-left: 0.5em; font-style: italic; color: gray;">v0.1.0 (01.2026)</span>
+- @about: <span style="font-size: 1.1em;">About</span> <span style="margin-left: 0.5em; font-style: italic; color: gray;">v0.1.0 (06.2026)</span>
 - @credits: <span style="font-size: 1.1em;">Credits</span>
 
 
 @start
-choose-if: 1==0
+choose-if: url_valid
 unavailable-subtitle: Route to Ítaca is currently in its early development stages. Check back soon(-ish) for the full experience!
+# unavailable-subtitle: Page loaded from an unrecognized origin, are you sure you're in the right place? TODO: put this as the right unavailable subtitle!
 on-arrival: {!
 Q.debug = false;
 
 Q.started = 1;
-// time elapsed (in months)
-Q.time = 1;
-
-// how many actions have been taken this week?
-Q.week_actions = 0; // FIXME: delete me?
-// how many actions have been taken this month?
+Q.time = 1; // time elapsed (in months)
 Q.month_actions = 0;
 
 // 0 = normal difficulty, 1 = hard mode, 2 = hard mode no saves
 Q.difficulty = 0;
 Q.historical_mode = 0;
 
+// dissent will actually get re-calculated anyway on start
 Q.erc_dissent = 15;
 Q.ciu_dissent = 15;
 Q.cup_dissent = 15;
@@ -2119,7 +2138,7 @@ Q.cup_parlament_barcelona_buss_support = 2.2;
 Q.cup_parlament_barcelona_ind_support = 1.82;
 Q.cup_parlament_barcelona_middle_support = 1.9;
 Q.cup_parlament_barcelona_young_support = 6.02;
-Q.cup_parlament_barcelona_retired_support = 0.0;
+Q.cup_parlament_barcelona_retired_support = 0.001;
 Q.cup_parlament_barcelona_rural_support = 9.5;
 Q.cup_parlament_barcelona_unemployed_support = 1.3;
 Q.cup_parlament_girona_buss_support = 2.79;
@@ -2129,26 +2148,26 @@ Q.cup_parlament_girona_young_support = 4.4;
 Q.cup_parlament_girona_retired_support = 0.24;
 Q.cup_parlament_girona_rural_support = 5.74;
 Q.cup_parlament_girona_unemployed_support = 2.33;
-Q.cup_parlament_lleida_buss_support = 0.0;
-Q.cup_parlament_lleida_ind_support = 0.0;
-Q.cup_parlament_lleida_middle_support = 0.0;
+Q.cup_parlament_lleida_buss_support = 0.001;
+Q.cup_parlament_lleida_ind_support = 0.001;
+Q.cup_parlament_lleida_middle_support = 0.001;
 Q.cup_parlament_lleida_young_support = 2.9;
-Q.cup_parlament_lleida_retired_support = 0.0;
+Q.cup_parlament_lleida_retired_support = 0.001;
 Q.cup_parlament_lleida_rural_support = 4.64;
 Q.cup_parlament_lleida_unemployed_support = 3.38;
 Q.cup_parlament_tarragona_buss_support = 2.94;
 Q.cup_parlament_tarragona_ind_support = 3.52;
 Q.cup_parlament_tarragona_middle_support = 5.03;
 Q.cup_parlament_tarragona_young_support = 5.91;
-Q.cup_parlament_tarragona_retired_support = 0.0;
-Q.cup_parlament_tarragona_rural_support = 0.0;
+Q.cup_parlament_tarragona_retired_support = 0.001;
+Q.cup_parlament_tarragona_rural_support = 0.001;
 Q.cup_parlament_tarragona_unemployed_support = 2.97;
 Q.icv_parlament_barcelona_buss_support = 7.9;
 Q.icv_parlament_barcelona_ind_support = 10.71;
 Q.icv_parlament_barcelona_middle_support = 10.02;
 Q.icv_parlament_barcelona_young_support = 10.03;
 Q.icv_parlament_barcelona_retired_support = 3.34;
-Q.icv_parlament_barcelona_rural_support = 0.0;
+Q.icv_parlament_barcelona_rural_support = 0.01;
 Q.icv_parlament_barcelona_unemployed_support = 14.53;
 Q.icv_parlament_girona_buss_support = 4.12;
 Q.icv_parlament_girona_ind_support = 4.66;
@@ -2192,7 +2211,7 @@ Q.psc_parlament_lleida_young_support = 9.18;
 Q.psc_parlament_lleida_retired_support = 6.32;
 Q.psc_parlament_lleida_rural_support = 4.64;
 Q.psc_parlament_lleida_unemployed_support = 7.73;
-Q.psc_parlament_tarragona_buss_support = 0.0;
+Q.psc_parlament_tarragona_buss_support = 0.01;
 Q.psc_parlament_tarragona_ind_support = 11.06;
 Q.psc_parlament_tarragona_middle_support = 11.06;
 Q.psc_parlament_tarragona_young_support = 9.85;
@@ -2204,7 +2223,7 @@ Q.cs_parlament_barcelona_ind_support = 4.85;
 Q.cs_parlament_barcelona_middle_support = 14.03;
 Q.cs_parlament_barcelona_young_support = 9.33;
 Q.cs_parlament_barcelona_retired_support = 1.52;
-Q.cs_parlament_barcelona_rural_support = 0.0;
+Q.cs_parlament_barcelona_rural_support = 0.001;
 Q.cs_parlament_barcelona_unemployed_support = 4.91;
 Q.cs_parlament_girona_buss_support = 2.57;
 Q.cs_parlament_girona_ind_support = 2.33;
@@ -2213,11 +2232,11 @@ Q.cs_parlament_girona_young_support = 3.7;
 Q.cs_parlament_girona_retired_support = 1.04;
 Q.cs_parlament_girona_rural_support = 2.01;
 Q.cs_parlament_girona_unemployed_support = 3.63;
-Q.cs_parlament_lleida_buss_support = 0.0;
+Q.cs_parlament_lleida_buss_support = 0.01;
 Q.cs_parlament_lleida_ind_support = 3.03;
 Q.cs_parlament_lleida_middle_support = 3.16;
 Q.cs_parlament_lleida_young_support = 2.9;
-Q.cs_parlament_lleida_retired_support = 0.0;
+Q.cs_parlament_lleida_retired_support = 0.01;
 Q.cs_parlament_lleida_rural_support = 3.61;
 Q.cs_parlament_lleida_unemployed_support = 3.38;
 Q.cs_parlament_tarragona_buss_support = 7.05;
@@ -2225,14 +2244,14 @@ Q.cs_parlament_tarragona_ind_support = 7.54;
 Q.cs_parlament_tarragona_middle_support = 8.04;
 Q.cs_parlament_tarragona_young_support = 8.38;
 Q.cs_parlament_tarragona_retired_support = 3.06;
-Q.cs_parlament_tarragona_rural_support = 0.0;
+Q.cs_parlament_tarragona_rural_support = 0.01;
 Q.cs_parlament_tarragona_unemployed_support = 6.93;
 Q.ppc_parlament_barcelona_buss_support = 14.9;
 Q.ppc_parlament_barcelona_ind_support = 9.09;
 Q.ppc_parlament_barcelona_middle_support = 13.83;
 Q.ppc_parlament_barcelona_young_support = 3.81;
 Q.ppc_parlament_barcelona_retired_support = 17.21;
-Q.ppc_parlament_barcelona_rural_support = 0.0;
+Q.ppc_parlament_barcelona_rural_support = 0.01;
 Q.ppc_parlament_barcelona_unemployed_support = 4.11;
 Q.ppc_parlament_girona_buss_support = 8.83;
 Q.ppc_parlament_girona_ind_support = 8.83;
@@ -2318,6 +2337,22 @@ Q.ciu_congreso_catalunya_support = 29.35;
 Q.erc_congreso_catalunya_support = 7.06;
 Q.cup_congreso_catalunya_support = 0;
 
+// TODO: Lots of congreso initial support missing!!
+
+// BCN & Local supports
+Q.icv_local_barcelona_support = 29.0;
+Q.ciu_local_barcelona_support = 12.5;
+Q.cdc_local_barcelona_support = 0;
+Q.dl_local_barcelona_support = 0;
+Q.jxcat_local_barcelona_support = 0;
+Q.junts_local_barcelona_support = 0;
+Q.erc_local_barcelona_support = 11.0;
+Q.psc_local_barcelona_support = 16.5;
+Q.cs_local_barcelona_support = 13.5;
+Q.cup_local_barcelona_support = 7.0;
+Q.pp_local_barcelona_support = 10.5;
+Q.primaries_local_barcelona_support =  0.0;
+
 
 /////////////////////// Timers
 Q.n_advisors = 3;
@@ -2400,7 +2435,7 @@ Q.gabriela_serra_advisor = 0;
 Q.pau_juvilla_advisor = 0;
 
 
-Q.random_seed = (new Date().getSeconds() / 10).toFixed(0); // Random number between 0 and 5
+Q.random_seed = Math.floor(Math.random() * 6);
 console.log("Random Seed: " + Q.random_seed);
 
 switch (Q.random_seed) {
@@ -2448,21 +2483,21 @@ For more information on the politics, government, and recent history of Cataloni
 
 @easy_mode
 title: Begin - Easy
-on-arrival: difficulty = -1; party_resources = 4; party_resources = 4; party_resources = 5; m_k_relation = 50; m_sr_relation = 62; sr_k_relation = 50; m_split_threshold = 65; sr_split_threshold = 65; m_support_change = 10; sr_support_change = 10; m_discipline_change = 8; sr_discipline_change = 8; max_advisors = 5; ipr_change = 8;
+on-arrival: difficulty = -1; party_resources = 4; max_advisors = 5;
 go-to: party_selection
 
 What party shall you lead?
 
 @normal_mode
 title: Begin - Normal
-on-arrival: difficulty = 0; party_resources = 3; party_resources = 3; party_resources = 3; m_k_relation = 40; m_sr_relation = 55; sr_k_relation = 40; m_split_threshold = 60; sr_split_threshold = 60; m_support_change = 7; sr_support_change = 7; m_discipline_change = 6; sr_discipline_change = 6; max_advisors = 4; ipr_change = 6;
+on-arrival: difficulty = 0; party_resources = 3; max_advisors = 4;
 go-to: party_selection
 
 What party shall you lead?
 
 @hard_mode
 title: Begin - Hard
-on-arrival: difficulty = 1; party_resources = 2; party_resources = 2; party_resources = 2; m_k_relation = 30; m_sr_relation = 40; sr_k_relation = 30; m_split_threshold = 50; sr_split_threshold = 50; m_support_change = 5; sr_support_change = 5; m_discipline_change = 4; sr_discipline_change = 4; max_advisors = 3; ipr_change = 5;
+on-arrival: difficulty = 1; party_resources = 2; max_advisors = 3;
 go-to: party_selection
 
 What party shall you lead?
