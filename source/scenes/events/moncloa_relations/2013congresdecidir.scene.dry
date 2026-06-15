@@ -3,6 +3,7 @@ face-image: img/events/congreso_decidir.webp
 new-page: true
 tags: event
 view-if: congreso_decidir_trigger
+set-bg: img/congreso.jpg
 max-visits: 1
 on-arrival: {!
     Q.cat_spa_relations -= 5;
@@ -16,7 +17,7 @@ on-arrival: {!
 
 = The "Right to Decide", debated in the Congreso
 
-After the Parlament's votes on the Declaration of Sovereignty of Catalonia and the show of an ample majority supporting a consultation on independence, matters have reached the Congreso. The parties that voted for both innitaitves in the Parlament and have representation in the Congreso have assembled a delegation are demanding a regonition of this "Right to Decide". Representing this push is the former MEP for ICV-EUiA Raul Romeva, who is seen as a neutral pick between the different pro-independence parties and has the extra value of comming from a non-openly-pro-independence party. However, the fact is that with the PP holding a comfortable majority in the Congreso, so chances of this being approved are, in essence, non-existing.
+After the Parlament's votes on the Declaration of Sovereignty of Catalonia and the show of an ample majority supporting a consultation on independence, matters have reached the Congreso. The parties that voted for both proposals in the Parlament and have representation in the Congreso have assembled a delegation are demanding a recognition of this "Right to Decide". Leading this delegation is former MEP for ICV-EUiA Raul Romeva, who is seen as a neutral pick between the different pro-independence an pro-self-determination parties. However, the fact is that with the PP holding a comfortable majority in the Congreso, chances of this being approved are, in essence, non-existing.
 
 - @calc: [? if player_party == "cup": What a waste of time ?][? if player_party != "cup": Well, let's at least try this out?]
 

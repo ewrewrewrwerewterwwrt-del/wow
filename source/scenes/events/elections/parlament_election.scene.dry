@@ -10,7 +10,12 @@ set-jump: parlament_election.post_election
 new-page: true
 on-arrival: {!
     Q.next_election_year += 4;
-    Q.next_election_time += 48;
+    if (Q.rubicon) {
+        Q.next_election_time += 48 * 4;
+    } else {
+        Q.next_election_time += 48;
+    }
+    
     if (Q.player_party == "cup" && Q.cup_parlament_s > 0) {
         Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
     } else {

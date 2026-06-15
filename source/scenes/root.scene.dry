@@ -287,7 +287,7 @@ Q.te_leader = "Tomás Guitarte"
 Q.te_ideology = "Transversal single-issue, Teruel Regionalism";
 
 // Initial values for bcn parties as well
-Q.parties_bcn = ['bcomu', 'cup', 'psc', 'erc', 'ciu', 'cdc', 'dl', 'jxcat', 'junts', 'primaries', 'cs', 'pp', "icv"];
+Q.parties_bcn = ['bcomu', 'cup', 'psc', 'erc', 'ciu', 'cdc', 'dl', 'jxcat', 'junts', 'jxsi', 'primaries', 'cs', 'pp', "icv"];
 
 Q.bcomu_leader = "Ada Colau";
 Q.bcomu_ideology = "Anti-austerity left, Plurinationalism";
@@ -517,7 +517,7 @@ for (var c of Q.congreso_constituencies) {
     Q[p + "_congreso_" + c + "_support"] = 0.0;
   }
 }
-for (var p of Q.bcn_parties) {
+for (var p of Q.parties_bcn) {
   Q[+ + "_local_barcelona_support"] = 0.0;
 }
 
@@ -2346,6 +2346,7 @@ Q.cdc_local_barcelona_support = 0;
 Q.dl_local_barcelona_support = 0;
 Q.jxcat_local_barcelona_support = 0;
 Q.junts_local_barcelona_support = 0;
+Q.jxsi_local_barcelona_support = 0;
 Q.erc_local_barcelona_support = 11.0;
 Q.psc_local_barcelona_support = 16.5;
 Q.cs_local_barcelona_support = 13.5;

@@ -56,6 +56,9 @@
       case "udc":
       case "unio":
         return unio_split ? "unio" : "icr";
+      case "erc":
+        // Indy-Left family slot. SI is intentionally left out (it phases out).
+        return "il";
       case "cup":
         return "cup";
       case "icv":
@@ -79,6 +82,34 @@
         return "abs";
       default:
         return party;
+    }
+  }
+
+  // Coalition lists (JxSí / JxCat) absorb the family deltas of the parties folded
+  // into them. Membership is driven SOLELY by the *_in_* flags set at formation,
+  // so a component that is NOT folded in (e.g. CUP when cup_in_jxsi is false)
+  // keeps receiving its own delta and stays a live party. The icr base is
+  // unconditional because the coalition cannot exist without its CiU-bloc core.
+  const COALITION_PARTIES = ["jxsi", "jxcat"];
+
+  function coalitionFamilies(Q, party) {
+    switch (party) {
+      case "jxsi": {
+        // JxSí = CiU-bloc (icr) + ERC (il) concentration list, + CUP if folded.
+        const fams = ["icr"];
+        if (Q.erc_in_jxsi) fams.push("il");
+        if (Q.cup_in_jxsi) fams.push("cup");
+        return fams;
+      }
+      case "jxcat": {
+        // JxCat = post-CDC (icr) space; ERC/CUP only if folded in.
+        const fams = ["icr"];
+        if (Q.erc_in_jxcat) fams.push("il");
+        if (Q.cup_in_jxcat) fams.push("cup");
+        return fams;
+      }
+      default:
+        return null;
     }
   }
 
@@ -474,22 +505,39 @@
           party_deltas[f].push(p);
         });
 
+        // Coalition routing for this cell: family -> coalition list party.
+        // Only applies where the coalition is actually fielded (support > 0);
+        // which families it absorbs is governed by the *_in_* flags, so a
+        // non-member party keeps its own delta rather than feeding the list.
+        const coalition_route = {};
+        for (const cp of COALITION_PARTIES) {
+          const cp_key = cp + "_parlament_" + prov + "_" + demo + "_support";
+          if ((Q[cp_key] || 0) <= 0) continue;
+          const fams = coalitionFamilies(Q, cp);
+          if (!fams) continue;
+          for (const cf of fams) coalition_route[cf] = cp;
+        }
+
         FAMILIES.forEach((f) => {
           const delta = family_deltas[f];
-          const parties = party_deltas[f] || [];
-          // Find the active party (one with support > 0)
-          let active_party = null;
-          for (const p of parties) {
-            if (Q[p + "_parlament_" + prov + "_" + demo + "_support"] > 0) {
-              active_party = p;
-              break;
+          // Folded-in families route to the coalition list; everything else
+          // goes to the normal active party of that family.
+          let recipient = coalition_route[f] || null;
+          if (!recipient) {
+            const parties = party_deltas[f] || [];
+            // Find the active party (one with support > 0)
+            for (const p of parties) {
+              if (Q[p + "_parlament_" + prov + "_" + demo + "_support"] > 0) {
+                recipient = p;
+                break;
+              }
             }
+            if (!recipient && parties.length > 0) recipient = parties[0];
           }
-          if (!active_party && parties.length > 0) active_party = parties[0];
 
-          if (active_party) {
+          if (recipient) {
             const key =
-              active_party + "_parlament_" + prov + "_" + demo + "_support";
+              recipient + "_parlament_" + prov + "_" + demo + "_support";
             Q[key] = Math.max(0, (Q[key] || 0) + delta);
           }
         });
@@ -521,6 +569,8 @@
 
   // --- LOCAL BARCELONA TICK ---
   // ICR family for local BCN: ciu/cdc/dl/jxcat/junts/pdcat are one bloc.
+  // jxsi is included as the united-list carrier (it borrows ciu's matrix profile
+  // and only ever carries support when fielded via jxsi_united_local).
   // Only the currently active ICR party (the one with support > 0) receives
   // the delta. "ciu" is the canonical key for matrix lookups throughout.
   const BCN_ICR_PARTIES = new Set([
@@ -530,11 +580,32 @@
     "jxcat",
     "junts",
     "pdcat",
+    "jxsi",
   ]);
   const BCN_ICR_CANONICAL = "ciu";
 
   function _bcnMatrixKey(party) {
     return BCN_ICR_PARTIES.has(party) ? BCN_ICR_CANONICAL : party;
+  }
+
+  // A "united" Barcelona list (jxsi/jxcat) only contests the city when its
+  // *_united_local flag is set; which components it has folded in follows the
+  // same parlament membership flags used everywhere else. Returns
+  // { carrier, absorbs:[…] } for the active list, or null.
+  function bcnUnitedCoalition(Q) {
+    if (Q.jxsi_united_local && (Q.jxsi_local_barcelona_support || 0) > 0) {
+      const absorbs = [];
+      if (Q.erc_in_jxsi) absorbs.push("erc");
+      if (Q.cup_in_jxsi) absorbs.push("cup");
+      return { carrier: "jxsi", absorbs };
+    }
+    if (Q.jxcat_united_local && (Q.jxcat_local_barcelona_support || 0) > 0) {
+      const absorbs = [];
+      if (Q.erc_in_jxcat) absorbs.push("erc");
+      if (Q.cup_in_jxcat) absorbs.push("cup");
+      return { carrier: "jxcat", absorbs };
+    }
+    return null;
   }
 
   function updateLocalBarcelona(
@@ -569,7 +640,15 @@
       icrCandidates[0] ??
       null;
 
+    // United Barcelona list: components folded into it at formation are held at
+    // 0 here, and the carrier mean-reverts toward the SUM of their baselines.
+    const united = bcnUnitedCoalition(Q);
+    const bcnAbsorbed = united ? new Set(united.absorbs) : null;
+
     for (const party of BCN_PARTIES) {
+      // Components folded into an active united list stay at 0 (their support was
+      // merged into the carrier at formation); don't let mean-reversion revive them.
+      if (bcnAbsorbed && bcnAbsorbed.has(party)) continue;
       // Skip inactive ICR parties — only the active one carries support
       if (BCN_ICR_PARTIES.has(party) && party !== activeIcr) continue;
 
@@ -597,7 +676,13 @@
         }
       }
 
-      const baseline = bcnMatrices.BCN_BASELINE[matrixKey] || 0.0;
+      let baseline = bcnMatrices.BCN_BASELINE[matrixKey] || 0.0;
+      // A united carrier reverts toward the combined baseline of its components,
+      // so the merged list doesn't decay toward a single party's equilibrium.
+      if (united && party === united.carrier) {
+        for (const c of united.absorbs)
+          baseline += bcnMatrices.BCN_BASELINE[_bcnMatrixKey(c)] || 0.0;
+      }
       delta += REVERSION * (baseline - Q[key]);
 
       Q[key] = clamp(Q[key] + delta, 0.0, 100.0);

@@ -176,7 +176,6 @@ new-page: true
 
 Note that your achievement progress is stored in your browser. Switching browsers or devices will reset it!
 
-{!
 <div class="achievement !}[? if achievement_game_completed : achievement--unlocked ?][? if not achievement_game_completed : achievement--locked ?]{!" style="display:flex">
   <div class="achievement-image !}[? if achievement_game_completed : achievement-image--unlocked ?][? if not achievement_game_completed : achievement-image--locked ?]{!">
     <img src="img/flags/estelada.png" style="width:100%;height:100%;object-fit:cover;">
@@ -195,8 +194,7 @@ Note that your achievement progress is stored in your browser. Switching browser
     <div class="achievement-description !}[? if achievement_game_completed : achievement-description--unlocked ?][? if not achievement_game_completed : achievement-description--locked ?]{!">Finish the game.</div>
   </div>
 </div>
-!}
-{!
+
 <div class="achievement !}[? if achievement_calcotada : achievement--unlocked ?][? if not achievement_calcotada : achievement--locked ?]{!" style="display:flex">
   <div class="achievement-image !}[? if achievement_calcotada : achievement-image--unlocked ?][? if not achievement_calcotada : achievement-image--locked ?]{!">
     <img src="img/achievements/calcotada.png" style="width:100%;height:100%;object-fit:cover;">
@@ -215,8 +213,26 @@ Note that your achievement progress is stored in your browser. Switching browser
     <div class="achievement-description !}[? if achievement_calcotada : achievement-description--unlocked ?][? if not achievement_calcotada : achievement-description--locked ?]{!"> Hold a non-referendum, non-binding, participative process on independence. </div>
   </div>
 </div>
-!}
-{!
+
+<div class="achievement !}[? if achievement_jxsi : achievement--unlocked ?][? if not achievement_jxsi : achievement--locked ?]{!" style="display:flex">
+  <div class="achievement-image !}[? if achievement_jxsi : achievement-image--unlocked ?][? if not achievement_jxsi : achievement-image--locked ?]{!">
+    <img src="img/parties/logo_jxsi.png" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="achievement-body">
+    <div class="achievement-title !}[? if achievement_jxsi : achievement-title--unlocked ?][? if not achievement_jxsi : achievement-title--locked ?]{!">
+     <span> Junts pel Sí </span>
+        <div class="achievement-stars">
+            <span class="star--filled">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+        </div>
+    </div>
+    <div class="achievement-description !}[? if achievement_jxsi : achievement-description--unlocked ?][? if not achievement_jxsi : achievement-description--locked ?]{!"> Form the Junts pel Sí electoral coalition. </div>
+  </div>
+</div>
+
 <div class="achievement !}[? if achievement_je_me_souviens : achievement--unlocked ?][? if not achievement_je_me_souviens : achievement--locked ?]{!" style="display:flex">
   <div class="achievement-image !}[? if achievement_je_me_souviens : achievement-image--unlocked ?][? if not achievement_je_me_souviens : achievement-image--locked ?]{!">
     <img src="img/achievements/quebec.svg" style="width:100%;height:100%;object-fit:cover;">
@@ -235,8 +251,7 @@ Note that your achievement progress is stored in your browser. Switching browser
     <div class="achievement-description !}[? if achievement_je_me_souviens : achievement-description--unlocked ?][? if not achievement_je_me_souviens : achievement-description--locked ?]{!">Have an independence consultation with an almost incomprehensible question.</div>
   </div>
 </div>
-!}
-{!
+
 <div class="achievement !}[? if achievement_mas_o_marc : achievement--unlocked ?][? if not achievement_mas_o_marc : achievement--locked ?]{!" style="display:flex">
   <div class="achievement-image !}[? if achievement_mas_o_marc : achievement-image--unlocked ?][? if not achievement_mas_o_marc : achievement-image--locked ?]{!">
     <img src="img/achievements/mas_o_marc.webp" style="width:100%;height:100%;object-fit:cover;">
@@ -255,8 +270,7 @@ Note that your achievement progress is stored in your browser. Switching browser
     <div class="achievement-description !}[? if achievement_mas_o_marc : achievement-description--unlocked ?][? if not achievement_mas_o_marc : achievement-description--locked ?]{!">Playing as a party part of the JxSí coalition, refuse to give up Artur Mas' leadership, resulting in new elections.</div>
   </div>
 </div>
-!}
-{!
+
 <div class="achievement !}[? if achievement_paperera_de_la_historia : achievement--unlocked ?][? if not achievement_paperera_de_la_historia : achievement--locked ?]{!" style="display:flex">
   <div class="achievement-image !}[? if achievement_paperera_de_la_historia : achievement-image--unlocked ?][? if not achievement_paperera_de_la_historia : achievement-image--locked ?]{!">
     <img src="img/achievements/paperera_de_la_historia.png" style="width:100%;height:100%;object-fit:cover;">
@@ -275,8 +289,26 @@ Note that your achievement progress is stored in your browser. Switching browser
     <div class="achievement-description !}[? if achievement_paperera_de_la_historia : achievement-description--unlocked ?][? if not achievement_paperera_de_la_historia : achievement-description--locked ?]{!">Playing as CUP and while not being part of the JxSí coalition, force Artur Mas to step aside.</div>
   </div>
 </div>
-!}
-{!
+
+<div class="achievement !}[? if achievement_jxsi_de_debo : achievement--unlocked ?][? if not achievement_jxsi_de_debo : achievement--locked ?]{!" style="display:flex">
+  <div class="achievement-image !}[? if achievement_jxsi_de_debo : achievement-image--unlocked ?][? if not achievement_jxsi_de_debo : achievement-image--locked ?]{!">
+    <img src="img/achievements/jxsi_dedebo.jpg" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="achievement-body">
+    <div class="achievement-title !}[? if achievement_jxsi_de_debo : achievement-title--unlocked ?][? if not achievement_jxsi_de_debo : achievement-title--locked ?]{!">
+     <span> Junts (de debò) pel Sí </span>
+        <div class="achievement-stars">
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--empty">★</span>
+        </div>
+    </div>
+    <div class="achievement-description !}[? if achievement_jxsi_de_debo : achievement-description--unlocked ?][? if not achievement_jxsi_de_debo : achievement-description--locked ?]{!"> Include CUP into the JxSí electoral coalition or, as CUP, join into the JxSí coaltion. </div>
+  </div>
+</div>
+
 <div class="achievement !}[? if achievement_majoria_no_silenciosa : achievement--unlocked ?][? if not achievement_majoria_no_silenciosa : achievement--locked ?]{!" style="display:flex">
   <div class="achievement-image !}[? if achievement_majoria_no_silenciosa : achievement-image--unlocked ?][? if not achievement_majoria_no_silenciosa : achievement-image--locked ?]{!">
     <img src="img/achievements/majoria_silenciosa.jpg" style="width:100%;height:100%;object-fit:cover;">
@@ -295,7 +327,6 @@ Note that your achievement progress is stored in your browser. Switching browser
     <div class="achievement-description !}[? if achievement_majoria_no_silenciosa : achievement-description--unlocked ?][? if not achievement_majoria_no_silenciosa : achievement-description--locked ?]{!">Somehow, manage to lose a non-agreement referndum or non-binding consultation to the "No" option.</div>
   </div>
 </div>
-!}
 
 
 - @root: Back

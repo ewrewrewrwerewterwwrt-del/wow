@@ -1,0 +1,11 @@
+title: A Catalan "Yes We Can"?
+view-if: podemos_surged and next_election_time - time <= 4
+face-image: img/events/podemos_formation.jpg
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    
+!}
+
+LOL?

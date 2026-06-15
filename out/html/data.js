@@ -42,7 +42,7 @@ const tooltipList = [
   },
   {
     searchString: ["JxSí", "JxSi", "jxsi"],
-    mainText: "Together for Yes",
+    mainText: 'Together for the "Yes"',
     subText: "Junts pel Sí",
     img: "img/parties/logo_jxsi.png",
     ledBy: "jxsi_leader",
@@ -418,7 +418,7 @@ const tooltipList = [
   },
   {
     searchString: ["jxsibcn", "jxsi_bcn"],
-    mainText: "Together for Yes (Barcelona)",
+    mainText: 'Together for the "Yes" (Barcelona)',
     subText: "Junts pel Sí",
     img: "img/parties/logo_jxsi.png",
     ledBy: "jxsibcn_leader",

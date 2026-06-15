@@ -443,9 +443,11 @@ on-arrival: {!
 
     Q.cup_in_gob = false;
     Q.cup_supporting = false;
+    
+    Q.independence_trust += 10 * Q.roadmap - (Q.year-2012);
 !}
 
-After some ardous negotiations, we have finally reached an agreement with [+ parlament_current_ciu +] to form a [+ cat_coalition_disp +]. Let's hope cooperation continues during this legislature, and that promises are kept!
+After some arduous negotiations, we have finally reached an agreement with [+ parlament_current_ciu +] to form a [+ cat_coalition_disp +]. Let's hope cooperation continues during this legislature, and that promises are kept!
 
 - @parlament_coalition_resolve: A new government is formed
 

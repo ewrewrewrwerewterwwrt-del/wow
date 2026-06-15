@@ -1,12 +1,26 @@
 title: Parlament
 new-page: true
-view-if: parlament_timer <= 0 and year > 2012
-on-arrival: parlament_timer += 6; month_actions += 1; coming_from_parlament = false;
+view-if: parlament_timer <= 0 and year > 2012 and not cat_caretaker_gov
+on-arrival: parlament_timer += 6; month_actions += 1; coming_from_parlament = true;
 is-card: true
 card-image: img/parlament_card.jpg
 tags: erc_party cup_party parlament_card
-go-to: parlament_options
+go-to: parlament_options if not cat_caretaker_gov; parlament_dissolved if cat_caretaker_gov
+# TODO: What happens on art. 155
 
+@parlament_dissolved
+title: Parlament
+new-page: true
+
+= Parlament de Catalunya
+
+The Parlament is currently dissolved, so no parliamentary actions are possible at this point.
+
+- @go_back: Return card to hnd
+
+@go_back
+call: easy_discard
+go-to: root
 
 @parlament_options
 title: Parlament
@@ -275,7 +289,6 @@ subtitle: Nothing is free, and in finances lay many levers for a more just socie
 @sovereignty
 title: Catalan Sovereignty
 subtitle: No other institutional lever is as symbolic and powerful as pushing for further sovereignty than the Parlament
-on-arrival: coming_from_parlament = true;
 
 **On Catalan Sovereignty**
 

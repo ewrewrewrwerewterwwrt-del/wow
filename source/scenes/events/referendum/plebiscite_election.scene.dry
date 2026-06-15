@@ -1,0 +1,47 @@
+title: Plebiscite-elections?
+view-if: (plebiscite_election_trigger or (not rubicon and not consultation_pending and not referendum_happened and next_election_time - time <= 24 and next_election_time >= 14)) and not referendum_pending and not cat_caretaker_gov and not president_party = player_party
+face-image: img/events/snapelection.jpg
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    // TODO: more triggers for this??
+    Q.next_election_week = Q.week; 
+
+    if (Q.month >=6 && Q.month < 11) {
+        Q.next_election_month = 4;
+        Q.next_election_year = Q.year + 1;
+        Q.next_election_time = Q.time + (12 - Q.month + 4); // months until April next year
+    } else {
+        Q.next_election_month = 9;
+        if (Q.month < 9) {
+            Q.next_election_year = Q.year;
+            Q.next_election_time = Q.time + (9 - Q.month);  // months until Sep this year
+        } else { 
+            Q.next_election_year = Q.year + 1;
+            Q.next_election_time = Q.time + (12 - Q.month + 9); // months until Sep next year
+        }
+    }
+
+    Q.cat_coalition_disp_old = Q.cat_coalition_disp;
+    Q.cat_coalition_disp = Q.president_party + "<span style=\"font-style:italic;\"> caretaker gov.</span>";1
+    Q.cat_caretaker_gov = true;
+
+    if (Q[Q.player_party + "_in_gob"] && !(Q.president_party == Q.player_party)) {
+        Q.position_disp = "<span style='font-style: italic'>Government Support</span>";
+    }
+
+    if (!Q.unio_breakdown_countdown) {
+        Q.unio_breakup_countdown = 2;
+        Q.countdowns.push("unio_breakup");
+    }
+
+    console.info("Set new election date for ", Q.next_election_month, Q.next_election_year, ", week", Q.next_election_week);
+!}
+
+After a rough legislature that has yet to end, [? if president_gender = "m": President ?][? if president_gender = "f": Presidenta ?][+ president +] is proposing a new way for self-determination. In the proposed "plebiscite-election", all parties would be asked to make their position clear on independence, either for or against, and thus popular vote results could be interpreted as the result of a referendum. The legal basis for one such "plebiscite-election" is shady at least, though. Forcing parties via presidential-called snap-election to take one of two political positions goes against the very idea of free elections, and it is very likely to be struck down by courts. Not only that, but it is also quite unclear that anyone would abide by the results, no matter what they are, since there's also no framework for that.
+
+It is, in any case, a good chance to re-configure the Parlament's majority and ensure everyone partaking in government is committed to self-determination and independence building, so it may not be such a bad proposal after all.
+
+
+- @post_event: We better get ready!

@@ -231,7 +231,7 @@ on-arrival: {!
     Q.countdows.push("jxsi_formation");
     Q.unio_breakup_countdown = 5;
     Q.jxsi_formation_countdown = 6;
-    Q.plebiscite_election_countdown = 3; // TODO: actual event lol
+    Q.plebiscite_election_countdown = 3;
 !}
 
 After the celebration, it is clear what the question on everyone's mind right is: what now? A non-binding consultation does not force the Generalitat into any path of action, and it is not like the current [+ cat_coalition_disp +] has made any provisions for continuing any path towards independence after this. It may be time to re-think any roadmaps towards independence...
