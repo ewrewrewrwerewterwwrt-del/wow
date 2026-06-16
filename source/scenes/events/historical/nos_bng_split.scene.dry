@@ -1,0 +1,12 @@
+title: BNG re-emerges
+view-if: year = 2019 and month = 3
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    // TODO: make this conditional? on what?
+    // En Marea dissolves; BNG stands again, seeded from the left carrier.
+    window.spaSupportInject(Q, 'bng', 'galicia', 3.0, 'podemos');
+!}
+
+- @post_event: TODO

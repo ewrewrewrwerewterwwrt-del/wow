@@ -565,6 +565,9 @@
       prev_cat_spa,
       prev_unemployment,
     );
+
+    // Spanish Congreso evolves off the same freshly-updated Catalan macro.
+    monthPassesCongreso(Q);
   }
 
   // --- LOCAL BARCELONA TICK ---
@@ -700,5 +703,468 @@
     }
   }
 
+  // ===========================================================================
+  // Spanish Congreso monthly engine.
+  //
+  // Ported from simulations/spa_vote_model.py (the calibrated reference), but
+  // operates DIRECTLY on the in-game support keys (`{party}_congreso_{c}_support`)
+  // defined in root.scene.dry — there is no separate "family" namespace.
+  //
+  // Behaviour mirrors monthPasses() in cat_engine.js: it runs once per month
+  // (called from post_event.scene.dry AFTER window.engineTick), reads the
+  // Catalan macro variables on Q, derives Spanish-level deltas, and evolves
+  // every constituency's party support, renormalising to 100 (abstain included).
+  //
+  // Conventions that matter:
+  //  - Abstention lives under the `abstain` key (abstain_congreso_{c}_support),
+  //    NOT `abs` — matching the resolver in election_algorithm.scene.dry.
+  //  - A party is ACTIVE in a constituency iff its support > 0. Formation scenes
+  //    inject support to bring a party to life; folded coalition components are
+  //    zeroed by their formation scene and then skipped here (so mean-reversion /
+  //    noise can't zombie them back — the trap documented in design/LEARNINGS.md).
+  //  - Coefficients attach by CANONICAL key (up→podemos, dl/jxsi/…→ciu, etc.).
+  //  - Coalition carriers (up / nsuma / jxsi / jxcat) are resolved live: cross-
+  //    party effects target whichever key currently carries that bloc's vote.
+  // ===========================================================================
+
+  const ABSTAIN = "abstain";
+  const URBAN_CONSTITUENCIES = ["catalunya", "euskadi", "valencia", "balears"];
+
+  // CiU-bloc keys, in priority order for "which list is live".
+  const CONV_BLOC = ["jxsi", "jxcat", "junts", "pdcat", "dl", "cdc", "ciu"];
+
+  // In-game key -> canonical coefficient key.
+  const CANONICAL = {
+    up: "podemos",
+    sumar: "podemos",
+    cdc: "ciu",
+    dl: "ciu",
+    pdcat: "ciu",
+    jxsi: "ciu",
+    jxcat: "ciu",
+    junts: "ciu",
+    amaiur: "ehbildu",
+    nos: "bng",
+  };
+
+  // Per unit of each driver delta, how much the canonical family shifts.
+  // Values carried over verbatim from spa_vote_model.py ECON_BASE_DEFAULT.
+  const ECON = {
+    //               g(gdp)  u(unemp) w(welfare) d(dissent)
+    pp:        { g:  0.06, u: -0.05, w:  0.03, d: -0.04 },
+    psoe:      { g:  0.06, u: -0.04, w:  0.04, d: -0.03 },
+    psc:       { g:  0.06, u: -0.04, w:  0.04, d: -0.03 }, // PSC mirrors PSOE econ
+    podemos:   { g: -0.04, u:  0.06, w: -0.04, d:  0.07 },
+    cs:        { g: -0.02, u:  0.03, w: -0.01, d:  0.02 },
+    vox:       { g: -0.01, u:  0.01, w: -0.01, d:  0.02 },
+    iu:        { g: -0.03, u:  0.04, w: -0.03, d:  0.05 },
+    mpais:     { g: -0.02, u:  0.03, w: -0.02, d:  0.04 },
+    abstain:   { g: -0.02, u:  0.02, w: -0.02, d:  0.03 },
+    nsuma:     { g:  0.05, u: -0.04, w:  0.03, d: -0.03 },
+    upn:       { g:  0.01, u:  0.00, w:  0.01, d: -0.01 },
+    gbai:      { g:  0.00, u:  0.01, w: -0.01, d:  0.02 },
+    pnv:       { g:  0.01, u:  0.00, w:  0.01, d: -0.01 },
+    ehbildu:   { g: -0.01, u:  0.01, w: -0.01, d:  0.01 },
+    bng:       { g:  0.00, u:  0.01, w: -0.01, d:  0.01 },
+    compromis: { g: -0.02, u:  0.03, w: -0.02, d:  0.05 },
+    mes:       { g: -0.01, u:  0.02, w: -0.01, d:  0.04 },
+    // Catalan independence space — driven by cat_spa, not national economics
+    erc:       { g:  0.00, u:  0.00, w:  0.00, d:  0.00 },
+    ciu:       { g:  0.00, u:  0.00, w:  0.00, d:  0.00 },
+    cup:       { g:  0.00, u:  0.00, w:  0.00, d:  0.00 },
+    fr:        { g:  0.00, u:  0.00, w:  0.00, d:  0.00 },
+    // Rest minors — zero econ sensitivity, driven by reversion + noise
+    cc:        { g:  0.00, u:  0.00, w:  0.00, d:  0.00 },
+    prc:       { g:  0.00, u:  0.00, w:  0.00, d:  0.00 },
+    te:        { g:  0.00, u:  0.00, w:  0.00, d:  0.00 },
+    fac:       { g:  0.00, u:  0.00, w:  0.00, d:  0.00 },
+    // UPyD — collapses over 2012-2015; mild econ, real action is the decay term
+    upyd:      { g:  0.02, u: -0.01, w:  0.01, d: -0.02 },
+  };
+
+  // Minor "rest" regional parties: mean-revert toward a stable base instead of
+  // following national trends, with scaled-down noise so they don't walk to 0.
+  const MINOR_REST = new Set(["cc", "prc", "te", "fac"]);
+  const MINOR_REST_TARGETS = { cc: 1.0, prc: 0.12, te: 0.08, fac: 0.4 };
+
+  // Named scalar constants (from spa_vote_model.py DEFAULTS).
+  const P = {
+    gov_gdp_boost: 0.041,
+    corr_pp_cs_urban: 0.00075,
+    corr_pp_cs_base: 0.00041,
+    corr_pp_abs: 0.00031,
+    corr_psoe_pod: 0.0007,
+    corr_psoe_abs: 0.00031,
+    cat_spa_indy: 0.052,
+    cat_spa_cs_cat: 0.041,
+    cat_spa_pp_psoe: 0.041,
+    cat_spa_cs_pod: 0.031,
+    dom_momentum: 0.03,
+    hold_decay: 0.0088,
+    hold_recovery: 0.0051,
+    noise_stdev: 0.164,
+    noise_stdev_minor: 0.008,
+    minor_reversion_rate: 0.008,
+    channeling_rate: 0.0024,
+    psoe_recover_rate: 0.0027,
+    psoe_leadership_rate: 0.0123,
+    pp_leadership_rate: 0.0155,
+    upyd_decay_rate: 0.035, // UPyD bleed/tick → ~0 by 2015
+  };
+
+  // --- UTILS (congreso; gaussianRandom/clamp reused from the Parlament engine above) ---
+
+  function sup(Q, p, c) {
+    return Q[p + "_congreso_" + c + "_support"] || 0;
+  }
+  function setSup(Q, p, c, v) {
+    Q[p + "_congreso_" + c + "_support"] = Math.max(0, v);
+  }
+
+  function coeffKey(p) {
+    return CANONICAL[p] || p;
+  }
+
+  // First key in `candidates` that is live (support > 0) in c, else fallback.
+  function liveAmong(Q, c, candidates, fallback) {
+    for (const p of candidates) if (sup(Q, p, c) > 0) return p;
+    return fallback;
+  }
+
+  // Live in-game key carrying a given bloc's vote in constituency c.
+  function ppKey(Q, c) {
+    return liveAmong(Q, c, ["nsuma", "pp"], "pp");
+  }
+  function podKey(Q, c) {
+    return liveAmong(Q, c, ["up", "podemos"], "podemos");
+  }
+  function psoeKey(Q, c) {
+    if (c === "catalunya" && Q.psc_split) return "psc";
+    return "psoe";
+  }
+  function convKey(Q, c) {
+    return liveAmong(Q, c, CONV_BLOC, "ciu");
+  }
+  function ercKey(Q, c) {
+    // ERC if it runs standalone, else its vote sits in the live CiU-bloc carrier
+    return sup(Q, "erc", c) > 0 ? "erc" : convKey(Q, c);
+  }
+
+  function isIncumbent(canonical, Q) {
+    const gob = Q.spanish_coalition || [];
+    for (const party of gob) {
+      const p = ("" + party).toLowerCase();
+      if (canonical === "pp" && ["pp", "ppc", "nsuma"].includes(p)) return true;
+      if (canonical === "nsuma" && ["nsuma", "pp"].includes(p)) return true;
+      if ((canonical === "psoe" || canonical === "psc") &&
+          ["psoe", "psc"].includes(p)) return true;
+      if (canonical === "podemos" &&
+          ["podemos", "up", "unidas_podemos"].includes(p)) return true;
+      if (canonical === "iu" && ["iu", "unidas_podemos"].includes(p)) return true;
+      if (canonical === "cs" && p === "cs") return true;
+      if (canonical === p) return true;
+    }
+    return false;
+  }
+
+  // Active parties (support > 0) in c, abstain included.
+  function activeParties(Q, c) {
+    const list = (Q["congreso_parties_" + c] || []).concat([ABSTAIN]);
+    return list.filter((p) => sup(Q, p, c) > 0);
+  }
+
+  // --- DOMINANCE HOLDS (run once per month, before deltas) ---
+
+  function updateHolds(Q, constituencies) {
+    for (const c of constituencies) {
+      if (c === "navarra") continue; // no clean bipartisan rivalry to track
+      const ppS = sup(Q, ppKey(Q, c), c);
+      const csS = sup(Q, "cs", c);
+
+      const kPp = "pp_hold_" + c;
+      Q[kPp] = Q[kPp] == null ? 1.0 : Q[kPp];
+      Q[kPp] = clamp(
+        Q[kPp] + (csS > ppS ? -P.hold_decay : P.hold_recovery), 0, 1);
+
+      if (Q.vox_active) {
+        const voxS = sup(Q, "vox", c);
+        const kV = "pp_vox_hold_" + c;
+        Q[kV] = Q[kV] == null ? 1.0 : Q[kV];
+        Q[kV] = clamp(
+          Q[kV] + (voxS > ppS ? -P.hold_decay : P.hold_recovery), 0, 1);
+      }
+
+      const psoeS = sup(Q, psoeKey(Q, c), c);
+      const podS = sup(Q, podKey(Q, c), c);
+      const kPs = "psoe_hold_" + c;
+      Q[kPs] = Q[kPs] == null ? 1.0 : Q[kPs];
+      Q[kPs] = clamp(
+        Q[kPs] + (podS > psoeS ? -P.hold_decay : P.hold_recovery), 0, 1);
+    }
+  }
+
+  // --- MAIN MONTHLY TICK ---
+
+  function monthPassesCongreso(Q) {
+    console.log("Running congreso engine tick for", Q.month, Q.year);
+
+    const constituencies = Q.congreso_constituencies;
+    if (!constituencies) return;
+
+    // 1. Effective Spanish macro variables (Catalan values + scenario offsets).
+    const spa_gdp = Q.gdp_growth + (Q.spa_gdp_offset || 0);
+    const spa_unemp = Q.unemployment + (Q.spa_unemp_offset || 0);
+    const spa_welfare = Q.welfare_index + (Q.spa_welfare_offset || 0);
+
+    const prev_gdp = Q._prev_spa_gdp == null ? spa_gdp : Q._prev_spa_gdp;
+    const prev_unemp = Q._prev_spa_unemp == null ? spa_unemp : Q._prev_spa_unemp;
+    const prev_welfare =
+      Q._prev_spa_welfare == null ? spa_welfare : Q._prev_spa_welfare;
+    const prev_dissent =
+      Q._prev_spa_dissent == null ? Q.social_dissent : Q._prev_spa_dissent;
+    const prev_cat_spa =
+      Q._prev_spa_cat_spa == null ? Q.cat_spa_relations : Q._prev_spa_cat_spa;
+
+    const d_gdp = spa_gdp - prev_gdp;
+    const d_unemp = spa_unemp - prev_unemp;
+    const d_welfare = spa_welfare - prev_welfare;
+    const d_dissent = Q.social_dissent - prev_dissent;
+    const d_cat_spa = Q.cat_spa_relations - prev_cat_spa;
+
+    Q._prev_spa_gdp = spa_gdp;
+    Q._prev_spa_unemp = spa_unemp;
+    Q._prev_spa_welfare = spa_welfare;
+    Q._prev_spa_dissent = Q.social_dissent;
+    Q._prev_spa_cat_spa = Q.cat_spa_relations;
+
+    const channeling = Q.podemos_channeling || 0;
+
+    // 2. Passive corruption decay (decay rates are event-set).
+    if (Q.corruption_pp != null) {
+      Q.corruption_pp = clamp(
+        Q.corruption_pp * (Q.corruption_pp_decay == null ? 1.0 : Q.corruption_pp_decay),
+        0, 100);
+    }
+    if (Q.corruption_psoe != null) {
+      Q.corruption_psoe = clamp(
+        Q.corruption_psoe * (Q.corruption_psoe_decay == null ? 1.0 : Q.corruption_psoe_decay),
+        0, 100);
+    }
+    const corr_pp = Q.corruption_pp || 0;
+    const corr_psoe = Q.corruption_psoe || 0;
+
+    // 3. Dominance holds.
+    updateHolds(Q, constituencies);
+
+    // 4. Per-constituency evolution.
+    for (const c of constituencies) {
+      const fams = activeParties(Q, c);
+      if (fams.length === 0) continue;
+      const urban = URBAN_CONSTITUENCIES.includes(c);
+      const has = (p) => fams.includes(p);
+
+      const deltas = {};
+      fams.forEach((p) => (deltas[p] = 0));
+
+      const ppF = ppKey(Q, c);
+      const podF = podKey(Q, c);
+      const psoeF = psoeKey(Q, c);
+
+      // 4a. Base economic response + incumbent GDP boost.
+      for (const p of fams) {
+        const coeff = ECON[coeffKey(p)];
+        if (!coeff) continue;
+        let d =
+          coeff.g * d_gdp + coeff.u * d_unemp +
+          coeff.w * d_welfare + coeff.d * d_dissent;
+        if (d_gdp > 0 && isIncumbent(coeffKey(p), Q)) {
+          d += P.gov_gdp_boost * d_gdp;
+        }
+        deltas[p] += d;
+      }
+
+      // 4b. PP corruption bleed → CS + abstain (UPN takes it when run as rival).
+      if (corr_pp > 0 && has(ppF)) {
+        const to_cs = corr_pp * (urban ? P.corr_pp_cs_urban : P.corr_pp_cs_base);
+        const to_abs = corr_pp * P.corr_pp_abs;
+        deltas[ppF] -= to_cs + to_abs;
+        const upnRival = has("upn") && Q.spa_upn_independent;
+        if (upnRival && has("cs")) {
+          deltas["upn"] += to_cs * 0.7;
+          deltas["cs"] += to_cs * 0.3;
+        } else if (upnRival) {
+          deltas["upn"] += to_cs;
+        } else if (has("cs")) {
+          deltas["cs"] += to_cs;
+        }
+        if (has(ABSTAIN)) deltas[ABSTAIN] += to_abs;
+      }
+
+      // 4c. PSOE corruption bleed → Podemos + abstain.
+      if (corr_psoe > 0 && has(psoeF)) {
+        const to_pod = corr_psoe * P.corr_psoe_pod;
+        const to_abs = corr_psoe * P.corr_psoe_abs;
+        deltas[psoeF] -= to_pod + to_abs;
+        if (has(podF)) deltas[podF] += to_pod;
+        if (has(ABSTAIN)) deltas[ABSTAIN] += to_abs;
+      }
+
+      // 4d. cat_spa relations effects.
+      if (d_cat_spa < 0) {
+        const mag = Math.abs(d_cat_spa);
+        if (c === "catalunya") {
+          const indy_gain = mag * P.cat_spa_indy;
+          const cs_gain = mag * P.cat_spa_cs_cat;
+          const total = indy_gain + cs_gain;
+          const ercF = ercKey(Q, c);
+          const convF = convKey(Q, c);
+          if (has(ercF)) deltas[ercF] += indy_gain * 0.65;
+          if (has(convF)) deltas[convF] += indy_gain * 0.35;
+          if (has("cs")) deltas["cs"] += cs_gain;
+          if (has(ppF)) deltas[ppF] -= total * 0.4;
+          if (has(psoeF)) deltas[psoeF] -= total * 0.6;
+        } else if (c !== "navarra") {
+          const pp_gain = mag * P.cat_spa_pp_psoe;
+          const cs_gain = mag * P.cat_spa_cs_pod;
+          if (has(ppF)) deltas[ppF] += pp_gain;
+          if (has(psoeF)) deltas[psoeF] -= pp_gain;
+          if (has("cs")) deltas["cs"] += cs_gain;
+          if (has(podF)) deltas[podF] -= cs_gain;
+        }
+      }
+
+      // 4e. Dominance momentum.
+      const psoeHold = Q["psoe_hold_" + c] == null ? 1.0 : Q["psoe_hold_" + c];
+      if (psoeHold < 1.0 && has(psoeF) && has(podF)) {
+        const m = P.dom_momentum * (1 - psoeHold);
+        deltas[podF] += m;
+        deltas[psoeF] -= m;
+      }
+      const ppHold = Q["pp_hold_" + c] == null ? 1.0 : Q["pp_hold_" + c];
+      if (ppHold < 1.0 && has(ppF) && has("cs")) {
+        const m = P.dom_momentum * (1 - ppHold);
+        deltas["cs"] += m;
+        deltas[ppF] -= m;
+      }
+      if (Q.vox_active) {
+        const vH = Q["pp_vox_hold_" + c] == null ? 1.0 : Q["pp_vox_hold_" + c];
+        if (vH < 1.0 && has(ppF) && has("vox")) {
+          const m = P.dom_momentum * (1 - vH);
+          deltas["vox"] += m;
+          deltas[ppF] -= m;
+        }
+      }
+
+      // 4f. Podemos channeling — organic PSOE⇄Podemos flow (cat_engine driven).
+      if (has(podF) && has(psoeF)) {
+        const net =
+          channeling * P.channeling_rate -
+          (1 - channeling) * P.psoe_recover_rate;
+        let actual;
+        if (net > 0) {
+          actual = Math.min(net * sup(Q, psoeF, c), sup(Q, psoeF, c) - 1.0);
+        } else {
+          actual = Math.max(net * sup(Q, podF, c), -(sup(Q, podF, c) - 1.0));
+        }
+        actual = clamp(actual, -5.0, 5.0);
+        deltas[podF] += actual;
+        deltas[psoeF] -= actual;
+      }
+
+      // 4g. Leadership recovery — sustained monthly pull from abstain.
+      const psoeLm = Q.psoe_leadership_mult || 0;
+      if (psoeLm > 0 && has(psoeF) && has(ABSTAIN)) {
+        const pull = Math.min(P.psoe_leadership_rate * psoeLm, sup(Q, ABSTAIN, c) * 0.02);
+        deltas[psoeF] += pull;
+        deltas[ABSTAIN] -= pull;
+      }
+      const ppLm = Q.pp_leadership_mult || 0;
+      if (ppLm > 0 && has(ppF) && has(ABSTAIN)) {
+        const pull = Math.min(P.pp_leadership_rate * ppLm, sup(Q, ABSTAIN, c) * 0.02);
+        deltas[ppF] += pull;
+        deltas[ABSTAIN] -= pull;
+      }
+
+      // 4h. UPyD collapse — bleeds to CS (where present) and abstain.
+      if (has("upyd")) {
+        const dec = P.upyd_decay_rate * sup(Q, "upyd", c);
+        deltas["upyd"] -= dec;
+        const to_cs = has("cs") ? dec * 0.5 : 0;
+        if (to_cs) deltas["cs"] += to_cs;
+        if (has(ABSTAIN)) deltas[ABSTAIN] += dec - to_cs;
+        else if (has("cs")) deltas["cs"] += dec - to_cs;
+      }
+
+      // 4i. Minor "rest" regional reversion.
+      if (c === "rest") {
+        for (const p of fams) {
+          if (MINOR_REST.has(p)) {
+            deltas[p] += P.minor_reversion_rate * ((MINOR_REST_TARGETS[p] || 0) - sup(Q, p, c));
+          }
+        }
+      }
+
+      // 4j. Gaussian noise (scaled down for minor rest parties).
+      for (const p of fams) {
+        const sd = c === "rest" && MINOR_REST.has(p) ? P.noise_stdev_minor : P.noise_stdev;
+        deltas[p] += gaussianRandom(0, sd);
+      }
+
+      // 4k. Apply deltas.
+      for (const p of fams) setSup(Q, p, c, sup(Q, p, c) + deltas[p]);
+
+      // 4l. Renormalize constituency to 100 (abstain included).
+      let total = 0;
+      for (const p of fams) total += sup(Q, p, c);
+      if (total > 0) {
+        for (const p of fams) setSup(Q, p, c, (sup(Q, p, c) / total) * 100);
+      }
+    }
+  }
+
+  // ===========================================================================
+  // SUPPORT INJECTION HELPER (for formation / shock scenes)
+  //
+  // Mirrors the support_inject semantics from spa_economic_timeline.py: move
+  // `delta` percentage points from `from` to `family` in constituency `c`
+  // ('all' = every constituency where both keys are part of the lineup),
+  // transferring at most 50% of the funding source's current support.
+  //
+  // `family`/`from` may be a literal in-game key (cs, vox, mes, …) OR a bloc
+  // alias (pp / podemos / psoe / ciu), which resolves per-constituency to the
+  // live carrier — so a scene can always write `'podemos'` and it lands on `up`
+  // once Unidos Podemos exists, regardless of the player's timeline.
+  //
+  // Usage in a scene's on-arrival block:
+  //   window.spaSupportInject(Q, 'cs', 'all', 9.0, 'pp');
+  // ===========================================================================
+
+  // Resolve a bloc-alias key to the live carrier in constituency c.
+  function resolveBloc(Q, c, key) {
+    switch (key) {
+      case "pp": return ppKey(Q, c);
+      case "podemos": return podKey(Q, c);
+      case "psoe": return psoeKey(Q, c);
+      case "ciu": return convKey(Q, c);
+      default: return key;
+    }
+  }
+
+  function spaSupportInject(Q, family, c, delta, from) {
+    const cs = c === "all" ? Q.congreso_constituencies : [c];
+    for (const cc of cs) {
+      const toKey = resolveBloc(Q, cc, family);
+      const fromKey = resolveBloc(Q, cc, from);
+      const lineup = (Q["congreso_parties_" + cc] || []).concat([ABSTAIN]);
+      if (!lineup.includes(toKey) || !lineup.includes(fromKey)) continue;
+      const fromCur = sup(Q, fromKey, cc);
+      const actual = Math.min(delta, fromCur * 0.5);
+      if (actual <= 0) continue;
+      setSup(Q, fromKey, cc, fromCur - actual);
+      setSup(Q, toKey, cc, sup(Q, toKey, cc) + actual);
+    }
+  }
+
   window.engineTick = monthPasses;
+  window.spaSupportInject = spaSupportInject;
 })();

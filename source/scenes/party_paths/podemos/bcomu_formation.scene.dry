@@ -1,11 +1,12 @@
 title: Barcelona's new left surge
-view-if: next_local_election_time - time <= 6
+view-if: next_local_election_time - time <= 6 and 0
 face-image: img/events/podemos_formation.jpg
 tags: event
 new-page: true
 max-visits: 1
 on-arrival: {!
-    Q.podemos_surged = true;
+    // TODO: complete 
+    Q.podemos_surged = true; // TODO: check if this should be flagged as true here??
     Q.podemos_channeling = 1;
     Q.social_dissent += 5;
 

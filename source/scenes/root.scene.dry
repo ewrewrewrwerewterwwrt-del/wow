@@ -518,7 +518,7 @@ for (var c of Q.congreso_constituencies) {
   }
 }
 for (var p of Q.parties_bcn) {
-  Q[+ + "_local_barcelona_support"] = 0.0;
+  Q[p + "_local_barcelona_support"] = 0.0;
 }
 
 !}
@@ -2331,13 +2331,102 @@ Q.abstain_parlament_tarragona_retired_support = 30.62;
 Q.abstain_parlament_tarragona_rural_support = 39.55;
 Q.abstain_parlament_tarragona_unemployed_support = 37.62;
 
-// Congreso supports
+// Congreso supports (Aug 2012, % of census incl. abstain — see congreso_engine.js).
+// Parties not set here stay 0 (zeroed in @start_menu) and only come to life via
+// their formation scenes: Podemos (2014), Cs national (2015), Vox (2018), Unidas
+// Podemos / NSuma / Más País / Compromís / Més / FR-CUP etc. The 2012 left space
+// is IU; the abertzale left is Amaiur (rebrands to EH Bildu later).
 
-Q.ciu_congreso_catalunya_support = 29.35;
-Q.erc_congreso_catalunya_support = 7.06;
-Q.cup_congreso_catalunya_support = 0;
+// Catalunya — CiU bloc runs as "ciu"; ERC separate; left space = IU.
+Q.ciu_congreso_catalunya_support = 22.0;
+Q.psoe_congreso_catalunya_support = 14.0;
+Q.pp_congreso_catalunya_support = 9.0;
+Q.iu_congreso_catalunya_support = 7.5;
+Q.erc_congreso_catalunya_support = 6.0;
+Q.upyd_congreso_catalunya_support = 1.0;
+Q.abstain_congreso_catalunya_support = 40.5;
 
-// TODO: Lots of congreso initial support missing!!
+// Valencia
+Q.pp_congreso_valencia_support = 35.0;
+Q.psoe_congreso_valencia_support = 20.0;
+Q.iu_congreso_valencia_support = 5.0;
+Q.upyd_congreso_valencia_support = 0.5;
+Q.abstain_congreso_valencia_support = 39.5;
+
+// Balears
+Q.pp_congreso_balears_support = 32.0;
+Q.psoe_congreso_balears_support = 22.0;
+Q.iu_congreso_balears_support = 5.0;
+Q.upyd_congreso_balears_support = 0.3;
+Q.abstain_congreso_balears_support = 40.7;
+
+// Navarra — UPN folded into PP by default; abertzale left = Amaiur.
+Q.pp_congreso_navarra_support = 21.0;
+Q.psoe_congreso_navarra_support = 18.0;
+Q.amaiur_congreso_navarra_support = 13.0;
+Q.gbai_congreso_navarra_support = 9.0;
+Q.iu_congreso_navarra_support = 3.0;
+Q.upyd_congreso_navarra_support = 0.3;
+Q.abstain_congreso_navarra_support = 35.7;
+
+// Euskadi — abertzale left = Amaiur (→ EH Bildu later).
+Q.pnv_congreso_euskadi_support = 21.0;
+Q.amaiur_congreso_euskadi_support = 16.0;
+Q.psoe_congreso_euskadi_support = 14.0;
+Q.pp_congreso_euskadi_support = 11.0;
+Q.iu_congreso_euskadi_support = 3.0;
+Q.upyd_congreso_euskadi_support = 0.2;
+Q.abstain_congreso_euskadi_support = 34.8;
+
+// Galicia — BNG runs on its own (En Marea / NOS dynamics come later).
+Q.pp_congreso_galicia_support = 31.0;
+Q.psoe_congreso_galicia_support = 20.0;
+Q.bng_congreso_galicia_support = 5.0;
+Q.iu_congreso_galicia_support = 3.0;
+Q.upyd_congreso_galicia_support = 0.4;
+Q.abstain_congreso_galicia_support = 40.6;
+
+// Rest (virtual-province aggregate) — CC/PRC/TE are protected regional minors.
+Q.pp_congreso_rest_support = 32.0;
+Q.psoe_congreso_rest_support = 22.0;
+Q.iu_congreso_rest_support = 4.5;
+Q.cc_congreso_rest_support = 1.0;
+Q.upyd_congreso_rest_support = 0.8;
+Q.prc_congreso_rest_support = 0.12;
+Q.te_congreso_rest_support = 0.05;
+Q.abstain_congreso_rest_support = 39.5;
+
+// ── Spanish (Congreso) engine state ──────────────────────────────────────────
+Q.spa_unemp_offset = 5.0;   // Spain-wide unemployment runs ~5pp above Catalunya
+Q.spa_gdp_offset = 0;
+Q.spa_welfare_offset = 0;
+Q.corruption_pp = 0;
+Q.corruption_psoe = 0;
+Q.corruption_pp_decay = 0.998;
+Q.corruption_psoe_decay = 0.998;
+Q.psoe_leadership_mult = 0;
+Q.pp_leadership_mult = 0;
+
+// Spanish party-system flags (IRL defaults; flipped by formation scenes)
+Q.spa_cs_active = false;
+Q.vox_active = false;
+Q.spa_nsuma_formed = false;
+Q.spa_upn_independent = false;
+Q.spa_upn_defect = false;
+Q.spa_foro_active = false;
+Q.spa_compromis_active = false;
+Q.spa_mes_active = false;
+Q.spa_fr_active = false;
+Q.spa_cup_spa_active = false;
+Q.spa_up_masq_split = false;
+
+// Congreso coalition membership (alt-history toggles)
+Q.upn_in_pp = true;        // UPN runs within PP lists for general elections
+Q.cs_in_nsuma = false;
+Q.iu_in_up = false;
+Q.compromis_in_up = false;
+Q.mes_in_up = false;
+Q.psc_split = false;
 
 // BCN & Local supports
 Q.icv_local_barcelona_support = 29.0;
@@ -2354,6 +2443,22 @@ Q.cup_local_barcelona_support = 7.0;
 Q.pp_local_barcelona_support = 10.5;
 Q.primaries_local_barcelona_support =  0.0;
 
+
+// Leader initialization (these get defined on party formation)
+
+Q.jxsi_leader = "???";
+Q.jxsi_leader_gender = "f";
+Q.jxcat_leader = "???";
+Q.jxcat_leader_gender = "f";
+
+Q.csqp_leader = "???";
+Q.csqp_leader_gender = "f";
+Q.cecp_leader = "???";
+Q.cecp_leader_gender = "f";
+Q.csqp_leader = "???";
+Q.csqp_leader_gender = "f";
+Q.ecp_leader = "???";
+Q.ecp_leader_gender = "f";
 
 /////////////////////// Timers
 Q.n_advisors = 3;
@@ -2476,35 +2581,52 @@ This is a game of alternate history. While historical accuracy is a major concer
 
 For more information on the politics, government, and recent history of Catalonia, please see the Library page on the top left. If this is your first time playing the game, it is strongly recommended that you read at least some of this information.
 
-**If you are playing this mod via the Mod Loader in base game, you may be using a broken build. For the intended experience, please play using <a class="link" href="https://broken-arrows.github.io/route_to_itaca/" style="color: #0077FF; text-de">this</a> link.**
+- @easy_mode : <span style="color: #5B9A8D;font-weight: bold;">Easy</span> mode
+- @normal_mode : <span style="color: #C4B156;font-weight: bold;">Normal</span> mode
+- @hard_mode : <span style="color: rgb(148, 27, 6);font-weight: bold;">Hard</span> mode
+- @historical_mode : <span style="color: rgb(69, 23, 2);font-weight: bold;">Historical</span> mode
 
-- @easy_mode : Begin - <span style="color: #5B9A8D;font-weight: bold;">Easy</span>
-- @normal_mode : Begin - <span style="color: #C4B156;font-weight: bold;">Normal</span>
-- @hard_mode : Begin - <span style="color: #943006ff;font-weight: bold;">Hard</span>
+# TODO: actually make more variables depend on difficulty
 
 @easy_mode
-title: Begin - Easy
+subtitle: Extra party resources, more lenient interactions and easier options.
 on-arrival: difficulty = -1; party_resources = 4; max_advisors = 5;
 go-to: party_selection
 
-What party shall you lead?
+= <span style="color: #5B9A8D;font-weight: bold;">Easy</span> difficulty
 
 @normal_mode
-title: Begin - Normal
+subtitle: Normal party resources, challenging interactions and options-
 on-arrival: difficulty = 0; party_resources = 3; max_advisors = 4;
 go-to: party_selection
 
-What party shall you lead?
+= <span style="color: #C4B156;font-weight: bold;">Normal</span> difficulty
 
 @hard_mode
-title: Begin - Hard
+subtitle: Little party resources, hard interactions, more limitted options.
 on-arrival: difficulty = 1; party_resources = 2; max_advisors = 3;
 go-to: party_selection
 
-What party shall you lead?
+= <span style="color: rgb(148, 27, 6);font-weight: bold;">Hard</span> difficulty
 
+@historical_mode
+subtitle: All the challenges of Hard mode, saving and loading the game is forbidden, and polls are not available.
+on-arrival: {!
+  Q.difficulty = 1; 
+  Q.party_resources = 2;
+  Q.max_advisors = 3;
+  Q.historical_mode = true;
+  this.state.disableSaves = true;
+!}
+go-to: party_selection
+
+= <span style="color: rgb(69, 23, 2);font-weight: bold;">Historical</span> difficulty
+
+Careful! Re-loading this page will result in a loss of playthrough progress. 
 
 @party_selection
+
+What party shall you lead? *(Click on the options to get more information)*
 
 - @esquerra: Republican Left of Catalonia - ERC
 - @cup: Popular Unity Candidacy - CUP
@@ -2523,6 +2645,7 @@ The left-wing republican party advocates for Catalan independence, socialism, an
 
 
 @esquerra_2
+subtitle: Start the game as ERC.
 on-arrival: {!
 Q.player_party = "erc";
 Q.position_disp = "<span style='font-style: italic;'>Opposition</span>"; 
@@ -2582,7 +2705,7 @@ go-to: intros
 @ciu
 title: Convergence and Union (CiU)
 face-image: img/parties/logo_ciu.png
-choose-if: 1==0
+view-if: 1==0
 unavailable-subtitle: Coming soon! (maybe?)
 
 **Convergence and Union - CiU**
@@ -2610,6 +2733,7 @@ The far-left, anti-capitalist, eco-socialist platform demands direct democracy, 
 
 
 @cup_2
+subtitle: Start the game as CUP.
 on-arrival: {!
 Q.player_party = "cup";
 Q.position_disp = "Non-existence";

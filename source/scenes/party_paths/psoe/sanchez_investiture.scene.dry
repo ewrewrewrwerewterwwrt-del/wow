@@ -1,0 +1,20 @@
+title: The no-confidence vote
+view-if: year = 2018 and month = 6
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    // TODO: un-hardcode this: motion of no confidence happens conditionally and depending on player action
+    // PSOE wins the no-confidence vote; Sánchez becomes PM. Government changes,
+    // PSOE consolidates the anti-PP left and partially resets its corruption stain.
+    Q.spanish_coalition = ["psoe"];
+    Q.spanish_coalition_disp = "PSOE <span style='color: var(--psoe);'>minority government</span>";
+    Q.spanish_pm = "Pedro Sánchez";
+    Q.spanish_pm_party = "psoe";
+    Q.spanish_pm_gender = "m";
+    Q.corruption_psoe = Math.max(0, Q.corruption_psoe - 8);
+    window.spaSupportInject(Q, 'psoe', 'all', 5.0, 'podemos');
+    window.spaSupportInject(Q, 'psoe', 'all', 4.0, 'abstain');
+!}
+
+- @post_event: TODO

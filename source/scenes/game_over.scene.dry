@@ -286,7 +286,7 @@ Note that your achievement progress is stored in your browser. Switching browser
             <span class="star--empty">★</span>
         </div>
     </div>
-    <div class="achievement-description !}[? if achievement_paperera_de_la_historia : achievement-description--unlocked ?][? if not achievement_paperera_de_la_historia : achievement-description--locked ?]{!">Playing as CUP and while not being part of the JxSí coalition, force Artur Mas to step aside.</div>
+    <div class="achievement-description !}[? if achievement_paperera_de_la_historia : achievement-description--unlocked ?][? if not achievement_paperera_de_la_historia : achievement-description--locked ?]{!">Playing as the CUP and while not being part of the JxSí coalition, force Artur Mas to step aside.</div>
   </div>
 </div>
 
@@ -305,7 +305,7 @@ Note that your achievement progress is stored in your browser. Switching browser
             <span class="star--empty">★</span>
         </div>
     </div>
-    <div class="achievement-description !}[? if achievement_jxsi_de_debo : achievement-description--unlocked ?][? if not achievement_jxsi_de_debo : achievement-description--locked ?]{!"> Include CUP into the JxSí electoral coalition or, as CUP, join into the JxSí coaltion. </div>
+    <div class="achievement-description !}[? if achievement_jxsi_de_debo : achievement-description--unlocked ?][? if not achievement_jxsi_de_debo : achievement-description--locked ?]{!"> Include the CUP into the JxSí electoral coalition or, as the CUP, join into the JxSí coaltion. </div>
   </div>
 </div>
 

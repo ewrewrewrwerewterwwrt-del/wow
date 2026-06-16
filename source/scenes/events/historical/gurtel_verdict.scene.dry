@@ -1,0 +1,12 @@
+title: The Gürtel verdict
+view-if: year = 2018 and month = 5
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    // Supreme Court confirms PP benefited from the Gürtel network — triggers the
+    // no-confidence vote.
+    Q.corruption_pp += 25;
+!}
+
+- @post_event: TODO

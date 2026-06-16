@@ -313,7 +313,7 @@
                         <button class="tab_button" id="politics_tab" data-tooltip="Politics" onclick="window.changeTab('status.politics', 'politics_tab');"><img class="status-icon" src="img/politics_icon.svg" alt="Politics"></button>
                         <button class="tab_button" id="government_tab" data-tooltip="Government" onclick="window.changeTab('status.government', 'government_tab');"><img class="status-icon" src="img/government_icon.svg" alt="Government"></button>
                         <button class="tab_button" id="international_tab" data-tooltip="International Relations" onclick="window.changeTab('status.international', 'international_tab');"><img class="status-icon" src="img/international_icon.svg" alt="International"></button>
-                        <button class="tab_button" id="polls_tab" data-tooltip="Opinion Polls" onclick="window.changeTab('status.polls', 'polls_tab');initCataloniaPolls('cat-polls-widget', dendryUI.dendryEngine.state.qualities);"><img class="status-icon" src="img/poll_icon.svg" alt="Polls"></button>
+                        <button class="tab_button" id="polls_tab" data-tooltip="Opinion Polls" onclick="window.changeTab('status.polls', 'polls_tab');initCataloniaPolls('cat-polls-widget', dendryUI.dendryEngine.state.qualities);addTooltipEventListeners();"><img class="status-icon" src="img/poll_icon.svg" alt="Polls"></button>
                     </div>
                     <div id="qualities">
                     </div>
@@ -325,16 +325,7 @@
             </div>
 
             <footer>
-      <!--
-      <p>
-        <a onclick="window.showSaveSlots();" href="#">Save/Load</a>
-        <a onclick="window.quickSave();" href="#">Quick Save</a>
-        <a onclick="window.quickLoad();" href="#">Quick Load</a>
-      </p>
-
-      &copy; 2021 Autumn Chen.
-      Made with <a href="https://github.com/aucchen/dendry">Dendry</a>.
-      -->
+                <!-- WIP add something? -->
             </footer>
         </div>
     </div>

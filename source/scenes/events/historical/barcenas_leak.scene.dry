@@ -1,0 +1,11 @@
+title: The Bárcenas Papers
+view-if: year = 2013 and month = 1
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    // El País publishes Bárcenas's secret accounts — PP slush-fund crisis.
+    Q.corruption_pp += 35;
+!}
+
+- @post_event: TODO

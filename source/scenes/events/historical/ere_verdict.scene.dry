@@ -1,0 +1,11 @@
+title: The ERE case
+view-if: year = 2015 and month = 10
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    // Andalusia ERE corruption verdict against PSOE officials.
+    Q.corruption_psoe += 20;
+!}
+
+- @post_event: TODO

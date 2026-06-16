@@ -1,0 +1,11 @@
+title: Bárcenas escalation
+view-if: year = 2013 and month = 7
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    // Leaked texts of Rajoy's own bonus payments confirmed.
+    Q.corruption_pp += 15;
+!}
+
+- @post_event: TODO

@@ -3,11 +3,12 @@ new-page: true
 is-special: true
 go-to: menu
 
+@menu
+new-page: true
+
 = Library
 
 Herein you may find all varieties of information pertaining to Catalonia.
-
-@menu
 
 - @catalan_system_lib: Catalan Political System
 - @catalan_parties_lib: Political Parties
@@ -17,7 +18,6 @@ Herein you may find all varieties of information pertaining to Catalonia.
 # - @spanish_parties_lib: Spanish Political Parties
 
 @catalan_system_lib
-go-to: menu
 
 = Catalan Political System
 
@@ -29,13 +29,13 @@ The (Most Honourable) **President** is the head of government, elected by the Pa
 
 The Generalitat's framework tilts slightly toward executive strength. No-confidence votes require an alternative candidate to be proposed, and the President can dissolve the Parlament and call for early elections. However, the legislative body has the power to approve or reject the budget, and to propose laws and reforms.
 
-Catalonia has no special fiscal status as a Spanish Autonomous Community. Unlike the Basque Country or Navarre, Catalonia does not collect its own taxes. Instead, all taxes are collected by the Spanish government and then redistributed to the Autonomous Communities through a complex funding formula. This has always resulted in an acute deficit for Catalonia, with estimates at around €20 billion, close to 8-10% of Catalonia's GDP, or almost half of the Generalitat's annual budget.
+Catalonia has no special fiscal status as a Spanish Autonomous Community. This means that, unlike the Basque Country or Navarre, Catalonia does not collect its own taxes. Instead, all taxes are collected by the Spanish government and then redistributed to the Autonomous Communities through a complex funding formula. This has always resulted in an acute deficit for Catalonia, with estimates at around €20 billion, close to 8-10% of Catalonia's GDP, or almost half of the Generalitat's annual budget.
 
 With this budget, the Generalitat does have to manage its many areas it does control. These include education, health, transportation, urban planning, ecology, language and culture, agriculture, tourism, social services, and many aspects of civil law. It also has some control over internal security through the Mossos d'Esquadra, its regional police force, and its own prisons, with the Spanish police forces retaining fairly limited competences, at least on paper.
 
+- @menu: Back
 
 @timeline_lib
-go-to: menu
 
 = Timeline of recent Catalan history
 
@@ -71,8 +71,9 @@ Despite the PSOE's earlier promises, the Congreso ended up modifying more than h
 
 The anti-austerity movements that expanded through Europe in the 2010's reach the Iberian peninsula in May 2011 as a series of protests against cuts, political corruption, and economic inequality. In Catalonia, the movement resonated strongly, intertwining with the growing independence sentiment. It led to the formation of new political platforms and grassroots organizations advocating for social justice, participatory democracy, and Catalan sovereignty.
 
+- @menu: Back
+
 @catalan_parties_lib
-go-to: menu
 
 = Political Parties
 
@@ -110,11 +111,12 @@ SI - **Catalan Solidarity for Independence**
 
 The pro-independence transversal coalition sought sovereignty with progressive pluralism. Launched in 2010 by ex-FCB president Joan Laporta, it won 4 seats pre-2012 from anti-autonomist surge. In 2012, however, it is set to struggle against CiU - ERC dominance and internal fragmentation.
 
+- @menu: Back
 
 @spanish_parties_lib
-go-to: menu
 
 = Spanish Political Parties
 
+- @menu: Back
 
 

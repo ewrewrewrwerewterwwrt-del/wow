@@ -256,7 +256,7 @@ on-arrival: {!
     }
 !}
 
-Focusing on the far-right feels like an odd choice at this point. A general anti-fascist position is always welcome and will be applauded specially by CUP and [? if not csqp_formed and not cecp_formed and not ecp_formed: ICV-EUiA?][? if csqp_formed: CSQP?][? if cecp_formed: CECP?][? if ecp_formed: ECP?], but other than that it seems to fall on deaf ears. The far-right is such a minority at this point, and specially in Catalonia. We'll never have to worry about such thing in Catalonia!
+Focusing on the far-right feels like an odd choice at this point. A general anti-fascist position is always welcome and will be applauded specially by the CUP and [? if not csqp_formed and not cecp_formed and not ecp_formed: ICV-EUiA?][? if csqp_formed: CSQP?][? if cecp_formed: CECP?][? if ecp_formed: ECP?], but other than that it seems to fall on deaf ears. The far-right is such a minority at this point, and specially in Catalonia. We'll never have to worry about such thing in Catalonia!
 
 @extremes
 on-arrival: {!

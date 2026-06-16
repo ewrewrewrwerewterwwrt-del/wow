@@ -1,0 +1,19 @@
+title: Vox erupts
+view-if: year = 2018 and month = 11
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    // Andalusia regional breakthrough; Vox enters as a PP drain (capped per constituency).
+    // TODO: un-hardcode this? how?
+    Q.vox_active = true;
+    for (var c of Q.congreso_constituencies) {
+        if (c === 'navarra') continue; // Navarra right runs via PP/UPN/NSuma dynamics
+        var pp = Q['pp_congreso_' + c + '_support'] || 0;
+        var drain = Math.min(8.0, pp * 0.22);
+        Q['pp_congreso_' + c + '_support'] = pp - drain;
+        Q['vox_congreso_' + c + '_support'] = (Q['vox_congreso_' + c + '_support'] || 0) + drain;
+    }
+!}
+
+- @post_event: TODO

@@ -1,0 +1,15 @@
+title: PSOE civil war
+view-if: year = 2016 and month = 10
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    // TODO: fold this into the PSOE event tree + conditional on election results
+    // The federal committee forces Sánchez out; the leadership_mult goes negative
+    // (acts as a sustained penalty), and voters bleed to the left + abstention.
+    Q.psoe_leadership_mult = -0.5;
+    window.spaSupportInject(Q, 'podemos', 'all', 1.5, 'psoe');
+    window.spaSupportInject(Q, 'abstain', 'all', 1.0, 'psoe');
+!}
+
+- @post_event: TODO

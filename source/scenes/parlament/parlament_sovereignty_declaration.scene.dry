@@ -76,14 +76,14 @@ choose-if: roadmap != 3
 unavailable-subtitle: Our roadmap to independence is about unilateralism, which is explicitly for the breaking with the Spanish leagal frameworks.
 on-arrival: parlament_sovereignty_declaration_legality = true
 
-By including mentions of legality and dialogue, we may have made the text more paletable for our moderate allies, but we also risk alienating CUP and some of our more radical base.
+By including mentions of legality and dialogue, we may have made the text more paletable for our moderate allies, but we also risk alienating the CUP and some of our more radical base.
 
 - @calc_erc: Let's get this done!
 
 @none
 on-arrival: parlament_sovereignty_declaration_legality = false;
 
-By not including a mention of legality and dialogue, we may have made the text a bit too radical for our more moderate allies. On the flip side, we may have the chance for a better alignment with CUP.
+By not including a mention of legality and dialogue, we may have made the text a bit too radical for our more moderate allies. On the flip side, we may have the chance for a better alignment with the CUP.
 
 - @calc_erc: Let's get this done!
 

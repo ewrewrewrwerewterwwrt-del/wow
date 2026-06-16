@@ -1,0 +1,14 @@
+title: Front Republicà
+view-if: year = 2019 and month = 2
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    // TODO: un-hardcode this
+    // Anti-capitalist pro-independence list for Apr 2019, from the CiU-bloc fringe + abstention.
+    Q.spa_fr_active = true;
+    window.spaSupportInject(Q, 'fr', 'catalunya', 1.0, 'ciu');
+    window.spaSupportInject(Q, 'fr', 'catalunya', 1.5, 'abstain');
+!}
+
+- @post_event: TODO

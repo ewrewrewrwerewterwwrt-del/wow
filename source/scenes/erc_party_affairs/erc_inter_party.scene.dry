@@ -7,11 +7,11 @@ on-arrival: month_actions += 1; erc_inter_party_relationships_timer = 6;
 card-image: img/parties/frontpopular.jpg
 face-image: img/parties/frontpopular.jpg
 
-# TODO: Proper weighting of relations for different comuns leaders (just as we did with PSC). Should we do the same with CUP factions in power?
+# TODO: Proper weighting of relations for different comuns leaders (just as we did with PSC). Should we do the same with the CUP factions in power?
 
 = Inter-Party Relationships
 
-ERC cannot govern by itself yet. Because we do not have an electoral majority, we need the support of other parties. Up until 2010, we were part of a tripartite coalition with PSC and ICV-EUiA [? if csqp_formed: (now part of CSQP)?][? if cecp_formed: (now part of CECP)?][? if ecp_formed: (now part of ECP)?], but its failures have left us with strained relations, specially with the PSC. The new surge of support for independence also opens new avenues of cooperation through shared national lines, namely with [? if not unio_split: CiU?][? if pdcat_formed and not pdcat_split: pdcat?][? if cdc_formed: CDC?][? if dl_formed: DL?][?if not erc_in_jxcat and jxcat_formed: JxCat?][? if erc_in_jxcat and jxcat_formed: CDC?][? if junts_formed: Junts ?][? if si_parlament_s> 0: , SI?] and CUP.
+ERC cannot govern by itself yet. Because we do not have an electoral majority, we need the support of other parties. Up until 2010, we were part of a tripartite coalition with PSC and ICV-EUiA [? if csqp_formed: (now part of CSQP)?][? if cecp_formed: (now part of CECP)?][? if ecp_formed: (now part of ECP)?], but its failures have left us with strained relations, specially with the PSC. The new surge of support for independence also opens new avenues of cooperation through shared national lines, namely with [? if not unio_split: CiU?][? if pdcat_formed and not pdcat_split: pdcat?][? if cdc_formed: CDC?][? if dl_formed: DL?][?if not erc_in_jxcat and jxcat_formed: JxCat?][? if erc_in_jxcat and jxcat_formed: CDC?][? if junts_formed: Junts ?][? if si_parlament_s> 0: , SI?] and the CUP.
 
 - @jxsi_relations: We need to work on national unity within JxSi!
 - @jxcat_relations: We need to work on national unity within JxCat!
@@ -21,7 +21,7 @@ ERC cannot govern by itself yet. Because we do not have an electoral majority, w
 - @dl_relations: We need to work on national unity with DL ([+dl_ideology+])
 - @jxcat_noerc_relations: We need to work on national unity with JxCat ([+jxcat_ideology+])
 - @junts_relations: We need to work on national unity with Junts ([+junts_ideology+])
-- @cup_relations: Left and national unity at the same time? Let's work on it with CUP ([+cup_ideology+])
+- @cup_relations: Left and national unity at the same time? Let's work on it with the CUP ([+cup_ideology+])
 - @si_relations: Left and national unity, plus people willing to work with us? Let's talk with SI ([+si_ideology+])
 - @icv_relations: We could use boosted trust with ICV-EUiA ([+icv_ideology+])
 - @csqp_relations: Let's build bridges with the new left, CSQP ([+csqp_ideology+])
@@ -313,7 +313,7 @@ on-arrival: {!
     Q.cat_coalition_includes_cup = Q.cat_coalition.includes("cup");
 !}
 
-[? if cup_supporting and cat_coalition_includes_erc: CUP is currently supporting our government, which is already a balancing act. Hopefully this can bring us closer together. ?][? if erc_in_gob and cat_coalition_includes_cup: We are currently governing together with CUP, which alread demonstrates our commitment to leftist values. Let's hope this formula can hold up for some time. ?][? if (not cup_supporting and cat_coalition_includes_erc) or (not erc_in_gob and cat_coalition_includes_cup): Without official institutional obligations to eachother for the moment, building ties with CUP is always easier. ?]
+[? if cup_supporting and cat_coalition_includes_erc: The CUP is currently supporting our government, which is already a balancing act. Hopefully this can bring us closer together. ?][? if erc_in_gob and cat_coalition_includes_cup: We are currently governing together with the CUP, which alread demonstrates our commitment to leftist values. Let's hope this formula can hold up for some time. ?][? if (not cup_supporting and cat_coalition_includes_erc) or (not erc_in_gob and cat_coalition_includes_cup): Without official institutional obligations to eachother for the moment, building ties with the CUP is always easier. ?]
 
 @icv_relations
 subtitle: -1 resources

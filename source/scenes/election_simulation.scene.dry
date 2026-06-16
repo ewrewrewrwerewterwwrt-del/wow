@@ -3318,7 +3318,7 @@ on-display: {!
 {!</table>!}
 
 
-[? if bcomu_local_barcelona_s = 11: Ada Colau will lead a bcomu <span style="color: var(--bcomu); font-style: italic;"> minority government</span> with the support of ERC, PSC, and CUP. ?]
+[? if bcomu_local_barcelona_s = 11: Ada Colau will lead a bcomu <span style="color: var(--bcomu); font-style: italic;"> minority government</span> with the support of ERC, PSC, and the CUP. ?]
 [? if bcomu_local_barcelona_s = 10: Ada Colau will lead a bcomu-pscbcn <span style="color: var(--bcomu); font-style: italic;">coalition</span> <span style="color: var(--psc); font-style: italic;">government</span> with the support of csbcn. ?]
 
 - @local_cat_results: Catalonia is not only Barcelona, though...

@@ -1,0 +1,12 @@
+title: Sánchez wins the primaries
+view-if: year = 2017 and month = 6
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    // Membership vote re-energises PSOE; sustained recovery pull from abstention.
+    // TODO: Fold this into the PSOE leadership event tree
+    Q.psoe_leadership_mult = 1.0;
+!}
+
+- @post_event: TODO

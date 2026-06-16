@@ -1,18 +1,41 @@
 title: A United National Concentration list?
-subtitle: Definitely a hard-to-believe proposal
 face-image: img/events/jxsi_formation.jpg
-view-if: unio_split and next_election_time - time < 9 and next_election_time - time > 3 and (cdc_roadmap > 1 or dl_roadmap > 1 or pdcat_roadmap > 1) and (player_party == "cup" or (player_party == "erc" and (cdc_relations >= 30 or dl_relations >= 30 or pdcat_relations >= 30))) and not consultation_pending and not referendum_pending and not referendum_happened
+view-if: true
+# view-if: unio_split and next_election_time - time < 9 and next_election_time - time > 3 and (cdc_roadmap > 1 or dl_roadmap > 1 or pdcat_roadmap > 1) and (player_party == "cup" or (player_party == "erc" and (cdc_relations >= 30 or dl_relations >= 30 or pdcat_relations >= 30))) and not consultation_pending and not referendum_pending and not referendum_happened
 tags: event
 new-page: true
 max-visits: 1
 go-to: erc_0 if player_party == "erc"; cup_0 if player_party == "cup"
+on-arrival: {!
+    // TODO: Remove, just for testing!!
+    Q.year = 2015;
+    Q.month = 7;
+    Q.unio_split = true;
+    Q.cdc_parlament_s = Math.ceil(0.75*Q.ciu_parlament_s);
+    Q.unio_parlament_s = Math.floor(0.25*Q.ciu_parlament_s);
+    Q.ciu_parlament_s = 0;
+    Q.cdc_leader = Q.ciu_leader;
+    Q.cdc_leader_gender = Q.ciu_leader_gender;
+    Q.cdc_roadmap = 2;
+    Q.cat_coalition = ["cdc"];
+    Q.cat_coalition_disp = "CDC <span style='font-style: italic'>caretaker gov.</span>"
+    Q.president_party = "CDC";
 
-# TODO: united_blocal and united_congreso options a few months past the event? or via card???
+    for (var c of Q.parlament_constituencies) {
+        for (var d of Q.parlament_demographics) {
+            Q["cdc_parlament_" + c + "_" + d + "_support"] = 0.8 * Q["ciu_parlament_" + c + "_" + d + "_support"];
+            Q["ciu_parlament_" + c + "_" + d + "_support"] = 0;
+        }
+    }
+!}
+
+
+# TODO: united_bcn_local and united_congreso options a few months past the event? or via card???
 # TODO: actual jxsi cards
 
 = A United National Concentration list?
 
-[? if consultation_happened: After the very questionable outcome of the non-binding consultation, ?][? if not consultation_happened: After this a legislature defined by debates on independence, ?][? if cdc_parlament_s > 0: CDC leader [+ cdc_leader +]?][? if dl_parlament_s > 0: DL leader [+ dl_leader +]?][? if pdcat_parlament_s > 0: PDeCAT leader [+ pdcat_leader +]?] is now openly proposing something truly unheard of. A National concentration list for the upcoming elections, agglutinating the main pro-independence parties into a single, unified candidacy. Under the name Junts pel Sí (Together for the "Yes"), it would be opened widely to include profiles from the civil society: local and Catalan-wide leaders and organizers of the independence movement, jumping into parliamentary and party politics to focus on self-determination and building the insitutional apparatus necessary for independence. All with a very ambitious timeline: 18 months from the elections to a referendum, which should lead to a delcaration of independence, a constituent process and ultimately to Catalan Republic.
+[? if consultation_happened: After the very questionable outcome of the non-binding consultation, ?][? if not consultation_happened: After this a legislature defined by debates on independence, ?][? if cdc_parlament_s > 0: CDC leader [+ cdc_leader +]?][? if dl_parlament_s > 0: DL leader [+ dl_leader +]?][? if pdcat_parlament_s > 0: PDeCAT leader [+ pdcat_leader +]?] is now openly proposing something truly unheard of. A National concentration list for the upcoming elections, agglutinating the main pro-independence parties into a single, unified candidacy. This umbrella, jxsi, would be opened widely to include profiles from the civil society: local and Catalan-wide leaders and organizers of the independence movement, jumping into parliamentary and party politics to focus on self-determination and building the insitutional apparatus necessary for independence. All with a very ambitious timeline: 18 months from the elections to a referendum, which should lead to a declaration of independence, a constituent process and ultimately to Catalan Republic.
 
 While the proposal is exciting for many, it is also a big ask. The collaboration left-to-right bridge between ERC and [? if cdc_parlament_s > 0: CDC?][? if dl_parlament_s > 0: DL?][? if pdcat_parlament_s > 0: the PDeCAT?] is indeed sustained precisely by national interests, and that has naturally never been enough to convince everyone in either party. 
 
@@ -86,7 +109,7 @@ on-arrival: {!
 go-to: erc_jxsi_formation
 
 @erc_no
-title: We don't want to partake in JxSí
+title: We don't want to partake in jxsi
 
 Are we completely sure of this? At the moment, there is heavy expectations both within the party and from the civil society for a full commitment to National liberation.
 
@@ -176,6 +199,9 @@ on-arrival: {!
 
     // block parlament card from appearing
     Q.cat_caretaker_gov = true;
+    if (Q.cat_coalition.includes(_activeCiu) || Q.cat_coalition.includes("erc")) {
+        Q.position_disp = "<span style='font-style: italic'>Government Support</span>";
+    } 
 
     for (const c of Q.parlament_constituencies) {
         Q["abstain_parlament_" + c + "_buss_support"] -= 1;
@@ -184,12 +210,14 @@ on-arrival: {!
         Q["abstain_parlament_" + c + "_unemployed_support"] -= 1;
         Q["abstain_parlament_" + c + "_young_support"] -= 2;
         Q["abstain_parlament_" + c + "_retired_support"] -= 2;
+        Q["abstain_parlament_" + c + "_rural_support"] -= 2.5;
         Q["jxsi_parlament_" + c + "_buss_support"] =  Q[_activeCiu + "_parlament_" + c + "_buss_support"] + Q["erc_parlament_" + c + "_buss_support"] + 0.5;
         Q["jxsi_parlament_" + c + "_ind_support"] += Q[_activeCiu + "_parlament_" + c + "_ind_support"] + Q["erc_parlament_" + c + "_ind_support"] - 1;
         Q["jxsi_parlament_" + c + "_middle_support"] += Q[_activeCiu + "_parlament_" + c + "_middle_support"] + Q["erc_parlament_" + c + "_middle_support"] - 1;
         Q["jxsi_parlament_" + c + "_unemployed_support"] += Q[_activeCiu + "_parlament_" + c + "_unemployed_support"] + Q["erc_parlament_" + c + "_unemployed_support"] - 3;
         Q["jxsi_parlament_" + c + "_young_support"] += Q[_activeCiu + "_parlament_" + c + "_young_support"] + Q["erc_parlament_" + c + "_young_support"] - 2;
         Q["jxsi_parlament_" + c + "_retired_support"] += Q[_activeCiu + "_parlament_" + c + "_retired_support"] + Q["erc_parlament_" + c + "_retired_support"] + 1.5;
+        Q["jxsi_parlament_" + c + "_rural_support"] += Q[_activeCiu + "_parlament_" + c + "_rural_support"] + Q["erc_parlament_" + c + "_rural_support"] + 0.75;
         if (Q.jxsi_formation_num == 40) {
             // Anti-ciu, indy vote goes to CUP
             Q["cup_parlament_" + c + "_buss_support"] += 0.5;
@@ -198,6 +226,7 @@ on-arrival: {!
             Q["cup_parlament_" + c + "_unemployed_support"] += 4;
             Q["cup_parlament_" + c + "_young_support"] += 4;
             Q["cup_parlament_" + c + "_retired_support"] += 0.5;
+            Q["cup_parlament_" + c + "_rural_support"] += 1.75;
         } else {
             Q["jxsi_parlament_" + c + "_buss_support"] += 0.5;
             Q["jxsi_parlament_" + c + "_ind_support"] += 2;
@@ -205,6 +234,7 @@ on-arrival: {!
             Q["jxsi_parlament_" + c + "_unemployed_support"] += 4;
             Q["jxsi_parlament_" + c + "_young_support"] += 4;
             Q["jxsi_parlament_" + c + "_retired_support"] += 0.5;
+            Q["cup_parlament_" + c + "_rural_support"] += 1.75;
         }
         Q["erc_parlament_" + c + "_buss_support"] = 0;
         Q["erc_parlament_" + c + "_ind_support"] = 0;
@@ -212,28 +242,30 @@ on-arrival: {!
         Q["erc_parlament_" + c + "_unemployed_support"] = 0;
         Q["erc_parlament_" + c + "_young_support"] = 0;
         Q["erc_parlament_" + c + "_retired_support"] = 0;
+        Q["erc_parlament_" + c + "_rural_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_buss_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_ind_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_middle_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_unemployed_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_young_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_retired_support"] = 0;
+        Q[_activeCiu + "_parlament_" + c + "_rural_support"] = 0;
     }
 
     Q.independence_movement += 5;
     Q.independence_trust += 15;
 !}
 
-The JxSí coalition has been formed! It now counts with ample support from civil society organizations, minor parties like SI, as well as, of course, the big players in the Parlament, [? if cdc_parlament_s > 0: CDC?][? if dl_parlament_s > 0: DL?][? if pdcat_parlament_s > 0: the PDeCAT?] and ERC. Can it, however, be expanded further? Everyone is looking right now at CUP, who so far has been skeptical of the whole formation process. Will they join in as well to build true National unity?
+The jxsi coalition has been formed! It now counts with ample support from civil society organizations, minor parties like SI, as well as, of course, the big players in the Parlament, [? if cdc_in_jxsi > 0: CDC?][? if dl_in_jxsi > 0: DL?][? if pdcat_in_jxsi > 0: the PDeCAT?] and ERC. Can it, however, be expanded further? Everyone is looking right now at the CUP, who so far has been skeptical of the whole formation process. Will they join in as well to build true National unity?
 
 -@jxsi_cup_in
 -@jxsi_cup_no
 
 @jxsi_cup_in
-title: Push CUP to join in!
-subtitle: Despite some heavy criticisms of the role of [? if cdc_parlament_s > 0: CDC?][? if dl_parlament_s > 0: DL?][? if pdcat_parlament_s > 0: the PDeCAT?] within JxSí, it seems like they can be convinced after all with a bit of a push. [-1 resources]
+title: Push the CUP to join in!
+subtitle: Despite some heavy criticisms of the role of [? if cdc_in_jxsi > 0: CDC?][? if dl_in_jxsi > 0: DL?][? if pdcat_in_jxsi > 0: the PDeCAT?] within jxsi, it seems like they can be convinced after all with a bit of a push. [-1 resources]
 choose-if: cup_relations >= 65 and jxsi_formation_num == 50 and party_resouces >= 1
-unavailable-subtitle: [? if cup_relations >= 65: We don't have good enough relations with CUP. ?][? if jxsi_formation_num == 40: There's no way they can accept a [? if cdc_parlament_s > 0: CDC?][? if dl_parlament_s > 0: DL?][? if pdcat_parlament_s > 0: PDeCAT?] leadership. ?][? if party_resources < 1: Not enough resources.?]
+unavailable-subtitle: [? if cup_relations >= 65: We don't have good enough relations with the CUP. ?][? if jxsi_formation_num != 40: There's no way they can accept a [? if cdc_in_jxsi > 0: CDC?][? if dl_in_jxsi > 0: DL?][? if pdcat_in_jxsi > 0: PDeCAT?] leadership. ?][? if party_resources < 1: Not enough resources.?]
 on-arrival: {!
     // TODO: make a poble lliure leadership also a requisite?
     const _activeComuns = Q.icv_parlament_s > 0 ? "icv" : Q.csqp_parlament_s > 0 ? "csqp" : Q.cecp_parlament_s > 0 ? "cecp" : "ecp";
@@ -254,10 +286,10 @@ on-arrival: {!
 !}
 
 @jxsi_cup_no
-title: CUP stays out of the coalition
+title: The CUP stays out of the coalition
 subtitle: [? if jxsi_formation_num != 50: Something about betraying the original idea of a civic list and instead doing yet another party-centric coalition ?]
 
-Seems like National unity will have to do without CUP for now. Even without them, this is a huge step forward for the upcoming elections! The vote of our lives!
+Seems like National unity will have to do without the CUP for now. Even without them, this is a huge step forward for the upcoming elections! The vote of our lives!
 
 -@post_event: Let's hope we don't need them down the line though...
 
@@ -286,7 +318,7 @@ subtitle: They are the leading force at the moment
 face-image: img/events/jxsi_mas.jpg
 on-arrival: jxsi_formation_num = 40
 
-With [? if cdc_parlament_s > 0: [+ cdc_leader +]?][? if dl_parlament_s > 0: [+ dl_leader +]?][? if pdcat_parlament_s > 0: [+ pdcat_leader +]?] at the forefront of JxSí, the party has grown increasingly skeptical of the idea of joining in. Disguised as a National-unity Front for independence and self-determination, the candidacy seems to instead perpetuate the reign of austerity and alleged corruption of the Catalan bourgeois-right. Both ERC and [? if cdc_parlament_s > 0: CDC?][? if dl_parlament_s > 0: DL?][? if pdcat_parlament_s > 0: the PDeCAT?], nonetheless, are adamant that we join in.
+With [? if cdc_parlament_s > 0: [+ cdc_leader +]?][? if dl_parlament_s > 0: [+ dl_leader +]?][? if pdcat_parlament_s > 0: [+ pdcat_leader +]?] at the forefront of jxsi, the party has grown increasingly skeptical of the idea of joining in. Disguised as a National-unity Front for independence and self-determination, the candidacy seems to instead perpetuate the reign of austerity and alleged corruption of the Catalan bourgeois-right. Both ERC and [? if cdc_parlament_s > 0: CDC?][? if dl_parlament_s > 0: DL?][? if pdcat_parlament_s > 0: the PDeCAT?], nonetheless, are adamant that we join in.
 
 - @cup_no_join
 - @cup_join_mas
@@ -297,13 +329,13 @@ subtitle: Neither from ERC nor from [? if cdc_parlament_s > 0: CDC?][? if dl_par
 choose-if: erc_relations >= 65 and ((cdc_relations >= 65 and cdc_parlament_s > 0) or (dl_relations >= 65 and dl_parlament_s > 0) or (pdcat_relations >= 65 and pdcat_parlament_s > 0)) and party_resources >= 1
 on-arrival: jxsi_formation_num = 50; party_resources -= 1;
 
-Without the expected [? if cdc_parlament_s > 0: [+ cdc_leader +]?][? if dl_parlament_s > 0: [+ dl_leader +]?][? if pdcat_parlament_s > 0: [+ pdcat_leader +]?] leadership, the JxSí candidacy seems to have taken a slightly different meaning within the party. While there's still suspicion about it being a way to disguise the reign of austerity and alleged corruption of the Catalan bourgeois-right, with a stronger non-partisan leadership there's hope that CUP and ERC can keep that at bay to an extent at least. Both ERC and [? if cdc_parlament_s > 0: CDC?][? if dl_parlament_s > 0: DL?][? if pdcat_parlament_s > 0: the PDeCAT?], in any case, are adamant that we join in.
+Without the expected [? if cdc_parlament_s > 0: [+ cdc_leader +]?][? if dl_parlament_s > 0: [+ dl_leader +]?][? if pdcat_parlament_s > 0: [+ pdcat_leader +]?] leadership, the jxsi candidacy seems to have taken a slightly different meaning within the party. While there's still suspicion about it being a way to disguise the reign of austerity and alleged corruption of the Catalan bourgeois-right, with a stronger non-partisan leadership there's hope that the CUP and ERC can keep that at bay to an extent at least. Both ERC and [? if cdc_parlament_s > 0: CDC?][? if dl_parlament_s > 0: DL?][? if pdcat_parlament_s > 0: the PDeCAT?], in any case, are adamant that we join in.
 
 - @cup_no_join
 - @cup_join_romeva
 
 @cup_no_join
-title: JxSí is no place for us
+title: jxsi is no place for us
 on-arrival: {!
     Q.cup_endavant_strength += 1;
     Q.cup_endavant_dissent -= 5;
@@ -332,12 +364,14 @@ on-arrival: {!
         Q["abstain_parlament_" + c + "_unemployed_support"] -= 1;
         Q["abstain_parlament_" + c + "_young_support"] -= 2;
         Q["abstain_parlament_" + c + "_retired_support"] -= 2;
+        Q["abstain_parlament_" + c + "_rural_support"] -= 2.5;
         Q["jxsi_parlament_" + c + "_buss_support"] =  Q[_activeCiu + "_parlament_" + c + "_buss_support"] + Q["erc_parlament_" + c + "_buss_support"] + 0.5;
         Q["jxsi_parlament_" + c + "_ind_support"] += Q[_activeCiu + "_parlament_" + c + "_ind_support"] + Q["erc_parlament_" + c + "_ind_support"] - 1;
         Q["jxsi_parlament_" + c + "_middle_support"] += Q[_activeCiu + "_parlament_" + c + "_middle_support"] + Q["erc_parlament_" + c + "_middle_support"] - 1;
         Q["jxsi_parlament_" + c + "_unemployed_support"] += Q[_activeCiu + "_parlament_" + c + "_unemployed_support"] + Q["erc_parlament_" + c + "_unemployed_support"] - 3;
         Q["jxsi_parlament_" + c + "_young_support"] += Q[_activeCiu + "_parlament_" + c + "_young_support"] + Q["erc_parlament_" + c + "_young_support"] - 2;
         Q["jxsi_parlament_" + c + "_retired_support"] += Q[_activeCiu + "_parlament_" + c + "_retired_support"] + Q["erc_parlament_" + c + "_retired_support"] + 1.5;
+        Q["jxsi_parlament_" + c + "_rural_support"] += Q[_activeCiu + "_parlament_" + c + "_rural_support"] + Q["erc_parlament_" + c + "_rural_support"] + 0.75;
         if (Q.jxsi_formation_num == 40) {
             // Anti-ciu, indy vote goes to CUP
             Q["cup_parlament_" + c + "_buss_support"] += 0.5;
@@ -346,6 +380,7 @@ on-arrival: {!
             Q["cup_parlament_" + c + "_unemployed_support"] += 4;
             Q["cup_parlament_" + c + "_young_support"] += 4;
             Q["cup_parlament_" + c + "_retired_support"] += 0.5;
+            Q["cup_parlament_" + c + "_rural_support"] += 1.75;
         } else {
             Q["jxsi_parlament_" + c + "_buss_support"] += 0.5;
             Q["jxsi_parlament_" + c + "_ind_support"] += 2;
@@ -353,6 +388,7 @@ on-arrival: {!
             Q["jxsi_parlament_" + c + "_unemployed_support"] += 4;
             Q["jxsi_parlament_" + c + "_young_support"] += 4;
             Q["jxsi_parlament_" + c + "_retired_support"] += 0.5;
+            Q["jxsi_parlament_" + c + "_rural_support"] += 1.75;
         }
         Q["erc_parlament_" + c + "_buss_support"] = 0;
         Q["erc_parlament_" + c + "_ind_support"] = 0;
@@ -360,24 +396,26 @@ on-arrival: {!
         Q["erc_parlament_" + c + "_unemployed_support"] = 0;
         Q["erc_parlament_" + c + "_young_support"] = 0;
         Q["erc_parlament_" + c + "_retired_support"] = 0;
+        Q["erc_parlament_" + c + "_rural_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_buss_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_ind_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_middle_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_unemployed_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_young_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_retired_support"] = 0;
+        Q[_activeCiu + "_parlament_" + c + "_rural_support"] = 0;
     }
     
     Q.independence_movement += 5;
     Q.independence_trust += 15;
 !}
 
-For one reason or another, CUP will go to the next Parlament election outside the JxSí umbrella. 
+For one reason or another, the CUP will go to the next Parlament election outside the jxsi umbrella. 
 
 - @post_event: Let's hope this is for the best
 
 @cup_join_mas
-title: Let's join in [? if cdc_parlament_s > 0: [+ cdc_leader +]?][? if dl_parlament_s > 0: [+ dl_leader +]?][? if pdcat_parlament_s > 0: [+ pdcat_leader +]?]'s JxSí
+title: Let's join in [? if cdc_parlament_s > 0: [+ cdc_leader +]?][? if dl_parlament_s > 0: [+ dl_leader +]?][? if pdcat_parlament_s > 0: [+ pdcat_leader +]?]'s jxsi
 subtitle: This will not please everyone in the party
 choose-if: cup_poblelliure_strength > cup_endavant_strength + 5 and cup_poblelliure_dissent <= 15 and cup_thirdsector_dissent <= 15 and erc_relations >= 55 and ((cdc_relations >= 55 and cdc_parlament_s > 0) or (dl_relations >= 55 and dl_parlament_s > 0) or (pdcat_relations >= 55 and pdcat_parlament_s > 0))
 unavailable-subtitle: [? if cup_poblelliure_strength <= cup_endavant_strength + 5: Poble Lliure is not strong enough as a party faction to push for this. ?][? if erc_relations < 55: We don't have good enough relations with ERC. ?][? if ((cdc_relations < 55 and cdc_parlament_s > 0) or (dl_relations < 55 and dl_parlament_s > 0) or (pdcat_relations < 55 and pdcat_parlament_s > 0)): We don't have good enough relations with [? if cdc_parlament_s > 0: CDC?][? if dl_parlament_s > 0: DL?][? if pdcat_parlament_s > 0: the PDeCAT?]. ?]
@@ -407,12 +445,14 @@ on-arrival: {!
         Q["abstain_parlament_" + c + "_unemployed_support"] -= 1;
         Q["abstain_parlament_" + c + "_young_support"] -= 2;
         Q["abstain_parlament_" + c + "_retired_support"] -= 2;
+        Q["abstain_parlament_" + c + "_rural_support"] -= 2;
         Q["jxsi_parlament_" + c + "_buss_support"] =  Q[_activeCiu + "_parlament_" + c + "_buss_support"] + Q["erc_parlament_" + c + "_buss_support"] + Q["cup_parlament_" + c + "_buss_support"];
         Q["jxsi_parlament_" + c + "_ind_support"] += Q[_activeCiu + "_parlament_" + c + "_ind_support"] + Q["erc_parlament_" + c + "_ind_support"] + Q["cup_parlament_" + c + "_ind_support"] - 1;
         Q["jxsi_parlament_" + c + "_middle_support"] += Q[_activeCiu + "_parlament_" + c + "_middle_support"] + Q["erc_parlament_" + c + "_middle_support"] + Q["cup_parlament_" + c + "_middle_support"];
         Q["jxsi_parlament_" + c + "_unemployed_support"] += Q[_activeCiu + "_parlament_" + c + "_unemployed_support"] + Q["erc_parlament_" + c + "_unemployed_support"] + Q["cup_parlament_" + c + "_unemployed_support"] - 2;
         Q["jxsi_parlament_" + c + "_young_support"] += Q[_activeCiu + "_parlament_" + c + "_young_support"] + Q["erc_parlament_" + c + "_young_support"] + Q["cup_parlament_" + c + "_young_support"] - 1;
         Q["jxsi_parlament_" + c + "_retired_support"] += Q[_activeCiu + "_parlament_" + c + "_retired_support"] + Q["erc_parlament_" + c + "_retired_support"] + Q["cup_parlament_" + c + "_retired_support"];
+        Q["jxsi_parlament_" + c + "_rural_support"] += Q[_activeCiu + "_parlament_" + c + "_rural_support"] + Q["erc_parlament_" + c + "_rural_support"] + Q["cup_parlament_" + c + "_rural_support"] + 1;
 
         // Anti-ciu vote goes to Comuns
         Q[_activeComuns + "_parlament_" + c + "_buss_support"] += 0.5;
@@ -421,6 +461,7 @@ on-arrival: {!
         Q[_activeComuns + "_parlament_" + c + "_unemployed_support"] += 2;
         Q[_activeComuns + "_parlament_" + c + "_young_support"] += 2;
         Q[_activeComuns + "_parlament_" + c + "_retired_support"] += 1;
+        Q[_activeComuns + "_parlament_" + c + "_rural_support"] += 0.75;
 
         Q["erc_parlament_" + c + "_buss_support"] = 0;
         Q["erc_parlament_" + c + "_ind_support"] = 0;
@@ -428,18 +469,21 @@ on-arrival: {!
         Q["erc_parlament_" + c + "_unemployed_support"] = 0;
         Q["erc_parlament_" + c + "_young_support"] = 0;
         Q["erc_parlament_" + c + "_retired_support"] = 0;
+        Q["erc_parlament_" + c + "_rural_support"] = 0;
         Q["cup_parlament_" + c + "_buss_support"] = 0;
         Q["cup_parlament_" + c + "_ind_support"] = 0;
         Q["cup_parlament_" + c + "_middle_support"] = 0;
         Q["cup_parlament_" + c + "_unemployed_support"] = 0;
         Q["cup_parlament_" + c + "_young_support"] = 0;
         Q["cup_parlament_" + c + "_retired_support"] = 0;
+        Q["cup_parlament_" + c + "_rural_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_buss_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_ind_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_middle_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_unemployed_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_young_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_retired_support"] = 0;
+        Q[_activeCiu + "_parlament_" + c + "_rural_support"] = 0;
     }
     
     Q.independence_movement += 8;
@@ -456,9 +500,9 @@ This is highly unexpected and has angered many on the left of the party, special
 - @post_event: Let's hope this is for the best
 
 @cup_join_romeva
-title: Let's join in Romeva's JxSí!
+title: Let's join in Romeva's jxsi!
 choose-if: cup_poblelliure_strength > cup_endavant_strength + 5 and cup_poblelliure_dissent <= 15 and cup_thirdsector_dissent <= 15
-unavailable-subtitle: [? if cup_poblelliure_strength <= cup_endavant_strength + 5: Poble Lliure is not strong enough as a party faction to push for this. ?][? if cup_poblelliure_dissent > 15 or cup_thirdsector_dissent > 15: The factions in our party are too divided to agree to join JxSí. ?]
+unavailable-subtitle: [? if cup_poblelliure_strength <= cup_endavant_strength + 5: Poble Lliure is not strong enough as a party faction to push for this. ?][? if cup_poblelliure_dissent > 15 or cup_thirdsector_dissent > 15: The factions in our party are too divided to agree to join jxsi. ?]
 on-arrival: {!
     if (!Q.achievement_jxsi_de_debo) {
         window.achievementNotif('Junts (de debò) pel Sí', 'img/achievements/jxsi_dedebo.jpg', 4);
@@ -485,12 +529,14 @@ on-arrival: {!
         Q["abstain_parlament_" + c + "_unemployed_support"] -= 1;
         Q["abstain_parlament_" + c + "_young_support"] -= 2;
         Q["abstain_parlament_" + c + "_retired_support"] -= 2;
+        Q["abstain_parlament_" + c + "_rural_support"] -= 2;
         Q["jxsi_parlament_" + c + "_buss_support"] =  Q[_activeCiu + "_parlament_" + c + "_buss_support"] + Q["erc_parlament_" + c + "_buss_support"] + Q["cup_parlament_" + c + "_buss_support"];
         Q["jxsi_parlament_" + c + "_ind_support"] += Q[_activeCiu + "_parlament_" + c + "_ind_support"] + Q["erc_parlament_" + c + "_ind_support"] + Q["cup_parlament_" + c + "_ind_support"];
         Q["jxsi_parlament_" + c + "_middle_support"] += Q[_activeCiu + "_parlament_" + c + "_middle_support"] + Q["erc_parlament_" + c + "_middle_support"] + Q["cup_parlament_" + c + "_middle_support"];
         Q["jxsi_parlament_" + c + "_unemployed_support"] += Q[_activeCiu + "_parlament_" + c + "_unemployed_support"] + Q["erc_parlament_" + c + "_unemployed_support"] + Q["cup_parlament_" + c + "_unemployed_support"];
         Q["jxsi_parlament_" + c + "_young_support"] += Q[_activeCiu + "_parlament_" + c + "_young_support"] + Q["erc_parlament_" + c + "_young_support"] + Q["cup_parlament_" + c + "_young_support"];
-        Q["jxsi_parlament_" + c + "_retired_support"] += Q[_activeCiu + "_parlament_" + c + "_retired_support"] + Q["erc_parlament_" + c + "_retired_support"] + Q["cup_parlament_" + c + "_retired_support"]
+        Q["jxsi_parlament_" + c + "_retired_support"] += Q[_activeCiu + "_parlament_" + c + "_retired_support"] + Q["erc_parlament_" + c + "_retired_support"] + Q["cup_parlament_" + c + "_retired_support"];
+        Q["jxsi_parlament_" + c + "_rural_support"] += Q[_activeCiu + "_parlament_" + c + "_rural_support"] + Q["erc_parlament_" + c + "_rural_support"] + Q["cup_parlament_" + c + "_rural_support"];
 
         Q["jxsi_parlament_" + c + "_buss_support"] += 0.5;
         Q["jxsi_parlament_" + c + "_ind_support"] += 0.5;
@@ -498,6 +544,7 @@ on-arrival: {!
         Q["jxsi_parlament_" + c + "_unemployed_support"] += 0.5;
         Q["jxsi_parlament_" + c + "_young_support"] += 1;
         Q["jxsi_parlament_" + c + "_retired_support"] += 1;
+        Q["jxsi_parlament_" + c + "_rural_support"] += 2;
     
         Q["erc_parlament_" + c + "_buss_support"] = 0;
         Q["erc_parlament_" + c + "_ind_support"] = 0;
@@ -505,18 +552,21 @@ on-arrival: {!
         Q["erc_parlament_" + c + "_unemployed_support"] = 0;
         Q["erc_parlament_" + c + "_young_support"] = 0;
         Q["erc_parlament_" + c + "_retired_support"] = 0;
+        Q["erc_parlament_" + c + "_rural_support"] = 0;
         Q["cup_parlament_" + c + "_buss_support"] = 0;
         Q["cup_parlament_" + c + "_ind_support"] = 0;
         Q["cup_parlament_" + c + "_middle_support"] = 0;
         Q["cup_parlament_" + c + "_unemployed_support"] = 0;
         Q["cup_parlament_" + c + "_young_support"] = 0;
         Q["cup_parlament_" + c + "_retired_support"] = 0;
+        Q["cup_parlament_" + c + "_rural_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_buss_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_ind_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_middle_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_unemployed_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_young_support"] = 0;
         Q[_activeCiu + "_parlament_" + c + "_retired_support"] = 0;
+        Q[_activeCiu + "_parlament_" + c + "_rural_support"] = 0;
     }
     
     Q.independence_movement += 8;

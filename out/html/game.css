@@ -1182,7 +1182,7 @@ table {
 }
 
 .mytooltiptext {
-  position: absolute;
+  position: fixed;
   z-index: 999999;
   background: var(--content-bg-color);
   border-radius: 7px;
@@ -1193,18 +1193,18 @@ table {
   font-weight: 500 !important;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
   width: max-content;
-  max-width: 500px;
+  /* Never wider than the viewport, so JS clamping always has room (8px each side). */
+  max-width: min(500px, calc(100vw - 16px));
   border-bottom: 3px solid var(--mytooltip-color);
   font-family: "HkGroteskRegular", sans-serif;
   text-transform: none;
   letter-spacing: normal;
 
-  /* Position above the element */
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-bottom: 8px;
-  
+  /* top/left are computed in JS (positionTip) so the tooltip stays inside the
+     viewport; these are just defaults before the first positioning pass. */
+  top: 0;
+  left: 0;
+
   /* Hidden by default - use visibility + opacity for smooth transitions */
   opacity: 0;
   visibility: hidden;
@@ -1212,14 +1212,8 @@ table {
   transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
 }
 
-/* Show on hover */
-.mytooltip:hover .mytooltiptext {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Show when clicked (active state) */
-.mytooltiptext.active {
+/* Shown by JS (hover, tap toggle, …) */
+.mytooltiptext.visible {
   opacity: 1;
   visibility: visible;
 }
@@ -1269,15 +1263,27 @@ table {
   margin-top: 0.5em;
   gap: 2px;
 }
-/* Arrow pointing down from tooltip */
+/* Arrow pointing down at the word (default: tooltip sits above it).
+   --arrow-left is set in JS so the arrow keeps pointing at the word even after
+   the tooltip body is clamped sideways to stay on screen. */
 .mytooltiptext::after {
   content: "";
   position: absolute;
   top: 100%;
-  left: 50%;
+  left: var(--arrow-left, 50%);
   transform: translateX(-50%);
   border: 8px solid transparent;
-  border-top-color: inherit;
+  /* Was `inherit` (which only worked because the tooltip used to live inside
+     the coloured .mytooltip trigger). The singleton lives on <body> now, so
+     tie the arrow straight to the accent variable set in JS. */
+  border-top-color: var(--mytooltip-color);
+}
+/* When flipped below the word (no room above), the arrow points up instead. */
+.mytooltiptext.below::after {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: var(--mytooltip-color);
 }
 
 /* Achievement display */

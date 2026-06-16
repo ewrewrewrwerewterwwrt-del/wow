@@ -1,11 +1,11 @@
 title: Plebiscite-elections?
-view-if: (plebiscite_election_trigger or (not rubicon and not consultation_pending and not referendum_happened and next_election_time - time <= 24 and next_election_time >= 14)) and not referendum_pending and not cat_caretaker_gov and not president_party = player_party
+view-if: (plebiscite_election_trigger or (not cat_caretaker_gov and year > 2013 and not rubicon and not consultation_pending and not referendum_happened and next_election_time - time <= 18 and next_election_time >= 14)) and not referendum_pending and not cat_caretaker_gov and not president_party = player_party
 face-image: img/events/snapelection.jpg
 tags: event
 new-page: true
 max-visits: 1
 on-arrival: {!
-    // TODO: more triggers for this??
+    // TODO: check triggers for this, make it never coincide with general election??
     Q.next_election_week = Q.week; 
 
     if (Q.month >=6 && Q.month < 11) {

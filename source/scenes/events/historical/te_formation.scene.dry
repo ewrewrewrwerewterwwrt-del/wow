@@ -1,0 +1,11 @@
+title: Teruel Existe stands for Congress
+view-if: year = 2018 and month = 9
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    // Civic platform mobilises interior-province abstainers.
+    window.spaSupportInject(Q, 'te', 'rest', 0.22, 'abstain');
+!}
+
+- @post_event: TODO
