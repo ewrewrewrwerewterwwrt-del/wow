@@ -1,0 +1,47 @@
+title: National Day of Catalonia (2014)
+view-if: year = 2014 and month = 9
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    // Diada 2014 — the "V" formation, peak pre-9N energy.
+    // Effect AND street turnout decided dynamically from current state (existing Q
+    // vars only). Model + rationale: simulations/diada_dynamics.py.
+    var IM = Q.independence_movement, IT = Q.independence_trust;
+    var SD = Q.social_dissent, CSR = Q.cat_spa_relations;
+    var pod = Q.podemos_channeling || 0;
+    var clamp = function (x, lo, hi) { return Math.max(lo, Math.min(hi, x)); };
+
+    // Situational reads (existing bool flags; absent => false). A referendum/consulta
+    // IS street action (mobilises); a caretaker government means an ordinary election
+    // is near, which drains the marginal effect to the ballot — but still draws crowds.
+    var mobilise = (Q.referendum_pending || Q.consultation_pending) ? 1 : 0;
+    var channel  = Q.cat_caretaker_gov ? 1 : 0;
+    var voteDraw = (mobilise || channel) ? 1 : 0;
+
+    // Magnitude: autonomous street floor (IM-IT gap, widest when parties haven't earned
+    // trust) + mobilisation, amplified by antagonism, drained by an imminent election.
+    var gap   = Math.max(0, IM - IT);
+    var antag = clamp(1 + 0.5 * (40 - CSR) / 40, 0.4, 1.6);
+    var mag   = clamp((1.5 + 0.18 * gap + 5.0 * mobilise) * antag * (1 - 0.45 * channel), 0, 16);
+
+    // Valence: hope by default; grief (the sign flips) in the repression aftermath —
+    // broken roadmap + relations on the floor + anger (dissent) still unspent.
+    var grief = 0;
+    if (Q.broken_roadmap) {
+        grief = clamp((20 - CSR) / 15, 0, 1) * clamp((SD - 48) / 10, 0, 1);
+    }
+    var valence = 1 - 2 * grief;
+
+    // Political effect (post_event clamps each variable afterwards).
+    Q.independence_movement += mag * valence;
+    Q.independence_trust    += 0.22 * mag * valence;
+    Q.social_dissent        += -0.22 * mag * valence * (1 - 0.6 * pod);
+    Q.cat_spa_relations     += -0.30 * mag;
+
+    // Street turnout for flavour text, in millions of participants (display only).
+    Q.diada_size = clamp((0.35 + 0.020 * gap + 0.60 * voteDraw) * antag * (1 - 0.40 * grief), 0.2, 2.0);
+    Q.diada_size = Math.round(Q.diada_size * 100) / 100;
+!}
+
+- @post_event: TODO

@@ -1,0 +1,46 @@
+title: Junts pel Sí dissolves
+subtitle: Separate lists for the 21-D 2017 election
+view-if: jxsi_formed and not jxsi_dissolved and year = 2017 and month = 12
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    // JxSí splits back into separate lists for 21-D 2017: the post-CDC carrier
+    // becomes JxCat, ERC runs alone again.
+    // cal: economic_engine.py EVENTS['jxsi_dissolution'] + vote_model jxsi_dissolved flag
+    // TODO: tie the trigger to the actual 21-D / Art.155 election call, not a bare date.
+    Q.jxsi_dissolved = true;
+    Q.independence_trust -= 1.5;
+
+    // ERC's share of the coalition, fixed at formation (40/45/50/60). Default 50.
+    var _ercFrac = (Q.jxsi_formation_num || 50) / 100;
+
+    // Seats: split the JxSí bloc into JxCat (carrier) + ERC.
+    Q.erc_parlament_s = Math.round(Q.jxsi_parlament_s * _ercFrac);
+    Q.jxcat_parlament_s = Q.jxsi_parlament_s - Q.erc_parlament_s;
+    Q.jxsi_parlament_s = 0;
+
+    // Per-constituency / demographic support: hand JxSí back to ERC + JxCat.
+    for (var c of Q.parlament_constituencies) {
+        for (var d of Q.parlament_demographics) {
+            var _s = Q["jxsi_parlament_" + c + "_" + d + "_support"] || 0;
+            Q["erc_parlament_" + c + "_" + d + "_support"] = (Q["erc_parlament_" + c + "_" + d + "_support"] || 0) + _s * _ercFrac;
+            Q["jxcat_parlament_" + c + "_" + d + "_support"] = (Q["jxcat_parlament_" + c + "_" + d + "_support"] || 0) + _s * (1 - _ercFrac);
+            Q["jxsi_parlament_" + c + "_" + d + "_support"] = 0;
+        }
+    }
+
+    // Clear coalition membership flags (cat_engine routes JxCat via *_in_jxcat).
+    Q.erc_in_jxsi = false;
+    Q.cup_in_jxsi = false;
+    Q.player_in_jxsi = false;
+    for (var _carrier of ["cdc", "dl", "pdcat"]) {
+        Q[_carrier + "_in_jxsi"] = false;
+    }
+
+    // TODO: if cup_in_jxsi, carve CUP back out instead of folding it into ERC/JxCat above
+    // TODO: JxCat leader / relations / roadmap / governing inheritance from the carrier
+    // TODO: congreso + Barcelona-local un-fold (mirror the parlament split here)
+!}
+
+- @post_event: TODO

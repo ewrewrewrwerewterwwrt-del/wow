@@ -1,0 +1,29 @@
+title: Abdication of Juan Carlos I
+subtitle: Felipe VI proclaimed king
+view-if: year = 2014 and month = 6
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    // June 2014: Juan Carlos abdicates; Felipe VI is proclaimed. Sparks republican
+    // rallies ("volem decidir", republic-referendum demands) in Catalonia and Spain.
+    // Effect on Catalan INDEPENDENCE is minor and indirect (republican / anti-
+    // establishment energy that partly overlaps with the indy base). The monarchy's
+    // real electoral footprint was on the SPANISH stage — the "régimen del 78"
+    // delegitimisation — hence the congreso ripple below.
+    // cal: NONE — not modelled in economic_engine.py; deltas are a design judgement.
+    Q.independence_movement += 1.0;   // small republican / anti-monarchy overlap with indy
+    Q.social_dissent        += 2.0;   // republican demonstrations
+    Q.cat_spa_relations     -= 0.5;   // negligible
+
+    // Optional congreso ripple (the "some impact on congreso" idea): the abdication
+    // crystallised the republican-left vs "régimen del 78" divide — PP/PSOE closed
+    // ranks behind Felipe VI; IU/Podemos pushed a republic referendum. Kept SMALL,
+    // and it OVERLAPS the May-2014 Podemos EP surge, so tune or remove.
+    window.spaSupportInject(Q, 'podemos', 'all', 1.5, 'psoe');        // anti-casta / republican leak
+    window.spaSupportInject(Q, 'erc', 'catalunya', 1.0, 'abstain');  // republican energy in Catalonia
+
+    // TODO: text and potential path for no abdication?
+!}
+
+- @post_event: TODO

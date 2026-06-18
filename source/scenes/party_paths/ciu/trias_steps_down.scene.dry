@@ -1,0 +1,17 @@
+title: Trias no longer leads the Barcelona bid
+view-if: year = 2017 and month = 9
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    // Xavier Trias (the incumbent CiU/JxCat personal-vote magnet) steps aside; the
+    // 2019 Barcelona list runs without his bonus.
+    // cal: local_calibrator m=62 (trias_leading -> false)
+    // NOTE: the Barcelona resolver (election_algorithm @local_elections) does not yet
+    //       read trias_leading, nor is it initialised true at start — wiring owed
+    //       (see design/LEARNINGS.md, Barcelona Trias bonus).
+    // It does so instead via leader variable!
+    // TODO: make it dynamic, un-hardcode!
+!}
+
+- @post_event: TODO

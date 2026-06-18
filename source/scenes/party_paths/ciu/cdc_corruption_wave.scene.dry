@@ -1,0 +1,14 @@
+title: CDC corruption case deepens
+view-if: year = 2015 and month = 1
+tags: event
+new-page: true
+max-visits: 1
+on-arrival: {!
+    // Second CDC corruption wave (cal: local_calibrator CORRUPTION_MONTHS, m=30).
+    // Feeds the centre-right's local + parlament decay via corruption_events_ciu
+    // (see election_algorithm decay_corr_coeff).
+    // TODO: which concrete case (Palau / "3%" financing / Método 3)? + text + vote movement
+    Q.corruption_events_ciu += 1;
+!}
+
+- @post_event: TODO
