@@ -1,0 +1,17 @@
+title: psoe-cs coaltion
+
+You should not be here? Report a bug if you see this text.
+
+
+@wtf
+title: <span style="color: var(--psoe); font-style: italic;">Social</span>-<span style="color: var(--psoe); font-style: italic;">Centrist</span> Coalition (PSOE - csspa)
+subtitle: What the hell? The numbers really don't add up...
+view-if: congreso_coalition_psoe_cs_wtf
+on-arrival: {!
+    Q.congreso_coalition_psoe_cs_wtf_happened = true;
+    // TODO
+!}
+
+You're right they dont, big mess!
+
+-@post_event: TO-DO

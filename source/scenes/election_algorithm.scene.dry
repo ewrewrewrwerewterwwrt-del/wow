@@ -253,6 +253,13 @@ for (var p of CONGRESO_PARTIES) {
     Q[p + '_congreso_pv'] = 0;
 }
 
+// Reset per-constituency seat counts (the congreso map + per-region bars read these)
+for (var c of Q.congreso_constituencies) {
+    for (var p of Q['congreso_parties_' + c]) {
+        Q[p + '_congreso_s_' + c] = 0;
+    }
+}
+
 // 02. Helper Function: D'Hondt Method
 function dhondt_method(votes_map, num_seats) {
     var seats = {};
@@ -346,7 +353,8 @@ for (var constituency of Q.congreso_constituencies) {
         // VIRTUAL REST LOGIC
         var working_votes = Object.assign({}, region_votes_map);
         var protected_seats_awarded = 0;
-        
+        var rest_seats = {};
+
         // Protected Minors Check against VALID votes of the Rest region
         for (var minor in PROTECTED_MINORS) {
             if (working_votes[minor] !== undefined) {
@@ -356,6 +364,7 @@ for (var constituency of Q.congreso_constituencies) {
                 console.log(`Protected minor check for ${minor}: share ${share.toFixed(2)}% threshold ${threshold*100}%`);
                 while (share >= threshold) {
                     total_party_seats[minor] += 1;
+                    rest_seats[minor] = (rest_seats[minor] || 0) + 1;
                     protected_seats_awarded++;
                     share -= threshold;
                     console.log(`  -> Awarded protected seat to ${minor}, total now ${total_party_seats[minor]}, shares left ${share.toFixed(2)}%`);
@@ -389,14 +398,21 @@ for (var constituency of Q.congreso_constituencies) {
                     biased_votes[p] = working_votes[p] * multiplier;
                 }
                 var dist_res = dhondt_method(biased_votes, dist_size);
-                for (var p in dist_res) total_party_seats[p] += dist_res[p];
+                for (var p in dist_res) {
+                    total_party_seats[p] += dist_res[p];
+                    rest_seats[p] = (rest_seats[p] || 0) + dist_res[p];
+                }
             }
         }
+        for (var p of Q.congreso_parties_rest) Q[p + '_congreso_s_rest'] = rest_seats[p] || 0;
 
     } else {
         // STANDARD REGIONAL
         seat_results = dhondt_method(region_votes_map, seats_available);
-        for (var p in seat_results) total_party_seats[p] += seat_results[p];
+        for (var p in seat_results) {
+            total_party_seats[p] += seat_results[p];
+            Q[p + '_congreso_s_' + constituency] = seat_results[p];
+        }
     }
     
     // Regional PV Calculation (Valid Votes Only)
@@ -406,6 +422,65 @@ for (var constituency of Q.congreso_constituencies) {
             Q[p + '_congreso_pv_cat'] = ((region_votes_map[p] / region_valid_total) * 100).toFixed(2);
         }
     }
+
+    // Map colour for the simulated regions = POPULAR-VOTE winner of the constituency.
+    // Must be the most-voted party, NOT the seat leader — D'Hondt seat ties could
+    // otherwise hand the colour to a party that came second in votes.
+    if (constituency !== 'rest') {
+        var _vLead = null, _vBest = -1;
+        for (var p of local_parties) {
+            var _v = region_votes_map[p] || 0;
+            if (_v > _vBest) { _vBest = _v; _vLead = p; }
+        }
+        Q['congreso_' + constituency + '_wp'] = _vBest > 0 ? _vLead : null;
+    }
+}
+
+// 03b. Map painting — synthetic 'rest' province winners. (Simulated regions are
+// coloured by their popular-vote winner, computed in the main loop above.)
+// 'rest' has no per-province model — synthesise a believable winner per province from
+// the aggregate 'rest' support, modulated by the same urban/rural bias the seat
+// allocator uses, a light historical lean, and regional-minor strongholds. Map flavour
+// only (mirrors the synthetic comarques in @local_elections).
+var REST_PROVINCE_LEAN = {
+    "madrid":             { bias: "urban",   lean: { pp: 1.15, podemos: 1.20, cs: 1.15, vox: 1.10 } },
+    "andalusia":          { bias: "rural",   lean: { psoe: 1.45, podemos: 1.10, vox: 1.05 } },
+    "extremadura":        { bias: "rural",   lean: { psoe: 1.60, pp: 1.05 } },
+    "castilla_la_mancha": { bias: "rural",   lean: { pp: 1.25, psoe: 1.20 } },
+    "castile_and_leon":   { bias: "rural",   lean: { pp: 1.45 } },
+    "murcia":             { bias: "neutral", lean: { pp: 1.40, vox: 1.25 } },
+    "la_rioja":           { bias: "rural",   lean: { pp: 1.40 } },
+    "aragon":             { bias: "rural",   lean: { pp: 1.30, psoe: 1.05 }, minor: "te" },
+    "asturias":           { bias: "neutral", lean: { psoe: 1.35, iu: 1.20 }, minor: "fac" },
+    "cantabria":          { bias: "neutral", lean: { pp: 1.20, psoe: 1.05 }, minor: "prc" },
+    "canary_islands":     { bias: "neutral", lean: { psoe: 1.10, pp: 1.05 }, minor: "cc" },
+    "ceuta":              { bias: "neutral", lean: { pp: 1.50, vox: 1.20 } },
+    "melilla":            { bias: "neutral", lean: { pp: 1.50, psoe: 1.10 } }
+};
+var REST_MINOR_PARTIES = { cc: 1, prc: 1, fac: 1, te: 1 };
+// left-bloc carrier aliases share Podemos's bias/lean profile
+function _restBiasKey(party) { return (party === 'up' || party === 'sumar') ? 'podemos' : party; }
+var _restSupport = {};
+for (var p of Q.congreso_parties_rest) _restSupport[p] = Q[p + '_congreso_rest_support'] || 0;
+
+for (var provId in REST_PROVINCE_LEAN) {
+    var cfg = REST_PROVINCE_LEAN[provId];
+    var biasSet = cfg.bias === 'urban' ? Q.congreso_urban_bias
+                : cfg.bias === 'rural' ? Q.congreso_rural_bias : {};
+    var scores = {};
+    for (var p of Q.congreso_parties_rest) {
+        if (REST_MINOR_PARTIES[p]) {
+            // a regional minor only contends in (and dominates) its home province
+            scores[p] = (cfg.minor === p) ? _restSupport[p] * 25 : 0;
+            continue;
+        }
+        var bk = _restBiasKey(p);
+        var mult = (biasSet[bk] || 1.0) * ((cfg.lean && cfg.lean[bk]) || 1.0);
+        scores[p] = _restSupport[p] * mult;
+    }
+    var winP = null, winBest = 0;
+    for (var p in scores) { if (scores[p] > winBest) { winBest = scores[p]; winP = p; } }
+    Q['congreso_prov_' + provId + '_wp'] = winP;
 }
 
 // 04. Final Global Calculations

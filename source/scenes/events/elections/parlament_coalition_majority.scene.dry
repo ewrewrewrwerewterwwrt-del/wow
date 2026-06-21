@@ -1,0 +1,69 @@
+title: Single-Party Majority Government
+view-if: parlament_coalition_majority_s
+choose-if: parlament_coalition_majority_s >= parlament_s_majority
+subtitle: [? if parlament_coalition_majority_party == player_party: We won an absolute majority, we can govern on our own! ?][? if parlament_coalition_majority_party != player_party: [+ parlament_coalition_majority_party +] holds an absolute majority and will govern alone.?]
+on-arrival: {!
+    var mp = Q.parlament_coalition_majority_party;
+
+    Q.erc_in_gob = false;
+    Q.erc_supporting = false;
+    Q.cup_in_gob = false;
+    Q.cup_supporting = false;
+    Q.cat_coalition_dissent = 0;
+    Q.month_actions += 1;
+
+    Q.cat_coalition = [mp];
+    Q.cat_coalition_disp = "<span style='color: var(--" + mp + "); font-style: italic;'>" + mp + " Majority Government</span>";
+
+    Q.parlament_coalition_proposal_president = mp;
+    Q.parlament_coalition_proposal_vp = mp;
+    Q.parlament_coalition_proposal_economy = mp;
+    Q.parlament_coalition_proposal_interior = mp;
+    Q.parlament_coalition_proposal_health = mp;
+    Q.parlament_coalition_proposal_education = mp;
+    Q.parlament_coalition_proposal_foreign = mp;
+    Q.parlament_coalition_proposal_territory = mp;
+    Q.parlament_coalition_proposal_bnl = mp;
+
+    // Speaker from the governing party (established second-figure names where known)
+    Q.speaker_party = mp;
+    if (mp == "erc") {
+        if (Q.year < 2016) { Q.speaker = "Anna Simó"; Q.speaker_gender = "f"; }
+        else { Q.speaker = "Roger Torrent"; Q.speaker_gender = "m"; }
+    } else if (mp == "ciu") {
+        Q.speaker = "Núria de Gispert"; Q.speaker_gender = "f";
+    } else if (mp == "cdc" || mp == "dl") {
+        Q.speaker = "Carles Campuzano"; Q.speaker_gender = "m";
+    } else if (mp == "pdcat") {
+        Q.speaker = "Lluís Corominas"; Q.speaker_gender = "m";
+    } else if (mp == "jxcat" || mp == "junts") {
+        if (Q.junts_leader != "Laura Borràs") { Q.speaker = "Laura Borràs"; Q.speaker_gender = "f"; }
+        else { Q.speaker = "Albert Batet"; Q.speaker_gender = "m"; }
+    } else {
+        // TODO: Fix this gracious fallback, we have more speaker options in other govt formation paths
+        Q.speaker = Q[mp + "_leader"];
+        Q.speaker_gender = Q[mp + "_leader_gender"] || "m";
+    }
+
+    if (mp == Q.player_party) {
+        Q.position_disp = "Generalitat";
+        if (mp == "erc") { Q.erc_in_gob = true; Q.erc_supporting = true; }
+        else if (mp == "cup") { Q.cup_in_gob = true; Q.cup_supporting = true; }
+    } else {
+        Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
+    }
+
+    // A unionist single-party government inflames the movement and erodes trust in the process
+    if (mp == "cs" || mp == "ppc" || mp == "psc" || mp == "vox") {
+        Q.independence_movement += 10;
+        Q.independence_trust -= 15;
+    }
+!}
+go-to: parlament_coalition_setnames
+set-jump: display_government
+
+[? if parlament_coalition_majority_party == player_party: We have secured an absolute majority and will govern alone. ?][? if parlament_coalition_majority_party != player_party: [+ parlament_coalition_majority_party +] secured an absolute majority and will govern alone. ?] The Speaker of the House will be [+ speaker +] ([+ speaker_party +]).
+
+@display_government
+
+- @parlament_coalition_resolve: A new government is formed.

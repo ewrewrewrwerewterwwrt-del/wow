@@ -245,6 +245,10 @@
       "catalonia-local-map",
       dendryUI.dendryEngine.state.qualities,
     );
+    initCongresoMap(
+      "congreso-map-widget",
+      dendryUI.dendryEngine.state.qualities,
+    );
     initCatCoalitions(
       "parlament-coalition-widget",
       window._cvParlement,
@@ -280,6 +284,10 @@
     );
     initCatLocalMap(
       "catalonia-local-map",
+      dendryUI.dendryEngine.state.qualities,
+    );
+    initCongresoMap(
+      "congreso-map-widget",
       dendryUI.dendryEngine.state.qualities,
     );
     initCatCoalitions(
@@ -319,6 +327,10 @@
       "catalonia-local-map",
       dendryUI.dendryEngine.state.qualities,
     );
+    initCongresoMap(
+      "congreso-map-widget",
+      dendryUI.dendryEngine.state.qualities,
+    );
     initCatCoalitions(
       "parlament-coalition-widget",
       window._cvParlement,
@@ -340,6 +352,10 @@
     );
     initCatLocalMap(
       "catalonia-local-map",
+      dendryUI.dendryEngine.state.qualities,
+    );
+    initCongresoMap(
+      "congreso-map-widget",
       dendryUI.dendryEngine.state.qualities,
     );
     initCatCoalitions(
@@ -518,6 +534,10 @@
     );
     initCatLocalMap(
       "catalonia-local-map",
+      dendryUI.dendryEngine.state.qualities,
+    );
+    initCongresoMap(
+      "congreso-map-widget",
       dendryUI.dendryEngine.state.qualities,
     );
     initCatCoalitions(

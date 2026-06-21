@@ -44,8 +44,25 @@
  *   "abstain"     striped bar — tolerates; prevents a blocking no
  *   Default: "government"
  *
+ * ── Aggregate "bucket" members ───────────────────────────────────────────────
+ *   A member may stand for a whole bloc of minor parties rather than one party.
+ *   Give it an explicit `seats` (the bloc total) and `color` (a CSS colour, e.g.
+ *   "#b5485d" or "var(--erc)") so it can paint without a per-party CSS var; the
+ *   `label` is the bloc name. Used by the Congreso widget, where individual
+ *   kingmaker minors are bucketed (plurinational left / pact-pragmatists / …).
+ *
  * ── Visibility ───────────────────────────────────────────────────────────────
- *   A row renders when ANY of:
+ *   PREFERRED — single source of truth: give the entry a `seatsVar` naming a
+ *   precomputed coalition-total quality (e.g. "parlament_coalition_ciu_erc_s").
+ *   That is the SAME variable the matching option scene reads in its `view-if`,
+ *   so the bar and the clickable option can never disagree. The row renders iff
+ *     Q[seatsVar] > 0   (|| def.alwaysShow || Q.debug)
+ *   The total is 0 when the coalition is structurally inapplicable (wrong
+ *   who-leads ordering, a party absent), matching `view-if`. The members list is
+ *   then used ONLY to draw the coloured per-party segments + count.
+ *
+ *   LEGACY — display-only landscape bars with no corresponding option may omit
+ *   `seatsVar` and keep a self-contained `condition`; those render when ANY of:
  *     effectiveSeats >= majority
  *     delta >= -nearMissThreshold
  *     def.alwaysShow === true
@@ -86,11 +103,14 @@
       /* one row = label line + bar line stacked */
       ".cv-entry{margin-bottom:.9em}",
 
-      /* label row */
-      ".cv-label-row{display:flex;align-items:baseline;gap:.4em;margin-bottom:.3em}",
-      ".cv-entry-name{color:var(--text-color,#ddd); font-weight:bold}",
-      ".cv-entry-members{white-space:nowrap}",
-      ".cv-entry-count{margin-left:auto;white-space:nowrap}",
+      /* label row: [ name + members ............ ] [count]
+         the name+members block (cv-label-main) takes the remaining width and
+         WRAPS onto as many lines as it needs; the count stays pinned top-right. */
+      ".cv-label-row{display:flex;align-items:baseline;gap:.5em;margin-bottom:.3em}",
+      ".cv-label-main{flex:1 1 auto;min-width:0;line-height:1.5}",
+      ".cv-entry-name{color:var(--text-color,#ddd);font-weight:bold;margin-right:.35em}",
+      ".cv-member{white-space:nowrap}", /* keep e.g. \"EAJ-PNV (abst.)\" intact; only the \" + \" joins break */
+      ".cv-entry-count{flex:0 0 auto;white-space:nowrap;align-self:baseline}",
       ".cv-count-ok{color:var(--success-color,#4caf50)}",
       ".cv-count-warn{color:var(--warning-color,#ff9800)}",
       ".cv-count-info{color:var(--info-color,#2196f3)}",
@@ -122,14 +142,29 @@
   // ── render one coalition entry ─────────────────────────────────────────────
 
   function renderEntry(def, config, seats, Q) {
-    // condition gate
-    var condOk =
-      def.condition == null
-        ? true
-        : typeof def.condition === "function"
-          ? def.condition(seats)
-          : !!def.condition;
-    if (!condOk) return null;
+    var alwaysShow = !!def.alwaysShow; // || !!(Q && Q.debug);
+
+    // ── visibility gate (single source of truth) ────────────────────────────
+    // When an entry names a `seatsVar`, its visibility is driven by that
+    // precomputed coalition-total quality — the SAME variable the matching
+    // option scene reads in its `view-if`. The total is 0 when the coalition is
+    // structurally inapplicable (wrong who-leads ordering, a party absent), so
+    // `> 0` means "this coalition is on the table", exactly mirroring `view-if`
+    // (which shows the option — greyed — regardless of distance to majority).
+    // Entries WITHOUT a seatsVar keep a self-contained `condition` plus the
+    // legacy near-miss distance gate: the display-only landscape bars that have
+    // no corresponding option (yet).
+    if (def.seatsVar != null) {
+      if (!alwaysShow && !(Q && +Q[def.seatsVar] > 0)) return null;
+    } else {
+      var condOk =
+        def.condition == null
+          ? true
+          : typeof def.condition === "function"
+            ? def.condition(seats)
+            : !!def.condition;
+      if (!condOk) return null;
+    }
 
     var majority = +config.majoritySeats;
     var near =
@@ -145,6 +180,12 @@
         label: m.label != null ? m.label : realKey,
         seats: m.seats != null ? +m.seats : seats(m.party),
         type: m.type || "government",
+        // optional explicit segment colour — lets an aggregate "bucket" member
+        // (e.g. a whole bloc of minor parties) paint without a per-party CSS var.
+        color: m.color != null ? m.color : null,
+        // escalated = this stance is only reachable through a hard negotiation
+        // (an abstainer talked into voting yes, or an opponent dragged in).
+        escalated: !!m.escalated,
       };
     });
 
@@ -161,10 +202,15 @@
     var effectiveSeats = Math.floor(yesSeats + abstainSeats / 2);
     var delta = effectiveSeats - majority;
 
-    var alwaysShow = !!def.alwaysShow || !!Q.debug;
-
-    // visibility gate
-    if (!alwaysShow && effectiveSeats < majority && delta < -near) return null;
+    // legacy near-miss gate — only for display-only (condition-based) entries;
+    // seatsVar entries were already gated above to mirror their option's view-if.
+    if (
+      def.seatsVar == null &&
+      !alwaysShow &&
+      effectiveSeats < majority &&
+      delta < -near
+    )
+      return null;
 
     // status
     var countClass, countText;
@@ -191,9 +237,15 @@
     var labelRow = document.createElement("div");
     labelRow.className = "cv-label-row";
 
+    // name + members share one flex column that wraps across as many lines as it
+    // needs; each member token is kept whole (so "EAJ-PNV (abst.)" never splits)
+    // while the " + " joins stay breakable.
+    var main = document.createElement("div");
+    main.className = "cv-label-main";
+
     var name = document.createElement("span");
     name.className = "cv-entry-name";
-    name.innerHTML = window.applyWholesome(def.label) + ":" || "";
+    name.innerHTML = (window.applyWholesome(def.label) + ":") || "";
 
     var memberSpan = document.createElement("span");
     memberSpan.className = "cv-entry-members";
@@ -202,22 +254,42 @@
         return m.seats > 0;
       })
       .map(function (m) {
+        // escalated stances (won only through hard talks) are tagged with a "*"
+        var star = m.escalated ? "*" : "";
         var suffix =
           m.type === "support"
-            ? " <span style='opacity:.6'>(support)</span>"
+            ? " <span style='opacity:.6'>(support" + star + ")</span>"
             : m.type === "abstain"
-              ? " <span style='opacity:.6'>(abst.)</span>"
+              ? " <span style='opacity:.6'>(abst." + star + ")</span>"
               : "";
-        return window.applyWholesome(m.label) + suffix;
+        var title = m.escalated ? " title='requires negotiation'" : "";
+        return (
+          "<span class='cv-member'" +
+          title +
+          ">" +
+          window.applyWholesome(m.label) +
+          suffix +
+          "</span>"
+        );
       })
       .join(" + ");
 
+    var hasEscalation = members.some(function (m) {
+      return m.escalated && m.seats > 0;
+    });
+
     var countSpan = document.createElement("span");
     countSpan.className = "cv-entry-count " + countClass;
-    countSpan.innerHTML = countText;
+    // a "*" on the headline flags a majority that only holds with negotiated stances
+    countSpan.innerHTML =
+      countText +
+      (hasEscalation
+        ? " <span class='cv-count-muted' title='requires negotiation'>*</span>"
+        : "");
 
-    labelRow.appendChild(name);
-    labelRow.appendChild(memberSpan);
+    main.appendChild(name);
+    main.appendChild(memberSpan);
+    labelRow.appendChild(main);
     labelRow.appendChild(countSpan);
 
     // bar
@@ -242,10 +314,11 @@
         (m.type === "support" ? " cv-seg-support" : "") +
         (m.type === "abstain" ? " cv-seg-abstain" : "");
       seg.style.width = pct.toFixed(3) + "%";
-      seg.style.background = getPartyColor(m.party);
+      var segColor = m.color || getPartyColor(m.party);
+      seg.style.background = segColor;
       // abstain stripe needs the color for the ::after pseudo-element too
       if (m.type === "abstain") {
-        seg.style.setProperty("--seg-color", getPartyColor(m.party));
+        seg.style.setProperty("--seg-color", segColor);
       }
       seg.title = m.label + ": " + m.seats + " seats";
       seg.textContent = m.seats;

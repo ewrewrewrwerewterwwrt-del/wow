@@ -1,0 +1,403 @@
+title: congreso coalition
+new-page: true
+on-arrival: {!
+    // ── Reset flags ──────────────────────────────────────────────────────────
+    Q.congreso_coalition_psoe_cs_wtf = false;
+
+    // ── Helper: live seats ───────────────────────────────────────────────────
+    var S = function (p) { return (p && Q[p + "_congreso_s"] > 0) ? Q[p + "_congreso_s"] : 0; };
+
+    var congresoTotal = 0;
+    for (var ck in Q.congreso_seats) congresoTotal += Q.congreso_seats[ck];
+    if (!congresoTotal) congresoTotal = 350;
+
+
+    var playerVehicle = Q.player_party;
+    if ((Q.player_party === "erc" && Q.erc_in_jxsi) || (Q.player_party === "cup" && Q.cup_in_jxsi)) playerVehicle = "jxsi";
+    else if ((Q.player_party === "erc" && Q.erc_in_jxcat) || (Q.player_party === "cup" && Q.cup_in_jxcat)) playerVehicle = "jxcat";
+    Q.congreso_player_vehicle = playerVehicle;
+    Q.congreso_player_s = S(playerVehicle);
+
+    // ── Dynamic carriers ─────────────────────────────────────────────────────
+    // Left govt partner: Sumar → UP → Podemos → (IU as last resort).
+    var leftCarrier = S("sumar") ? "sumar" : S("up") ? "up" : S("podemos") ? "podemos" : (!Q.iu_in_up && S("iu") ? "iu" : "podemos");
+    Q.congreso_left_carrier = leftCarrier;
+    // IU as a *separate* junior partner only when it didn't fold and isn't itself the carrier.
+    var iuSupport = (!Q.iu_in_up && S("iu") > 0 && leftCarrier !== "iu") ? S("iu") : 0;
+
+    // Catalan sovereigntist (post-Convergència) carrier — the first live one that
+    // isn't the player's own vehicle. Its roadmap drives the whole bucket's stance.
+    var catRightCarrier = null;
+    var catRightList = ["junts", "jxcat", "jxsi", "pdcat", "dl", "cdc", "ciu"];
+    for (var i = 0; i < catRightList.length; i++) {
+        if (!catRightCarrier && catRightList[i] !== playerVehicle && S(catRightList[i]) > 0) catRightCarrier = catRightList[i];
+    }
+    Q.congreso_cat_right_carrier = catRightCarrier;
+    var catRightRoadmap = catRightCarrier ? (Q[catRightCarrier + "_roadmap"] || 0) : 0;
+
+    var catRightRoadmap = 2; //debug
+
+    // ── Government cores ─────────────────────────────────────────────────────
+    // PSOE core already absorbs PSC (folded → 0 seats) unless a split casts PSC
+    // out; a split PSC then stands as its own courted kingmaker, NOT part of core.
+    var psoeCore = S("psoe");
+    var progCore = psoeCore + S(leftCarrier) + iuSupport;               // coalition cabinet
+    var ppVoxCore = S("pp") + S("vox");
+    var ppCsCore  = S("pp") + S("cs");
+    // Sorpasso: the radical left out-seats PSOE ⇒ a Podemos-led progressive bloc.
+    // Only THEN can the anti-regime left (CUP/FR) ever be talked aboard; they will
+    // never lend themselves to a PSOE-led government.
+    var leftPodemosLed = S(leftCarrier) > psoeCore;
+
+    // Single-party absolute majority (only conceivable for a national party).
+    Q.congreso_coalition_majority_party = null;
+    Q.congreso_coalition_majority_s = 0;
+    for (var mp of Q.congreso_parties_rest) {
+        if (Q[mp + "_congreso_s"] >= Q.congreso_s_majority) {
+            Q.congreso_coalition_majority_party = mp;
+            Q.congreso_coalition_majority_s = Q[mp + "_congreso_s"];
+        }
+    }
+
+    // ── Bloc seat totals = "is this government core on the table?" ────────────
+    Q.congreso_coalition_progressive_s = (S("psoe") > 0 && (S(leftCarrier) > 0 || iuSupport > 0)) ? progCore : 0;
+    Q.congreso_coalition_psoe_min_s    = S("psoe") > 0 ? psoeCore : 0;
+    Q.congreso_coalition_pp_vox_s      = (S("pp") > 0 && S("vox") > 0) ? ppVoxCore : 0;
+    Q.congreso_coalition_pp_cs_s       = (S("pp") > 0 && S("cs") > 0) ? ppCsCore : 0;
+    Q.congreso_coalition_pp_min_s      = S("pp") > 0 ? S("pp") : 0;
+    Q.congreso_coalition_grand_s_pp    = (S("pp") > 0 && S("psoe") > 0) && S("pp") > S("psoe") ? S("pp") + psoeCore : 0;
+    Q.congreso_coalition_grand_s_psoe    = (S("pp") > 0 && S("psoe") > 0) && S("pp") <= S("psoe") ? S("pp") + psoeCore : 0;
+    Q.congreso_coalition_grand_s_ppcs = (S("pp") > 0 && S("psoe") > 0 && S("cs") > 0) && S("pp") > S("psoe") ? S("pp") + psoeCore : 0;
+
+    // 2015–16 special: PSOE–Cs tried despite the arithmetic not being there.
+    Q.congreso_coalition_psoe_cs = S("cs") ? psoeCore + S("cs") : 0;
+    if (Q.congreso_coalition_psoe_cs >= 0.69 * Q.congreso_s_majority && Q.congreso_coalition_psoe_cs < Q.congreso_s_majority && !Q.congreso_coalition_psoe_cs_wtf_happened) {
+        Q.congreso_coalition_psoe_cs_wtf = true;
+    }
+
+    // ── Bucket postures toward each bloc (design knobs) ──────────────────────
+    var catRightVsLeft  = (catRightRoadmap >= 1 && catRightRoadmap <= 2) ? "abstain" : "oppose";
+    var catRightVsRight = (catRightRoadmap <= 1) ? "abstain" : "oppose";
+
+    // The player's own default posture, by which bucket they belong to.
+    var playerIsCatRight = catRightList.indexOf(playerVehicle) >= 0;
+    var playerRoadmap = Q[playerVehicle + "_roadmap"] || 0;
+    var playerVsLeft, playerVsRight;
+    if (playerIsCatRight) {
+        playerVsLeft  = (playerRoadmap >= 1 && playerRoadmap <= 2) ? "abstain" : "oppose";
+        playerVsRight = (playerRoadmap <= 1) ? "abstain" : "oppose";
+    } else {                       // plurinational left (erc / cup / …): the lever
+        playerVsLeft  = "abstain"; // an abstention enables a progressive govt
+        playerVsRight = "oppose";
+    }
+
+    // ── Party catalog: posture per party toward each bloc ────────────────────
+    // Each kingmaker minor carries its stance toward a LEFT-led and a (moderate)
+    // RIGHT-led government. The Catalan sovereigntist carrier and the player's own
+    // vehicle are roadmap-driven and resolved live (catRightVs*/playerVs* above).
+    // "oppose" ⇒ the party simply never joins that bloc.
+    var LEFT_POSTURE = {
+        // small regional / plurinational minors — vote YES for a progressive bloc
+        compromis:"support", mes:"support", gbai:"support", nos:"support",
+        bng:"support", te:"support", prc:"support", pnv:"support",
+        // pragmatic dealmaker — merely tolerates
+        cc:"abstain",
+        // the big nationalist left + a split PSC — enable by abstaining, stay out
+        ehbildu:"abstain", amaiur:"abstain", erc:"abstain", cup:"oppose", fr:"oppose", psc:"abstain",
+        // centralist right opposes the left
+        upn:"oppose", nsuma:"oppose", fac:"oppose", upyd:"oppose"
+    };
+    var RIGHT_POSTURE = {           // a *moderate* right core (PP / PP+Cs)
+        upn:"support", nsuma:"support", fac:"support", upyd:"support",
+        cc:"abstain", prc:"abstain", te:"abstain", pnv:"abstain",
+        compromis:"oppose", mes:"oppose", gbai:"oppose", nos:"oppose",
+        bng:"oppose", fr:"oppose", ehbildu:"oppose", amaiur:"oppose",
+        erc:"oppose", cup:"oppose", psc:"oppose"
+    };
+    // Pact-pragmatists tolerate a moderate right but NOT a Vox-tainted cabinet.
+    var isPragmatist = function (p) { return p === "cc" || p === "prc" || p === "te" || p === "pnv"; };
+
+    // ── Hard ideological opponents (never flippable, even under extreme talks) ──
+    var HARD_LEFT  = { upn:1, nsuma:1, fac:1, upyd:1 };
+    var HARD_RIGHT = { compromis:1, mes:1, gbai:1, nos:1, bng:1, fr:1, ehbildu:1, amaiur:1, erc:1, cup:1, psc:1 };
+
+    // ── Courting order ───────────────────────────────────────────────────────
+    var COURT_ORDER = [
+        "upn", "fac", "nsuma", "upyd",                                            // centralist-right allies
+        "compromis", "mes", "te", "prc", "cc", "nos", "gbai", "bng", "fr", "psc", // small regional minors
+        "pnv", "ehbildu", "amaiur",                                               // Basque bloc (PNV the pragmatic, cheaper one)
+        "@player", "erc", "cup", "@catright"                                      // the Catalan last resort — the sovereigntist right (DL/Junts) dead last
+    ];
+
+    var playerDesc = (Q.congreso_player_s > 0)
+        ? { party: playerVehicle, seats: Q.congreso_player_s, left: playerVsLeft, right: playerVsRight, rightvox: playerVsRight,
+            negLeft: (playerVehicle === "cup" || playerVehicle === "fr") ? leftPodemosLed : true,
+            negRight: playerIsCatRight && playerRoadmap <= 1 }
+        : null;
+    // The Catalan sovereigntist carrier deals transactionally — but a hardened
+    // roadmap (>=2) rules out backing a Spanish right government even under talks.
+    var catDesc = (catRightCarrier && catRightCarrier !== playerVehicle && S(catRightCarrier) > 0)
+        ? { party: catRightCarrier, seats: S(catRightCarrier), left: catRightVsLeft, right: catRightVsRight, rightvox: catRightVsRight,
+            negLeft: true, negRight: catRightRoadmap <= 1 }
+        : null;
+
+    // Live candidate descriptors, already in courting order; folded comps (0 seats)
+    // and the core parties (never in COURT_ORDER) drop out automatically.
+    var candidates = [];
+    for (var ci = 0; ci < COURT_ORDER.length; ci++) {
+        var key = COURT_ORDER[ci];
+        if (key === "@player")   { if (playerDesc) candidates.push(playerDesc); continue; }
+        if (key === "@catright") { if (catDesc)    candidates.push(catDesc);    continue; }
+        if (key === playerVehicle || key === catRightCarrier) continue; // already placed as a descriptor
+        var ks = S(key);
+        if (ks <= 0) continue;
+        candidates.push({
+            party: key, seats: ks,
+            left:     LEFT_POSTURE[key]  || "oppose",
+            right:    RIGHT_POSTURE[key] || "oppose",
+            rightvox: isPragmatist(key) ? "oppose" : (RIGHT_POSTURE[key] || "oppose"),
+            // CUP/FR (anti-regime) only ever flip for a Podemos-led left; the
+            // centralist right never flips for the left at all (HARD_LEFT).
+            negLeft:  HARD_LEFT[key] ? false : ((key === "cup" || key === "fr") ? leftPodemosLed : true),
+            negRight: !HARD_RIGHT[key]
+        });
+    }
+
+    // ── Greedy coalition builder (two tiers: base, then escalation) ──────────
+    // Investiture clears on the 2nd-round rule, yes + abstain/2 >= majority.
+    //  Phase 1 — court partners at their BASE posture, in order, until it clears,
+    //            then STOP. Only the parties actually needed show, so an easy
+    //            coalition reads as "who this government really depends on".
+    //  Phase 2 — still short? ESCALATE up the ladder oppose → abstain → support,
+    //            ONE rank at a time, always taking the earliest-courted partner
+    //            with headroom toward its ceiling. So a friendlier partner reaches
+    //            active support before a more hostile one is even pulled in to
+    //            abstain, and a dragged-in opponent passes through abstain before
+    //            support (abstention is a real middle step). Anything pushed past
+    //            its base stance is flagged as negotiated — concession mechanics
+    //            come later; for now this is the arithmetic-of-the-possible view.
+    var fillMajority = Q.congreso_s_majority || 176;
+    var RANK = { oppose: 0, abstain: 1, support: 2 };
+    var RANKNAME = ["oppose", "abstain", "support"];
+    var seatsOf = function (m) { return (m.seats != null) ? +m.seats : S(m.party); };
+    // How far a candidate can be pushed for a bloc. A Vox-tainted cabinet can't be
+    // negotiated upward, so "rightvox" never escalates past its base posture.
+    var ceilingOf = function (c, mode) {
+        if (mode === "left")  return c.negLeft  ? "support" : c.left;
+        if (mode === "right") return c.negRight ? "support" : c.right;
+        return c.rightvox;
+    };
+    var fill = function (core, mode) {
+        var members = core.slice();
+        var yes = 0, abst = 0;
+        var addSeats = function (seats, type) { if (type === "abstain") abst += seats; else yes += seats; };
+        members.forEach(function (m) { addSeats(seatsOf(m), m.type); });
+        var enough = function () { return Math.floor(yes + abst / 2) >= fillMajority; };
+
+        // One slot per candidate, tracking its base + current rank and live member.
+        var slots = [];
+        for (var i0 = 0; i0 < candidates.length; i0++) {
+            slots.push({ c: candidates[i0], base: RANK[candidates[i0][mode]] || 0, rank: 0, mem: null });
+        }
+
+        // Phase 1 — seat partners at their BASE posture, in order, until it clears.
+        for (var s1 = 0; s1 < slots.length && !enough(); s1++) {
+            var sl = slots[s1];
+            if (sl.base <= 0) continue;                                       // oppose at base — not yet
+            sl.rank = sl.base;
+            sl.mem = { party: sl.c.party, seats: sl.c.seats, type: RANKNAME[sl.rank] };
+            members.push(sl.mem); addSeats(sl.c.seats, sl.mem.type);
+        }
+
+        // Phase 2 — climb one rank at a time, earliest-courted partner with headroom.
+        while (!enough()) {
+            var moved = false;
+            for (var s2 = 0; s2 < slots.length; s2++) {
+                var t = slots[s2];
+                var ceil = RANK[ceilingOf(t.c, mode)] || 0;
+                if (t.rank >= ceil) continue;                                 // maxed (hard opponent ⇒ ceil 0)
+                var nr = t.rank + 1;
+                if (!t.mem) {                                                 // first time on the board (oppose → abstain)
+                    t.mem = { party: t.c.party, seats: t.c.seats, type: RANKNAME[nr] };
+                    members.push(t.mem); addSeats(t.c.seats, t.mem.type);
+                } else {                                                      // abstain → support: move its seats yes-ward
+                    if (t.mem.type === "abstain" && RANKNAME[nr] === "support") { abst -= t.c.seats; yes += t.c.seats; }
+                    t.mem.type = RANKNAME[nr];
+                }
+                t.rank = nr;
+                if (t.rank > t.base) t.mem.escalated = true;                  // beyond its natural stance ⇒ negotiated
+                moved = true;
+                break;                                                        // re-scan from the top after each single bump
+            }
+            if (!moved) break;                                               // nothing left to give
+        }
+        return members;
+    };
+    // Investiture maths over a finished member list (used to set choose-if flags).
+    var effOf = function (members) {
+        var y = 0, a = 0;
+        for (var i = 0; i < members.length; i++) { var v = seatsOf(members[i]); if (members[i].type === "abstain") a += v; else y += v; }
+        return Math.floor(y + a / 2);
+    };
+    var neededTalks = function (members) {
+        for (var i = 0; i < members.length; i++) if (members[i].escalated) return true;
+        return false;
+    };
+    var concat = function () {
+        var out = [];
+        for (var a = 0; a < arguments.length; a++) out = out.concat(arguments[a]);
+        return out;
+    };
+
+    // ── Build each coalition's member list ONCE ──────────────────────────────
+    // Shared by the viz bars (below) and the choose-if reachability flags, so the
+    // clickable option can never disagree with its bar.
+    var progMembers = fill(concat(
+        [{ party: "psoe", type: "government" }],
+        leftCarrier && S(leftCarrier) > 0 ? [{ party: leftCarrier, type: "government" }] : [],
+        iuSupport > 0 ? [{ party: "iu", type: "support" }] : []
+    ), "left");
+    var psoeMinMembers = fill(concat(
+        [{ party: "psoe", type: "government" }],
+        leftCarrier && S(leftCarrier) > 0 ? [{ party: leftCarrier, type: "support" }] : [],
+        iuSupport > 0 ? [{ party: "iu", type: "support" }] : []
+    ), "left");
+    var rightMembers = fill(
+        [{ party: "pp", type: "government" }, { party: "cs", type: "government" }],
+        "right"
+    );
+    var natRightMembers = fill(concat(
+        [{ party: "pp", type: "government" }, { party: "vox", type: "government" }],
+        S("cs") > 0 ? [{ party: "cs", type: "support" }] : []
+    ), "rightvox");
+    var ppMinMembers = fill(concat(
+        [{ party: "pp", type: "government" }],
+        S("cs") > 0 ? [{ party: "cs", type: "support" }] : []
+    ), "right");
+
+    // ── choose-if gating: the realistic menu the player can actually back ─────
+    // "reach" = clears investiture, allowing negotiated (starred) support — the
+    // player CAN pursue a hard-fought coalition. "talks" = that reach leans on at
+    // least one negotiated stance (flavour now; concession mechanics later).
+    var maj = Q.congreso_s_majority || 176;
+    Q.congreso_coalition_progressive_reach = (S("psoe") > 0 && (S(leftCarrier) > 0 || iuSupport > 0)) && effOf(progMembers)    >= maj;
+    Q.congreso_coalition_psoe_min_reach    =  S("psoe") > 0                                            && effOf(psoeMinMembers) >= maj;
+    Q.congreso_coalition_pp_cs_reach       = (S("pp") > 0 && S("cs") > 0)                              && effOf(rightMembers)    >= maj;
+    Q.congreso_coalition_pp_vox_reach      = (S("pp") > 0 && S("vox") > 0)                             && effOf(natRightMembers) >= maj;
+    Q.congreso_coalition_pp_min_reach      =  S("pp") > 0                                              && effOf(ppMinMembers)    >= maj;
+    Q.congreso_coalition_progressive_talks = Q.congreso_coalition_progressive_reach && neededTalks(progMembers);
+    Q.congreso_coalition_psoe_min_talks    = Q.congreso_coalition_psoe_min_reach    && neededTalks(psoeMinMembers);
+    Q.congreso_coalition_pp_cs_talks       = Q.congreso_coalition_pp_cs_reach       && neededTalks(rightMembers);
+    Q.congreso_coalition_pp_vox_talks      = Q.congreso_coalition_pp_vox_reach      && neededTalks(natRightMembers);
+    Q.congreso_coalition_pp_min_talks      = Q.congreso_coalition_pp_min_reach      && neededTalks(ppMinMembers);
+    Q.congreso_coalition_majority_reach    = Q.congreso_coalition_majority_s >= maj;
+
+    // Preference knobs (the "only as wide as realistic" rules):
+    //  • a PSOE–PP grand coalition is only on the table when PSOE *won't* be led by
+    //    Pedro Sánchez ("no es no"); any other PSOE leader could deal with the PP.
+    //  • PP→Cs always beats PP→Vox whenever the Cs maths is there (read directly in
+    //    the National-Right choose-if as "pp_vox_reach and not pp_cs_reach").
+    Q.congreso_coalition_grand_ok = (Q.psoe_leader !== "Pedro Sánchez");
+
+    // ── Widget config ────────────────────────────────────────────────────────
+    window._cvParlement = {
+        totalSeats:        congresoTotal,
+        majoritySeats:     Q.congreso_s_majority || 176,
+        majorityMarkAt:    0.55,
+        nearMissThreshold: 50,
+        seatsKey:          "{party}_congreso_s",
+        partyAliases: {
+            "majority_alias": Q.congreso_coalition_majority_party
+        },
+        coalitions: [
+            {
+                label: "Single-Party Majority Government",
+                seatsVar: "congreso_coalition_majority_s",
+                members: [
+                    { party: "majority_alias", type: "government" }
+                ]
+            },
+            {
+                label: "Progressist Government",
+                seatsVar: "congreso_coalition_progressive_s",
+                members: progMembers
+            },
+            {
+                label: "PSOE Minority Government",
+                seatsVar: "congreso_coalition_psoe_min_s",
+                members: psoeMinMembers
+            },
+            {
+                label: "PSOE-led Grand Coalition",
+                seatsVar: "congreso_coalition_grand_s_psoe",
+                members: [
+                    { party: "psoe", type: "government" },
+                    { party: "pp",   type: "support" }
+                ]
+            },
+            {
+                label: "PP-led Grand Coalition",
+                seatsVar: "congreso_coalition_grand_s_pp",
+                members: [
+                    { party: "pp",   type: "government" },
+                    { party: "psoe", type: "support" }
+                ]
+            },
+            {
+                label: "Grand Toleration",
+                // 2015–16 special: PP governs, Cs supports, PSOE abstains.
+                seatsVar: "congreso_coalition_grand_s_ppcs",
+                members: concat(
+                    [{ party: "pp", type: "government" }],
+                    S("cs") > 0 ? [{ party: "cs", type: "support" }] : [],
+                    [{ party: "psoe", type: "abstain" }]
+                )
+            },
+            {
+                label: "Right Coalition",
+                seatsVar: "congreso_coalition_pp_cs_s",
+                members: rightMembers
+            },
+            {
+                label: "National Right Coalition",
+                seatsVar: "congreso_coalition_pp_vox_s",
+                members: natRightMembers
+            },
+            {
+                label: "PP Minority Government",
+                seatsVar: "congreso_coalition_pp_min_s",
+                members: ppMinMembers
+            },
+            {
+                label: "Social-Centrist Coalition",
+                // 2015 "wtf" — tried even though the arithmetic isn't there.
+                seatsVar: "congreso_coalition_psoe_cs",
+                members: [
+                    { party: "psoe", type: "government" },
+                    { party: "cs",   type: "government" }
+                ]
+            }
+        ]
+    };
+!}
+
+= Coalitions and Negotiations
+
+[? if not congreso_coalition_majority_party : Many arithmetics seem possible right now in Madrid... ?][? if congreso_coalition_majority_party: Given the majority enjoyed by [+congreso_coalition_majority_party +], it does not look like there will be much negotiation to do.?]
+
+{!<div id="parlament-coalition-widget"></div>!}
+
+{!<span style="font-size:0.8em; font-style: italic;">* indicates a negotiation-dependant position.</span>!}
+
+- @congreso_coalition_majority.party
+- @congreso_coalition_progressive.progressive
+- @congreso_coalition_progressive.psoe_minority
+- @congreso_coalition_psoe_cs.wtf
+- @congreso_coalition_grand.psoe_led
+- @congreso_coalition_grand.pp_led
+- @congreso_coalition_grand.toleration
+- @congreso_coalition_right.pp_cs
+- @congreso_coalition_right.pp_vox
+- @congreso_coalition_right.pp_minority
+
+# TODO: if king-maker, force new elections?

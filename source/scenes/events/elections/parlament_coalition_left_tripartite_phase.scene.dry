@@ -28,26 +28,10 @@ go-to: phase_text
 go-to: parlament_coalition_setnames
 set-jump: choices 
 
-@choices
-new-page: true
-
 [? if left_tripartite_coalition_phase = 1: As the leading force of the coalition, we're expected to make a government composition proposal to the PSC and [+ parlament_current_icv +]. [? if parlament_coalition_changes: Right now, the proposal looks as follows: ?] ?][? if left_tripartite_coalition_phase > 1: Answering to our previous proposal, PSC and [+ parlament_current_icv +] have pushed back with a few ideas of their own on what shape this coalition government should take. [? if parlament_coalition_changes: After our ammendmends, it looks as follows: ?] ?]
 
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content:center"><img src="img/cat_seal.svg"></div><div style="width:80%; padding-left: 1em;"> **M.H.** [? if parlament_coalition_proposal_president_gender = "m": **President** ?][? if parlament_coalition_proposal_president_gender = "f": **Presidenta** ?] **[+ parlament_coalition_proposal_president_name +]** ([+ parlament_coalition_proposal_president +])<br/> <span style="font-size:0.9em;"> [? if parlament_coalition_proposal_vp_gender = "m": **H. Vicepresident** ?][? if parlament_coalition_proposal_vp_gender = "f": **H. Vicepresidenta** ?] [+ parlament_coalition_proposal_vp_name +] ([+ parlament_coalition_proposal_vp +])</span></div></div></div>
-
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/economy_icon.svg"/></div><div style="width: 100%"> **Economy** ([+ parlament_coalition_proposal_economy +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_economy_name +]</span></div></div>
-
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/health_icon.svg"/></div><div style="width: 100%"> **Health** ([+ parlament_coalition_proposal_health +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_health_name +]</span></div></div>
-
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/education_icon.svg"/></div><div style="width: 100%"> **Education** ([+ parlament_coalition_proposal_education +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_education_name +]</span></div></div>
-
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/interior_icon.svg"/></div><div style="width: 100%"> **Interior** ([+ parlament_coalition_proposal_interior +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_interior_name +]</span></div></div>
-
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/international_icon.svg"/></div><div style="width: 100%"> **Foreign Affairs** ([+ parlament_coalition_proposal_foreign +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_foreign_name +]</span></div></div>
-
-<div style="display:flex; align-content:center;width:105%"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/labour_icon.svg"/></div><div style="width: 100%"> **Business & Labour** ([+ parlament_coalition_proposal_bnl +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_bnl_name +]</span></div></div>
-
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/territory_icon.svg"/></div><div style="width: 100%"> **Territory** ([+ parlament_coalition_proposal_territory +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_territory_name +]</span></div></div>
+@choices
+new-page: true
 
 - @changes
 - @send_back
@@ -73,6 +57,10 @@ title: Propose a[? if left_tripartite_coalition_phase > 1 or parlament_coalition
 on-arrival: {!
     var psc_leverage = (Q.psc_parlament_s / Q.parlament_coalition_erc_psc_icv_s)*55 - 3 + Q.left_tripartite_coalition_phase;
     var icv_leverage = (Q.parlament_current_icv_s / Q.parlament_coalition_erc_psc_icv_s)*55 - 3 + Q.left_tripartite_coalition_phase;
+
+    // the partner holding the Speaker has spent capital there, so less pull on ministries
+    if (Q.speaker_party == "psc") psc_leverage -= 10;
+    if (Q.speaker_party == Q.parlament_current_icv) icv_leverage -= 10;
 
     var empty_positions = [];
     if (Q.parlament_coalition_proposal_vp != "erc") {
@@ -430,6 +418,10 @@ on-arrival: {!
     var psc_leverage = (Q.psc_parlament_s / Q.parlament_coalition_erc_psc_icv_s)*55 + 12 - 3*Q.left_tripartite_coalition_phase;
     var icv_leverage = (Q.parlament_current_icv_s / Q.parlament_coalition_erc_psc_icv_s)*55 + 12 - 3*Q.left_tripartite_coalition_phase;
 
+    // the partner holding the Speaker has spent capital there, so less pull on ministries
+    if (Q.speaker_party == "psc") psc_leverage -= 10;
+    if (Q.speaker_party == Q.parlament_current_icv) icv_leverage -= 10;
+
     if (icv_leverage > 10) {
         Q.parlament_coalition_proposal_education = Q.parlament_current_icv;
         icv_leverage -= 7;
@@ -494,8 +486,10 @@ on-arrival: {!
     Q.left_tripartite_coalition_phase = 0;
     Q[Q.parlament_current_icv + "_relations"] -= 5;
     Q.psc_relations -= 5;
-    Q.social_dissent += 10
-    // TODO: Move some votes to CUP, ICV, etc
+    Q.social_dissent += 10;
+    Q.snap_blame = Q.player_party;
+    Q.snap_counterparty = "psc";
+    Q.snap_severity = 0.12;
 !}
 call: snap_election
 

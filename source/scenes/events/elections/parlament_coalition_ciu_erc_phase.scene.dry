@@ -97,26 +97,10 @@ go-to: phase_text
 go-to: parlament_coalition_setnames
 set-jump: choices
 
-@choices
-new-page: true
-
 [? if not parlament_coalition_changes: The representatives of [+ parlament_current_ciu +] have come forward with a [?if ciu_erc_coalition_phase > 1: new?] proposal for the formation of a new coalition government: ?][? if parlament_coalition_changes: After our ammendments, the proposal for the formation of a new coalition government looks like this: ?]
 
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content:center"><img src="img/cat_seal.svg"></div><div style="width:80%; padding-left: 1em;"> **M.H.** [? if parlament_coalition_proposal_president_gender = "m": **President** ?][? if parlament_coalition_proposal_president_gender = "f": **Presidenta** ?] **[+ parlament_coalition_proposal_president_name +]** ([+ parlament_coalition_proposal_president +])<br/> <span style="font-size:0.9em;"> [? if parlament_coalition_proposal_vp_gender = "m": **H. Vicepresident** ?][? if parlament_coalition_proposal_vp_gender = "f": **H. Vicepresidenta** ?] [+ parlament_coalition_proposal_vp_name +] ([+ parlament_coalition_proposal_vp +])</span></div></div></div>
-
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/economy_icon.svg"/></div><div style="width: 100%"> **Economy** ([+ parlament_coalition_proposal_economy +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_economy_name +]</span></div></div>
-
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/health_icon.svg"/></div><div style="width: 100%"> **Health** ([+ parlament_coalition_proposal_health +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_health_name +]</span></div></div>
-
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/education_icon.svg"/></div><div style="width: 100%"> **Education** ([+ parlament_coalition_proposal_education +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_education_name +]</span></div></div>
-
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/interior_icon.svg"/></div><div style="width: 100%"> **Interior** ([+ parlament_coalition_proposal_interior +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_interior_name +]</span></div></div>
-
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/international_icon.svg"/></div><div style="width: 100%"> **Foreign Affairs** ([+ parlament_coalition_proposal_foreign +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_foreign_name +]</span></div></div>
-
-<div style="display:flex; align-content:center;width:105%"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/labour_icon.svg"/></div><div style="width: 100%"> **Business & Labour** ([+ parlament_coalition_proposal_bnl +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_bnl_name +]</span></div></div>
-
-<div style="display:flex; align-content:center;"><div style="width: 2em; align-content: center"><img style="height:1.5em;" src="img/territory_icon.svg"/></div><div style="width: 100%"> **Territory** ([+ parlament_coalition_proposal_territory +])<br/><span style="font-size:0.9em">[+ parlament_coalition_proposal_territory_name +]</span></div></div>
+@choices
+new-page: true
 
 [? if parlament_coalition_concessions_social or parlament_coalition_concessions_indy: **Policy Concessions**?]
 
@@ -444,7 +428,7 @@ on-arrival: {!
     Q.cup_in_gob = false;
     Q.cup_supporting = false;
     
-    Q.independence_trust += 10 * Q.roadmap - (Q.year-2012);
+    Q.independence_trust += 10 * Q.erc_roadmap - (Q.year-2012);
 !}
 
 After some arduous negotiations, we have finally reached an agreement with [+ parlament_current_ciu +] to form a [+ cat_coalition_disp +]. Let's hope cooperation continues during this legislature, and that promises are kept!
@@ -458,7 +442,9 @@ on-arrival: {!
     Q.ciu_erc_coalition_phase = 0;
     Q[Q.parlament_current_ciu + "_relations"] -= 5;
     Q.independence_trust -= 10;
-    // TODO: Move some votes to CUP, some to CiU
+    Q.snap_blame = Q.player_party;
+    Q.snap_counterparty = Q.parlament_current_ciu;
+    Q.snap_severity = 0.12;
 !}
 call: snap_election
 

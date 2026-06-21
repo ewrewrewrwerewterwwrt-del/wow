@@ -1,0 +1,45 @@
+title: grand coaltions
+
+You should not be here? Report a bug if you see this text.
+
+@psoe_led
+title: PSOE-led <span style="color: var(--psoe); font-style: italic;">Grand</span> <span style="color: var(--pp); font-style: italic;">Coalition</span> (PSOE - PP)
+subtitle: Unprecedented stuff
+view-if: congreso_coalition_grand_s_psoe > congreso_s_majority - 50
+choose-if: congreso_coalition_grand_s_psoe >= congreso_s_majority and congreso_coalition_grand_ok and not congreso_coalition_psoe_cs_wtf
+unavailable-subtitle: [? if congreso_coalition_grand_s_psoe < congreso_s_majority: PSOE and PP don't have enough seats, even together, ?][? if not congreso_coalition_grand_ok: [+ psoe_leader +] has ruled out any pact with the PP. ?][? if congreso_coalition_psoe_cs_wtf: This does not seem to be the plan of [+ psoe_leader +] and [+ csspa_leader +] ?]
+on-arrival: {!
+    // TODO
+!}
+
+TODO
+
+-@post_event: TO-DO
+
+@pp_led
+title: PP-led <span style="color: var(--pp); font-style: italic;">Grand</span> <span style="color: var(--psoe); font-style: italic;">Coalition</span> (PP - PSOE)
+subtitle: Unprecedented stuff
+view-if: congreso_coalition_grand_s_pp > congreso_s_majority - 50
+choose-if: congreso_coalition_grand_s_pp >= congreso_s_majority and congreso_coalition_grand_ok and not congreso_coalition_psoe_cs_wtf
+unavailable-subtitle: [? if congreso_coalition_grand_s_pp < congreso_s_majority: PP and PSOE don't have enough seats, even together, ?][? if not congreso_coalition_grand_ok: [+ psoe_leader +] has ruled out any pact with the PP. ?][? if congreso_coalition_psoe_cs_wtf: This does not seem to be the plan of [+ psoe_leader +] and [+ csspa_leader +] ?]
+on-arrival: {!
+    // TODO
+!}
+
+TODO
+
+-@post_event: TO-DO
+
+@toleration
+title: <span style="color: var(--pp); font-style: italic;">Grand</span> <span style="color: var(--cs); font-style: italic;">Coa</span><span style="color: var(--psoe); font-style: italic;">lition</span> (PP - Cs - PSOE)
+subtitle: Truly, what even is going on?
+view-if: congreso_coalition_grand_s_ppcs > congreso_s_majority - 50
+choose-if: congreso_coalition_grand_s_ppcs >= congreso_s_majority and congreso_coalition_grand_ok and not congreso_coalition_psoe_cs_wtf
+unavailable-subtitle: [? if congreso_coalition_grand_s_ppcs < congreso_s_majority: PP, Cs, and PSOE don't have enough seats, even together. ?][? if not congreso_coalition_grand_ok: [+ psoe_leader +] has ruled out any pact with the PP. ?][? if congreso_coalition_psoe_cs_wtf: This does not seem to be the plan of [+ psoe_leader +] and [+ csspa_leader +] ?]
+on-arrival: {!
+    // TODO proper stuff to trigger the choices
+!}
+
+TODO
+
+-@post_event: TO-DO

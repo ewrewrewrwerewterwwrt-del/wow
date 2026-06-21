@@ -31,6 +31,7 @@ max-cards: 5
 - @party_cup
 - @cat_gov
 - @parlament_deck
+- @debug_deck
 - #advisor
 - @erc_shuffle_leadership_pinned
 - @cup_shuffle_leadership_pinned
@@ -67,6 +68,7 @@ max-cards: 6
 - @party_cup
 - @cat_gov
 - @parlament_deck
+- @debug_deck
 - #advisor
 - @erc_shuffle_leadership_pinned
 - @cup_shuffle_leadership_pinned
@@ -104,6 +106,7 @@ max-cards: 3
 - @party_cup
 - @cat_gov
 - @parlament_deck
+- @debug_deck
 - #advisor
 
 
@@ -136,3 +139,11 @@ card-image: img/parlament_card.jpg
 is-deck: true
 
 - #parlament_card
+
+@debug_deck
+title: DEBUG!
+view-if: debug
+card-image: img/flags/estelada.png
+is-deck: true
+
+- #debug_card

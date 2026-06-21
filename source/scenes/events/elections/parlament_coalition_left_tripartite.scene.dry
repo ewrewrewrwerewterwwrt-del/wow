@@ -45,7 +45,6 @@ on-arrival: {!
         Q.speaker = "Roger Torrent";
         Q.speaker_gender = "m";
     }
-    Q.parlament_coalition_leverage_erc -= 10;
 !}
 go-to: post_speaker
 
@@ -54,7 +53,6 @@ on-arrival: {!
     Q.speaker_party = "psc";
     Q.speaker = "Xabier Sabaté";
     Q.speaker_gender = "m";
-    Q.parlament_coalition_leverage_psc -= 10;
 !}
 go-to: post_speaker
 
@@ -68,7 +66,6 @@ on-arrival: {!
         Q.speaker = "Lluís Rabell";
         Q.speaker_gender = "m"
     }
-    Q.parlament_coalition_leverage_icv -= 10;
 !}
 go-to: post_speaker
 

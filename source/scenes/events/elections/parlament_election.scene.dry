@@ -16,9 +16,11 @@ on-arrival: {!
         Q.next_election_time += 48;
     }
     
-    if (Q.player_party == "cup" && Q.cup_parlament_s > 0) {
+    // edge case for 2012
+    if (Q.player_party == "cup" && Q.cup_parlament_s > 0 && Q.year == 2012) {
         Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
-    } else {
+    } 
+    if ((Q.player_party == "cup" && Q.cup_parlament_s <= 0) || (Q.player_party == "erc" && Q.erc_parlament_s <= 0)) {
         Q.game_over_trigger = true;
     }
 !}
@@ -240,6 +242,7 @@ on-display: {!
         console.log("party_support_records", Q.party_support_records);
     }
 !}
+go-to: coalitions if not game_over_trigger; game_lost_on_election if game_over_trigger
 
 = Election Results
 
@@ -295,4 +298,15 @@ on-display: {!
 
 {!<svg id="party_support_history" style="width: 500px; height: 400px;"> </svg>!}
 
-- @parlament_coalition: Let's see what options this give us...
+@coalitions
+
+- @parlament_coalition: Let's see what options this gives us...
+
+@game_lost_on_election
+on-arrival: {!
+    // TODO: trigger something here?
+!}
+
+TODO text??
+
+- @game_over: Loser!!!

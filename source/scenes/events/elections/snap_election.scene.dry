@@ -24,6 +24,64 @@ on-arrival: {!
         Q.position_disp = "<span style='font-style: italic'>Government Support</span>";
     }
 
+    // ── deadlock / refusal vote shift ──────────────────────────────────────
+    // A collapsed coalition negotiation (or a flat refusal) reshapes the re-run
+    // board: the party blamed for it (the player, as the active negotiator) sheds
+    // support. In a deadlock it flows to the other side of the talks (40%), the
+    // player's ideological neighbour (35%) and abstention (25%); in a flat refusal
+    // it flows to the largest *rival* pro-indy party (60%) and abstention (40%).
+    // Triggers set snap_blame/counterparty/severity before calling this scene;
+    // non-negotiation snaps leave them unset, so nothing shifts.
+    if (Q.snap_blame) {
+        var snapSev = Q.snap_severity || 0.12;
+        var snapNeighbour = ({ erc: "cup", cup: "erc", ciu: "erc" })[Q.snap_blame] || null;
+        var snapRival = Q.snap_counterparty;
+
+        if (!snapRival) {
+            // refusal: reward the largest rival pro-indy party (by seats, not the player)
+            var snapIndy = ["erc", "cup", Q.parlament_current_ciu];
+            var snapBest = 0;
+            for (var si = 0; si < snapIndy.length; si++) {
+                var sp = snapIndy[si];
+                if (!sp || sp === Q.snap_blame) continue;
+                if (sp === Q.parlament_current_ciu && !Q[sp + "_roadmap"]) continue;
+                var sps = Q[sp + "_parlament_s"] || 0;
+                if (sps > snapBest) { snapBest = sps; snapRival = sp; }
+            }
+        }
+
+        for (var sc of Q.parlament_constituencies) {
+            for (var sd of Q.parlament_demographics) {
+                var sBlameKey = Q.snap_blame + "_parlament_" + sc + "_" + sd + "_support";
+                var sMoved = snapSev * (Q[sBlameKey] || 0);
+                if (sMoved <= 0) continue;
+                Q[sBlameKey] -= sMoved;
+                var sAbstainKey = "abstain_parlament_" + sc + "_" + sd + "_support";
+
+                if (Q.snap_counterparty) {
+                    // deadlock split: counterparty 40 / neighbour 35 / abstain 25
+                    Q[Q.snap_counterparty + "_parlament_" + sc + "_" + sd + "_support"] += 0.40 * sMoved;
+                    if (snapNeighbour) {
+                        Q[snapNeighbour + "_parlament_" + sc + "_" + sd + "_support"] += 0.35 * sMoved;
+                        Q[sAbstainKey] += 0.25 * sMoved;
+                    } else {
+                        Q[sAbstainKey] += 0.60 * sMoved;
+                    }
+                } else if (snapRival) {
+                    // refusal split: largest rival pro-indy party 60 / abstain 40
+                    Q[snapRival + "_parlament_" + sc + "_" + sd + "_support"] += 0.60 * sMoved;
+                    Q[sAbstainKey] += 0.40 * sMoved;
+                } else {
+                    Q[sAbstainKey] += sMoved;
+                }
+            }
+        }
+
+        Q.snap_blame = null;
+        Q.snap_counterparty = null;
+        Q.snap_severity = null;
+    }
+
     console.info("Set new election date for ", Q.next_election_month, Q.next_election_year, ", week", Q.next_election_week);
 !}
 

@@ -75,11 +75,13 @@ Q.spain_is_republic = 0; // lol
 
 Q.next_election_month = 12;
 Q.next_election_year = 2014;
-Q.next_election_time = 16; // in months, what counts is the first "next election". In any case, snap election will reset this.
+Q.next_election_time = 16; // in time steps, months for non-rubicon case, weeks when rubicon
 Q.next_spanish_election_month = 12;
 Q.next_spanish_election_year = 2015;
+Q.next_spanish_election_time = 40;
 Q.next_local_election_month = 5;
 Q.next_local_election_year = 2015;
+Q.next_local_election_time = 32;
 
 Q.independence_trust = 28;
 Q.independence_movement = 65;
@@ -442,7 +444,7 @@ Q.congreso_seats = {
 Q.congreso_constituencies = ["catalunya", "valencia", "balears", "navarra", "euskadi", "galicia", "rest"];
 Q.congreso_parties_left = ["podemos", "iu", "mpais", "sumar", "up", "csqp", "cecp", "ecp", "fr", "erc", "cup", "ehbildu", "amaiur", "bng", "nos", "compromis", "mes"];
 
-Q.congreso_parties_catalunya = ["ciu", "psoe", "erc", "pp", "cs", "podemos", "iu", "cup", "fr", "dl", "pdcat", "jxsi", "cdc", "unio", "junts", "upyd", "vox", "mpais", "up", "sumar", "jxcat"];
+Q.congreso_parties_catalunya = ["ciu", "psoe", "psc", "erc", "pp", "cs", "podemos", "iu", "cup", "fr", "dl", "pdcat", "jxsi", "cdc", "unio", "junts", "upyd", "vox", "mpais", "up", "sumar", "jxcat"];
 Q.congreso_parties_valencia = ["pp", "psoe", "podemos", "cs", "iu", "compromis", "vox", "up", "sumar", "upyd", "mpais"];
 Q.congreso_parties_balears = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "mes"];
 Q.congreso_parties_navarra = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "amaiur", "nsuma", "ehbildu", "upn", "gbai"];
@@ -544,7 +546,7 @@ choose-if: url_valid
 unavailable-subtitle: Route to Ítaca is currently in its early development stages. Check back soon(-ish) for the full experience!
 # unavailable-subtitle: Page loaded from an unrecognized origin, are you sure you're in the right place? TODO: put this as the right unavailable subtitle!
 on-arrival: {!
-Q.debug = false;
+// Q.debug = true;
 
 Q.started = 1;
 Q.time = 1; // time elapsed (in months)
@@ -2580,6 +2582,8 @@ new-page: true
 This is a game of alternate history. While historical accuracy is a major concern, keep in mind that this is a *game*, and that any divergence from actual events will necessarily have to involve some element of make-believe. Nevertheless, please let the author know if there are any glaring mistakes.
 
 For more information on the politics, government, and recent history of Catalonia, please see the Library page on the top left. If this is your first time playing the game, it is strongly recommended that you read at least some of this information.
+
+[? if debug: **DEBUG** mode is toggled (!) - you should not be seeing this unless you are testing sutff :) ?]
 
 - @easy_mode : <span style="color: #5B9A8D;font-weight: bold;">Easy</span> mode
 - @normal_mode : <span style="color: #C4B156;font-weight: bold;">Normal</span> mode

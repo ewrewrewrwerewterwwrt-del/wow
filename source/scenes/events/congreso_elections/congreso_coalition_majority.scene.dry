@@ -1,0 +1,22 @@
+title: congreso single-party majority
+
+You should not be here? Report a bug if you see this text.
+
+@party
+title: <span style="font-style: italic;">Single-Party</span> Majority Government
+subtitle: custom title??
+view-if: congreso_coalition_majority_s > 0
+choose-if: congreso_coalition_majority_reach
+unavailable-subtitle: No single party reached an absolute majority on its own.
+on-arrival: {!
+    // TODO — install a single-party government.
+    //   formateur = Q.congreso_coalition_majority_party  (set in congreso_coalition)
+    //   seats     = Q.congreso_coalition_majority_s
+    //   • president = the majority party; no investiture concessions to extract.
+    //   • the player (always a Catalan minor) is a pure bystander here — no lever.
+    //   • set the downstream "government formed" flags the engine/post_event read.
+!}
+
+TODO
+
+-@post_event: TO-DO

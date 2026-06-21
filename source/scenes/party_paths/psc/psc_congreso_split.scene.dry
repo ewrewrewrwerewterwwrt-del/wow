@@ -1,0 +1,22 @@
+title: PSC breaks up with the PSOE!
+view-if: psc_breakup_trigger
+new-page: true
+max-visits: 1
+tags: event
+on-arrival: {!
+    Q.psc_split = true;
+    
+    Q.psc_congreso_catalunya_support = 0.9*Q.psoe_congreso_catalunya_support;
+    Q.psc_congreso_pv = 0.1*Q.psoe_congreso_pv;
+    Q.psc_congreso_s = Math.ceil(Q.psoe_congreso_s / 10);
+    Q.psc_congreso_pv_cat = Q.psoe_congreso_pv_cat;
+
+    Q.psoe_congreso_catalunya_support = 0.0;
+    Q.psoe_congreso_pv -= 0.1*Q.psoe_congreso_pv;
+    Q.psoe_congreso_s -= Math.ceil(Q.psoe_congreso_s / 10);
+    Q.psoe_congreso_pv_cat = 0.0;
+!}
+
+TODO: Text!! more stuff??
+
+- @post_event: TODO!

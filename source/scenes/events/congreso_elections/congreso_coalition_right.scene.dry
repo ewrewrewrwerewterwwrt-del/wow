@@ -1,0 +1,52 @@
+title: congreso right coalitions
+
+You should not be here? Report a bug if you see this text.
+
+@pp_cs
+title: <span style="color: var(--pp); font-style: italic;">Right</span> <span style="color: var(--cs); font-style: italic;">Coalition</span> (PP - Cs)
+subtitle: A PP + Cs cabinet, backed by the centralist-right and regionalist minors. [? if congreso_coalition_pp_cs_talks: It leans on tolerations we'd have to negotiate. ?]
+view-if: congreso_coalition_pp_cs_s > congreso_s_majority - 50
+choose-if: congreso_coalition_pp_cs_reach
+unavailable-subtitle: PP and Cs fall short of investiture, even with the minors they could win over.
+on-arrival: {!
+    // TODO — form the PP + Cs coalition cabinet.
+    //   • president = pp, Cs in government; centralist-right minors support,
+    //     pact-pragmatists (cc/prc/te/pnv) abstain, the Catalan right per roadmap.
+    //   • the player (Catalan minor) almost always OPPOSES — little to no lever.
+!}
+
+TODO
+
+-@post_event: TO-DO
+
+@pp_vox
+title: <span style="color: var(--pp); font-style: italic;">National</span> <span style="color: var(--vox); font-style: italic;">Right</span> Coalition (PP - Vox)
+subtitle: PP turns to Vox. [? if congreso_coalition_pp_vox_talks: And still needs every far-right vote it can find. ?]
+view-if: congreso_coalition_pp_vox_s > congreso_s_majority - 50
+choose-if: congreso_coalition_pp_vox_reach and not congreso_coalition_pp_cs_reach
+unavailable-subtitle: [? if congreso_coalition_pp_cs_reach: The PP would rather govern with Cs than lean on Vox. ?][? if not congreso_coalition_pp_vox_reach: PP and Vox don't reach investiture even with the far right. ?]
+on-arrival: {!
+    // TODO — form the PP + Vox cabinet (only when the PP→Cs maths ISN'T there).
+    //   • a Vox-tainted cabinet can't be negotiated upward (no rightvox escalation):
+    //     pact-pragmatists and the Catalan right will NOT enable it — centralist
+    //     right only. So this reaches far less often than the PP+Cs option.
+!}
+
+TODO
+
+-@post_event: TO-DO
+
+@pp_minority
+title: <span style="color: var(--pp); font-style: italic;">PP</span> Minority Government
+subtitle: PP governs alone, tolerated from the outside. [? if congreso_coalition_pp_min_talks: Held up by tolerations we'd have to bargain for. ?]
+view-if: congreso_coalition_pp_min_s > congreso_s_majority - 50
+choose-if: congreso_coalition_pp_min_reach
+unavailable-subtitle: Even with outside support, PP alone can't clear investiture.
+on-arrival: {!
+    // TODO — form a PP single-party (minority) cabinet, externally supported.
+    //   • president = pp; Cs + the right-leaning minors sit OUTSIDE (support/abstain).
+!}
+
+TODO
+
+-@post_event: TO-DO

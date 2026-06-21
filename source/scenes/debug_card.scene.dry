@@ -1,0 +1,379 @@
+title: DEBUG!
+new-page: true
+is-card: true
+tags: debug_card
+view-if: debug
+on-arrival: month_actions += 1
+card-image: img/flags/estelada.png
+go-to: debug_menu
+
+
+@debug_menu
+new-page: true
+
+= DEBUG CARD!
+
+You should not be seeing this in a normal game. Please report a bug!
+
+- @inject_global
+- @inject_party
+- @add_remove_support
+- @set_time
+- @post_event: Pass time
+- @easy_discard
+
+@inject_party
+title: Inject party situation
+new-page: true
+
+= Party situation injector
+May (very probably) mess up your save
+
+- @debug_menu: Back
+- @psc_inject
+- @ciu_inject
+- @post_event: Done
+
+@psc_inject
+title: PSC
+
+** PSC situations **
+
+- @inject_party: Back
+- @psc_congreso_split_inject
+- @post_event: Done
+
+@psc_congreso_split_inject
+title: Split PSC from PSOE in the congreso
+choose-if: not psc_split
+unavailable-subtitle: PSC is already split from the PSOE
+call: psc_congreso_split
+
+Split PSC from the PSOE in the congreso elections.
+
+- @inject_party: Back
+- @post_event: Done
+
+@ciu_inject
+title: CiU (and evolutions)
+choose-if: 1==0
+
+** CiU situations **
+
+- @inject_party: Back
+- @post_event: Done
+
+@inject_global
+title: Inject global situation
+new-page: true
+
+= Global situation injector
+
+May (very probably) mess up your save
+
+- @debug_menu: Back
+- @cat_2012
+- @cat_2015
+- @cat_2017
+- @congreso_2015
+- @congreso_2016
+- @congreso_2019
+- @congreso_2019_2
+- @post_event: Done
+
+@cat_2012
+title: Parlament 2012 election
+subtitle: Only affects parlament party supports and related variables
+call: election_simulation.2012_11
+
+Injected parlament 2012 situation!
+
+- @inject_global: Back
+- @post_event: Done
+
+
+@cat_2015
+title: Parlament 2015 election
+subtitle: Only affects parlament party supports and related variables
+call: election_simulation.2015_5
+
+Injected parlament 2015 situation!
+
+- @inject_global: Back
+- @post_event: Done
+
+
+@cat_2017
+title: Parlament 2017 election
+subtitle: Only affects parlament party supports and related variables
+call: election_simulation.2017_12
+
+Injected parlament 2017 situation!
+
+- @inject_global: Back
+- @post_event: Done
+
+
+@congreso_2015
+title: Congreso 2015 election
+subtitle: Only affects congreso party supports and related variables
+call: election_simulation.2015_12
+
+Injected congreso 2015 situation!
+
+- @inject_global: Back
+- @post_event: Done
+
+@congreso_2016
+title: Congreso 2016 election
+subtitle: Only affects congreso party supports and related variables
+call: election_simulation.2016_6
+
+Injected congreso 2016 situation!
+
+- @inject_global: Back
+- @post_event: Done
+
+@congreso_2019
+title: Congreso 2019 election (apr.)
+subtitle: Only affects congreso party supports and related variables
+call: election_simulation.2019_4
+
+Injected congreso 2019 (apr.) situation!
+
+- @inject_global: Back
+- @post_event: Done
+
+
+@congreso_2019_2
+title: Congreso 2016 election (nov.)
+subtitle: Only affects congreso party supports and related variables
+call: election_simulation.2019_11
+
+Injected congreso 2019 (apr.) situation!
+
+- @inject_global: Back
+- @post_event: Done
+
+
+@add_remove_support
+title: Add/remove support
+choose-if: 1==0
+
+** WIP! **
+
+- @debug_menu:  Back
+- @post_event: Done
+
+@set_time
+title: Set time
+new-page: true
+
+= Time setter
+
+Countdowns and timers will be unaffected!!
+
+- @set_month: Set month
+- @set_year: Set year
+- @debug_menu:  Back
+- @post_event: Done
+
+@set_month
+
+- @set_time: Back
+- @jan
+- @feb
+- @mar
+- @apr
+- @may
+- @jun
+- @jul
+- @aug
+- @sep
+- @oct
+- @nov
+- @dec
+
+@jan
+title: January
+on-arrival: month=1
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+@feb
+title: February
+on-arrival: month=2
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+@mar
+title: March
+on-arrival: month=3
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+@apr
+title: April
+on-arrival: month=4
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+@may
+title: May
+on-arrival: month=5
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+@jun
+title: June
+on-arrival: month=6
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+@jul
+title: July
+on-arrival: month=7
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+@aug
+title: August
+on-arrival: month=8
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+@sep
+title: September
+on-arrival: month=9
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+@oct
+title: October
+on-arrival: month=10
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+@nov
+title: November
+on-arrival: month=11
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+@dec
+title: December
+on-arrival: month=12
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_month:  Back
+- @post_event: Done
+
+@set_year
+
+- @set_time: Back
+- @y2013
+- @y2014
+- @y2015
+- @y2016
+- @y2017
+- @y2018
+- @y2019
+
+@y2013
+title: 2013
+on-arrival: year=2013
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+@y2014
+title: 2014
+on-arrival: year=2014
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+@y2015
+title: 2015
+on-arrival: year=2015
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+@y2016
+title: 2016
+on-arrival: year=2016
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+@y2017
+title: 2017
+on-arrival: year=2017
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+@y2018
+title: 2018
+on-arrival: year=2018
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+@y2019
+title: 2019
+on-arrival: year=2019
+
+time set to [+ month: month +] [+ year +] (week [+ week +])
+
+- @set_time:  Back
+- @post_event: Done
+
+

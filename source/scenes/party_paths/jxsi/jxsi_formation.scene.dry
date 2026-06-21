@@ -1,34 +1,10 @@
 title: A United National Concentration list?
 face-image: img/events/jxsi_formation.jpg
-view-if: true
-# view-if: unio_split and next_election_time - time < 9 and next_election_time - time > 3 and (cdc_roadmap > 1 or dl_roadmap > 1 or pdcat_roadmap > 1) and (player_party == "cup" or (player_party == "erc" and (cdc_relations >= 30 or dl_relations >= 30 or pdcat_relations >= 30))) and not consultation_pending and not referendum_pending and not referendum_happened
+view-if: unio_split and next_election_time - time < 9 and next_election_time - time > 3 and (cdc_roadmap > 1 or dl_roadmap > 1 or pdcat_roadmap > 1) and (player_party == "cup" or (player_party == "erc" and (cdc_relations >= 30 or dl_relations >= 30 or pdcat_relations >= 30))) and not consultation_pending and not referendum_pending and not referendum_happened
 tags: event
 new-page: true
 max-visits: 1
 go-to: erc_0 if player_party == "erc"; cup_0 if player_party == "cup"
-on-arrival: {!
-    // TODO: Remove, just for testing!!
-    Q.year = 2015;
-    Q.month = 7;
-    Q.unio_split = true;
-    Q.cdc_parlament_s = Math.ceil(0.75*Q.ciu_parlament_s);
-    Q.unio_parlament_s = Math.floor(0.25*Q.ciu_parlament_s);
-    Q.ciu_parlament_s = 0;
-    Q.cdc_leader = Q.ciu_leader;
-    Q.cdc_leader_gender = Q.ciu_leader_gender;
-    Q.cdc_roadmap = 2;
-    Q.cat_coalition = ["cdc"];
-    Q.cat_coalition_disp = "CDC <span style='font-style: italic'>caretaker gov.</span>"
-    Q.president_party = "CDC";
-
-    for (var c of Q.parlament_constituencies) {
-        for (var d of Q.parlament_demographics) {
-            Q["cdc_parlament_" + c + "_" + d + "_support"] = 0.8 * Q["ciu_parlament_" + c + "_" + d + "_support"];
-            Q["ciu_parlament_" + c + "_" + d + "_support"] = 0;
-        }
-    }
-!}
-
 
 # TODO: united_bcn_local and united_congreso options a few months past the event? or via card???
 # TODO: actual jxsi cards

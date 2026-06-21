@@ -1,0 +1,40 @@
+title: congreso progressive coalitions
+
+You should not be here? Report a bug if you see this text.
+
+@progressive
+title: <span style="color: var(--psoe); font-style: italic;">Progressist</span> <span style="color: var(--up);">Coalition</span> (PSOE - [+ congreso_left_carrier +])
+subtitle: A difficult arithmetic made possible by kingmaker smaller parties. [? if congreso_coalition_progressive_talks: Pulling it over the line will demand hard concessions. ?]
+view-if: congreso_coalition_progressive_s > congreso_s_majority - 50
+choose-if: congreso_coalition_progressive_reach and not congreso_coalition_psoe_cs_wtf
+unavailable-subtitle: [? if not congreso_coalition_progressive_reach : The numbers don't add up, not even with every abstention that can be realistically negotiated. ?][? if congreso_coalition_psoe_cs_wtf: This does not seem to be the plan of [+ psoe_leader +] and [+ csspa_leader +] ?]
+on-arrival: {!
+    // TODO — form the PSOE + left-carrier coalition cabinet.
+    //   left carrier = Q.congreso_left_carrier (sumar→up→podemos→iu)
+    //   • president = psoe, UNLESS Q (sorpasso): leftPodemosLed ⇒ carrier leads.
+    //   • the player negotiates support/abstention for concessions — reuse the
+    //     *_concessions_indy / *_concessions_social machinery (cf. parlament coalitions).
+    //   • Q.congreso_coalition_progressive_talks flags whether the maths needed
+    //     escalated (starred) support → bigger asks / lower trust payoff.
+    //   • set the "government formed" flags the engine/post_event read.
+!}
+
+TODO
+
+-@post_event: TO-DO
+
+@psoe_minority
+title: <span style="color: var(--psoe); font-style: italic;">PSOE</span> Minority Government
+subtitle: PSOE governs alone, tolerated from the outside. [? if congreso_coalition_psoe_min_talks: It hangs on concessions we'd have to wring out. ?]
+view-if: congreso_coalition_psoe_min_s > congreso_s_majority - 50
+choose-if: congreso_coalition_psoe_min_reach and not congreso_coalition_psoe_cs_wtf
+unavailable-subtitle: [? if congreso_coalition_psoe_min_s < congreso_s_majority: Even with outside support that could be negotiated, PSOE falls short of investiture. ?][? if congreso_coalition_psoe_cs_wtf: This does not seem to be the plan of [+ psoe_leader +] and [+ csspa_leader +]. ?]
+on-arrival: {!
+    // TODO — form a PSOE single-party (minority) cabinet, externally supported.
+    //   • president = psoe; the left carrier + minors sit OUTSIDE (support/abstain).
+    //   • same concession flow as @progressive, but no cabinet seats to hand out.
+!}
+
+TODO
+
+-@post_event: TO-DO

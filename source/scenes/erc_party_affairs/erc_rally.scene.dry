@@ -29,7 +29,7 @@ on-arrival: {!
         Q.independence_movement += 1;
     } else {
         Q.independence_movement += 5;
-        switch (Q.roadmap) {
+        switch (Q.erc_roadmap) {
             default:
             // Should not happen?
                 for (var c of Q.parlament_constituencies) {
