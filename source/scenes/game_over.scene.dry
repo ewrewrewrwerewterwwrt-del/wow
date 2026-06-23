@@ -233,6 +233,25 @@ Note that your achievement progress is stored in your browser. Switching browser
   </div>
 </div>
 
+<div class="achievement !}[? if achievement_perrosanxe : achievement--unlocked ?][? if not achievement_perrosanxe : achievement--locked ?]{!" style="display:flex">
+  <div class="achievement-image !}[? if achievement_perrosanxe : achievement-image--unlocked ?][? if not achievement_perrosanxe : achievement-image--locked ?]{!">
+    <img src="img/achievements/perrosanxe.png" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="achievement-body">
+    <div class="achievement-title !}[? if achievement_perrosanxe : achievement-title--unlocked ?][? if not achievement_perrosanxe : achievement-title--locked ?]{!">
+     <span> Más sabe por Perro que por Sanxe </span>
+        <div class="achievement-stars">
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+        </div>
+    </div>
+    <div class="achievement-description !}[? if achievement_perrosanxe : achievement-description--unlocked ?][? if not achievement_perrosanxe : achievement-description--locked ?]{!"> After being ousted from the PSOE and winning back its leadership, have Pedro Sánchez become Presidente. </div>
+  </div>
+</div>
+
 <div class="achievement !}[? if achievement_je_me_souviens : achievement--unlocked ?][? if not achievement_je_me_souviens : achievement--locked ?]{!" style="display:flex">
   <div class="achievement-image !}[? if achievement_je_me_souviens : achievement-image--unlocked ?][? if not achievement_je_me_souviens : achievement-image--locked ?]{!">
     <img src="img/achievements/quebec.svg" style="width:100%;height:100%;object-fit:cover;">
@@ -287,6 +306,25 @@ Note that your achievement progress is stored in your browser. Switching browser
         </div>
     </div>
     <div class="achievement-description !}[? if achievement_paperera_de_la_historia : achievement-description--unlocked ?][? if not achievement_paperera_de_la_historia : achievement-description--locked ?]{!">Playing as the CUP and while not being part of the JxSí coalition, force Artur Mas to step aside.</div>
+  </div>
+</div>
+
+<div class="achievement !}[? if achievement_barones : achievement--unlocked ?][? if not achievement_barones : achievement--locked ?]{!" style="display:flex">
+  <div class="achievement-image !}[? if achievement_barones : achievement-image--unlocked ?][? if not achievement_barones : achievement-image--locked ?]{!">
+    <img src="img/achievements/barones.webp" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="achievement-body">
+    <div class="achievement-title !}[? if achievement_barones : achievement-title--unlocked ?][? if not achievement_barones : achievement-title--locked ?]{!">
+     <span> Barones del PSOE </span>
+        <div class="achievement-stars">
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--empty">★</span>
+        </div>
+    </div>
+    <div class="achievement-description !}[? if achievement_barones : achievement-description--unlocked ?][? if not achievement_barones : achievement-description--locked ?]{!"> Have the Barons of the PSOE successfully oust Pedro Sánchez and keep him away from the leadership for the rest of the game. </div>
   </div>
 </div>
 

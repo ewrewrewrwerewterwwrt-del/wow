@@ -3,7 +3,7 @@ title: congreso single-party majority
 You should not be here? Report a bug if you see this text.
 
 @party
-title: <span style="font-style: italic;">Single-Party</span> Majority Government
+title: [? if congreso_coalition_majority_party == "cs": csspa ?][? if congreso_coalition_majority_party != "cs": [+ congreso_coalition_majority_party +]?] Majority Government
 subtitle: custom title??
 view-if: congreso_coalition_majority_s > 0
 choose-if: congreso_coalition_majority_reach

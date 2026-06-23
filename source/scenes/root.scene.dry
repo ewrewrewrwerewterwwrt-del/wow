@@ -213,79 +213,114 @@ Q.comuns_name = "icv";
 // Initial ideologies for all parties, also future ones, just in case
 Q.pdcat_leader = "Artur Mas";
 Q.pdcat_ideology = "Centre-right Liberalism, Pragmatic Independence";
+Q.pdcat_leader_gender = "m";
 Q.dl_leader = "Artur Mas";
+Q.dl_leader_gender = "m";
 Q.dl_ideology = "Centre-right Liberalism, Pragmatic Independence";
 Q.jxsi_leader = "Artur Mas";
+Q.jxsi_leader_gender = "m";
 Q.jxsi_ideology = "National coalition, Independence";
 Q.jxcat_leader = "Carles Puigdemont";
+Q.jxcat_leader_gender = "m";
 Q.jxcat_ideology = "Center-right Liberalism, Unilateralism";
 Q.junts_leader = "Carles Puigdemont";
+Q.junts_leader_gender = "m";
 Q.junts_ideology = "Center-right Liberalism, Unilateralism";
 
 Q.pxc_leader = "Josep Anglada";
 Q.pxc_ideology = "Far-right Nationalism, Centralism";
+Q.pxc_leader_gender = "m";
 Q.fnc_leader = "Jordi Casacuberta";
+Q.fnc_leader_gender = "m";
 Q.fnc_ideology = "Far-right Nationalism, Unilateralism";
 
 Q.csqp_leader = "Lluís Rabell";
+Q.csqp_leader_gender = "m";
 Q.csqp_ideology = "Anti-austerity left, Plurinationalism";
 Q.cecp_leader = "Xavier Domènech";
+Q.cecp_leader_gender = "m";
 Q.cecp_ideology = "Left Social Democracy, Autonomism";
 Q.ecp_leader = "Jéssica Albiach";
+Q.ecp_leader_gender = "f";
 Q.ecp_ideology = "Social democracy, Autonomism";
 Q.fr_leader = "Albano Dante Fachín";
+Q.fr_leader_gender = "m";
 Q.fr_ideology = "Anticapitalism, Unilateralism";
 
 Q.psoe_leader = "Alfredo Pérez Rubalcaba";
+Q.psoe_leader_gender = "m";
 Q.psoe_ideology = "Centrist Social Democracy, Autonomism";
 Q.pp_leader = "Mariano Rajoy";
 Q.pp_ideology = "Conservatism, Centralism";
+Q.pp_leader_gender = "m";
 Q.csspa_leader = "Albert Rivera";
+Q.csspa_leader_gender = "m";
 Q.vox_leader = "Santiago Abascal";
+Q.vos_leader_gender = "m";
 Q.vox_ideology = "Far-right Nationalism, Hypercentralism";
 Q.upyd_leader = "Rosa Díez";
+Q.upyd_leader_gender = "f";
 Q.upyd_ideology = "Liberal reformism, Hypercentralism";
 
 Q.podemos_leader = "Pablo Iglesias";
 Q.podemos_ideology = "Anti-austerity left, Plurinationalism";
+Q.podemod_leader_gender = "m";
 Q.iu_leader = "Cayo Lara";
+Q.i_leader_gender = "m";
 Q.iu_ideology = "Left Social Democracy, Federalism";
 Q.mpais_leader = "Íñigo Errejón";
+Q.mpais_leader_gender = "m";
 Q.mpais_ideology = "Social Democracy, Federalism";
 Q.sumar_leader = "Yolanda Díaz";
+Q.sumar_leader_gender = "f";
 Q.sumar_ideology = "Social Democracy, Autonomism";
 Q.up_leader = "Pablo Iglesias";
+Q.up_leader_gender = "m";
 Q.up_ideology = "Anti-austerity left, Plurinationalism";
 
 Q.pnv_leader = "Íñigo Urkullu";
+Q.pnv_leader_gender = "m";
 Q.pnv_ideology = "Christian Democracy, Basque Pact-Pragmatism";
 Q.ehbildu_leader = "Arnaldo Otegi";
+Q.ehbildu_leader_gender = "m";
 Q.ehbildu_ideology = "Left Social Democracy, Basque Independence";
 Q.amaiur_leader = "Maite Aristegi";
+Q.amaiur_leader_gender = "f";
 Q.amaiur_ideology = "Left Social Democracy, Basque Independence";
 
 Q.gbai_leader = "Uxue Barkos";
+Q.gbai_leader_gender = "f";
 Q.gbai_ideology = "Social Democracy, Navarrese Independence";
 Q.upn_leader = "Yolanda Barcina";
 Q.upn_ideology = "Conservatism, Navarrese Regionalism";
+Q.upn_leader_gender = "f";
 Q.nsuma_leader = "Sergio Sayas";
 Q.nsuma_ideology = "Conservatism, Navarrese Regionalism";
+Q.nsuma_leader_gender = "m";
 
 Q.ccpnc_leader = "Paulino Rivero";
+Q.ccpnc_leader_gender = "m";
 Q.ccpnc_ideology = "Centrist Liberalism, Canarian Regionalism";
 Q.compromis_leader = "Joan Baldoví";
+Q.compromis_leader_gender = "m";
 Q.compromis_ideology = "Social Democracy, Valencian Regionalism";
 Q.mes_leader = "Biel Barceló";
+Q.mes_leader_gender = "m";
 Q.mes_ideology = "Left Social Democracy, Balearic Regionalism";
 Q.bng_leader = "Ana Pontón";
+Q.bng_leader_gender = "f";
 Q.bng_ideology = "Social Democracy, Galician Independence";
 Q.nos_leader = "Carlos Morais";
+Q.nos_leader_gender = "m";
 Q.nos_ideology = "Social Democracy, Galician Independence";
 Q.fac_leader = "Cristina Coto";
+Q.fac_leader_gender = "f";
 Q.fac_ideology = "Liberal Conservatism, Asturian Regionalism";
 Q.prc_leader = "Miguel Ángel Revilla";
+Q.prc_leader_gender = "m";
 Q.prc_ideology = "Centrist Social Democracy, Cantabrian Regionalism";
 Q.te_leader = "Tomás Guitarte"
+Q.te_leader_gender = "m";
 Q.te_ideology = "Transversal single-issue, Teruel Regionalism";
 
 // Initial values for bcn parties as well
@@ -293,17 +328,29 @@ Q.parties_bcn = ['bcomu', 'cup', 'psc', 'erc', 'ciu', 'cdc', 'dl', 'jxcat', 'jun
 
 Q.bcomu_leader = "Ada Colau";
 Q.bcomu_ideology = "Anti-austerity left, Plurinationalism";
+Q.bcomu_leader_gender = "f";
 Q.ppbcn_leader = "Alberto Fernández Díaz";
+Q.ppbcn_leader_gender = "m";
 Q.csbcn_leader = "Carina Mejías";
+Q.csbcn_leader_gender = "f";
 Q.cupbcn_leader = "María José Lecha";
+Q.cupbcn_leader_gender = "f";
 Q.pscbcn_leader = "Jaume Collboni";
+Q.pscbcn_leader_gender = "m";
 Q.ercbcn_leader = "Alfred Bosch";
+Q.ercbcn_leader_gender = "m";
 Q.ciubcn_leader = "Xavier Trias";
+Q.ciubcn_leader_gender = "m";
 Q.cdcbcn_leader = "Xavier Trias";
+Q.cdcbcn_leader_gender = "m";
 Q.dlbcn_leader = "Xavier Trias";
+Q.dlbcn_leader_gender = "m";
 Q.jxcatbcn_leader = "Joaquim Forn";
+Q.jxcatbcn_leader_gender = "m";
 Q.primaries_leader = "Jordi Graupera";
+Q.primaries_leader_gender = "m";
 Q.primaries_ideology = "Transversal single-issue, Unilateralism";
+
 Q.ua_psc_leader = "Francés Boya Alós";
 Q.ua_psc_ideology = "Social Democracy, Aranese Regionalism";
 Q.cda_pna_leader = "Carles Barrera Sánchez";
@@ -546,7 +593,7 @@ choose-if: url_valid
 unavailable-subtitle: Route to Ítaca is currently in its early development stages. Check back soon(-ish) for the full experience!
 # unavailable-subtitle: Page loaded from an unrecognized origin, are you sure you're in the right place? TODO: put this as the right unavailable subtitle!
 on-arrival: {!
-// Q.debug = true;
+Q.debug = true;
 
 Q.started = 1;
 Q.time = 1; // time elapsed (in months)
@@ -2559,7 +2606,7 @@ switch (Q.random_seed) {
     Q.random_seed_author = "CUP's post-election negotiation motto, circa 2015";
     break;
   case 2:
-    Q.random_seed_quote_text = "Everything is ready for the desconnection* \[independence\]. *All that will be needed is to press a button."
+    Q.random_seed_quote_text = "Everything is ready for the desconnection \[independence\]. All that will be needed is to press a button."
     Q.random_seed_author = "Carles Viver Pi-Sunyer, Parlament's Comissioner for the National Transition, 2015";
     break;
   case 3:

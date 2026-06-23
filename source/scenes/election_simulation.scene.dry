@@ -78,8 +78,8 @@ on-arrival: {!
     Q.welfare_index = 53.57;
     Q.podemos_channeling = 0.94;
     Q.corruption_events_ciu = 2;
-    Q.unio_split_happened = false;
-    Q.pdcat_split_happened = false;
+    Q.unio_split = false;
+    Q.pdcat_split = false;
     
     Q.bcomu_local_barcelona_support    = 23.0;
     Q.ciu_local_barcelona_support      =  8.0;  // +17 Trias → ~27%, 10-11 seats

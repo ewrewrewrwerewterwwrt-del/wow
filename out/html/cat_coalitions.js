@@ -109,7 +109,7 @@
       ".cv-label-row{display:flex;align-items:baseline;gap:.5em;margin-bottom:.3em}",
       ".cv-label-main{flex:1 1 auto;min-width:0;line-height:1.5}",
       ".cv-entry-name{color:var(--text-color,#ddd);font-weight:bold;margin-right:.35em}",
-      ".cv-member{white-space:nowrap}", /* keep e.g. \"EAJ-PNV (abst.)\" intact; only the \" + \" joins break */
+      ".cv-member{white-space:nowrap}" /* keep e.g. \"EAJ-PNV (abst.)\" intact; only the \" + \" joins break */,
       ".cv-entry-count{flex:0 0 auto;white-space:nowrap;align-self:baseline}",
       ".cv-count-ok{color:var(--success-color,#4caf50)}",
       ".cv-count-warn{color:var(--warning-color,#ff9800)}",
@@ -183,9 +183,6 @@
         // optional explicit segment colour — lets an aggregate "bucket" member
         // (e.g. a whole bloc of minor parties) paint without a per-party CSS var.
         color: m.color != null ? m.color : null,
-        // escalated = this stance is only reachable through a hard negotiation
-        // (an abstainer talked into voting yes, or an opponent dragged in).
-        escalated: !!m.escalated,
       };
     });
 
@@ -245,7 +242,7 @@
 
     var name = document.createElement("span");
     name.className = "cv-entry-name";
-    name.innerHTML = (window.applyWholesome(def.label) + ":") || "";
+    name.innerHTML = window.applyWholesome(def.label) + ":" || "";
 
     var memberSpan = document.createElement("span");
     memberSpan.className = "cv-entry-members";
@@ -254,38 +251,35 @@
         return m.seats > 0;
       })
       .map(function (m) {
-        // escalated stances (won only through hard talks) are tagged with a "*"
-        var star = m.escalated ? "*" : "";
         var suffix =
           m.type === "support"
-            ? " <span style='opacity:.6'>(support" + star + ")</span>"
+            ? " <span style='opacity:.6'>(support)</span>"
             : m.type === "abstain"
-              ? " <span style='opacity:.6'>(abst." + star + ")</span>"
+              ? " <span style='opacity:.6'>(abst.)</span>"
               : "";
-        var title = m.escalated ? " title='requires negotiation'" : "";
+        var partyLabel;
+        if (
+          config.seatsKey.includes("congreso") &&
+          (m.label == "cs" || m.label == "Cs")
+        ) {
+          partyLabel = "csspa";
+        } else if (config.seatsKey.includes("congreso") && m.label == "up") {
+          partyLabel = "UP";
+        } else {
+          partyLabel = m.label;
+        }
         return (
-          "<span class='cv-member'" +
-          title +
-          ">" +
-          window.applyWholesome(m.label) +
+          "<span class='cv-member'>" +
+          window.applyWholesome(partyLabel) +
           suffix +
           "</span>"
         );
       })
       .join(" + ");
 
-    var hasEscalation = members.some(function (m) {
-      return m.escalated && m.seats > 0;
-    });
-
     var countSpan = document.createElement("span");
     countSpan.className = "cv-entry-count " + countClass;
-    // a "*" on the headline flags a majority that only holds with negotiated stances
-    countSpan.innerHTML =
-      countText +
-      (hasEscalation
-        ? " <span class='cv-count-muted' title='requires negotiation'>*</span>"
-        : "");
+    countSpan.innerHTML = countText;
 
     main.appendChild(name);
     main.appendChild(memberSpan);

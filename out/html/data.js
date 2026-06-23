@@ -678,6 +678,15 @@ const tooltipList = [
     },
   },
   {
+    searchString: ["Felipe González"],
+    mainText: "Felipe González Márquez ",
+    img: "img/other_leaders/fgonzalez.jpg",
+    ideology: "Centrist Social Democracy, Autonomism",
+    allegiances: (Q) => {
+      return ["<span style='color: var(--psoe)'>PSOE</span>"];
+    },
+  },
+  {
     searchString: ["Alfredo Pérez Rubalcaba", "Rubalcaba"],
     mainText: "Alfredo Pérez Rubalcaba",
     img: "img/other_leaders/rubalcaba.jpg",
@@ -1324,6 +1333,10 @@ const colourList = [
   },
   {
     words: ["Pedro Sánchez"],
+    colour: "var(--psoe)",
+  },
+  {
+    words: ["Felipe González"],
     colour: "var(--psoe)",
   },
   {

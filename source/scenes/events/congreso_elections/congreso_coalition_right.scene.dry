@@ -3,11 +3,11 @@ title: congreso right coalitions
 You should not be here? Report a bug if you see this text.
 
 @pp_cs
-title: <span style="color: var(--pp); font-style: italic;">Right</span> <span style="color: var(--cs); font-style: italic;">Coalition</span> (PP - Cs)
-subtitle: A PP + Cs cabinet, backed by the centralist-right and regionalist minors. [? if congreso_coalition_pp_cs_talks: It leans on tolerations we'd have to negotiate. ?]
+title: <span style="color: var(--cs); font-style: italic;">Liberal</span> <span style="color: var(--pp); font-style: italic;">Right</span> Coalition (PP - csspa)
+subtitle: A PP + csspa cabinet, backed by the centralist-right and other smaller partie. [? if congreso_coalition_pp_cs_talks: It leans on tolerations they'll have to negotiate. ?]
 view-if: congreso_coalition_pp_cs_s > congreso_s_majority - 50
 choose-if: congreso_coalition_pp_cs_reach
-unavailable-subtitle: PP and Cs fall short of investiture, even with the minors they could win over.
+unavailable-subtitle: PP and Cs fall short of investiture, even with the smaller parties they could win over.
 on-arrival: {!
     // TODO — form the PP + Cs coalition cabinet.
     //   • president = pp, Cs in government; centralist-right minors support,
@@ -19,12 +19,29 @@ TODO
 
 -@post_event: TO-DO
 
+@cs_pp
+title: <span style="color: var(--cs); font-style: italic;">Liberal</span> <span style="color: var(--pp); font-style: italic;">Coalition</span> (csspa - PP)
+subtitle: A csspa-led cabinet with the PP as the junior partner, backed by the centralist-right and other smaller parties. [? if congreso_coalition_pp_cs_talks: It leans on tolerations they'll have to negotiate. ?]
+view-if: congreso_coalition_cs_pp_s > congreso_s_majority - 50
+choose-if: congreso_coalition_pp_cs_reach
+unavailable-subtitle: Cs and PP fall short of investiture, even with the smaller parties they could win over.
+on-arrival: {!
+    // TODO — form the Cs-led liberal cabinet (Cs president, PP the junior partner).
+    //   • mirrors @pp_cs but with the bigger party (Cs) taking the presidency; the
+    //     same right minors back it. Shares congreso_coalition_pp_cs_reach (the
+    //     PP+Cs arithmetic is identical — only who-leads differs).
+!}
+
+TODO
+
+-@post_event: TO-DO
+
 @pp_vox
 title: <span style="color: var(--pp); font-style: italic;">National</span> <span style="color: var(--vox); font-style: italic;">Right</span> Coalition (PP - Vox)
-subtitle: PP turns to Vox. [? if congreso_coalition_pp_vox_talks: And still needs every far-right vote it can find. ?]
+subtitle: PP turns to Vox, a truly bleak prospect. [? if congreso_coalition_pp_vox_talks: And still needs every far-right vote it can find. ?]
 view-if: congreso_coalition_pp_vox_s > congreso_s_majority - 50
 choose-if: congreso_coalition_pp_vox_reach and not congreso_coalition_pp_cs_reach
-unavailable-subtitle: [? if congreso_coalition_pp_cs_reach: The PP would rather govern with Cs than lean on Vox. ?][? if not congreso_coalition_pp_vox_reach: PP and Vox don't reach investiture even with the far right. ?]
+unavailable-subtitle: [? if congreso_coalition_pp_cs_reach: The PP would rather govern with csspa than lean on Vox. ?][? if not congreso_coalition_pp_vox_reach: Luckily PP and Vox simply don't have enough seats. ?]
 on-arrival: {!
     // TODO — form the PP + Vox cabinet (only when the PP→Cs maths ISN'T there).
     //   • a Vox-tainted cabinet can't be negotiated upward (no rightvox escalation):
@@ -38,7 +55,7 @@ TODO
 
 @pp_minority
 title: <span style="color: var(--pp); font-style: italic;">PP</span> Minority Government
-subtitle: PP governs alone, tolerated from the outside. [? if congreso_coalition_pp_min_talks: Held up by tolerations we'd have to bargain for. ?]
+subtitle: PP governs alone, tolerated from the outside. [? if congreso_coalition_pp_min_talks: Held up by tolerations they'll have to bargain for. ?]
 view-if: congreso_coalition_pp_min_s > congreso_s_majority - 50
 choose-if: congreso_coalition_pp_min_reach
 unavailable-subtitle: Even with outside support, PP alone can't clear investiture.

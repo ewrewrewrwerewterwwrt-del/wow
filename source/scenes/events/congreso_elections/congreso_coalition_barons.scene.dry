@@ -1,0 +1,25 @@
+title: The Barons revolt!
+subtitle: What is even going on within the PSOE?
+new-page: true
+face-image: img/events/barones_revolt.jpg
+on-arrival: {!
+    Q.psoe_barons_revolted = true; // global flag
+    Q.congreso_coalition_grand_ok = true;
+    Q.psoe_leadership_mult = -0.5;
+    window.spaSupportInject(Q, Q.congreso_left_carrier, 'all', 1.5, 'psoe');
+    window.spaSupportInject(Q, 'abstain', 'all', 1.0, 'psoe');
+!}
+go-to: happens
+
+= The Barons revolt!
+
+It's no secret that the Barons of the PSOE have now been long time dissatisfied with the leadership of Pedro Sánchez. Now, with an impossible arithmetic in the Congreso and with the open support of former Presidente Felipe González, they have gathered unprecedented momentum within the party, enough to force a resignation of their Secretary-General. In what can only be categorized as an internal coup, the PSOE has now ousted Pedro Sánchez and will be ruled by an interim council until new primaries are held. 
+
+@happens
+on-arrival: {!
+    Q.psoe_leader = "???";
+    Q.psoe_leader_gender = "f";
+    Q.psoe_ideology = "Centrist Social Democracy, Autonomism";
+!}
+
+- @congreso_coalition: So what's the PSOE going to do?

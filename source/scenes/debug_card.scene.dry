@@ -4,7 +4,7 @@ is-card: true
 tags: debug_card
 view-if: debug
 on-arrival: month_actions += 1
-card-image: img/flags/estelada.png
+card-image: img/achievements/perrosanxe.png
 go-to: debug_menu
 
 
@@ -56,9 +56,44 @@ Split PSC from the PSOE in the congreso elections.
 
 @ciu_inject
 title: CiU (and evolutions)
-choose-if: 1==0
 
 ** CiU situations **
+
+- @inject_party: Back
+- @cdc_unio_inject
+- @dl_inject
+- @pdcat_inject
+- @post_event: Done
+
+@cdc_unio_inject
+title: Split UDC, create CDC
+choose-if: not unio_split
+unavailable-subtitle: UDC is already split from CDC
+call: unio_breaks
+
+UDC broken from CDC.
+
+- @inject_party: Back
+- @post_event: Done
+
+@dl_inject
+title: Form DL
+choose-if: not dl_formed and unio_split
+unavailable-subtitle: DL has already been formed, or UDC has not been split yet
+call: dl_formation
+
+DL formed from CDC.
+
+- @inject_party: Back
+- @post_event: Done
+
+@pdcat_inject
+title: Form PDeCAT
+choose-if: dl_formed and not pdcat_formed
+unavailable-subtitle: PDeCAT has already been formed, or DL has not been formed yet
+call: pdcat_formation
+
+PDeCAT formed from CDC.
 
 - @inject_party: Back
 - @post_event: Done
@@ -127,6 +162,9 @@ Injected congreso 2015 situation!
 @congreso_2016
 title: Congreso 2016 election
 subtitle: Only affects congreso party supports and related variables
+on-arrival: {!
+    Q.congreso_coalition_psoe_cs_wtf_happened = true;
+!}
 call: election_simulation.2016_6
 
 Injected congreso 2016 situation!
