@@ -2,33 +2,60 @@ title: grand coaltions
 
 You should not be here? Report a bug if you see this text.
 
+# TODO: add extra grand coalition psoe+pp+cs if they never add up
+
 @psoe_led
 title: PSOE-led <span style="color: var(--psoe); font-style: italic;">Grand</span> <span style="color: var(--pp); font-style: italic;">Coalition</span> (PSOE - PP)
 subtitle: Is this the new normal?
 view-if: congreso_coalition_grand_s_psoe > congreso_s_majority - 50 and psoe_leader != "???"
-choose-if: congreso_coalition_grand_s_psoe >= congreso_s_majority and congreso_coalition_grand_ok and not congreso_coalition_psoe_cs_wtf and congreso_coalition_grand_toleration_happened
+choose-if: congreso_coalition_grand_s_psoe >= congreso_s_majority and congreso_coalition_grand_ok and not congreso_coalition_psoe_cs_wtf and (congreso_coalition_grand_toleration_happened or congreso_coalition_grand_s_ppcs < congreso_s_majority)
 unavailable-subtitle: [? if congreso_coalition_grand_s_psoe < congreso_s_majority: PSOE and PP don't have enough seats, even together, ?][? if not congreso_coalition_grand_ok: [+ psoe_leader +] has ruled out any pact with the PP. ?][? if congreso_coalition_psoe_cs_wtf: This does not seem to be the plan of [+ psoe_leader +] and [+ csspa_leader +] ?][? if congreso_coalition_psoe_cs_wtf_happened and not congreso_coalition_grand_toleration_happened: This may still be a bit too much to ask from the PP. ?][? if psoe_leader == "???": The PSOE has no clear leadership at the moment. ?]
 on-arrival: {!
-    // TODO
+    Q.congreso_coalition_grand_toleration_happened = true;
+    Q.social_dissent += 5;
+    Q.spanish_pm = Q.psoe_leader;
+    Q.spanish_pm_gender = Q.psoe_leader_gender;
+    Q.spanish_pm_party = "psoe";
+    Q.spanish_coalition = ["psoe"];
+    Q.spanish_coalition_disp = "PSOE <span style='font-style: italic; color: var(--psoe);'>minority government</span>";
+
+    // supporters shed votes
+    window.spaSupportInject(Q, Q.congreso_left_carrier, 'all', 0.5, 'psoe');
+    window.spaSupportInject(Q, 'cs', 'all', 0.5, 'psoe');
+    window.spaSupportInject(Q, 'abstain', 'all', 1.0, 'pp');
+    window.spaSupportInject(Q, 'cs', 'all', 1.0, 'pp');
+    window.spaSupportInject(Q, 'vox', 'all', 0.5, 'pp');
 !}
 
-TODO
+In [? if congreso_coalition_grand_toleration_happened: yet another ?][? if not congreso_coalition_grand_toleration_happened: a ?] set of events hard to even imagine a decade ago, the bipartidist rivalry seems to have stepped aside to bring a joining of parties thought to be ideologically opposed. [? if spanish_pm_gender == "m": Presidente ?][? if spanish_pm_gender == "f": Presidenta ?][+ spanish_pm +] will be sworn in thanks to the support of the PP.
 
--@post_event: TO-DO
+-@post_event: Let's hope that at least [? if spanish_pm_gender = "m": his ?][? if spanish_pm_gender = "f": her ?]tenure is not long...
 
 @pp_led
 title: PP-led <span style="color: var(--pp); font-style: italic;">Grand</span> <span style="color: var(--psoe); font-style: italic;">Coalition</span> (PP - PSOE)
 subtitle: Is this the new normal?
 view-if: congreso_coalition_grand_s_pp > congreso_s_majority - 50 
-choose-if: congreso_coalition_grand_s_pp >= congreso_s_majority and congreso_coalition_grand_ok and not congreso_coalition_psoe_cs_wtf and congreso_coalition_grand_toleration_happened
+choose-if: congreso_coalition_grand_s_pp >= congreso_s_majority and congreso_coalition_grand_ok and not congreso_coalition_psoe_cs_wtf and (congreso_coalition_grand_toleration_happened or congreso_coalition_grand_s_ppcs < congreso_s_majority)
 unavailable-subtitle: [? if congreso_coalition_grand_s_pp < congreso_s_majority: PP and PSOE don't have enough seats, even together, ?][? if not congreso_coalition_grand_ok: [+ psoe_leader +] has ruled out any pact with the PP. ?][? if congreso_coalition_psoe_cs_wtf: This does not seem to be the plan of [+ psoe_leader +] and [+ csspa_leader +] ?][? if congreso_coalition_psoe_cs_wtf_happened and not congreso_coalition_grand_toleration_happened: This may still be a bit too much to ask from the PSOE. ?]
 on-arrival: {!
-    // TODO
+    Q.congreso_coalition_grand_toleration_happened = true;
+    Q.social_dissent += 5;
+    Q.spanish_pm = Q.pp_leader;
+    Q.spanish_pm_gender = Q.pp_leader_gender;
+    Q.spanish_pm_party = "pp";
+    Q.spanish_coalition = ["pp", "ppc"];
+    Q.spanish_coalition_disp = "PP <span style='font-style: italic; color: var(--pp);'>minority government</span>";
+
+    // supporters shed votes
+    window.spaSupportInject(Q, Q.congreso_left_carrier, 'all', 0.5, 'psoe');
+    window.spaSupportInject(Q, 'abstain', 'all', 1.0, 'psoe');
+    window.spaSupportInject(Q, 'cs', 'all', 0.5, 'psoe');
+    window.spaSupportInject(Q, 'vox', 'all', 0.5, 'pp');
 !}
 
-TODO
+In [? if congreso_coalition_grand_toleration_happened: yet another ?][? if not congreso_coalition_grand_toleration_happened: a ?] set of events hard to even imagine a decade ago, the bipartidist rivalry seems to have stepped aside to bring a joining of parties thought to be ideologically opposed. [? if spanish_pm_gender == "m": Presidente ?][? if spanish_pm_gender == "f": Presidenta ?][+ spanish_pm +] will be sworn in thanks to the support of the PSOE.
 
--@post_event: TO-DO
+-@post_event: Let's hope that at least [? if spanish_pm_gender = "m": his ?][? if spanish_pm_gender = "f": her ?]tenure is not long...
 
 @toleration
 title: <span style="color: var(--pp); font-style: italic;">Grand</span> <span style="color: var(--cs); font-style: italic;">Tole</span><span style="color: var(--psoe); font-style: italic;">ration</span> (PP - csspa - PSOE)
@@ -41,10 +68,18 @@ on-arrival: {!
     Q.social_dissent += 5;
     Q.spanish_pm = Q.pp_leader;
     Q.spanish_pm_gender = Q.pp_leader_gender;
+    Q.spanish_pm_party = "pp";
     Q.spanish_coalition = ["pp", "ppc"];
     Q.spanish_coalition_disp = "PP <span style='font-style: italic; color: var(--pp);'>minority government</span>";
+
+    // supporters shed votes
+    window.spaSupportInject(Q, Q.congreso_left_carrier, 'all', 0.5, 'psoe');
+    window.spaSupportInject(Q, 'abstain', 'all', 1.0, 'psoe');
+    window.spaSupportInject(Q, 'pp', 'all', 1.0, 'cs');
+    window.spaSupportInject(Q, 'vox', 'all', 0.5, 'pp');
+    window.spaSupportInject(Q, 'abstain', 'all', 0.5, 'cs');
 !}
 
-After a set of events truly unbelievable just a few years ago, the ongoing civil war within the PSOE has left a bizarre sight within the walls of the Congreso. The century-old party, historical pillar of the post-Franco era and bipartidism, now just torn into pieces. Some MPs have voted against the investiture, some have followed the line and abstained, some have not even showed up. In any case, the majority was there despite everything, and [+ spanish_pm +] will be Presidente after all. 
+After a set of events truly unbelievable just a few years ago, the ongoing civil war within the PSOE has left a bizarre sight within the walls of the Congreso. The century-old party, historical pillar of the post-Franco era and bipartidism, now just torn into pieces. Some MPs have voted against the investiture, some have followed the line and abstained, some have not even showed up. In any case, the majority was there despite everything, and [+ spanish_pm +] will be [? if spanish_pm_gender == "m": Presidente?][? if spanish_pm_gender == "f": Presidenta?] after all. 
 
--@post_event: Let's hope that at least [? spanish_pm_gender = "m": his ?][? spanish_pm_gender = "f": her ?] tenure is not long
+-@post_event: Let's hope that at least [? if spanish_pm_gender = "m": his ?][? if spanish_pm_gender = "f": her ?]tenure is not long...

@@ -1,0 +1,31 @@
+title: left congreso coalitions
+
+You should not be here? Report a bug if you see this text.
+
+@change
+title: <span style="color: var(--up); font-style: italic;">Change</span> <span style="color: var(--psoe); font-style: italic;">Coalition</span> ([? if congreso_left_carrier == "up": UP?][?if congreso_left_carrier != "up": [+ congreso_left_carrier +]?] - PSOE [? if iu_congreso_s > 0: - IU?])
+subtitle: A difficult arithmetic made possible by kingmaker smaller parties. [? if congreso_coalition_change_talks: Pulling it over the line may demand hard concessions. ?]
+view-if: congreso_coalition_change_s > congreso_s_majority - 50
+choose-if: congreso_coalition_change_reach and not congreso_coalition_psoe_cs_wtf
+unavailable-subtitle: [? if not congreso_coalition_change_reach : The numbers don't add up, not even with every abstention that can be realistically negotiated. ?][? if congreso_coalition_psoe_cs_wtf: This does not seem to be the plan of [+ psoe_leader +] and [+ csspa_leader +] ?]
+on-arrival: {!
+    // TODO 
+!}
+
+TODO
+
+-@post_event: TO-DO
+
+@left
+title: <span style="color: var(--up); font-style: italic;">Left</span> <span style="color: var(--iu); font-style: italic;">Front</span> Government ([? if congreso_left_carrier == "up": UP?][?if congreso_left_carrier != "up": [+ congreso_left_carrier +]?][? if iu_congreso_s > 0:  - IU?])
+subtitle: A difficult arithmetic made possible by kingmaker smaller parties. [? if congreso_coalition_left_talks: Pulling it over the line may demand hard concessions. ?]
+view-if: congreso_coalition_left_s > congreso_s_majority - 50
+choose-if: congreso_coalition_left_reach
+unavailable-subtitle: [? if not congreso_coalition_left_reach : The numbers don't add up, not even with every abstention that can be realistically negotiated. ?]
+on-arrival: {!
+    // TODO 
+!}
+
+TODO
+
+-@post_event: TO-DO

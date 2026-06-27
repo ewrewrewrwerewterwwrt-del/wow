@@ -173,7 +173,22 @@ for (var p of Q.parties) {
     }
 }
 
-
+// 4. Achievement check
+if (Q.spanish_pm == "Pedro Sánchez") {
+    Q.psoe_sanchez_president_ever = true;
+    if (Q.psoe_barons_revolted ) {
+        if (!Q.achievement_perrosanxe) {
+            window.achievementNotif('Más sabe por Perro que por Sanxe', 'img/achievements/perrosanxe.png', 2);
+        }
+        this.achieve('perrosanxe');
+    }
+}
+if (Q.congreso_coalition_sorpasso && (Q.spanish_pm_party == "podemos" || Q.spanish_pm_party == "up")) {
+    if (!Q.achievement_asalto_cielos) {
+        window.achievementNotif('Asalto a los Cielos', 'img/achievements/asalto_cielos.avif', 3);
+    }
+    this.achieve('asalto_cielos');
+}
 
 Q.has_event = 0;
 // check if there are any cards in #event, and then go to main if not.

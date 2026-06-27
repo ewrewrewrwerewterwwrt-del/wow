@@ -186,6 +186,15 @@
       };
     });
 
+    // Consistent reading order: government → support → abstain. The scene emits
+    // courted partners in court order (an abstaining tolerator can precede a later
+    // active supporter), but supports should always read/paint before abstains.
+    // Stable sort (ES2019+) keeps the original order within each type.
+    var TYPE_RANK = { government: 0, support: 1, abstain: 2 };
+    members.sort(function (a, b) {
+      return (TYPE_RANK[a.type] || 0) - (TYPE_RANK[b.type] || 0);
+    });
+
     // tally
     var govSeats = 0,
       supportSeats = 0,

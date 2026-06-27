@@ -6,570 +6,569 @@ go-to: post_event if started = 1; start_menu if started = 0
 new-page: true
 set-bg: img/3rd_October_2017.jpg
 on-arrival: {!
-// check origin 
-// TODO: allow via url
-const valid_urls = [
-  // "https://broken-arrows.github.io/route_to_itaca",
-  // "https://broken-arrows.github.io/cami_a_itaca"
-];
+  // check origin 
+  // TODO: allow via url
+  const valid_urls = [
+    // "https://broken-arrows.github.io/route_to_itaca",
+    // "https://broken-arrows.github.io/cami_a_itaca"
+  ];
 
-var local_file = window.location.protocol === 'file:' || window.location.hostname === 'localhost';
-var valid_url = valid_urls.some(url => window.location.href.startsWith(url));
+  var local_file = window.location.protocol === 'file:' || window.location.hostname === 'localhost';
+  var valid_url = valid_urls.some(url => window.location.href.startsWith(url));
 
-if (!valid_url) {
-  console.error("Page loaded from unexpected origin:", window.location.href);
-}
+  if (!valid_url) {
+    console.error("Page loaded from unexpected origin:", window.location.href);
+  }
 
-Q.url_valid = local_file || valid_url;
+  Q.url_valid = local_file || valid_url;
 
-// setup
-Q.year = 2012;
-Q.month = 8;
-Q.week = 1;
-Q.rubicon = 0;
-Q.countdowns = [];
+  // setup
+  Q.year = 2012;
+  Q.month = 8;
+  Q.week = 1;
+  Q.rubicon = 0;
+  Q.countdowns = [];
 
-// start situation
-Q.president = "Artur Mas";
-Q.president_party = "ciu";
-Q.president_gender = "m";
-Q.cat_coalition = ["ciu"];
-Q.cat_coalition_disp = "CiU <span style='color: var(--ciu);'>minority government</span>";
-Q.cat_coalition_dissent = 0;
+  // start situation
+  Q.president = "Artur Mas";
+  Q.president_party = "ciu";
+  Q.president_gender = "m";
+  Q.cat_coalition = ["ciu"];
+  Q.cat_coalition_disp = "CiU <span style='color: var(--ciu);'>minority government</span>";
+  Q.cat_coalition_dissent = 0;
 
-Q.speaker = "Núria de Gispert";
-Q.speaker_party = "ciu";
-Q.speaker_gender = "f";
+  Q.speaker = "Núria de Gispert";
+  Q.speaker_party = "ciu";
+  Q.speaker_gender = "f";
 
-Q.vicepresident = "Joana Ortega";
-Q.vicepresident_party = "ciu";
-Q.vicepresident_gender = "f";
-Q.economy_minister = "Andreu Mas-Colell";
-Q.economy_minister_party = "ciu";
-Q.economy_minister_gender = "m";
-Q.health_minister = "Boi Ruiz";
-Q.health_minister_party = "indp.";
-Q.health_minister_gender = "m";
-Q.interior_minister = "Felip Puig";
-Q.interior_minister_party = "ciu";
-Q.interior_minister_gender = "m";
-Q.education_minister = "Irene Rigau";
-Q.education_minister_party = "ciu";
-Q.education_minister_gender = "f";
-Q.foreign_minister = "Joana Ortega";
-Q.foreign_minister_party = "ciu";
-Q.foreign_minister_gender = "f";
-Q.territory_minister = "Lluís Miquel Recoder";
-Q.territory_minister_party = "ciu";
-Q.territory_minister_gender = "m";
-Q.bnl_minister = "Francesc Xavier Mena";
-Q.bnl_minister_party = "indp.";
-Q.bnl_minister_gender = "m";
+  Q.vicepresident = "Joana Ortega";
+  Q.vicepresident_party = "ciu";
+  Q.vicepresident_gender = "f";
+  Q.economy_minister = "Andreu Mas-Colell";
+  Q.economy_minister_party = "ciu";
+  Q.economy_minister_gender = "m";
+  Q.health_minister = "Boi Ruiz";
+  Q.health_minister_party = "indp.";
+  Q.health_minister_gender = "m";
+  Q.interior_minister = "Felip Puig";
+  Q.interior_minister_party = "ciu";
+  Q.interior_minister_gender = "m";
+  Q.education_minister = "Irene Rigau";
+  Q.education_minister_party = "ciu";
+  Q.education_minister_gender = "f";
+  Q.foreign_minister = "Joana Ortega";
+  Q.foreign_minister_party = "ciu";
+  Q.foreign_minister_gender = "f";
+  Q.territory_minister = "Lluís Miquel Recoder";
+  Q.territory_minister_party = "ciu";
+  Q.territory_minister_gender = "m";
+  Q.bnl_minister = "Francesc Xavier Mena";
+  Q.bnl_minister_party = "indp.";
+  Q.bnl_minister_gender = "m";
 
-Q.spanish_pm = "Mariano Rajoy";
-Q.spanish_pm_gender = "m";
-Q.spanish_pm_party = "pp";
-Q.spanish_coalition = ["pp", "ppc"];
-Q.spanish_coalition_disp = "PP <span style='color: var(--pp);'>majority government</span>";
-Q.spain_is_republic = 0; // lol
+  Q.spanish_pm = "Mariano Rajoy";
+  Q.spanish_pm_gender = "m";
+  Q.spanish_pm_party = "pp";
+  Q.spanish_coalition = ["pp", "ppc"];
+  Q.spanish_coalition_disp = "PP <span style='color: var(--pp);'>majority government</span>";
+  Q.spain_is_republic = 0; // lol
 
-Q.next_election_month = 12;
-Q.next_election_year = 2014;
-Q.next_election_time = 16; // in time steps, months for non-rubicon case, weeks when rubicon
-Q.next_spanish_election_month = 12;
-Q.next_spanish_election_year = 2015;
-Q.next_spanish_election_time = 40;
-Q.next_local_election_month = 5;
-Q.next_local_election_year = 2015;
-Q.next_local_election_time = 32;
+  Q.next_election_month = 12;
+  Q.next_election_year = 2014;
+  Q.next_election_time = 16; // in time steps, months for non-rubicon case, weeks when rubicon
+  Q.next_spanish_election_month = 12;
+  Q.next_spanish_election_year = 2015;
+  Q.next_spanish_election_time = 40;
+  Q.next_local_election_month = 5;
+  Q.next_local_election_year = 2015;
+  Q.next_local_election_time = 32;
 
-Q.independence_trust = 28;
-Q.independence_movement = 65;
-Q.social_dissent = 72;
-Q.welfare_index = 72;
-Q.cat_spa_relations = 38;
-Q.gdp_growth = -3.1; // annual, percent
-Q.gdp_growth_change = '<img src="img/arrowdown.png"> ';
-Q.generalitat_surplus = -2.3; //percent
-Q.generalitat_surplus_change = '<img src="img/arrowup.png""> ';
-Q.public_debt = 26;
-Q.unemployment = 22.5;
-Q.unemployment_change = '<img src="img/arrowdown.png" style="transform: rotate(180deg);"> ';
-Q.podemos_surged = false;
-Q.podemos_channeling = 0.0;
-Q.corruption_events_ciu = 0;
+  Q.independence_trust = 28;
+  Q.independence_movement = 65;
+  Q.social_dissent = 72;
+  Q.welfare_index = 72;
+  Q.cat_spa_relations = 38;
+  Q.gdp_growth = -3.1; // annual, percent
+  Q.gdp_growth_change = '<img src="img/arrowdown.png"> ';
+  Q.generalitat_surplus = -2.3; //percent
+  Q.generalitat_surplus_change = '<img src="img/arrowup.png""> ';
+  Q.public_debt = 26;
+  Q.unemployment = 22.5;
+  Q.unemployment_change = '<img src="img/arrowdown.png" style="transform: rotate(180deg);"> ';
+  Q.podemos_surged = false;
+  Q.podemos_channeling = 0.0;
+  Q.corruption_events_ciu = 0;
 
-// Country control
-Q.airports_control = 0;
-Q.railways_control = 1;
-Q.ports_control = 1;
-Q.borders_control = 0;
-Q.security_control = 2;
-Q.communications_control = 1;
-Q.tax_control = 1;
-Q.art155_ever = false;
+  // Country control
+  Q.airports_control = 0;
+  Q.railways_control = 1;
+  Q.ports_control = 1;
+  Q.borders_control = 0;
+  Q.security_control = 2;
+  Q.communications_control = 1;
+  Q.tax_control = 1;
+  Q.art155_ever = false;
 
-// start Parlament composition
-Q.parlament_seats = {
-    "barcelona": 85,
-    "girona": 17,
-    "lleida": 15,
-    "tarragona": 18
-  }; // seats
-Q.parlament_constituencies = ["barcelona", "girona", "lleida", "tarragona"];
-Q.parlament_size = 135;
-Q.parlament_s_majority = Math.floor(Q.parlament_size/2) + 1;
+  // start Parlament composition
+  Q.parlament_seats = {
+      "barcelona": 85,
+      "girona": 17,
+      "lleida": 15,
+      "tarragona": 18
+    }; // seats
+  Q.parlament_constituencies = ["barcelona", "girona", "lleida", "tarragona"];
+  Q.parlament_size = 135;
+  Q.parlament_s_majority = Math.floor(Q.parlament_size/2) + 1;
 
-Q.parties = ['ciu', 'erc', 'psc', 'ppc', 'icv', 'cs', 'cup', 'si', 'cdc', 'unio', 'dl', 'jxsi', 'junts', 'jxcat', 'pdcat', 'csqp', 'cecp', 'ecp', 'vox', 'fnc', 'pxc'];
+  Q.parties = ['ciu', 'erc', 'psc', 'ppc', 'icv', 'cs', 'cup', 'si', 'cdc', 'unio', 'dl', 'jxsi', 'junts', 'jxcat', 'pdcat', 'csqp', 'cecp', 'ecp', 'vox', 'fnc', 'pxc'];
 
-Q.ciu_parlament_pv = 40;
-Q.ciu_parlament_s = 62;
-Q.psc_parlament_pv = 18.4;
-Q.psc_parlament_s = 28;
-Q.ppc_parlament_pv = 11.5;
-Q.ppc_parlament_s = 18;
-Q.icv_parlament_pv = 7.4;
-Q.icv_parlament_s = 10;
-Q.erc_parlament_pv = 7.0;
-Q.erc_parlament_s = 10;
-Q.cs_parlament_pv = 3.4;
-Q.cs_parlament_s = 3;
-Q.si_parlament_pv = 3.3;
-Q.si_parlament_s = 4;
+  Q.ciu_parlament_pv = 40;
+  Q.ciu_parlament_s = 62;
+  Q.psc_parlament_pv = 18.4;
+  Q.psc_parlament_s = 28;
+  Q.ppc_parlament_pv = 11.5;
+  Q.ppc_parlament_s = 18;
+  Q.icv_parlament_pv = 7.4;
+  Q.icv_parlament_s = 10;
+  Q.erc_parlament_pv = 7.0;
+  Q.erc_parlament_s = 10;
+  Q.cs_parlament_pv = 3.4;
+  Q.cs_parlament_s = 3;
+  Q.si_parlament_pv = 3.3;
+  Q.si_parlament_s = 4;
 
-Q.cup_parlament_pv = 0.0;
-Q.cup_parlament_s = 0;
-Q.cdc_parlament_pv = 0.0;
-Q.cdc_parlament_s = 0;
-Q.dl_parlament_s = 0;
-Q.dl_parlament_pv = 0;
-Q.unio_parlament_pv = 0.0;
-Q.unio_parlament_s = 0;
-Q.jxsi_parlament_pv = 0.0;
-Q.jxsi_parlament_s = 0;
-Q.jxcat_parlament_pv = 0.0;
-Q.jxcat_parlament_s = 0;
-Q.pdcat_parlament_pv = 0.0;
-Q.pdcat_parlament_s = 0;
-Q.junts_parlament_pv = 0.0;
-Q.junts_parlament_s = 0;
-Q.csqp_parlament_pv = 0.0;
-Q.csqp_parlament_s = 0;
-Q.cecp_parlament_pv = 0.0;
-Q.cecp_parlament_s = 0;
-Q.ecp_parlament_pv = 0.0;
-Q.ecp_parlament_s = 0;
-Q.vox_parlament_pv = 0.0;
-Q.vox_parlament_s = 0;
-Q.pxc_parlament_pv = 0.0;
-Q.pxc_parlament_s = 0;
-Q.fnc_parlament_pv = 0.0;
-Q.fnc_parlament_s = 0;
+  Q.cup_parlament_pv = 0.0;
+  Q.cup_parlament_s = 0;
+  Q.cdc_parlament_pv = 0.0;
+  Q.cdc_parlament_s = 0;
+  Q.dl_parlament_s = 0;
+  Q.dl_parlament_pv = 0;
+  Q.unio_parlament_pv = 0.0;
+  Q.unio_parlament_s = 0;
+  Q.jxsi_parlament_pv = 0.0;
+  Q.jxsi_parlament_s = 0;
+  Q.jxcat_parlament_pv = 0.0;
+  Q.jxcat_parlament_s = 0;
+  Q.pdcat_parlament_pv = 0.0;
+  Q.pdcat_parlament_s = 0;
+  Q.junts_parlament_pv = 0.0;
+  Q.junts_parlament_s = 0;
+  Q.csqp_parlament_pv = 0.0;
+  Q.csqp_parlament_s = 0;
+  Q.cecp_parlament_pv = 0.0;
+  Q.cecp_parlament_s = 0;
+  Q.ecp_parlament_pv = 0.0;
+  Q.ecp_parlament_s = 0;
+  Q.vox_parlament_pv = 0.0;
+  Q.vox_parlament_s = 0;
+  Q.pxc_parlament_pv = 0.0;
+  Q.pxc_parlament_s = 0;
+  Q.fnc_parlament_pv = 0.0;
+  Q.fnc_parlament_s = 0;
 
-Q.abstain_parlament_pv = 41.2;
+  Q.abstain_parlament_pv = 41.2;
 
-// Initial party positions
+  // Initial party positions
 
-Q.ciu_ideology = "Liberal-Conservatism, Pact-Pragmatism";
-Q.ciu_leader = "Artur Mas";
-Q.cdc_leader = "Artur Mas";
-Q.cdc_leader_gender = "m";
-Q.ciu_leader_gender = "m";
-Q.cdc_ideology = "Centre-right Liberalism, Pact-Pragmatism";
+  Q.ciu_ideology = "Liberal-Conservatism, Pact-Pragmatism";
+  Q.ciu_leader = "Artur Mas";
+  Q.cdc_leader = "Artur Mas";
+  Q.cdc_leader_gender = "m";
+  Q.ciu_leader_gender = "m";
+  Q.cdc_ideology = "Centre-right Liberalism, Pact-Pragmatism";
 
-Q.unio_leader = "Josep Antoni Duran i Lleida";
-Q.unio_leader_gender = "m";
-Q.unio_ideology = "Christian Democracy, Pact-Pragmatism";
+  Q.unio_leader = "Josep Antoni Duran i Lleida";
+  Q.unio_leader_gender = "m";
+  Q.unio_ideology = "Christian Democracy, Pact-Pragmatism";
 
-Q.erc_ideology = "Social Democracy, Independence";
-Q.erc_leader = "Oriol Junqueras";
-Q.erc_leader_gender = "m";
+  Q.erc_ideology = "Social Democracy, Independence";
+  Q.erc_leader = "Oriol Junqueras";
+  Q.erc_leader_gender = "m";
 
-Q.cup_ideology = "Anticapitalism, Unilateralism";
-Q.cup_leader = "David Fernàndez";
-Q.cup_leader_gender = "m";
+  Q.cup_ideology = "Anticapitalism, Unilateralism";
+  Q.cup_leader = "David Fernàndez";
+  Q.cup_leader_gender = "m";
 
-Q.cs_leader = "Albert Rivera";
-Q.cs_ideology = "Neo-liberalism, Centralism";
-Q.cs_leader_gender = "m";
+  Q.cs_leader = "Albert Rivera";
+  Q.cs_ideology = "Neo-liberalism, Centralism";
+  Q.cs_leader_gender = "m";
 
-Q.si_leader = "Alfons López Tena";
-Q.si_ideology = "Transversal single-issue, Unilateralism";
-Q.si_leader_gender = "m";
+  Q.si_leader = "Alfons López Tena";
+  Q.si_ideology = "Transversal single-issue, Unilateralism";
+  Q.si_leader_gender = "m";
 
-Q.psc_leader = "Pere Navarro";
-Q.psc_leader_gender = "m";
-Q.psc_ideology = "Centrist Social Democracy, Federalism";
+  Q.psc_leader = "Pere Navarro";
+  Q.psc_leader_gender = "m";
+  Q.psc_ideology = "Centrist Social Democracy, Federalism";
 
-Q.ppc_leader = "Alícia Sánchez-Camacho";
-Q.ppc_leader_gender = "f";
-Q.ppc_ideology = "Conservatism, Centralism";
+  Q.ppc_leader = "Alícia Sánchez-Camacho";
+  Q.ppc_leader_gender = "f";
+  Q.ppc_ideology = "Conservatism, Centralism";
 
-Q.icv_leader = "Joan Herrera";
-Q.icv_leader_gender = "m";
-Q.icv_ideology = "Green Left, Plurinationalism";
-Q.comuns_name = "icv";
+  Q.icv_leader = "Joan Herrera";
+  Q.icv_leader_gender = "m";
+  Q.icv_ideology = "Green Left, Plurinationalism";
+  Q.comuns_name = "icv";
 
-// Initial ideologies for all parties, also future ones, just in case
-Q.pdcat_leader = "Artur Mas";
-Q.pdcat_ideology = "Centre-right Liberalism, Pragmatic Independence";
-Q.pdcat_leader_gender = "m";
-Q.dl_leader = "Artur Mas";
-Q.dl_leader_gender = "m";
-Q.dl_ideology = "Centre-right Liberalism, Pragmatic Independence";
-Q.jxsi_leader = "Artur Mas";
-Q.jxsi_leader_gender = "m";
-Q.jxsi_ideology = "National coalition, Independence";
-Q.jxcat_leader = "Carles Puigdemont";
-Q.jxcat_leader_gender = "m";
-Q.jxcat_ideology = "Center-right Liberalism, Unilateralism";
-Q.junts_leader = "Carles Puigdemont";
-Q.junts_leader_gender = "m";
-Q.junts_ideology = "Center-right Liberalism, Unilateralism";
+  // Initial ideologies for all parties, also future ones, just in case
+  Q.pdcat_leader = "Artur Mas";
+  Q.pdcat_ideology = "Centre-right Liberalism, Pragmatic Independence";
+  Q.pdcat_leader_gender = "m";
+  Q.dl_leader = "Artur Mas";
+  Q.dl_leader_gender = "m";
+  Q.dl_ideology = "Centre-right Liberalism, Pragmatic Independence";
+  Q.jxsi_leader = "Artur Mas";
+  Q.jxsi_leader_gender = "m";
+  Q.jxsi_ideology = "National coalition, Independence";
+  Q.jxcat_leader = "Carles Puigdemont";
+  Q.jxcat_leader_gender = "m";
+  Q.jxcat_ideology = "Center-right Liberalism, Unilateralism";
+  Q.junts_leader = "Carles Puigdemont";
+  Q.junts_leader_gender = "m";
+  Q.junts_ideology = "Center-right Liberalism, Unilateralism";
 
-Q.pxc_leader = "Josep Anglada";
-Q.pxc_ideology = "Far-right Nationalism, Centralism";
-Q.pxc_leader_gender = "m";
-Q.fnc_leader = "Jordi Casacuberta";
-Q.fnc_leader_gender = "m";
-Q.fnc_ideology = "Far-right Nationalism, Unilateralism";
+  Q.pxc_leader = "Josep Anglada";
+  Q.pxc_ideology = "Far-right Nationalism, Centralism";
+  Q.pxc_leader_gender = "m";
+  Q.fnc_leader = "Jordi Casacuberta";
+  Q.fnc_leader_gender = "m";
+  Q.fnc_ideology = "Far-right Nationalism, Unilateralism";
 
-Q.csqp_leader = "Lluís Rabell";
-Q.csqp_leader_gender = "m";
-Q.csqp_ideology = "Anti-austerity left, Plurinationalism";
-Q.cecp_leader = "Xavier Domènech";
-Q.cecp_leader_gender = "m";
-Q.cecp_ideology = "Left Social Democracy, Autonomism";
-Q.ecp_leader = "Jéssica Albiach";
-Q.ecp_leader_gender = "f";
-Q.ecp_ideology = "Social democracy, Autonomism";
-Q.fr_leader = "Albano Dante Fachín";
-Q.fr_leader_gender = "m";
-Q.fr_ideology = "Anticapitalism, Unilateralism";
+  Q.csqp_leader = "Lluís Rabell";
+  Q.csqp_leader_gender = "m";
+  Q.csqp_ideology = "Anti-austerity left, Plurinationalism";
+  Q.cecp_leader = "Xavier Domènech";
+  Q.cecp_leader_gender = "m";
+  Q.cecp_ideology = "Left Social Democracy, Autonomism";
+  Q.ecp_leader = "Jéssica Albiach";
+  Q.ecp_leader_gender = "f";
+  Q.ecp_ideology = "Social democracy, Autonomism";
+  Q.fr_leader = "Albano Dante Fachín";
+  Q.fr_leader_gender = "m";
+  Q.fr_ideology = "Anticapitalism, Unilateralism";
 
-Q.psoe_leader = "Alfredo Pérez Rubalcaba";
-Q.psoe_leader_gender = "m";
-Q.psoe_ideology = "Centrist Social Democracy, Autonomism";
-Q.pp_leader = "Mariano Rajoy";
-Q.pp_ideology = "Conservatism, Centralism";
-Q.pp_leader_gender = "m";
-Q.csspa_leader = "Albert Rivera";
-Q.csspa_leader_gender = "m";
-Q.vox_leader = "Santiago Abascal";
-Q.vos_leader_gender = "m";
-Q.vox_ideology = "Far-right Nationalism, Hypercentralism";
-Q.upyd_leader = "Rosa Díez";
-Q.upyd_leader_gender = "f";
-Q.upyd_ideology = "Liberal reformism, Hypercentralism";
+  Q.psoe_leader = "Alfredo Pérez Rubalcaba";
+  Q.psoe_leader_gender = "m";
+  Q.psoe_ideology = "Centrist Social Democracy, Autonomism";
+  Q.pp_leader = "Mariano Rajoy";
+  Q.pp_ideology = "Conservatism, Centralism";
+  Q.pp_leader_gender = "m";
+  Q.csspa_leader = "Albert Rivera";
+  Q.csspa_leader_gender = "m";
+  Q.vox_leader = "Santiago Abascal";
+  Q.vos_leader_gender = "m";
+  Q.vox_ideology = "Far-right Nationalism, Hypercentralism";
+  Q.upyd_leader = "Rosa Díez";
+  Q.upyd_leader_gender = "f";
+  Q.upyd_ideology = "Liberal reformism, Hypercentralism";
 
-Q.podemos_leader = "Pablo Iglesias";
-Q.podemos_ideology = "Anti-austerity left, Plurinationalism";
-Q.podemod_leader_gender = "m";
-Q.iu_leader = "Cayo Lara";
-Q.i_leader_gender = "m";
-Q.iu_ideology = "Left Social Democracy, Federalism";
-Q.mpais_leader = "Íñigo Errejón";
-Q.mpais_leader_gender = "m";
-Q.mpais_ideology = "Social Democracy, Federalism";
-Q.sumar_leader = "Yolanda Díaz";
-Q.sumar_leader_gender = "f";
-Q.sumar_ideology = "Social Democracy, Autonomism";
-Q.up_leader = "Pablo Iglesias";
-Q.up_leader_gender = "m";
-Q.up_ideology = "Anti-austerity left, Plurinationalism";
+  Q.podemos_leader = "Pablo Iglesias";
+  Q.podemos_ideology = "Anti-austerity left, Plurinationalism";
+  Q.podemod_leader_gender = "m";
+  Q.iu_leader = "Cayo Lara";
+  Q.i_leader_gender = "m";
+  Q.iu_ideology = "Left Social Democracy, Federalism";
+  Q.mpais_leader = "Íñigo Errejón";
+  Q.mpais_leader_gender = "m";
+  Q.mpais_ideology = "Social Democracy, Federalism";
+  Q.sumar_leader = "Yolanda Díaz";
+  Q.sumar_leader_gender = "f";
+  Q.sumar_ideology = "Social Democracy, Autonomism";
+  Q.up_leader = "Pablo Iglesias";
+  Q.up_leader_gender = "m";
+  Q.up_ideology = "Anti-austerity left, Plurinationalism";
 
-Q.pnv_leader = "Íñigo Urkullu";
-Q.pnv_leader_gender = "m";
-Q.pnv_ideology = "Christian Democracy, Basque Pact-Pragmatism";
-Q.ehbildu_leader = "Arnaldo Otegi";
-Q.ehbildu_leader_gender = "m";
-Q.ehbildu_ideology = "Left Social Democracy, Basque Independence";
-Q.amaiur_leader = "Maite Aristegi";
-Q.amaiur_leader_gender = "f";
-Q.amaiur_ideology = "Left Social Democracy, Basque Independence";
+  Q.pnv_leader = "Íñigo Urkullu";
+  Q.pnv_leader_gender = "m";
+  Q.pnv_ideology = "Christian Democracy, Basque Pact-Pragmatism";
+  Q.ehbildu_leader = "Arnaldo Otegi";
+  Q.ehbildu_leader_gender = "m";
+  Q.ehbildu_ideology = "Left Social Democracy, Basque Independence";
+  Q.amaiur_leader = "Maite Aristegi";
+  Q.amaiur_leader_gender = "f";
+  Q.amaiur_ideology = "Left Social Democracy, Basque Independence";
 
-Q.gbai_leader = "Uxue Barkos";
-Q.gbai_leader_gender = "f";
-Q.gbai_ideology = "Social Democracy, Navarrese Independence";
-Q.upn_leader = "Yolanda Barcina";
-Q.upn_ideology = "Conservatism, Navarrese Regionalism";
-Q.upn_leader_gender = "f";
-Q.nsuma_leader = "Sergio Sayas";
-Q.nsuma_ideology = "Conservatism, Navarrese Regionalism";
-Q.nsuma_leader_gender = "m";
+  Q.gbai_leader = "Uxue Barkos";
+  Q.gbai_leader_gender = "f";
+  Q.gbai_ideology = "Social Democracy, Navarrese Independence";
+  Q.upn_leader = "Yolanda Barcina";
+  Q.upn_ideology = "Conservatism, Navarrese Regionalism";
+  Q.upn_leader_gender = "f";
+  Q.nsuma_leader = "Sergio Sayas";
+  Q.nsuma_ideology = "Conservatism, Navarrese Regionalism";
+  Q.nsuma_leader_gender = "m";
 
-Q.ccpnc_leader = "Paulino Rivero";
-Q.ccpnc_leader_gender = "m";
-Q.ccpnc_ideology = "Centrist Liberalism, Canarian Regionalism";
-Q.compromis_leader = "Joan Baldoví";
-Q.compromis_leader_gender = "m";
-Q.compromis_ideology = "Social Democracy, Valencian Regionalism";
-Q.mes_leader = "Biel Barceló";
-Q.mes_leader_gender = "m";
-Q.mes_ideology = "Left Social Democracy, Balearic Regionalism";
-Q.bng_leader = "Ana Pontón";
-Q.bng_leader_gender = "f";
-Q.bng_ideology = "Social Democracy, Galician Independence";
-Q.nos_leader = "Carlos Morais";
-Q.nos_leader_gender = "m";
-Q.nos_ideology = "Social Democracy, Galician Independence";
-Q.fac_leader = "Cristina Coto";
-Q.fac_leader_gender = "f";
-Q.fac_ideology = "Liberal Conservatism, Asturian Regionalism";
-Q.prc_leader = "Miguel Ángel Revilla";
-Q.prc_leader_gender = "m";
-Q.prc_ideology = "Centrist Social Democracy, Cantabrian Regionalism";
-Q.te_leader = "Tomás Guitarte"
-Q.te_leader_gender = "m";
-Q.te_ideology = "Transversal single-issue, Teruel Regionalism";
+  Q.ccpnc_leader = "Paulino Rivero";
+  Q.ccpnc_leader_gender = "m";
+  Q.ccpnc_ideology = "Centrist Liberalism, Canarian Regionalism";
+  Q.compromis_leader = "Joan Baldoví";
+  Q.compromis_leader_gender = "m";
+  Q.compromis_ideology = "Social Democracy, Valencian Regionalism";
+  Q.mes_leader = "Biel Barceló";
+  Q.mes_leader_gender = "m";
+  Q.mes_ideology = "Left Social Democracy, Balearic Regionalism";
+  Q.bng_leader = "Ana Pontón";
+  Q.bng_leader_gender = "f";
+  Q.bng_ideology = "Social Democracy, Galician Independence";
+  Q.nos_leader = "Carlos Morais";
+  Q.nos_leader_gender = "m";
+  Q.nos_ideology = "Social Democracy, Galician Independence";
+  Q.fac_leader = "Cristina Coto";
+  Q.fac_leader_gender = "f";
+  Q.fac_ideology = "Liberal Conservatism, Asturian Regionalism";
+  Q.prc_leader = "Miguel Ángel Revilla";
+  Q.prc_leader_gender = "m";
+  Q.prc_ideology = "Centrist Social Democracy, Cantabrian Regionalism";
+  Q.te_leader = "Tomás Guitarte"
+  Q.te_leader_gender = "m";
+  Q.te_ideology = "Transversal single-issue, Teruel Regionalism";
 
-// Initial values for bcn parties as well
-Q.parties_bcn = ['bcomu', 'cup', 'psc', 'erc', 'ciu', 'cdc', 'dl', 'jxcat', 'junts', 'jxsi', 'primaries', 'cs', 'pp', "icv"];
+  // Initial values for bcn parties as well
+  Q.parties_bcn = ['bcomu', 'cup', 'psc', 'erc', 'ciu', 'cdc', 'dl', 'jxcat', 'junts', 'jxsi', 'primaries', 'cs', 'pp', "icv"];
 
-Q.bcomu_leader = "Ada Colau";
-Q.bcomu_ideology = "Anti-austerity left, Plurinationalism";
-Q.bcomu_leader_gender = "f";
-Q.ppbcn_leader = "Alberto Fernández Díaz";
-Q.ppbcn_leader_gender = "m";
-Q.csbcn_leader = "Carina Mejías";
-Q.csbcn_leader_gender = "f";
-Q.cupbcn_leader = "María José Lecha";
-Q.cupbcn_leader_gender = "f";
-Q.pscbcn_leader = "Jaume Collboni";
-Q.pscbcn_leader_gender = "m";
-Q.ercbcn_leader = "Alfred Bosch";
-Q.ercbcn_leader_gender = "m";
-Q.ciubcn_leader = "Xavier Trias";
-Q.ciubcn_leader_gender = "m";
-Q.cdcbcn_leader = "Xavier Trias";
-Q.cdcbcn_leader_gender = "m";
-Q.dlbcn_leader = "Xavier Trias";
-Q.dlbcn_leader_gender = "m";
-Q.jxcatbcn_leader = "Joaquim Forn";
-Q.jxcatbcn_leader_gender = "m";
-Q.primaries_leader = "Jordi Graupera";
-Q.primaries_leader_gender = "m";
-Q.primaries_ideology = "Transversal single-issue, Unilateralism";
+  Q.bcomu_leader = "Ada Colau";
+  Q.bcomu_ideology = "Anti-austerity left, Plurinationalism";
+  Q.bcomu_leader_gender = "f";
+  Q.ppbcn_leader = "Alberto Fernández Díaz";
+  Q.ppbcn_leader_gender = "m";
+  Q.csbcn_leader = "Carina Mejías";
+  Q.csbcn_leader_gender = "f";
+  Q.cupbcn_leader = "María José Lecha";
+  Q.cupbcn_leader_gender = "f";
+  Q.pscbcn_leader = "Jaume Collboni";
+  Q.pscbcn_leader_gender = "m";
+  Q.ercbcn_leader = "Alfred Bosch";
+  Q.ercbcn_leader_gender = "m";
+  Q.ciubcn_leader = "Xavier Trias";
+  Q.ciubcn_leader_gender = "m";
+  Q.cdcbcn_leader = "Xavier Trias";
+  Q.cdcbcn_leader_gender = "m";
+  Q.dlbcn_leader = "Xavier Trias";
+  Q.dlbcn_leader_gender = "m";
+  Q.jxcatbcn_leader = "Joaquim Forn";
+  Q.jxcatbcn_leader_gender = "m";
+  Q.primaries_leader = "Jordi Graupera";
+  Q.primaries_leader_gender = "m";
+  Q.primaries_ideology = "Transversal single-issue, Unilateralism";
 
-Q.ua_psc_leader = "Francés Boya Alós";
-Q.ua_psc_ideology = "Social Democracy, Aranese Regionalism";
-Q.cda_pna_leader = "Carles Barrera Sánchez";
-Q.cda_pna_ideology = "Liberal-Conservatism, Aranese Regionalism";
+  Q.ua_psc_leader = "Francés Boya Alós";
+  Q.ua_psc_ideology = "Social Democracy, Aranese Regionalism";
+  Q.cda_pna_leader = "Carles Barrera Sánchez";
+  Q.cda_pna_ideology = "Liberal-Conservatism, Aranese Regionalism";
 
-// 2011 local elections results (for delta calcs)
-Q.ciu_local_barcelona_s = 14;
-Q.ciu_local_barcelona_pv = 28.73;
-Q.psc_local_barcelona_s = 11;
-Q.psc_local_barcelona_pv = 22.14;
-Q.pp_local_barcelona_s = 9;
-Q.pp_local_barcelona_pv = 17.24;
-Q.icv_local_barcelona_s = 5;
-Q.icv_local_barcelona_pv = 10.39;
-Q.erc_local_barcelona_s = 2;
-Q.erc_local_barcelona_pv = 5.59;
+  // 2011 local elections results (for delta calcs)
+  Q.ciu_local_barcelona_s = 14;
+  Q.ciu_local_barcelona_pv = 28.73;
+  Q.psc_local_barcelona_s = 11;
+  Q.psc_local_barcelona_pv = 22.14;
+  Q.pp_local_barcelona_s = 9;
+  Q.pp_local_barcelona_pv = 17.24;
+  Q.icv_local_barcelona_s = 5;
+  Q.icv_local_barcelona_pv = 10.39;
+  Q.erc_local_barcelona_s = 2;
+  Q.erc_local_barcelona_pv = 5.59;
 
-Q.cs_redbelt_mod = 0;
-Q.erc_redbelt_mod = -10;
-Q.comuns_redbelt_mod = 0;
-Q.cup_redbelt_mod = 0;
-Q.psc_redbelt_mod = 0;
-Q.erc_interior_mod = 0;
-Q.cup_interior_mod = 0;
-Q.fnc_interior_mod = 0;
-Q.ciu_interior_mod = 0;
+  Q.cs_redbelt_mod = 0;
+  Q.erc_redbelt_mod = -10;
+  Q.comuns_redbelt_mod = 0;
+  Q.cup_redbelt_mod = 0;
+  Q.psc_redbelt_mod = 0;
+  Q.erc_interior_mod = 0;
+  Q.cup_interior_mod = 0;
+  Q.fnc_interior_mod = 0;
+  Q.ciu_interior_mod = 0;
 
-// Local weights
+  // Local weights
 
-Q.RB_DEFAULTS = {
-    "cs_im_coeff":              0.90,
-    "cs_spa_coeff":             0.70,
-    "cs_diss_coeff":            0.30,
-    "erc_trust_coeff":          1.20,
-    "erc_im_coeff":             0.60,
-    "erc_no_outreach_penalty":  10.0,
-    "comuns_diss_coeff":        0.60,
-    "comuns_pp_scale":          15.0,
-    "comuns_welf_coeff":        0.40,
-}
+  Q.RB_DEFAULTS = {
+      "cs_im_coeff":              0.90,
+      "cs_spa_coeff":             0.70,
+      "cs_diss_coeff":            0.30,
+      "erc_trust_coeff":          1.20,
+      "erc_im_coeff":             0.60,
+      "erc_no_outreach_penalty":  10.0,
+      "comuns_diss_coeff":        0.60,
+      "comuns_pp_scale":          15.0,
+      "comuns_welf_coeff":        0.40,
+  }
 
-Q.INT_DEFAULTS = {
-  // Ciu decay
-    "decay_base":          8.0,
-    "decay_corr_coeff":   20.0,  
-    "decay_welf_coeff":   0.60,
-    "decay_pdcat_bonus":   8.0,   
-    "decay_unio_bonus":    5.0,   
-  // Contenders interior
-    "erc_trust_coeff":    0.75,
-    "erc_im_coeff":       0.30,
-    "erc_build_bonus":    28.0,
-    "erc_base_bonus":      5.0,
-    "cup_imtrust_coeff":  0.60,
-    "cup_diss_coeff":     0.50,
-    "holdout_base":      95.0,
-}
+  Q.INT_DEFAULTS = {
+    // Ciu decay
+      "decay_base":          8.0,
+      "decay_corr_coeff":   20.0,  
+      "decay_welf_coeff":   0.60,
+      "decay_pdcat_bonus":   8.0,   
+      "decay_unio_bonus":    5.0,   
+    // Contenders interior
+      "erc_trust_coeff":    0.75,
+      "erc_im_coeff":       0.30,
+      "erc_build_bonus":    28.0,
+      "erc_base_bonus":      5.0,
+      "cup_imtrust_coeff":  0.60,
+      "cup_diss_coeff":     0.50,
+      "holdout_base":      95.0,
+  }
 
-Q.LOCAL_BCN_MATRICES = {
-  BCN_MEAN_REVERSION_SPEED: 0.012,
+  Q.LOCAL_BCN_MATRICES = {
+    BCN_MEAN_REVERSION_SPEED: 0.012,
 
-  // Flat number per party. ICR parties (ciu/cdc/dl/jxcat/junts) all share the "ciu" key.
-  BCN_BASELINE: {
-    "bcomu":     29.0,
-    "ciu":       12.5,
-    "erc":       11.0,
-    "psc":       16.5,
-    "cs":        13.5,
-    "cup":        7.0,
-    "pp":        10.5,
-    "primaries":  0.0,
-  },
+    // Flat number per party. ICR parties (ciu/cdc/dl/jxcat/junts) all share the "ciu" key.
+    BCN_BASELINE: {
+      "bcomu":     29.0,
+      "ciu":       12.5,
+      "erc":       11.0,
+      "psc":       16.5,
+      "cs":        13.5,
+      "cup":        7.0,
+      "pp":        10.5,
+      "primaries":  0.0,
+    },
 
-  // [d_im, d_it, d_sd, d_welfare, d_cat_spa, d_unemployment, podemos_pulse]
-  BCN_SENSITIVITY: {
-    "bcomu":    [ 0.02,  0.00,  0.22, -0.10,  0.00,  0.05,  0.10],
-    "ciu":      [ 0.08,  0.15, -0.10,  0.05,  0.05, -0.05, -0.05],
-    "erc":      [ 0.15,  0.15,  0.05, -0.05,  0.05,  0.05,  0.04],
-    "psc":      [ 0.00, -0.15, -0.05,  0.18, -0.30, -0.05, -0.05],
-    "cs":       [ 0.08, -0.05, -0.05,  0.05, -0.10, -0.05, -0.02],
-    "cup":      [ 0.08, -0.10,  0.12, -0.10, -0.05,  0.10,  0.05],
-    "pp":       [-0.12, -0.05, -0.05,  0.05,  0.20, -0.05, -0.04],
-    "primaries":[ 0.00,  0.00,  0.00,  0.00,  0.00,  0.00,  0.00],
-  },
-};
-
-
-// International opinions
-Q.international_eu_opinion = 1;
+    // [d_im, d_it, d_sd, d_welfare, d_cat_spa, d_unemployment, podemos_pulse]
+    BCN_SENSITIVITY: {
+      "bcomu":    [ 0.02,  0.00,  0.22, -0.10,  0.00,  0.05,  0.10],
+      "ciu":      [ 0.08,  0.15, -0.10,  0.05,  0.05, -0.05, -0.05],
+      "erc":      [ 0.15,  0.15,  0.05, -0.05,  0.05,  0.05,  0.04],
+      "psc":      [ 0.00, -0.15, -0.05,  0.18, -0.30, -0.05, -0.05],
+      "cs":       [ 0.08, -0.05, -0.05,  0.05, -0.10, -0.05, -0.02],
+      "cup":      [ 0.08, -0.10,  0.12, -0.10, -0.05,  0.10,  0.05],
+      "pp":       [-0.12, -0.05, -0.05,  0.05,  0.20, -0.05, -0.04],
+      "primaries":[ 0.00,  0.00,  0.00,  0.00,  0.00,  0.00,  0.00],
+    },
+  };
 
 
-// Demographics
-Q.parlament_demographics = ["buss", "ind", "middle", "young", "retired", "rural", "unemployed"]
-Q.parlament_barcelona_middle_pop = 555810.0;
-Q.parlament_barcelona_retired_pop = 887550.0;
-Q.parlament_barcelona_young_pop = 655235.0;
-Q.parlament_barcelona_unemployed_pop = 556295.0;
-Q.parlament_barcelona_buss_pop = 226980.0;
-Q.parlament_barcelona_rural_pop = 339015.0;
-Q.parlament_barcelona_ind_pop = 739625.0;
-Q.parlament_girona_middle_pop = 33201.0;
-Q.parlament_girona_retired_pop = 107226.0;
-Q.parlament_girona_young_pop = 87885.0;
-Q.parlament_girona_unemployed_pop = 67473.0;
-Q.parlament_girona_buss_pop = 34272.0;
-Q.parlament_girona_rural_pop = 119133.0;
-Q.parlament_girona_ind_pop = 58401.0;
-Q.parlament_lleida_middle_pop = 17176.0;
-Q.parlament_lleida_retired_pop = 70946.0;
-Q.parlament_lleida_young_pop = 52668.0;
-Q.parlament_lleida_unemployed_pop = 28728.0;
-Q.parlament_lleida_buss_pop = 10184.0;
-Q.parlament_lleida_rural_pop = 101574.0;
-Q.parlament_lleida_ind_pop = 30134.0;
-Q.parlament_tarragona_middle_pop = 47503.0;
-Q.parlament_tarragona_retired_pop = 119059.0;
-Q.parlament_tarragona_young_pop = 90651.0;
-Q.parlament_tarragona_unemployed_pop = 77586.0;
-Q.parlament_tarragona_buss_pop = 26934.0;
-Q.parlament_tarragona_rural_pop = 96815.0;
-Q.parlament_tarragona_ind_pop = 82812.0;
-
-// Party support records for graphing
-Q.party_support_records = [];
-Q.economic_records = [];
-Q.social_records = [];
-
-// Congreso situation
-Q.congreso_seats = {
-    "catalunya": 47,
-    "valencia": 33,
-    "balears": 8,
-    "navarra": 5,
-    "euskadi": 18,
-    "galicia": 23,
-    "rest": 216
-};
-Q.congreso_constituencies = ["catalunya", "valencia", "balears", "navarra", "euskadi", "galicia", "rest"];
-Q.congreso_parties_left = ["podemos", "iu", "mpais", "sumar", "up", "csqp", "cecp", "ecp", "fr", "erc", "cup", "ehbildu", "amaiur", "bng", "nos", "compromis", "mes"];
-
-Q.congreso_parties_catalunya = ["ciu", "psoe", "psc", "erc", "pp", "cs", "podemos", "iu", "cup", "fr", "dl", "pdcat", "jxsi", "cdc", "unio", "junts", "upyd", "vox", "mpais", "up", "sumar", "jxcat"];
-Q.congreso_parties_valencia = ["pp", "psoe", "podemos", "cs", "iu", "compromis", "vox", "up", "sumar", "upyd", "mpais"];
-Q.congreso_parties_balears = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "mes"];
-Q.congreso_parties_navarra = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "amaiur", "nsuma", "ehbildu", "upn", "gbai"];
-Q.congreso_parties_euskadi = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "ehbildu", "pnv", "amaiur"];
-Q.congreso_parties_galicia = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "bng", "nos"];
-Q.congreso_parties_rest = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "cc", "fac", "prc", "te"];
+  // International opinions
+  Q.international_eu_opinion = 1;
 
 
-Q.congreso_rural_bias = {
-    'pp': 1.15,      // PP is dominant in rural Castilla
-    'psoe': 1.05,    // PSOE holds up well in rural South
-    'podemos': 0.75, // Podemos struggles significantly in rural areas
-    'cs': 0.85,      // Cs also struggles in rural areas
-};
+  // Demographics
+  Q.parlament_demographics = ["buss", "ind", "middle", "young", "retired", "rural", "unemployed"]
+  Q.parlament_barcelona_middle_pop = 555810.0;
+  Q.parlament_barcelona_retired_pop = 887550.0;
+  Q.parlament_barcelona_young_pop = 655235.0;
+  Q.parlament_barcelona_unemployed_pop = 556295.0;
+  Q.parlament_barcelona_buss_pop = 226980.0;
+  Q.parlament_barcelona_rural_pop = 339015.0;
+  Q.parlament_barcelona_ind_pop = 739625.0;
+  Q.parlament_girona_middle_pop = 33201.0;
+  Q.parlament_girona_retired_pop = 107226.0;
+  Q.parlament_girona_young_pop = 87885.0;
+  Q.parlament_girona_unemployed_pop = 67473.0;
+  Q.parlament_girona_buss_pop = 34272.0;
+  Q.parlament_girona_rural_pop = 119133.0;
+  Q.parlament_girona_ind_pop = 58401.0;
+  Q.parlament_lleida_middle_pop = 17176.0;
+  Q.parlament_lleida_retired_pop = 70946.0;
+  Q.parlament_lleida_young_pop = 52668.0;
+  Q.parlament_lleida_unemployed_pop = 28728.0;
+  Q.parlament_lleida_buss_pop = 10184.0;
+  Q.parlament_lleida_rural_pop = 101574.0;
+  Q.parlament_lleida_ind_pop = 30134.0;
+  Q.parlament_tarragona_middle_pop = 47503.0;
+  Q.parlament_tarragona_retired_pop = 119059.0;
+  Q.parlament_tarragona_young_pop = 90651.0;
+  Q.parlament_tarragona_unemployed_pop = 77586.0;
+  Q.parlament_tarragona_buss_pop = 26934.0;
+  Q.parlament_tarragona_rural_pop = 96815.0;
+  Q.parlament_tarragona_ind_pop = 82812.0;
 
-Q.congreso_urban_bias = {
-    'pp': 0.95,
-    'psoe': 0.95,
-    'podemos': 1.15,
-    'cs': 1.0
-};
+  // Party support records for graphing
+  Q.party_support_records = [];
+  Q.economic_records = [];
+  Q.social_records = [];
 
-// As of congreso 2011
+  // Congreso situation
+  Q.congreso_seats = {
+      "catalunya": 47,
+      "valencia": 33,
+      "balears": 8,
+      "navarra": 5,
+      "euskadi": 18,
+      "galicia": 23,
+      "rest": 216
+  };
+  Q.congreso_constituencies = ["catalunya", "valencia", "balears", "navarra", "euskadi", "galicia", "rest"];
+  Q.congreso_parties_left = ["podemos", "iu", "mpais", "sumar", "up", "csqp", "cecp", "ecp", "fr", "erc", "cup", "ehbildu", "amaiur", "bng", "nos", "compromis", "mes"];
 
-Q.abstain_congreso_pv = 31.06;
-Q.ciu_congreso_s = 16; // Was CiU
-Q.ciu_congreso_pv = 4.17;
-Q.ciu_congreso_pv_cat = 29.35;
-Q.erc_congreso_s = 3;
-Q.erc_congreso_pv = 1.05;
-Q.erc_congreso_pv_cat = 7.06;
-Q.pp_congreso_s = 186;
-Q.pp_congreso_pv = 44.63;
-Q.pp_congreso_pv_cat = 20.71;
-Q.psoe_congreso_s = 110;
-Q.psoe_congreso_pv = 28.76;
-Q.psoe_congreso_pv_cat = 26.63;
-Q.iu_congreso_s = 11;
-Q.iu_congreso_pv = 6.92;
-Q.iu_congreso_pv_cat = 8.09;
-Q.upyd_congreso_s = 5;
-Q.upyd_congreso_pv = 4.7;
-Q.upyd_congreso_pv_cat = 1.14;
-Q.pnv_congreso_s = 5;
-Q.pnv_congreso_pv = 1.33;
-Q.bng_congreso_s = 2; // Was BNG
-Q.bng_congreso_pv = 0.75;
-Q.bng_congreso_pv_true = 11.18;
-Q.cc_congreso_s = 2;
-Q.cc_congreso_pv = 0.59;
-Q.compromis_congreso_s = 1;
-Q.compromis_congreso_pv = 0.51;
-Q.fac_congreso_s = 1;
-Q.fac_congreso_pv = 0.41;
-Q.prc_congreso_s = 0;
-Q.prc_congreso_pv = 0.18;
-Q.gbai_congreso_s = 1;
-Q.gbai_congreso_pv = 0.17;
-Q.amaiur_congreso_s = 7;
-Q.amaiur_congreso_pv = 1.37;
+  Q.congreso_parties_catalunya = ["ciu", "psoe", "psc", "erc", "pp", "cs", "podemos", "iu", "cup", "fr", "dl", "pdcat", "jxsi", "cdc", "unio", "junts", "upyd", "vox", "mpais", "up", "sumar", "jxcat"];
+  Q.congreso_parties_valencia = ["pp", "psoe", "podemos", "cs", "iu", "compromis", "vox", "up", "sumar", "upyd", "mpais"];
+  Q.congreso_parties_balears = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "mes"];
+  Q.congreso_parties_navarra = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "amaiur", "nsuma", "ehbildu", "upn", "gbai"];
+  Q.congreso_parties_euskadi = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "ehbildu", "pnv", "amaiur"];
+  Q.congreso_parties_galicia = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "bng", "nos"];
+  Q.congreso_parties_rest = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "cc", "fac", "prc", "te"];
 
-// Initialize ALL party suppports to zero
-for (var c of Q.parlament_constituencies) {
-  for (var d of Q.parlament_demographics) {
-    for (var p of Q.parties) {
-      Q[p + "_parlament_" + c + "_" + d + "_support"] = 0.0;
+
+  Q.congreso_rural_bias = {
+      'pp': 1.15,      // PP is dominant in rural Castilla
+      'psoe': 1.05,    // PSOE holds up well in rural South
+      'podemos': 0.75, // Podemos struggles significantly in rural areas
+      'cs': 0.85,      // Cs also struggles in rural areas
+  };
+
+  Q.congreso_urban_bias = {
+      'pp': 0.95,
+      'psoe': 0.95,
+      'podemos': 1.15,
+      'cs': 1.0
+  };
+
+  // As of congreso 2011
+
+  Q.abstain_congreso_pv = 31.06;
+  Q.ciu_congreso_s = 16; // Was CiU
+  Q.ciu_congreso_pv = 4.17;
+  Q.ciu_congreso_pv_cat = 29.35;
+  Q.erc_congreso_s = 3;
+  Q.erc_congreso_pv = 1.05;
+  Q.erc_congreso_pv_cat = 7.06;
+  Q.pp_congreso_s = 186;
+  Q.pp_congreso_pv = 44.63;
+  Q.pp_congreso_pv_cat = 20.71;
+  Q.psoe_congreso_s = 110;
+  Q.psoe_congreso_pv = 28.76;
+  Q.psoe_congreso_pv_cat = 26.63;
+  Q.iu_congreso_s = 11;
+  Q.iu_congreso_pv = 6.92;
+  Q.iu_congreso_pv_cat = 8.09;
+  Q.upyd_congreso_s = 5;
+  Q.upyd_congreso_pv = 4.7;
+  Q.upyd_congreso_pv_cat = 1.14;
+  Q.pnv_congreso_s = 5;
+  Q.pnv_congreso_pv = 1.33;
+  Q.bng_congreso_s = 2; // Was BNG
+  Q.bng_congreso_pv = 0.75;
+  Q.bng_congreso_pv_true = 11.18;
+  Q.cc_congreso_s = 2;
+  Q.cc_congreso_pv = 0.59;
+  Q.compromis_congreso_s = 1;
+  Q.compromis_congreso_pv = 0.51;
+  Q.fac_congreso_s = 1;
+  Q.fac_congreso_pv = 0.41;
+  Q.prc_congreso_s = 0;
+  Q.prc_congreso_pv = 0.18;
+  Q.gbai_congreso_s = 1;
+  Q.gbai_congreso_pv = 0.17;
+  Q.amaiur_congreso_s = 7;
+  Q.amaiur_congreso_pv = 1.37;
+
+  // Initialize ALL party suppports to zero
+  for (var c of Q.parlament_constituencies) {
+    for (var d of Q.parlament_demographics) {
+      for (var p of Q.parties) {
+        Q[p + "_parlament_" + c + "_" + d + "_support"] = 0.0;
+      }
     }
   }
-}
-for (var c of Q.congreso_constituencies) {
-  for (var p of Q["congreso_parties_" + c]) {
-    Q[p + "_congreso_" + c + "_support"] = 0.0;
+  for (var c of Q.congreso_constituencies) {
+    for (var p of Q["congreso_parties_" + c]) {
+      Q[p + "_congreso_" + c + "_support"] = 0.0;
+    }
   }
-}
-for (var p of Q.parties_bcn) {
-  Q[p + "_local_barcelona_support"] = 0.0;
-}
-
+  for (var p of Q.parties_bcn) {
+    Q[p + "_local_barcelona_support"] = 0.0;
+  }
 !}
 go-to: start_menu_2
 
@@ -578,7 +577,7 @@ go-to: start_menu_2
 
 @start_menu_2
 
-[? if not url_valid: **If you are playing this mod via the Mod Loader in base game, you may be using a broken build. For the intended experience, please play using <a class="link" href="https://broken-arrows.github.io/route_to_itaca/" style="color: #0077FF; text-de">this link</a>.** ?]
+[? if not url_valid: **If you are playing this mod via the Mod Loader in base game, you may be using a broken build. For the intended experience, please <a class="link" href="https://broken-arrows.github.io/route_to_itaca/" style="text-de">play using this link</a>.** ?]
 
 - @start: <span style="font-size: 1.1em;">Start game</span>
 - @game_over.achievements: <span style="font-size: 1.1em;">Achievements</span>
@@ -591,10 +590,14 @@ go-to: start_menu_2
 @start
 choose-if: url_valid
 unavailable-subtitle: Route to Ítaca is currently in its early development stages. Check back soon(-ish) for the full experience!
-# unavailable-subtitle: Page loaded from an unrecognized origin, are you sure you're in the right place? TODO: put this as the right unavailable subtitle!
+# unavailable-subtitle: Game loaded from an unrecognized origin, are you sure you're in the right place? TODO: put this as the right unavailable subtitle!
 on-arrival: {!
-Q.debug = true;
+Q.debug = true; // FIXME - TODO: remove!
 
+// Achievement variables
+Q.psoe_sanchez_president_ever = false;
+
+// Global stuff
 Q.started = 1;
 Q.time = 1; // time elapsed (in months)
 Q.month_actions = 0;

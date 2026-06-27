@@ -4,6 +4,7 @@ on-arrival: {!
     // ── Reset flags ──────────────────────────────────────────────────────────
     Q.congreso_coalition_psoe_cs_wtf = false;
     Q.congreso_coalition_barons_flag = 0;
+    Q.congreso_coalition_sorpasso = false;
 
     // ── Helper: live seats ───────────────────────────────────────────────────
     var S = function (p) { return (p && Q[p + "_congreso_s"] > 0) ? Q[p + "_congreso_s"] : 0; };
@@ -26,6 +27,8 @@ on-arrival: {!
     // IU as a *separate* junior partner only when it didn't fold and isn't itself the carrier.
     var iuSupport = (!Q.iu_in_up && S("iu") > 0 && leftCarrier !== "iu") ? S("iu") : 0;
 
+    Q.congreso_coalition_sorpasso = S(leftCarrier) > S("psoe");
+
     // Catalan right-sovereigntist carrier — the first live one that
     // isn't the player's own vehicle. Its roadmap drives the whole bucket's stance.
     var catRightCarrier = null;
@@ -36,12 +39,11 @@ on-arrival: {!
     Q.congreso_cat_right_carrier = catRightCarrier;
     var catRightRoadmap = catRightCarrier ? (Q[catRightCarrier + "_roadmap"] || 0) : 0;
 
-    var catRightRoadmap = 2; //debug
-
     // ── Government cores ─────────────────────────────────────────────────────
     // PSOE core already absorbs PSC (folded → 0 seats) unless a split casts PSC
     // out; a split PSC then stands as its own courted kingmaker, NOT part of core.
     var psoeCore = S("psoe");
+    var leftCore = S(leftCarrier) + iuSupport;
     var progCore = psoeCore + S(leftCarrier) + iuSupport;               // coalition cabinet
     var ppVoxCore = S("pp") + S("vox");
     var ppCsCore  = S("pp") + S("cs");
@@ -61,7 +63,9 @@ on-arrival: {!
     }
 
     // ── Bloc seat totals = "is this government core on the table?" ────────────
-    Q.congreso_coalition_progressive_s = (S("psoe") > 0 && (S(leftCarrier) >= 10 || iuSupport > 0)) ? progCore : 0;
+    Q.congreso_coalition_progressive_s = (S("psoe") > 0 && (S(leftCarrier) >= 10 || iuSupport > 0)) && S("psoe") > S(leftCarrier) ? progCore : 0;
+    Q.congreso_coalition_left_s = (S(leftCarrier) > S("psoe") && leftCore >= Q.congreso_s_majority * 0.7) ? leftCore : 0;
+    Q.congreso_coalition_change_s = (S("psoe") > 0 && S(leftCarrier) > S("psoe")) ? progCore : 0;
     Q.congreso_coalition_psoe_min_s    = S("psoe") > 0 && (S(leftCarrier) < 10) ? psoeCore : 0;
     Q.congreso_coalition_pp_vox_s      = (S("pp") > 0 && S("vox") > 0) ? ppVoxCore : 0;
     // Liberal right (PP+Cs) — split by who leads, like the grand coalition. The
@@ -93,6 +97,10 @@ on-arrival: {!
         playerVsLeft  = "abstain"; // an abstention enables a progressive govt
         playerVsRight = "oppose";
     }
+    // True-left front: a Catalan-right player is excluded outright; a CUP/FR player
+    // opposes at base but can be talked aboard (Podemos-led); ERC abstains to enable.
+    var playerVsTrueLeft = playerIsCatRight ? "oppose"
+        : ((playerVehicle === "cup" || playerVehicle === "fr") ? "oppose" : "abstain");
 
     // ── Party catalog: posture per party toward each bloc ────────────────────
     // Each kingmaker minor carries its stance toward a LEFT-led and a (moderate)
@@ -111,6 +119,23 @@ on-arrival: {!
         ehbildu:"abstain", amaiur:"abstain", erc:"abstain", cup:"oppose", fr:"oppose", psc:"abstain",
         // centralist right opposes the left
         upn:"oppose", nsuma:"oppose", fac:"oppose", upyd:"oppose"
+    };
+    // ── True-left (Podemos-led radical front) postures ───────────────────────
+    // Like LEFT_POSTURE, but a true-left front does NOT include the pragmatic
+    // nationalists CC and PNV (excluded outright, see HARD_TRUELEFT), and CUP/FR
+    // CAN be talked aboard (only a Podemos-led left ever wins the anti-regime left).
+    // The Catalan right carrier is excluded too — handled live on its descriptor.
+    var TRUELEFT_POSTURE = {
+        // genuine plurinational / regional left — vote YES for a radical-left front
+        compromis:"support", mes:"support", gbai:"support", nos:"support",
+        bng:"support", te:"support", prc:"support",
+        // the big nationalist left + a split PSC — enable by abstaining, stay out
+        ehbildu:"abstain", amaiur:"abstain", erc:"abstain", psc:"abstain",
+        // anti-regime left — opposed at base, but convincible (negTrueLeft below)
+        cup:"oppose", fr:"oppose",
+        // centralist right + the excluded pragmatic nationalists oppose the true left
+        upn:"oppose", nsuma:"oppose", fac:"oppose", upyd:"oppose",
+        cc:"oppose", pnv:"oppose"
     };
     var RIGHT_POSTURE = {           // a *moderate* right core (PP / PP+Cs)
         upn:"support", nsuma:"support", fac:"support", upyd:"support",
@@ -134,28 +159,32 @@ on-arrival: {!
 
     // ── Hard ideological opponents (never flippable, even under extreme talks) ──
     var HARD_LEFT  = { upn:1, nsuma:1, fac:1, upyd:1 };
+    // A true-left front additionally hard-excludes the pragmatic nationalists CC/PNV
+    // (they never prop up a radical-left cabinet — unlike a moderate progressive one).
+    var HARD_TRUELEFT = { upn:1, nsuma:1, fac:1, upyd:1, cc:1, pnv:1 };
     var HARD_RIGHT = { compromis:1, mes:1, gbai:1, nos:1, bng:1, fr:1, ehbildu:1, amaiur:1, erc:1, cup:1, psc:1 };
 
     // ── Courting order ───────────────────────────────────────────────────────
     var COURT_ORDER = [
         "upn", "fac", "nsuma", "upyd",                                            // centralist-right allies
-        "compromis", "mes", "te", "prc", "cc", "nos", "gbai", "bng", "fr", "psc", // small regional minors
+        "compromis", "mes", "te", "prc", "cc", "nos", "gbai", "bng", "psc",       // small regional minors
         "pnv", "ehbildu", "amaiur", "erc",                                        // PNV (a willing YES) → the nationalist-left, courted up to support before the Catalan right
-        "@player", "cup", "@catright"                                             // player lever + anti-regime left + the Catalan sovereigntist right (roadmap-driven posture), dead last
+        "@player", "@catright", "cup", "fr"                                       // player lever + anti-regime left + the Catalan sovereigntist right (roadmap-driven posture), dead last
     ];
 
     // The player is always a Catalan party, so it OPPOSES a centralist PSOE–Cs deal.
     var playerDesc = (Q.congreso_player_s > 0)
-        ? { party: playerVehicle, seats: Q.congreso_player_s, left: playerVsLeft, right: playerVsRight, rightvox: playerVsRight, psoecs: "oppose",
+        ? { party: playerVehicle, seats: Q.congreso_player_s, left: playerVsLeft, trueLeft: playerVsTrueLeft, right: playerVsRight, rightvox: playerVsRight, psoecs: "oppose",
             negLeft: (playerVehicle === "cup" || playerVehicle === "fr") ? leftPodemosLed : true,
+            negTrueLeft: playerIsCatRight ? false : ((playerVehicle === "cup" || playerVehicle === "fr") ? leftPodemosLed : true),
             negRight: playerIsCatRight && playerRoadmap <= 1, negPsoeCs: false }
         : null;
     // The Catalan sovereigntist carrier deals transactionally — but a hardened
     // roadmap (>=2) rules out backing a Spanish right government even under talks;
     // it never props up a PSOE–Cs cabinet either (Catalan party, hard oppose).
     var catDesc = (catRightCarrier && catRightCarrier !== playerVehicle && S(catRightCarrier) > 0)
-        ? { party: catRightCarrier, seats: S(catRightCarrier), left: catRightVsLeft, right: catRightVsRight, rightvox: catRightVsRight, psoecs: "oppose",
-            negLeft: true, negRight: catRightRoadmap <= 1, negPsoeCs: false }
+        ? { party: catRightCarrier, seats: S(catRightCarrier), left: catRightVsLeft, trueLeft: "oppose", right: catRightVsRight, rightvox: catRightVsRight, psoecs: "oppose",
+            negLeft: true, negTrueLeft: false, negRight: catRightRoadmap <= 1, negPsoeCs: false }
         : null;
 
     // Live candidate descriptors, already in courting order; folded comps (0 seats)
@@ -171,12 +200,16 @@ on-arrival: {!
         candidates.push({
             party: key, seats: ks,
             left:     LEFT_POSTURE[key]  || "oppose",
+            trueLeft: TRUELEFT_POSTURE[key] || "oppose",
             right:    RIGHT_POSTURE[key] || "oppose",
             rightvox: isPragmatist(key) ? "oppose" : (RIGHT_POSTURE[key] || "oppose"),
             psoecs:   PSOECS_POSTURE[key] || "oppose",
             // CUP/FR (anti-regime) only ever flip for a Podemos-led left; the
             // centralist right never flips for the left at all (HARD_LEFT).
             negLeft:  HARD_LEFT[key] ? false : ((key === "cup" || key === "fr") ? leftPodemosLed : true),
+            // a true-left front also hard-excludes CC/PNV (HARD_TRUELEFT); CUP/FR
+            // stay convincible only under a Podemos-led left.
+            negTrueLeft: HARD_TRUELEFT[key] ? false : ((key === "cup" || key === "fr") ? leftPodemosLed : true),
             negRight: !HARD_RIGHT[key],
             // only the whitelisted regionalists can be talked toward a PSOE–Cs govt.
             negPsoeCs: !!PSOECS_POSTURE[key]
@@ -203,9 +236,10 @@ on-arrival: {!
     // How far a candidate can be pushed for a bloc. A Vox-tainted cabinet can't be
     // negotiated upward, so "rightvox" never escalates past its base posture.
     var ceilingOf = function (c, mode) {
-        if (mode === "left")   return c.negLeft   ? "support" : c.left;
-        if (mode === "right")  return c.negRight  ? "support" : c.right;
-        if (mode === "psoecs") return c.negPsoeCs ? "support" : c.psoecs;
+        if (mode === "left")     return c.negLeft     ? "support" : c.left;
+        if (mode === "trueLeft") return c.negTrueLeft ? "support" : c.trueLeft;
+        if (mode === "right")    return c.negRight    ? "support" : c.right;
+        if (mode === "psoecs")   return c.negPsoeCs   ? "support" : c.psoecs;
         return c.rightvox;
     };
     var fill = function (core, mode) {
@@ -273,6 +307,15 @@ on-arrival: {!
     // ── Build each coalition's member list ONCE ──────────────────────────────
     // Shared by the viz bars (below) and the choose-if reachability flags, so the
     // clickable option can never disagree with its bar.
+    var leftFrontMembers = fill(concat(
+        [{ party: leftCarrier, type: "government"}],
+        iuSupport > 0 ? [{ party: "iu", type: "support" }] : []
+    ), "trueLeft");
+    var changeCoalitionMembers = fill(concat(
+        [{ party: leftCarrier, type: "government"}],
+        [{ party: "psoe", type: "government" }],
+        iuSupport > 0 ? [{ party: "iu", type: "government" }] : []
+    ), "left");
     var progMembers = fill(concat(
         [{ party: "psoe", type: "government" }],
         leftCarrier && S(leftCarrier) > 0 ? [{ party: leftCarrier, type: "government" }] : [],
@@ -316,11 +359,15 @@ on-arrival: {!
     // player CAN pursue a hard-fought coalition. "talks" = that reach leans on at
     // least one negotiated stance (flavour now; concession mechanics later).
     var maj = Q.congreso_s_majority || 176;
-    Q.congreso_coalition_progressive_reach = (S("psoe") > 0 && (S(leftCarrier) > 0 || iuSupport > 0)) && effOf(progMembers)    >= maj;
-    Q.congreso_coalition_psoe_min_reach    =  S("psoe") > 0                                            && effOf(psoeMinMembers) >= maj;
+    Q.congreso_coalition_left_reach = (S(leftCarrier) > 0 || iuSupport > 0) && effOf(leftFrontMembers)                           >= maj;
+    Q.congreso_coalition_change_reah = (S("psoe") > 0 && (S(leftCarrier) > 0 || iuSupport > 0)) && effOf(changeCoalitionMembers) >= maj;
+    Q.congreso_coalition_progressive_reach = (S("psoe") > 0 && (S(leftCarrier) > 0 || iuSupport > 0))  && effOf(progMembers)     >= maj;
+    Q.congreso_coalition_psoe_min_reach    =  S("psoe") > 0                                            && effOf(psoeMinMembers)  >= maj;
     Q.congreso_coalition_pp_cs_reach       = (S("pp") > 0 && S("cs") > 0)                              && effOf(rightMembers)    >= maj;
     Q.congreso_coalition_pp_vox_reach      = (S("pp") > 0 && S("vox") > 0)                             && effOf(natRightMembers) >= maj;
     Q.congreso_coalition_pp_min_reach      =  S("pp") > 0                                              && effOf(ppMinMembers)    >= maj;
+    Q.congreso_coalition_left_talks        = Q.congreso_coalition_left_reach        && neededTalks(leftFrontMembers);
+    Q.congreso_coalition_change_talks      = Q.congreso_coalition_change_reach      && neededTalks(changeCoalitionMembers);
     Q.congreso_coalition_progressive_talks = Q.congreso_coalition_progressive_reach && neededTalks(progMembers);
     Q.congreso_coalition_psoe_min_talks    = Q.congreso_coalition_psoe_min_reach    && neededTalks(psoeMinMembers);
     Q.congreso_coalition_pp_cs_talks       = Q.congreso_coalition_pp_cs_reach       && neededTalks(rightMembers);
@@ -331,10 +378,10 @@ on-arrival: {!
     // PSOE–Cs: reachable only if the whitelisted regionalists carry it over the line.
     Q.congreso_coalition_psoe_cs_gov_reach = (S("psoe") > 0 && S("cs") > 0) && effOf(psoeCsGovMembers) >= maj;
     Q.congreso_coalition_psoe_cs_gov_talks = Q.congreso_coalition_psoe_cs_gov_reach && neededTalks(psoeCsGovMembers);
-    // 2015–16 "wtf": PSOE+Cs lands in the awkward 69–100% band but even the
+    // 2015–16 "wtf": PSOE+Cs lands in the awkward 60–100% band but even the
     // regionalists can't push it over — they tried, it never added up. Inherently a
     // PSOE-led (Sánchez–Rivera) affair, so it only fires when PSOE out-seats Cs.
-    if (Q.congreso_coalition_psoe_cs >= 0.69 * maj && Q.congreso_coalition_psoe_cs < maj
+    if (Q.congreso_coalition_psoe_cs >= 0.6 * maj && Q.congreso_coalition_psoe_cs < maj
         && !Q.congreso_coalition_psoe_cs_wtf_happened && !Q.congreso_coalition_psoe_cs_gov_reach
         && Q.psoe_leader == "Pedro Sánchez" && S("psoe") >= S("cs")) {
         Q.congreso_coalition_psoe_cs_wtf = true;
@@ -357,7 +404,7 @@ on-arrival: {!
     //    the National-Right choose-if as "pp_vox_reach and not pp_cs_reach").
     Q.congreso_coalition_grand_ok = (Q.psoe_leader !== "Pedro Sánchez");
 
-    if (Q.congreso_coalition_psoe_cs_wtf_happened && Q.psoe_leader == "Pedro Sánchez" && !Q.psoe_barons_revolted && (Q.congreso_coalition_grand_s_ppcs >= Q.congreso_s_majority || Q.congreso_coalition_grand_s_pp >= Q.congreso_s_majority)) {
+    if ((Q.congreso_coalition_psoe_cs_wtf_happened || !Q.congreso_coalition_psoe_cs_wtf) && Q.psoe_leader == "Pedro Sánchez" && !Q.psoe_barons_revolted && (Q.congreso_coalition_grand_s_ppcs >= Q.congreso_s_majority || Q.congreso_coalition_grand_s_pp >= Q.congreso_s_majority)) {
         Q.congreso_coalition_barons_flag = 1;
     }
 
@@ -378,6 +425,16 @@ on-arrival: {!
                 members: [
                     { party: "majority_alias", type: "government" }
                 ]
+            },
+            {
+                label: "Left Front Government",
+                seatsVar: "congreso_coalition_left_s",
+                members: leftFrontMembers
+            },
+            {
+                label: "Change Coalition",
+                seatsVar: "congreso_coalition_change_s",
+                members: changeCoalitionMembers
             },
             {
                 label: "Progressist Government",
@@ -469,6 +526,8 @@ go-to: coalition_list if congreso_coalition_barons_flag != 1; barons_intervene i
 @coalition_list
 
 - @congreso_coalition_majority.party
+- @congreso_coalition_left.left
+- @congreso_coalition_left.change
 - @congreso_coalition_progressive.progressive
 - @congreso_coalition_progressive.psoe_minority
 - @congreso_coalition_psoe_cs.government

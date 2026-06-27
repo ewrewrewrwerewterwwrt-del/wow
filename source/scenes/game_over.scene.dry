@@ -8,6 +8,12 @@ on-arrival: {!
     }
     this.achieve('game_completed');
     
+    if (Q.psoe_barons_revolted && !Q.psoe_sanchez_president_ever) {
+      if (!Q.achievement_game_completed) {
+        window.achievementNotif('Barones del PSOE', 'img/achievements/barones.webp', 4);
+      }
+      this.achieve('barones')
+    }
 !}
 
 = End
@@ -210,7 +216,7 @@ Note that your achievement progress is stored in your browser. Switching browser
             <span class="star--empty">★</span>
         </div>
     </div>
-    <div class="achievement-description !}[? if achievement_calcotada : achievement-description--unlocked ?][? if not achievement_calcotada : achievement-description--locked ?]{!"> Hold a non-referendum, non-binding, participative process on independence. </div>
+    <div class="achievement-description !}[? if achievement_calcotada : achievement-description--unlocked ?][? if not achievement_calcotada : achievement-description--locked ?]{!"> Hold a non-referendum, non-binding, consultative participative process on independence. </div>
   </div>
 </div>
 
@@ -306,6 +312,25 @@ Note that your achievement progress is stored in your browser. Switching browser
         </div>
     </div>
     <div class="achievement-description !}[? if achievement_paperera_de_la_historia : achievement-description--unlocked ?][? if not achievement_paperera_de_la_historia : achievement-description--locked ?]{!">Playing as the CUP and while not being part of the JxSí coalition, force Artur Mas to step aside.</div>
+  </div>
+</div>
+
+<div class="achievement !}[? if achievement_asalto_cielos : achievement--unlocked ?][? if not achievement_asalto_cielos : achievement--locked ?]{!" style="display:flex">
+  <div class="achievement-image !}[? if achievement_asalto_cielos : achievement-image--unlocked ?][? if not achievement_asalto_cielos : achievement-image--locked ?]{!">
+    <img src="img/achievements/asalto_cielos.avif" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="achievement-body">
+    <div class="achievement-title !}[? if achievement_asalto_cielos : achievement-title--unlocked ?][? if not achievement_asalto_cielos : achievement-title--locked ?]{!">
+     <span> Asalto a los Cielos </span>
+        <div class="achievement-stars">
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+        </div>
+    </div>
+    <div class="achievement-description !}[? if achievement_asalto_cielos : achievement-description--unlocked ?][? if not achievement_asalto_cielos : achievement-description--locked ?]{!">Have Podemos or Unidas Podemos surpass the PSOE in seats at the Congreso and reach the presidency.</div>
   </div>
 </div>
 
