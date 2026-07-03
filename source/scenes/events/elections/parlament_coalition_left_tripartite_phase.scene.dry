@@ -25,13 +25,13 @@ on-arrival: {!
 go-to: phase_text
 
 @phase_text
+new-page: true
 go-to: parlament_coalition_setnames
 set-jump: choices 
 
 [? if left_tripartite_coalition_phase = 1: As the leading force of the coalition, we're expected to make a government composition proposal to the PSC and [+ parlament_current_icv +]. [? if parlament_coalition_changes: Right now, the proposal looks as follows: ?] ?][? if left_tripartite_coalition_phase > 1: Answering to our previous proposal, PSC and [+ parlament_current_icv +] have pushed back with a few ideas of their own on what shape this coalition government should take. [? if parlament_coalition_changes: After our ammendmends, it looks as follows: ?] ?]
 
 @choices
-new-page: true
 
 - @changes
 - @send_back

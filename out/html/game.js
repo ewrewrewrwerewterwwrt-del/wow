@@ -573,6 +573,8 @@
     let allegiances = "";
     if (tooltip.ledBy && qualities.hasOwnProperty(tooltip.ledBy)) {
       ledBy = `<br/>Leader: <span class='mytooltip-ledby'>${qualities[tooltip.ledBy]}</span>`;
+    } else if (tooltip.infoDesc) {
+      ledBy = `<br/>${tooltip.infoDesc}`;
     }
     if (tooltip.ideology) {
       ideology = `<br/><span class='mytooltip-ideology'>${

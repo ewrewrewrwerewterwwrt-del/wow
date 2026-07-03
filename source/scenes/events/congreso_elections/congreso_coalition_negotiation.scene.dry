@@ -1,0 +1,263 @@
+title: congreso coalition negotiation
+on-arrival: {!
+    Q.congreso_coalition_leverage = 2
+    Q.congreso_coalition_negotiated_reform = 0;
+    Q.congreso_coalition_negotiated_amnesty = 0;
+    Q.congreso_coalition_negotiated_funding = 0;
+    Q.congreso_coalition_negotiated_cash = 0;
+    Q.congreso_coalition_negotiated_renfe = 0;
+    Q.congreso_coalition_negotiated_ports = 0;
+    Q.congreso_coalition_negotiated_education = 0;
+    Q.congreso_coalition_negotiated_police = 0;
+    Q.congreso_coalition_negotiated_borders = 0;
+!}
+go-to: choices
+# TODO: dynamic leverage?
+# TODO: judiciary reform?
+
+@choices
+new-page: true
+on-arrival: {!
+    Q.congreso_coalition_negotiated_any = 0;
+    if (Q.congreso_coalition_negotiated_reform || Q.congreso_coalition_negotiated_amnesty || Q.congreso_coalition_negotiated_funding || Q.congreso_coalition_negotiated_cash || Q.congreso_coalition_negotiated_renfe || Q.congreso_coalition_negotiated_ports || Q.congreso_coalition_negotiated_education || Q.congreso_coalition_negotiated_police || Q.congreso_coalition_negotiated_borders) {
+        Q.congreso_coalition_negotiated_any = 1;
+    }
+!}
+
+
+= Coalition Negotiations
+
+A potential [+ congreso_coalition_lead_party +]-led Gobierno requires our support in the Congreso for the investiture to go through. 
+
+[? if congreso_coalition_negotiated_any: So far, we have demanded: ?]
+
+[? if congreso_coalition_negotiated_funding: - [? if congreso_left_carrier == congreso_coalition_lead_party: A revision of the Catalan economic regime, as a part of the planned Consitutional reform.?][? if congreso_coalition_lead_party = "psoe": A negotiation for a new "singular" economic regime for Catalonia, as a part of a revision of the autonomic financing system. ?]?]
+
+[? if congreso_coalition_negotiated_reform: - That the planned reform of the Constitution includes provisions for further decentralization. ?]
+
+[? if congreso_coalition_negotiated_renfe: - For Catalonia to fully control its railway network. ?]
+
+[? if congreso_coalition_negotiated_ports: - For Catalonia to fully control its ports and airports. ?]
+
+[? if congreso_coalition_negotiated_education: - For Catalonia to have complete independence in Education policies. ?]
+
+[? if congreso_coalition_negotiated_police: - For the Mossos d'Esquadra to be the only police force in Catalonia. ?]
+
+[? if congreso_coalition_negotiated_borders: - For Catalonia to have its own policy and enforcement over Immigration and Border control. ?]
+
+[? if congreso_coalition_negotiated_amnesty: - A General Amnesty Law for all political prisoners. ?]
+
+[? if congreso_coalition_negotiated_cash and public_debt > 10: - A forgiveness of a part of the Generalitat's debt.?]
+[? if congreso_coalition_negotiated_cash and public_debt <= 10: - Further Gobierno-covered investment in Catalonia.?]
+
+- @funding
+- @cash
+- @devolution
+- @const_reform
+- @amnesty
+- @funding_dump
+- @cash_dump
+- @devolution_dump
+- @const_reform_dump
+- @amnesty_dump
+- @resolve
+
+
+@funding
+title: Demand a reform of the economic regime of Catalonia. 
+subtitle: Catalonia has been systemically underfunded. [? if congreso_left_carrier == congreso_coalition_lead_party: A reform by [+ congreso_left_carrier +] may be folded into their broader plans for Constitutional reform. ?][? if congreso_coalition_lead_party = "psoe": The PSOE seems open to talk about a "singular" regime and a revision of that system. ?]
+choose-if: (congreso_left_carrier == congreso_coalition_lead_party or congreso_coalition_lead_party == "psoe") and congreso_coalition_leverage > 0 and not congreso_coalition_negotiated_funding
+unavailable-subtitle: [? if congreso_left_carrier != congreso_coalition_lead_party and congreso_coalition_lead_party != "psoe": The [+ congreso_left_carrier +] has no intention of touching the autonomic financing system. ?][? if congreso_coalition_negotiated_funding: This is already in our demands list. ?][? if congreso_coalition_leverage < 1 and not congreso_coalition_negotiated_funding: We lack leverage to demand this, on top of the rest we've already asked for. ?]
+on-arrival: congreso_coalition_negotiated_funding = 1; congreso_coalition_leverage -= 1;
+go-to: choices
+
+@funding_dump
+title: Maybe we don't need to rethink the finances of Catalonia
+view-if: congreso_coalition_negotiated_funding
+choose-if: congreso_coalition_negotiated_funding
+on-arrival: congreso_coalition_negotiated_funding = 0; congreso_coalition_leverage += 1;
+go-to: choices
+
+@cash
+title: Demand extra state-side economic support for Catalonia
+subtitle: This could take the form of more Gobierno-covered investment in Catalonia or a forgiveness of a part of the Generalitat's debt.
+choose-if: congreso_coalition_leverage > 0 and not congreso_coalition_negotiated_cash
+unavailable-subtitle:[? if congreso_coalition_negotiated_cash: This is already in our demands list. ?][? if congreso_coalition_leverage < 1 and not congreso_coalition_negotiated_cash: We lack leverage to demand this, on top of the rest we've already asked for. ?]
+on-arrival: congreso_coalition_negotiated_cash = 1; congreso_coalition_leverage -= 1;
+go-to: choices
+
+@cash_dump
+title: Maybe we don't the Gobierno to assist in Catalan finances
+view-if: congreso_coalition_negotiated_cash
+choose-if: congreso_coalition_negotiated_cash
+on-arrival: congreso_coalition_negotiated_cash = 0; congreso_coalition_negotiated_cash += 1;
+go-to: choices
+
+@devolution
+title: Demand an expansion of Catalonia's governance powers
+choose-if: congreso_coalition_leverage > 0
+unavailable-subtitle: We lack leverage to demand this, on top of the rest we've already asked for.
+subtitle: We could push for many different concessions here.
+
+There's still a myriad of competences and concessions related to regional powers we could demand for Catalonia.
+
+- @renfe
+- @ports_airports
+- @universities
+- @military
+- @borders
+- @choices: Go back
+
+@renfe
+title: Complete railway control
+subtitle: State-owned RENFE and ADIF still operate and control a big part of the Catalan railway network after all. 
+view-if: not competence_renfe
+choose-if: congreso_coalition_leverage > 0 and not congreso_coalition_negotiated_renfe and not competence_renfe
+unavailable-subtitle:[? if congreso_coalition_negotiated_renfe: This is already in our demands list. ?][? if congreso_coalition_leverage < 1 and not congreso_coalition_negotiated_renfe: We lack leverage to demand this, on top of the rest we've already asked for. ?]
+on-arrival: congreso_coalition_negotiated_renfe = 1; congreso_coalition_leverage -= 1;
+go-to: choices
+
+@ports_airports
+title: Governance over Ports and Airports
+subtitle: Right now only minor ones are controlled by the Generalitat.
+view-if: not competence_ports
+choose-if: congreso_coalition_leverage > 0 and not congreso_coalition_negotiated_ports and not competence_ports
+unavailable-subtitle:[? if congreso_coalition_negotiated_ports: This is already in our demands list. ?][? if congreso_coalition_leverage < 1 and not congreso_coalition_negotiated_ports: We lack leverage to demand this, on top of the rest we've already asked for. ?]
+on-arrival: congreso_coalition_negotiated_ports = 1; congreso_coalition_leverage -= 1;
+go-to: choices
+
+@universities
+title: Complete governance on Education
+subtitle: Universities are still a shared competence, and Catalan education laws are usually struck down or limited by Spanish Courts.
+view-if: not competence_education
+choose-if: congreso_coalition_leverage > 0 and not congreso_coalition_negotiated_education and not competence_education
+unavailable-subtitle:[? if congreso_coalition_negotiated_education: This is already in our demands list. ?][? if congreso_coalition_leverage < 1 and not congreso_coalition_negotiated_education: We lack leverage to demand this, on top of the rest we've already asked for. ?]
+on-arrival: congreso_coalition_negotiated_education = 1; congreso_coalition_leverage -= 1;
+go-to: choices
+
+@military
+title: Demand all Spanish police forces to move out of Catalonia, and reduce the number of military bases there.
+subtitle: The Mossos d'Esquadra should be the only police force in Catalonia.
+view-if: not competence_police
+choose-if: (congreso_left_carrier == congreso_coalition_lead_party or congreso_coalition_lead_party == "psoe") and congreso_coalition_leverage > 0 and not congreso_coalition_negotiated_police
+unavailable-subtitle: [? if congreso_left_carrier != congreso_coalition_lead_party and congreso_coalition_lead_party != "psoe": The [+ congreso_coalition_lead_party +] has already ruled this out. ?][? if congreso_coalition_negotiated_police: This is already in our demands list. ?][? if congreso_coalition_leverage < 1 and not congreso_coalition_negotiated_police: We lack leverage to demand this, on top of the rest we've already asked for. ?]
+on-arrival: congreso_coalition_negotiated_police = 1; congreso_coalition_leverage -= 1;
+go-to: choices
+
+@borders
+title: Demand powers in Immigration and Border control policies
+subtitle: This is unprecedented.
+view-if: not competence_borders
+choose-if: (congreso_left_carrier == congreso_coalition_lead_party or congreso_coalition_lead_party == "psoe") and congreso_coalition_leverage > 0 and not congreso_coalition_negotiated_borders
+unavailable-subtitle: [? if congreso_left_carrier != congreso_coalition_lead_party and congreso_coalition_lead_party != "psoe": The [+ congreso_coalition_lead_party +] has already ruled this out. ?][? if congreso_coalition_negotiated_borders: This is already in our demands list. ?][? if congreso_coalition_leverage < 1 and not congreso_coalition_negotiated_borders: We lack leverage to demand this, on top of the rest we've already asked for. ?]
+on-arrival: congreso_coalition_negotiated_borders = 1; congreso_coalition_leverage -= 1;
+go-to: choices
+
+@devolution_dump
+title: Maybe we don't need to push for more devolution
+view-if: congreso_coalition_negotiated_renfe or congreso_coalition_negotiated_ports or congreso_coalition_negotiated_education or congreso_coalition_negotiated_police or congreso_coalition_negotiated_borders
+choose-if: congreso_coalition_negotiated_renfe or congreso_coalition_negotiated_ports or congreso_coalition_negotiated_education or congreso_coalition_negotiated_police or congreso_coalition_negotiated_borders
+on-arrival: {!
+    if (Q.congreso_coalition_negotiated_renfe) Q.congreso_coalition_leverage += 1;
+    if (Q.congreso_coalition_negotiated_ports) Q.congreso_coalition_leverage += 1;
+    if (Q.congreso_coalition_negotiated_education) Q.congreso_coalition_leverage += 1;
+    if (Q.congreso_coalition_negotiated_police) Q.congreso_coalition_leverage += 1;
+    if (Q.congreso_coalition_negotiated_borders) Q.congreso_coalition_leverage += 1;
+    Q.congreso_coalition_negotiated_renfe = 0;
+    Q.congreso_coalition_negotiated_ports = 0;
+    Q.congreso_coalition_negotiated_education = 0;
+    Q.congreso_coalition_negotiated_police = 0;
+    Q.congreso_coalition_negotiated_borders = 0;
+!}
+go-to: choices
+
+@const_reform
+title: It's time to reform the Constitution!
+subtitle: This is already in the agenda of [+ congreso_left_carrier +], yet we could push for further decentralization and even a referendum on the monarchy.
+choose-if: congreso_left_carrier == congreso_coalition_lead_party and congreso_coalition_leverage > 0 and not congreso_coalition_negotiated_reform
+unavailable-subtitle: [? if congreso_left_carrier != congreso_coalition_lead_party: The [+ congreso_coalition_lead_party +] has no intention of opening this can of worms. ?][? if congreso_coalition_negotiated_reform: This is already in our demands list. ?][? if congreso_coalition_leverage < 1 and not congreso_coalition_negotiated_reform: We lack leverage to demand this, on top of the rest we've already asked for. ?]
+on-arrival: congreso_coalition_negotiated_reform = 1; congreso_coalition_leverage -= 1;
+go-to: choices
+
+@const_reform_dump
+title: Maybe we don't need to push the Constitutional reform that far...
+view-if: congreso_coalition_negotiated_reform
+choose-if: congreso_coalition_negotiated_reform
+on-arrival: congreso_coalition_negotiated_reform = 0; congreso_coalition_leverage += 1;
+go-to: choices
+
+@amnesty
+title: Demand a General Amnesty Law for all political prisoners
+subtitle: A potential way to justify a participation in such a investiture agreement.
+view-if: political_prisoners_exists
+choose-if: (congreso_left_carrier == congreso_coalition_lead_party or congreso_coalition_lead_party == "psoe") and congreso_coalition_leverage > 0 and not congreso_coalition_negotiated_amnesty
+unavailable-subtitle: [? if congreso_left_carrier != congreso_coalition_lead_party and congreso_coalition_lead_party != "psoe": The [+ congreso_coalition_lead_party +] has no intention of offering amnesty. ?][? if congreso_coalition_negotiated_amnesty: This is already in our demands list. ?][? if congreso_coalition_leverage < 1 and not congreso_coalition_negotiated_amnesty: We lack leverage to demand this, on top of the rest we've already asked for. ?]
+on-arrival: congreso_coalition_negotiated_amnesty = 1; congreso_coalition_leverage -= 1;
+go-to: choices
+
+TODO! what happens here?
+
+@amnesty_dump
+title: Maybe we don't need Amnesty after all...
+view-if: congreso_coalition_negotiated_amnesty
+choose-if: congreso_coalition_negotiated_amnesty
+on-arrival: congreso_coalition_negotiated_amnesty = 0; congreso_coalition_leverage += 1;
+go-to: choices
+
+TODO! what happens here + party consequences for not choosing this
+
+@resolve
+title: Finalize negotiations
+on-arrival: {!
+    // Set timers
+    if (Q.congreso_coalition_negotiated_funding && !Q.congreso_coalition_lead_party == "psoe") {
+        Q.countdows.push("negotiated_funding");
+        Q.negotiated_founding_countdown = 12;
+    } else if (Q.congreso_coalition_negotiated_funding && Q.congreso_coalition_lead_party == "psoe") {
+        Q.countdows.push("negotiated_funding_psoe");
+        Q.negotiated_founding_psoe_countdown = 12;
+    }
+    if (Q.congreso_coalition_negotiated_cash) {
+        Q.countdows.push("negotiated_cash");
+        Q.negotiated_cash_countdown = 8;
+    }
+    if (Q.congreso_coalition_negotiated_renfe && !Q.congreso_coalition_lead_party == "psoe") {
+        Q.countdows.push("negotiated_renfe");
+        Q.negotiated_renfe_countdown = 12;
+    } else if (Q.congreso_coalition_negotiated_renfe && Q.congreso_coalition_lead_party == "psoe") {
+        Q.countdows.push("negotiated_renfe_psoe");
+        Q.negotiated_renfe_psoe_countdown = 12;
+    }
+    if (Q.congreso_coalition_negotiated_ports && !Q.congreso_coalition_lead_party == "psoe") {
+        Q.countdows.push("negotiated_ports");
+        Q.negotiated_ports_countdown = 12;
+    } else if (Q.congreso_coalition_negotiated_ports && Q.congreso_coalition_lead_party == "psoe") {
+        Q.countdows.push("negotiated_ports_psoe");
+        Q.negotiated_ports_psoe_countdown = 12;
+    }
+    if (Q.congreso_coalition_negotiated_education) {
+        Q.countdows.push("negotiated_education");
+        Q.negotiated_education_countdown = 12;
+    }
+    if (Q.congreso_coalition_negotiated_police && !Q.congreso_coalition_lead_party == "psoe") {
+        Q.countdows.push("negotiated_police");
+        Q.negotiated_police_countdown = 12;
+    } else if (Q.congreso_coalition_negotiated_police && Q.congreso_coalition_lead_party == "psoe") {
+        Q.countdows.push("negotiated_police_psoe");
+        Q.negotiated_police_psoe_countdown = 12;
+    }
+    if (Q.congreso_coalition_negotiated_borders && !Q.congreso_coalition_lead_party == "psoe") {
+        Q.countdows.push("negotiated_borders");
+        Q.negotiated_borders_countdown = 12;
+    } else if (Q.congreso_coalition_negotiated_borders && Q.congreso_coalition_lead_party == "psoe") {
+        Q.countdows.push("negotiated_borders_psoe");
+        Q.negotiated_borders_psoe_countdown = 12;
+    }
+    if (Q.congreso_coalition_negotiated_amnesty) {
+        Q.countdows.push("negotiated_amnesty");
+        Q.negotiated_amnesty_countdown = 12;
+    }
+!}
+go-to: jumpScene
+
+For better or for worse, our negotiations have concluded. In a few months, we'll see exactly how these negotiations materialize.

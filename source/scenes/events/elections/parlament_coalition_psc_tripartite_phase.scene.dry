@@ -68,13 +68,13 @@ on-arrival: {!
 go-to: phase_text
 
 @phase_text
+new-page: true
 go-to: parlament_coalition_setnames
 set-jump: choices
 
 [? if psc_tripartite_coalition_phase = 1: The PSC's negotiators have come forward with a proposal for forming a New Tripartite government.  ?][? if psc_tripartite_coalition_phase > 1: After our counter-proposal, the PSC has submitted a revised offer. ?][? if parlament_coalition_changes: After our adjustments, the current position looks as follows: ?]
 
 @choices
-new-page: true
 
 - @changes
 - @send_back

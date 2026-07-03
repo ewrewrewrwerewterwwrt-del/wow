@@ -13,13 +13,15 @@ go-to: happens
 
 = The Barons revolt!
 
-It's no secret that the Barons of the PSOE have now been long time dissatisfied with the leadership of Pedro Sánchez. Now, with an impossible arithmetic in the Congreso and with the open support of former Presidente Felipe González, they have gathered unprecedented momentum within the party, enough to force a resignation of their Secretary-General. In what can only be categorized as an internal coup, the PSOE has now ousted Pedro Sánchez and will be ruled by an interim council until new primaries are held. 
+It's no secret that the Barons of the PSOE have now been long time dissatisfied with the leadership of Pedro Sánchez. Now, with an impossible arithmetic in the Congreso and with the open support of former Presidente Felipe González, they have gathered unprecedented momentum within the party, enough to force a resignation of their Secretary-General. In what can only be categorized as an internal coup, the PSOE has now ousted Pedro Sánchez and will be ruled by an interim council until new a new primary election is held. 
 
 @happens
 on-arrival: {!
     Q.psoe_leader = "???";
     Q.psoe_leader_gender = "f";
     Q.psoe_ideology = "Centrist Social Democracy, Autonomism";
+    Q.psoe_party_congres_countdown = 12;
+    Q.countdown.push("psoe_party_congres");
 !}
 
 - @congreso_coalition: So what's the PSOE going to do?

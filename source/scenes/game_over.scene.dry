@@ -277,6 +277,25 @@ Note that your achievement progress is stored in your browser. Switching browser
   </div>
 </div>
 
+<div class="achievement !}[? if achievement_psoed : achievement--unlocked ?][? if not achievement_psoed : achievement--locked ?]{!" style="display:flex">
+  <div class="achievement-image !}[? if achievement_psoed : achievement-image--unlocked ?][? if not achievement_psoed : achievement-image--locked ?]{!">
+    <img src="img/achievements/psoed.jpg" style="width:100%;height:100%;object-fit:cover;">
+  </div>
+  <div class="achievement-body">
+    <div class="achievement-title !}[? if achievement_psoed : achievement-title--unlocked ?][? if not achievement_psoed : achievement-title--locked ?]{!">
+     <span> You've been PSOE'd </span>
+        <div class="achievement-stars">
+            <span class="star--filled">★</span>
+            <span class="star--filled">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+            <span class="star--empty">★</span>
+        </div>
+    </div>
+    <div class="achievement-description !}[? if achievement_psoed : achievement-description--unlocked ?][? if not achievement_psoed : achievement-description--locked ?]{!">Negotiate and make possible a PSOE-led Gobierno, only for the agreements to go unfulfilled. </div>
+  </div>
+</div>
+
 <div class="achievement !}[? if achievement_mas_o_marc : achievement--unlocked ?][? if not achievement_mas_o_marc : achievement--locked ?]{!" style="display:flex">
   <div class="achievement-image !}[? if achievement_mas_o_marc : achievement-image--unlocked ?][? if not achievement_mas_o_marc : achievement-image--locked ?]{!">
     <img src="img/achievements/mas_o_marc.webp" style="width:100%;height:100%;object-fit:cover;">

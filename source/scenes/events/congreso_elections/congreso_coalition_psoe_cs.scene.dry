@@ -10,17 +10,19 @@ view-if: congreso_coalition_psoe_cs_gov_s > 0
 choose-if: congreso_coalition_psoe_cs_gov_reach
 unavailable-subtitle: PSOE and csspa fall short, the few regionalists who'd ever deal with them are clearly not enough.
 on-arrival: {!
-    // TODO — form the PSOE + Cs centre cabinet.
-    //   • president = psoe, Cs in government; the player (a Catalan minor) and every
-    //     Catalan / Basque / BNG party OPPOSE — only the whitelisted regionalists
-    //     (cc / prc / te / upyd / upn / fac / nsuma) can ever prop it up.
-    //   • Q.congreso_coalition_psoe_cs_gov_talks flags whether the maths needed
-    //     escalated support → bigger asks / lower trust payoff (concessions later).
+    Q.spanish_pm = Q.psoe_leader;
+    Q.spanish_pm_gender = Q.psoe_leader_gender;
+    Q.spanish_pm_party = "psoe";
+    Q.spanish_coalition = ["psoe", "cs"];
+
+    Q.spanish_coalition_disp = '<span style="color: var(--psoe); font-style: italic;">Social</span>-<span style="color: var(--cs); font-style: italic;">Centrist</span> Coalition (PSOE - csspa)';
 !}
 
-TODO
+**A new government is formed!**
 
--@post_event: TO-DO
+The recently appointed [+ spanish_coalition_disp +] Gobierno will be lead by [? if spanish_pm_gender == "m": Presidente ?][? if spanish_pm_gender == "f": Presidenta ?][+ spanish_pm +].
+
+-@post_event: This cannot be good for anyone...
 
 @cs_government
 title: <span style="color: var(--cs); font-style: italic;">Centrist</span>-<span style="color: var(--psoe); font-style: italic;">Social</span> Coalition (csspa - PSOE)
@@ -29,15 +31,18 @@ view-if: congreso_coalition_cs_psoe_gov_s > 0
 choose-if: congreso_coalition_psoe_cs_gov_reach and psoe_leader != "???"
 unavailable-subtitle: [? if not congreso_coalition_psoe_cs_gov_reach : csspa and PSOE fall short, the few who'd ever deal with them are clearly not enough. ?][? if psoe_leader == "???": The PSOE has no clear leadership at the moment. ?]
 on-arrival: {!
-    // TODO — form the Cs-led centre cabinet (Cs president, PSOE the junior partner).
-    //   • mirrors @government but with the bigger party (Cs) taking the presidency;
-    //     the same regionalist whitelist props it up. Shares
-    //     congreso_coalition_psoe_cs_gov_reach (the arithmetic is leader-agnostic).
+    Q.spanish_pm = Q.csspa_leader;
+    Q.spanish_pm_gender = Q.csspa_leader_gender;
+    Q.spanish_pm_party = "cs";
+    Q.spanish_coalition = ["cs", "psoe"];
+    Q.spanish_coalition_disp = '<span style="color: var(--cs); font-style: italic;">Centrist</span>-<span style="color: var(--psoe); font-style: italic;">Social</span> Coalition (csspa - PSOE)';
 !}
 
-TODO
+**A new government is formed!**
 
--@post_event: TO-DO
+The recently appointed [+ spanish_coalition_disp +] Gobierno will be lead by [? if spanish_pm_gender == "m": Presidente ?][? if spanish_pm_gender == "f": Presidenta ?][+ spanish_pm +].
+
+-@post_event: This cannot be good for anyone...
 
 @wtf
 title: <span style="color: var(--psoe); font-style: italic;">Social</span>-<span style="color: var(--cs); font-style: italic;">Centrist</span> Coalition (PSOE - csspa)

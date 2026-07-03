@@ -7,7 +7,12 @@ if (Q.spain_is_republic) {
 } else {
     Q.spanish_seal_img = "img/esp_seal.svg";
 }
-Q.unemployment_dataviz = Q.unemployment.toFixed(1);
+if (Q.unemployment) {
+    Q.unemployment_dataviz = Q.unemployment.toFixed(1);
+} else {
+    Q.unemployment_dataviz = 'N/A';
+}
+
 !}
 
 = Status
@@ -37,7 +42,7 @@ Next election: [+ next_election_month : month +] [+ next_election_year +]
 
 <div style="display: flex; gap: 0.5em;margin-top:1.1em;margin-bottom: -0.75em;"><div style="flex: 0 0 18%;"><img src="[+spanish_seal_img+]"></div><div style="flex: 1 1 82%;"><p style="font-weight:bold; margin-top:-0.1em; margin-bottom:0.25em;">Gobierno</p><p style="white-space:nowrap; overflow:visible; text-overflow:ellipsis;max-width:95%;">[+ spanish_coalition_disp +]</p></div></div>
 
-[? if spanish_pm_gender = "m": Presidente ?][? if spanish_pm_gender = "f": Presidenta ?][+ spanish_pm +] ([+ spanish_pm_party +])
+[? if spanish_pm_gender = "m": Presidente ?][? if spanish_pm_gender = "f": Presidenta ?][+ spanish_pm +] ([? if spanish_pm_party == "cs" : csspa?][? if spanish_pm_party != "cs": [+ spanish_pm_party +]?])
 
 Next election: [+ next_spanish_election_month : month +] [+ next_spanish_election_year +]
 

@@ -22,12 +22,6 @@ on-arrival: {!
     } else {
         Q.next_spanish_election_time += 48;
     }
-    
-    if (Q.player_party == "cup" && Q.cup_parlament_s > 0) {
-        Q.position_disp = "<span style='font-style: italic'>Opposition</span>";
-    } else {
-        Q.game_over_trigger = true;
-    }
 !}
 on-display: {!
     const data = [];
@@ -343,6 +337,15 @@ on-display: {!
         parliament.enter.fromCenter(true).smallToBig(true);
         parliament.exit.toCenter(false).bigToSmall(true);
         d3.select("#congreso").datum(data).call(parliament);
+
+        console.log(Q.congreso_parties);
+        var lines_spa = d3.linegraph(true, true,
+            Q.congreso_parties,
+            {'ciu': 'var(--ciu)', 'erc': 'var(--erc)', 'cs': 'var(--cs)', 'psc': 'var(--psc)', 'pp': 'var(--pp)', 'vox': 'var(--vox)', 'cup': 'var(--cup)', 'unio': 'var(--unio)', 'jxsi': 'var(--jxsi)', 'jxcat': 'var(--jxcat)', 'junts': 'var(--junts)', 'cdc': 'var(--cdc)', 'dl': 'var(--dl)', 'pdcat': 'var(--pdcat)', 'psoe': 'var(--psoe)', 'iu': 'var(--iu)', 'up': 'var(--up)', 'sumar': 'var(--sumar)', 'mpais': 'var(--mpais)', 'pnv': 'var(--pnv)', 'ehbildu': 'var(--ehbildu)', 'amaiur': 'var(--amaiur)', 'bng': 'var(--bng)', 'nos': 'var(--nos)', 'mes': 'var(--mes)', 'gbai': 'var(--gbai)', 'compromis': 'var(--compromis)', 'cc': 'var(--cc)', 'fac': 'var(--fac)', 'prc': 'var(--prc)', 'te': 'var(--te)'},
+            {'ciu': 'CiU', 'erc': 'ERC', 'cs': 'Cs', 'psc': 'PSC', 'pp': 'PP', 'vox': 'Vox', 'cup': 'CUP','unio': 'UDC', 'jxsi': 'JxSí', 'jxcat': 'JxCat', 'junts': 'Junts', 'cdc': 'CDC', 'dl': 'DL', 'pdcat': 'PDeCAT', 'psoe': 'PSOE', 'iu': 'IU', 'up': 'UP', 'sumar': 'Sumar', 'mpais': 'Más País', 'pnv': 'EAJ-PNV', 'ehbildu': 'EH Bildu', 'amaiur': 'Amaiur', 'bng': 'BNG', 'nos': 'NÓS', 'mes': 'MES', 'gbai': 'GBai', 'compromis': 'Compromís', 'cc': 'CC-PNC', 'fac': 'FAC', 'prc': 'PRC', 'te': '¡TE!'});
+        lines_spa.width(width).height(400);
+        d3.select("#party_support_history").datum(Q.party_spa_support_records).call(lines_spa);
+        console.log("party_spa_support_records", Q.party_spa_support_records);
     }
 !}
 
@@ -397,5 +400,10 @@ on-display: {!
 **Results by constituency**
 
 {!<div id="congreso-map-widget" style="width: 95%; margin: 0 auto;"></div>!}
+
+**Party support trend**
+
+{!<svg id="party_support_history" style="width: 500px; height: 400px;"> </svg>!}
+
 
 - @congreso_coalition: [? if player_party == "erc" or (player_party == "cup" and cup_in_congreso): Let's see what options this gives us... ?][? if player_party == "cup" and not cup_in_congreso: Let's see what is to come from this... ?]

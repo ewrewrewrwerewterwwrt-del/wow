@@ -488,6 +488,14 @@ const tooltipList = [
     ledBy: "txt_leader",
     ideology: "txt_ideology",
   },
+  {
+    searchString: ["ETA"],
+    mainText: "Basque Homeland and Liberty",
+    subText: "Euskadi Ta Askatasuna",
+    img: "img/parties/eta.webp",
+    infoDesc: "Paramilitary Clandestine Organization",
+    ideology: "Revolutionary Socialism, Basque Independence",
+  },
   /* LEADERS */
   {
     searchString: ["Lluís Companys"],
@@ -672,9 +680,33 @@ const tooltipList = [
     searchString: ["Pedro Sánchez"],
     mainText: "Pedro Sánchez Pérez-Castejón",
     img: "img/other_leaders/pedro_sanchez.jpg",
-    ideology: "Centrist Social Democracy, Autonomism",
+    ideology: "Centrist Social Democracy, Reformist Autonomism",
     allegiances: (Q) => {
       return ["<span style='color: var(--psoe)'>PSOE</span>"];
+    },
+  },
+  {
+    searchString: ["Eduardo Madina"],
+    mainText: "Eduardo Madina Muñoz",
+    img: "img/other_leaders/madina.jpg",
+    ideology: "Centrist Social Democracy, Republican Autonomism",
+    allegiances: (Q) => {
+      return [
+        "<span style='color: var(--psc)'>PSE-EE</span>",
+        "<span style='color: var(--psoe)'>PSOE</span>",
+      ];
+    },
+  },
+  {
+    searchString: ["Susana Díaz", "Susana Diaz"],
+    mainText: "Susana Díaz Pacheco",
+    img: "img/other_leaders/susanadiaz.jpg",
+    ideology: "Centrist Social Democracy, Autonomism",
+    allegiances: (Q) => {
+      return [
+        "<span style='color: var(--psoe)'>PSOE-A</span>",
+        "<span style='color: var(--psoe)'>PSOE</span>",
+      ];
     },
   },
   {
@@ -1261,6 +1293,12 @@ const colourList = [
     transform: "TxT",
   },
   {
+    words: ["ETA"],
+    colour: "black",
+    style: "font-weight: bold;",
+    transform: "ETA",
+  },
+  {
     words: ["indp"],
     colour: "#464646",
     style: "font-weight: bold;",
@@ -1333,6 +1371,14 @@ const colourList = [
   },
   {
     words: ["Pedro Sánchez"],
+    colour: "var(--psoe)",
+  },
+  {
+    words: ["Eduardo Madina"],
+    colour: "var(--psoe)",
+  },
+  {
+    words: ["Susana Díaz", "Susana Diaz"],
     colour: "var(--psoe)",
   },
   {

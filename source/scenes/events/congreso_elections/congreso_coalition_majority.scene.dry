@@ -9,14 +9,16 @@ view-if: congreso_coalition_majority_s > 0
 choose-if: congreso_coalition_majority_reach
 unavailable-subtitle: No single party reached an absolute majority on its own.
 on-arrival: {!
-    // TODO — install a single-party government.
-    //   formateur = Q.congreso_coalition_majority_party  (set in congreso_coalition)
-    //   seats     = Q.congreso_coalition_majority_s
-    //   • president = the majority party; no investiture concessions to extract.
-    //   • the player (always a Catalan minor) is a pure bystander here — no lever.
-    //   • set the downstream "government formed" flags the engine/post_event read.
+    Q.spanish_pm = Q[Q.congreso_coalition_majority_party + "_leader"];
+    Q.spanish_pm_gender = Q[Q.congreso_coalition_majority_party + "_gender"];
+    Q.spanish_pm_party = Q.congreso_coalition_majority_party;
+    Q.spanish_coalition = [Q.congreso_coalition_majority_party];
+    
+    Q.spanish_coalition_disp = '[? if congreso_coalition_majority_party == "cs": csspa ?][? if congreso_coalition_majority_party != "cs": [+ congreso_coalition_majority_party +]?] <span style="color: var(--' + Q.congreso_coalition_majority_party + '); font-style: italic;">Majority Government</span>';
 !}
 
-TODO
+**A new government is formed!**
 
--@post_event: TO-DO
+The recently appointed [+ spanish_coalition_disp +] Gobierno will be lead by [? if spanish_pm_gender == "m": Presidente ?][? if spanish_pm_gender == "f": Presidenta ?][+ spanish_pm +].
+
+-@post_event: We'll see eachother in 4 years I guess...

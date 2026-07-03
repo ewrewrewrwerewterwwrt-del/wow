@@ -1,8 +1,10 @@
-title: PSC breaks up with the PSOE!
+title: The Socialist Divorce
+subtitle: The PSC breaks up with the PSOE!
 view-if: psc_breakup_trigger
 new-page: true
 max-visits: 1
 tags: event
+face-image: img/events/psc_divorce.jpg
 on-arrival: {!
     Q.psc_split = true;
     
@@ -15,8 +17,14 @@ on-arrival: {!
     Q.psoe_congreso_pv -= 0.1*Q.psoe_congreso_pv;
     Q.psoe_congreso_s -= Math.ceil(Q.psoe_congreso_s / 10);
     Q.psoe_congreso_pv_cat = 0.0;
+
+    window.spaSupportInject(Q, 'psoe', 'rest', 0.5, 'pp');
 !}
 
-TODO: Text!! more stuff??
+= The Socialist Divorce
 
-- @post_event: TODO!
+After almost four decades in a federation, the disagreements between PSC and PSOE seem to have reached the breaking point. The repeated pushes to silence any voices within the PSC demanding a proper recognition of Catalan identity and the right to self-determination have brought [+ psc_leader +] to the nuclear option. On the other end of the table, the poor electoral performance of the PSC and the PSOE's plummeting electoral prospects have also led some in the PSOE to think that, by getting rid of the Catalan component, votes can be recovered and gained elsewhere in Spain.
+
+This is, in any case, not a mutual-agreement separation. Without its Catalan partner and lacking any sort of territorial presence there, the PSOE will be unable to run for the Congreso in these provinces. On its own, the PSC may have trouble convincing voters of their leverage in Madrid. 
+
+- @post_event: This sure has to be for the better

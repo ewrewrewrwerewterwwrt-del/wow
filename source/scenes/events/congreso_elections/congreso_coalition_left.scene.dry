@@ -4,28 +4,56 @@ You should not be here? Report a bug if you see this text.
 
 @change
 title: <span style="color: var(--up); font-style: italic;">Change</span> <span style="color: var(--psoe); font-style: italic;">Coalition</span> ([? if congreso_left_carrier == "up": UP?][?if congreso_left_carrier != "up": [+ congreso_left_carrier +]?] - PSOE [? if iu_congreso_s > 0: - IU?])
-subtitle: A difficult arithmetic made possible by kingmaker smaller parties. [? if congreso_coalition_change_talks: Pulling it over the line may demand hard concessions. ?]
+subtitle: A difficult arithmetic made possible by kingmaker smaller parties. [? if congreso_coalition_change_talks: Given the numbers, we have a chance to negotiate the conditions to make this possible. ?]
 view-if: congreso_coalition_change_s > congreso_s_majority - 50
 choose-if: congreso_coalition_change_reach and not congreso_coalition_psoe_cs_wtf
 unavailable-subtitle: [? if not congreso_coalition_change_reach : The numbers don't add up, not even with every abstention that can be realistically negotiated. ?][? if congreso_coalition_psoe_cs_wtf: This does not seem to be the plan of [+ psoe_leader +] and [+ csspa_leader +] ?]
+on-arrival: congreso_coalition_lead_party = congreso_left_carrier
+set-jump: change_resolve
+go-to: change_resolve if not congreso_coalition_change_talks; congreso_coalition_negotiation if congreso_coalition_change_talks
+
+@change_resolve
 on-arrival: {!
-    // TODO 
+    Q.spanish_pm = Q[Q.congreso_left_carrier + "_leader"];
+    Q.spanish_pm_gender = Q[Q.congreso_left_carrier + "_gender"];
+    Q.spanish_pm_party = Q.congreso_left_carrier;
+    Q.spanish_coalition = [Q.congreso_left_carrier, "psoe"];
+    if (Q.iu_congreso_s > 0) {
+        Q.spanish_coalition.push("iu");
+    }
+    Q.spanish_coalition_disp = '<span style="color: var(--up); font-style: italic;">Change</span> <span style="color: var(--psoe); font-style: italic;">Coalition</span>';
 !}
 
-TODO
+**A new government is formed!**
 
--@post_event: TO-DO
+The recently appointed [+ spanish_coalition_disp +] Gobierno will be lead by [? if spanish_pm_gender == "m": Presidente ?][? if spanish_pm_gender == "f": Presidenta ?][+ spanish_pm +].
+
+-@post_event: Let's hope this really is a sign of change!
 
 @left
 title: <span style="color: var(--up); font-style: italic;">Left</span> <span style="color: var(--iu); font-style: italic;">Front</span> Government ([? if congreso_left_carrier == "up": UP?][?if congreso_left_carrier != "up": [+ congreso_left_carrier +]?][? if iu_congreso_s > 0:  - IU?])
-subtitle: A difficult arithmetic made possible by kingmaker smaller parties. [? if congreso_coalition_left_talks: Pulling it over the line may demand hard concessions. ?]
+subtitle: A difficult arithmetic made possible by kingmaker smaller parties.  [? if congreso_coalition_left_talks: Given the numbers, we have a chance to negotiate the conditions to make this possible. ?]
 view-if: congreso_coalition_left_s > congreso_s_majority - 50
 choose-if: congreso_coalition_left_reach
 unavailable-subtitle: [? if not congreso_coalition_left_reach : The numbers don't add up, not even with every abstention that can be realistically negotiated. ?]
+on-arrival: congreso_coalition_lead_party = congreso_left_carrier
+set-jump: left_resolve
+go-to: left_resolve if not congreso_coalition_left_talks; congreso_coalition_negotiation if congreso_coalition_left_talks
+
+@left_resolve
 on-arrival: {!
-    // TODO 
+    Q.spanish_pm = Q[Q.congreso_left_carrier + "_leader"];
+    Q.spanish_pm_gender = Q[Q.congreso_left_carrier + "_gender"];
+    Q.spanish_pm_party = Q.congreso_left_carrier;
+    Q.spanish_coalition = [Q.congreso_left_carrier];
+    if (Q.iu_congreso_s > 0) {
+        Q.spanish_coalition.push("iu");
+    }
+    Q.spanish_coalition_disp = '<span style="color: var(--up); font-style: italic;">Left</span> <span style="color: var(--iu); font-style: italic;">Front</span>';
 !}
 
-TODO
+**A new government is formed!**
 
--@post_event: TO-DO
+The recently appointed [+ spanish_coalition_disp +] Gobierno will be lead by [? if spanish_pm_gender == "m": Presidente ?][? if spanish_pm_gender == "f": Presidenta ?][+ spanish_pm +].
+
+-@post_event: Let's hope this really is a sign of change!

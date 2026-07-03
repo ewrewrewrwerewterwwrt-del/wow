@@ -21,13 +21,13 @@ on-arrival: {!
 go-to: phase_text
 
 @phase_text
+new-page: true
 go-to: parlament_coalition_setnames
 set-jump: choices
 
 [? if erc_ciu_coalition_phase = 1: As the leading force, we're expected to put forward a government composition proposal to [+ parlament_current_ciu +]. [? if parlament_coalition_changes: Right now, the proposal looks as follows: ?] ?][? if erc_ciu_coalition_phase > 1: Answering our previous proposal, [+ parlament_current_ciu +] has pushed back with a few ideas of its own on what shape this government should take. [? if parlament_coalition_changes: After our ammendments, it looks as follows: ?] ?]
 
 @choices
-new-page: true
 
 - @changes
 - @send_back

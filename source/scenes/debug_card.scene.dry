@@ -32,6 +32,61 @@ May (very probably) mess up your save
 - @debug_menu: Back
 - @psc_inject
 - @ciu_inject
+- @psoe_inject
+- @post_event: Done
+
+@psoe_inject
+title: PSOE
+
+** PSOE situations **
+
+- @inject_party: Back
+- @psoe_inject_sanchez_1
+- @psoe_inject_madina
+- @psoe_inject_sanchez_2
+- @psoe_inject_diaz
+- @post_event: Done
+
+@psoe_inject_sanchez_1
+title: Set leader: Pedro Sánchez (pre-barones coup)
+on-arrival: psoe_barons_revolted = false
+call: bye_rubalcaba.sanchez
+
+Set Pedro Sánchez as PSOE leader (pre-barones coup).
+
+- @inject_party: Back
+- @post_event: Done
+
+@psoe_inject_madina
+title: Set leader: Eduardo Madina
+call: bye_rubalcaba.madina
+
+Set Eduardo Madina as PSOE leader.
+
+- @inject_party: Back
+- @post_event: Done
+
+@psoe_inject_sanchez_2
+title: Set leader: Pedro Sánchez (post-barones coup)
+on-arrival: psoe_barons_revolted = true
+call: bye_rubalcaba.sanchez
+
+# TODO: inject form the right scene!
+
+Set Pedro Sánchez as PSOE leader (post-barones coup).
+
+- @inject_party: Back
+- @post_event: Done
+
+@psoe_inject_diaz
+title: Set leader: Susana Díaz
+call: psoe_primaries_2017.diaz_elected
+
+# TODO: inject form the right scene!
+
+Set Susana Díaz as PSOE leader.
+
+- @inject_party: Back
 - @post_event: Done
 
 @psc_inject
@@ -40,8 +95,49 @@ title: PSC
 ** PSC situations **
 
 - @inject_party: Back
+- @psc_inject_ros
+- @psc_inject_tura
+- @psc_inject_iceta
+- @psc_inject_parlon
 - @psc_congreso_split_inject
 - @post_event: Done
+
+@psc_inject_ros
+title: Set Àngel Ros as PSC leader
+call: psc_implosion.angelros_leadership
+
+Set Àngel Ros as PSC leader.
+
+- @inject_party: Back
+- @post_event: Done
+
+@psc_inject_tura
+title: Set Montserrat Tura as PSC leader
+call: psc_implosion.montserrattura_leadership
+
+Set Montserrat Tura as PSC leader.
+
+- @inject_party: Back
+- @post_event: Done
+
+@psc_inject_iceta
+title: Set Miquel Iceta as PSC leader
+call: psc_intro_iceta.iceta_leadership
+
+Set Miquel Iceta as PSC leader.
+
+- @inject_party: Back
+- @post_event: Done
+
+@psc_inject_parlon
+title: Set Nuria Parlon as PSC leader
+call: psc_2016congress.parlon_takes_over
+
+Set Nuria Parlon as PSC leader.
+
+- @inject_party: Back
+- @post_event: Done
+
 
 @psc_congreso_split_inject
 title: Split PSC from PSOE in the congreso
@@ -184,11 +280,11 @@ Injected congreso 2019 (apr.) situation!
 
 
 @congreso_2019_2
-title: Congreso 2016 election (nov.)
+title: Congreso 2019 election (nov.)
 subtitle: Only affects congreso party supports and related variables
 call: election_simulation.2019_11
 
-Injected congreso 2019 (apr.) situation!
+Injected congreso 2019 (nov.) situation!
 
 - @inject_global: Back
 - @post_event: Done

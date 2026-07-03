@@ -301,19 +301,7 @@ function dhondt_method(votes_map, num_seats) {
 
 // 03. Main Simulation Loop 
 for (var constituency of Q.congreso_constituencies) {
-    
-    // Approximate Census Weights - losely based on 2016 data
-    var census_weights = {
-        "catalunya": 55000, 
-        "valencia": 36000,
-        "balears": 8000,
-        "navarra": 4800,
-        "euskadi": 17000,
-        "galicia": 22000,
-        "rest": 220000
-    };
-    
-    var region_census = census_weights[constituency] || 1000;
+    var region_census = Q.congreso_pop[constituency] || 1000;
     var region_votes_map = {}; // Valid votes for parties only
     var region_abstain_raw = 0;
     var region_valid_total = 0;

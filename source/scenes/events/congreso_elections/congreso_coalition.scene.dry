@@ -215,6 +215,12 @@ on-arrival: {!
             negPsoeCs: !!PSOECS_POSTURE[key]
         });
     }
+    // Player-less candidate pool — feeds the kingmaker pivot test (below), which
+    // asks "could a government form over the player's head?".
+    var candidatesNoPlayer = [];
+    for (var cnp = 0; cnp < candidates.length; cnp++) {
+        if (candidates[cnp].party !== playerVehicle) candidatesNoPlayer.push(candidates[cnp]);
+    }
 
     // ── Greedy coalition builder (two tiers: base, then escalation) ──────────
     // Investiture clears on the 2nd-round rule, yes + abstain/2 >= majority.
@@ -242,7 +248,8 @@ on-arrival: {!
         if (mode === "psoecs")   return c.negPsoeCs   ? "support" : c.psoecs;
         return c.rightvox;
     };
-    var fill = function (core, mode) {
+    var fill = function (core, mode, cands) {
+        cands = cands || candidates;
         var members = core.slice();
         var yes = 0, abst = 0;
         var addSeats = function (seats, type) { if (type === "abstain") abst += seats; else yes += seats; };
@@ -251,8 +258,8 @@ on-arrival: {!
 
         // One slot per candidate, tracking its base + current rank and live member.
         var slots = [];
-        for (var i0 = 0; i0 < candidates.length; i0++) {
-            slots.push({ c: candidates[i0], base: RANK[candidates[i0][mode]] || 0, rank: 0, mem: null });
+        for (var i0 = 0; i0 < cands.length; i0++) {
+            slots.push({ c: cands[i0], base: RANK[cands[i0][mode]] || 0, rank: 0, mem: null });
         }
 
         // Phase 1 — seat partners at their BASE posture, in order, until it clears.
@@ -294,8 +301,12 @@ on-arrival: {!
         for (var i = 0; i < members.length; i++) { var v = seatsOf(members[i]); if (members[i].type === "abstain") a += v; else y += v; }
         return Math.floor(y + a / 2);
     };
+    // Hard-concession flag — fires ONLY when the PLAYER's own vehicle is the party
+    // being dragged past its base posture. Everyone else's escalation is the
+    // government-former's headache; it's the PLAYER's negotiation we surface here.
     var neededTalks = function (members) {
-        for (var i = 0; i < members.length; i++) if (members[i].escalated) return true;
+        for (var i = 0; i < members.length; i++)
+            if (members[i].escalated && members[i].party === playerVehicle) return true;
         return false;
     };
     var concat = function () {
@@ -305,54 +316,54 @@ on-arrival: {!
     };
 
     // ── Build each coalition's member list ONCE ──────────────────────────────
-    // Shared by the viz bars (below) and the choose-if reachability flags, so the
-    // clickable option can never disagree with its bar.
-    var leftFrontMembers = fill(concat(
+    // Cores ("seeds") are extracted so the SAME core feeds both the with-player
+    // member lists (the bars + choose-if flags) and the player-less pivot test
+    // further down — the clickable option can never disagree with its bar.
+    var leftFrontSeed = concat(
         [{ party: leftCarrier, type: "government"}],
         iuSupport > 0 ? [{ party: "iu", type: "support" }] : []
-    ), "trueLeft");
-    var changeCoalitionMembers = fill(concat(
+    );
+    var changeSeed = concat(
         [{ party: leftCarrier, type: "government"}],
         [{ party: "psoe", type: "government" }],
         iuSupport > 0 ? [{ party: "iu", type: "government" }] : []
-    ), "left");
-    var progMembers = fill(concat(
+    );
+    var progSeed = concat(
         [{ party: "psoe", type: "government" }],
         leftCarrier && S(leftCarrier) > 0 ? [{ party: leftCarrier, type: "government" }] : [],
         iuSupport > 0 ? [{ party: "iu", type: "support" }] : []
-    ), "left");
-    var psoeMinMembers = fill(concat(
+    );
+    var psoeMinSeed = concat(
         [{ party: "psoe", type: "government" }],
         leftCarrier && S(leftCarrier) > 0 ? [{ party: leftCarrier, type: "support" }] : [],
         iuSupport > 0 ? [{ party: "iu", type: "support" }] : []
-    ), "left");
-    var rightMembers = fill(
-        [{ party: "pp", type: "government" }, { party: "cs", type: "government" }],
-        "right"
     );
+    var rightSeed    = [{ party: "pp", type: "government" }, { party: "cs", type: "government" }];
     // Same liberal bloc, Cs in the lead (for when Cs out-seats the PP).
-    var csRightMembers = fill(
-        [{ party: "cs", type: "government" }, { party: "pp", type: "government" }],
-        "right"
-    );
-    var natRightMembers = fill(concat(
+    var csRightSeed  = [{ party: "cs", type: "government" }, { party: "pp", type: "government" }];
+    var natRightSeed = concat(
         [{ party: "pp", type: "government" }, { party: "vox", type: "government" }],
         S("cs") > 0 ? [{ party: "cs", type: "support" }] : []
-    ), "rightvox");
-    var ppMinMembers = fill(concat(
+    );
+    var ppMinSeed = concat(
         [{ party: "pp", type: "government" }],
         S("cs") > 0 ? [{ party: "cs", type: "support" }] : []
-    ), "right");
+    );
     // PSOE–Cs centre cabinet — only the whitelisted regionalists can be courted in.
-    var psoeCsGovMembers = fill(
-        [{ party: "psoe", type: "government" }, { party: "cs", type: "government" }],
-        "psoecs"
-    );
+    var psoeCsSeed   = [{ party: "psoe", type: "government" }, { party: "cs", type: "government" }];
     // Same centre cabinet, Cs in the lead (for when Cs out-seats the PSOE).
-    var csCentreMembers = fill(
-        [{ party: "cs", type: "government" }, { party: "psoe", type: "government" }],
-        "psoecs"
-    );
+    var csCentreSeed = [{ party: "cs", type: "government" }, { party: "psoe", type: "government" }];
+
+    var leftFrontMembers       = fill(leftFrontSeed, "trueLeft");
+    var changeCoalitionMembers = fill(changeSeed,    "left");
+    var progMembers            = fill(progSeed,      "left");
+    var psoeMinMembers         = fill(psoeMinSeed,   "left");
+    var rightMembers           = fill(rightSeed,     "right");
+    var csRightMembers         = fill(csRightSeed,   "right");
+    var natRightMembers        = fill(natRightSeed,  "rightvox");
+    var ppMinMembers           = fill(ppMinSeed,     "right");
+    var psoeCsGovMembers       = fill(psoeCsSeed,    "psoecs");
+    var csCentreMembers        = fill(csCentreSeed,  "psoecs");
 
     // ── choose-if gating: the realistic menu the player can actually back ─────
     // "reach" = clears investiture, allowing negotiated (starred) support — the
@@ -360,7 +371,7 @@ on-arrival: {!
     // least one negotiated stance (flavour now; concession mechanics later).
     var maj = Q.congreso_s_majority || 176;
     Q.congreso_coalition_left_reach = (S(leftCarrier) > 0 || iuSupport > 0) && effOf(leftFrontMembers)                           >= maj;
-    Q.congreso_coalition_change_reah = (S("psoe") > 0 && (S(leftCarrier) > 0 || iuSupport > 0)) && effOf(changeCoalitionMembers) >= maj;
+    Q.congreso_coalition_change_reach = (S("psoe") > 0 && (S(leftCarrier) > 0 || iuSupport > 0)) && effOf(changeCoalitionMembers) >= maj;
     Q.congreso_coalition_progressive_reach = (S("psoe") > 0 && (S(leftCarrier) > 0 || iuSupport > 0))  && effOf(progMembers)     >= maj;
     Q.congreso_coalition_psoe_min_reach    =  S("psoe") > 0                                            && effOf(psoeMinMembers)  >= maj;
     Q.congreso_coalition_pp_cs_reach       = (S("pp") > 0 && S("cs") > 0)                              && effOf(rightMembers)    >= maj;
@@ -407,6 +418,39 @@ on-arrival: {!
     if ((Q.congreso_coalition_psoe_cs_wtf_happened || !Q.congreso_coalition_psoe_cs_wtf) && Q.psoe_leader == "Pedro Sánchez" && !Q.psoe_barons_revolted && (Q.congreso_coalition_grand_s_ppcs >= Q.congreso_s_majority || Q.congreso_coalition_grand_s_pp >= Q.congreso_s_majority)) {
         Q.congreso_coalition_barons_flag = 1;
     }
+
+    // ── Player kingmaker power: can the player force a repeat election? ───────
+    // The player only really FORCES new elections when they are PIVOTAL — some
+    // government is reachable with their help, but NONE can form without them. We
+    // re-run the greedy builder over the player-less candidate pool; if any bloc
+    // still clears investiture, a cabinet forms over the player's head and the
+    // leverage is gone. Core-only cabinets (single-party majority, any grand
+    // coalition) never need the player, so they instantly defuse the threat.
+    var reachNoPlayer = function (seed, mode, valid) {
+        return valid && effOf(fill(seed, mode, candidatesNoPlayer)) >= maj;
+    };
+    var govFormsWithoutPlayer =
+           Q.congreso_coalition_majority_reach
+        || reachNoPlayer(leftFrontSeed, "trueLeft", (S(leftCarrier) > 0 || iuSupport > 0))
+        || reachNoPlayer(changeSeed,    "left",     (S("psoe") > 0 && (S(leftCarrier) > 0 || iuSupport > 0)))
+        || reachNoPlayer(progSeed,      "left",     (S("psoe") > 0 && (S(leftCarrier) > 0 || iuSupport > 0)))
+        || reachNoPlayer(psoeMinSeed,   "left",      S("psoe") > 0)
+        || reachNoPlayer(rightSeed,     "right",    (S("pp") > 0 && S("cs") > 0))
+        || reachNoPlayer(natRightSeed,  "rightvox", (S("pp") > 0 && S("vox") > 0))
+        || reachNoPlayer(ppMinSeed,     "right",     S("pp") > 0)
+        || reachNoPlayer(psoeCsSeed,    "psoecs",   (S("psoe") > 0 && S("cs") > 0))
+        || ((Q.congreso_coalition_grand_s_pp >= maj || Q.congreso_coalition_grand_s_psoe >= maj) && Q.congreso_coalition_grand_ok)
+        || Q.congreso_coalition_grand_s_ppcs >= maj;
+    var someGovWithPlayer =
+           Q.congreso_coalition_majority_reach
+        || Q.congreso_coalition_left_reach        || Q.congreso_coalition_change_reach
+        || Q.congreso_coalition_progressive_reach || Q.congreso_coalition_psoe_min_reach
+        || Q.congreso_coalition_pp_cs_reach       || Q.congreso_coalition_pp_vox_reach
+        || Q.congreso_coalition_pp_min_reach      || Q.congreso_coalition_psoe_cs_gov_reach
+        || ((Q.congreso_coalition_grand_s_pp >= maj || Q.congreso_coalition_grand_s_psoe >= maj) && Q.congreso_coalition_grand_ok)
+        || Q.congreso_coalition_grand_s_ppcs >= maj;
+    // Pivotal ⇔ a cabinet wants the player's votes, yet none can govern without them.
+    Q.congreso_coalition_force_elections = (Q.congreso_player_s > 0) && someGovWithPlayer && !govFormsWithoutPlayer;
 
     // ── Widget config ────────────────────────────────────────────────────────
     window._cvParlement = {
@@ -540,10 +584,69 @@ go-to: coalition_list if congreso_coalition_barons_flag != 1; barons_intervene i
 - @congreso_coalition_right.cs_pp
 - @congreso_coalition_right.pp_vox
 - @congreso_coalition_right.pp_minority
-
-# TODO: if king-maker, option to force new elections?
-
+- @new_congreso_elections
 
 @barons_intervene
 
 - @congreso_coalition_barons
+
+@new_congreso_elections
+title: Force new elections!
+subtitle: We are the kingmakers with this arithmetics after all
+choose-if: congreso_coalition_force_elections
+unavailable-subtitle: This is out of our control
+on-arrival: {!
+    Q.next_spanish_election_month += 4;
+    if (Q.next_spanish_election_month >= 12) {
+        Q.next_spanish_election_month = Q.next_spanish_election_month % 12;
+        Q.next_spanish_election_year = Q.year + 1;
+    } else {
+        Q.next_spanish_election_year = Q.year;
+    }
+    if (Q.rubicon) {
+        Q.next_spanish_election_time += 4 * 4;
+    } else {
+        Q.next_spanish_election_time += 4;
+        Q[Q.player_party + "_congreso_catalunya_support"] -= 2.5;
+    }
+
+    if (Q.congreso_coalition_left_reach) {
+        if (Q.csqp_formed) {
+            Q.csqp_relations -= 10;
+        } else if (Q.cecp_formed) {
+            Q.cecp_relations -= 10;
+        } else if (Q.ecp_formed) {
+            Q.ecp_relations -= 10;
+        } else {
+            Q.icv_relations -= 10;
+        }
+    } else if (Q.congreso_coalition_change_reach) {
+        if (Q.csqp_formed) {
+            Q.csqp_relations -= 7;
+        } else if (Q.cecp_formed) {
+            Q.cecp_relations -= 7;
+        } else if (Q.ecp_formed) {
+            Q.ecp_relations -= 7;
+        } else {
+            Q.icv_relations -= 7;
+        }
+        Q.psc_relations -= 5;
+    } else if (Q.congreso_coalition_progressive_reach) {
+        if (Q.csqp_formed) {
+            Q.csqp_relations -= 5;
+        } else if (Q.cecp_formed) {
+            Q.cecp_relations -= 5;
+        } else if (Q.ecp_formed) {
+            Q.ecp_relations -= 5;
+        } else {
+            Q.icv_relations -= 5;
+        }
+        Q.psc_relations -= 7;
+    }
+!}
+
+While definitely an unpopular option with some, we've decided that these results were not for us. 
+
+- @post_event: We have to hope this is for the better...
+
+

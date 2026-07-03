@@ -73,9 +73,11 @@ on-arrival: {!
   Q.spanish_coalition_disp = "PP <span style='color: var(--pp);'>majority government</span>";
   Q.spain_is_republic = 0; // lol
 
+  Q.next_election_week = 1;
   Q.next_election_month = 12;
   Q.next_election_year = 2014;
   Q.next_election_time = 16; // in time steps, months for non-rubicon case, weeks when rubicon
+  Q.next_spanish_election_week = 1;
   Q.next_spanish_election_month = 12;
   Q.next_spanish_election_year = 2015;
   Q.next_spanish_election_time = 40;
@@ -475,10 +477,22 @@ on-arrival: {!
 
   // Party support records for graphing
   Q.party_support_records = [];
+  Q.party_spa_support_records = [];
   Q.economic_records = [];
   Q.social_records = [];
 
   // Congreso situation
+  // Approximate Census Weights - losely based on 2016 data
+  Q.congreso_pop = {
+      "catalunya": 55000, 
+      "valencia": 36000,
+      "balears": 8000,
+      "navarra": 4800,
+      "euskadi": 17000,
+      "galicia": 22000,
+      "rest": 220000
+  };
+
   Q.congreso_seats = {
       "catalunya": 47,
       "valencia": 33,
@@ -499,6 +513,14 @@ on-arrival: {!
   Q.congreso_parties_galicia = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "bng", "nos"];
   Q.congreso_parties_rest = ["pp", "psoe", "podemos", "cs", "iu", "vox", "up", "sumar", "upyd", "mpais", "cc", "fac", "prc", "te"];
 
+  Q.congreso_parties = [];
+  for (var c of Q.congreso_constituencies) {
+    for (var p of Q["congreso_parties_" + c]) {
+      if (!Q.congreso_parties.includes(p)) {
+        Q.congreso_parties.push(p);
+      }
+    }
+  }
 
   Q.congreso_rural_bias = {
       'pp': 1.15,      // PP is dominant in rural Castilla

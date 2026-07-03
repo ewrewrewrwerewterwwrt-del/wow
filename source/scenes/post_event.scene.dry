@@ -96,19 +96,18 @@ if (has_time_passed) {
         Q.erc_civic_dissent += 1;
     }
     // 2.4. Historical records
-    if (!Q.historical_mode || (Q.month % 4 == 0 && Q.week == 1) || Q.month == Q.next_election_month) {
+    // Parlament
+    if (!Q.historical_mode || (Q.month % 4 == 0 && Q.week == 1) || (Q.year == Q.next_election_year && Q.month == Q.next_election_month && Q.week == Q.next_election_week)) {
         // For historical mode, only record 4 times a year + election times.
         var party_support_results = {'date': new Date(Q.year, Q.month-1, Q.week*7)};
         for (var p of Q.parties) {
-            if (!Q[p+'_parlament_s'] && p !== Q.player_party && (p != "cup" && !Q.cup_in_jxsi && !Q.cup_in_jxcat)) {
-                // only record parties that have seats. It's easier for parties that change names.
-                continue;
-            }
             var p_support = 0;
             var total_pop = 0;
             for (var c of Q.parlament_constituencies) {
                 for (var d of Q.parlament_demographics) {
-                    p_support += Q[p + '_parlament_' + c + '_' + d + '_support']*Q['parlament_' + c + '_' + d + '_pop']/100;
+                    if (Q[p + '_parlament_' + c + '_' + d + '_support'] > 0) {
+                        p_support += Q[p + '_parlament_' + c + '_' + d + '_support']*Q['parlament_' + c + '_' + d + '_pop']/100;
+                    }
                     total_pop += Q['parlament_' + c + '_' + d + '_pop'];
                 }
             }
@@ -116,6 +115,23 @@ if (has_time_passed) {
         }
         Q.party_support_records.push(party_support_results);
     }
+    // Congreso
+    if (!Q.historical_mode || (Q.month % 4 == 0 && Q.week == 1) || (Q.year == Q.next_spanish_election_year && Q.month == Q.next_spanish_election_month && Q.week == Q.next_spanish_election_week)) {
+        var party_spa_support_records = {'date': new Date(Q.year, Q.month-1, Q.week*7)};
+        for (var p of Q.congreso_parties) {
+            var p_support = 0;
+            var total_pop = 0;
+            for (var c of Q.congreso_constituencies) {
+                if (Q[p + '_congreso_' + c + '_support'] > 0) {
+                    p_support += Q[p + '_congreso_' + c + '_support']*Q['congreso_pop'][c]/100;
+                }
+                total_pop += Q['congreso_pop'][c];    
+            }
+            party_spa_support_records[p] = p_support/total_pop * 100;
+            }
+        Q.party_spa_support_records.push(party_spa_support_records);
+    }
+
     Q.economic_records.push({
         'date': new Date(Q.year, Q.month-1, Q.week*7),
         'gdp_growth': Q.gdp_growth,

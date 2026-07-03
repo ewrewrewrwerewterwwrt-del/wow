@@ -9,15 +9,18 @@ view-if: congreso_coalition_pp_cs_s > congreso_s_majority - 50
 choose-if: congreso_coalition_pp_cs_reach
 unavailable-subtitle: PP and Cs fall short of investiture, even with the smaller parties they could win over.
 on-arrival: {!
-    // TODO — form the PP + Cs coalition cabinet.
-    //   • president = pp, Cs in government; centralist-right minors support,
-    //     pact-pragmatists (cc/prc/te/pnv) abstain, the Catalan right per roadmap.
-    //   • the player (Catalan minor) almost always OPPOSES — little to no lever.
+    Q.spanish_pm = Q.pp_leader;
+    Q.spanish_pm_gender = Q.pp_leader_gender;
+    Q.spanish_pm_party = "pp";
+    Q.spanish_coalition = ["pp", "cs"];
+    Q.spanish_coalition_disp = '<span style="color: var(--cs); font-style: italic;">Liberal</span> <span style="color: var(--pp); font-style: italic;">Right</span> Coalition';
 !}
 
-TODO
+**A new government is formed!**
 
--@post_event: TO-DO
+The recently appointed [+ spanish_coalition_disp +] Gobierno will be lead by [? if spanish_pm_gender == "m": Presidente ?][? if spanish_pm_gender == "f": Presidenta ?][+ spanish_pm +].
+
+-@post_event: This is terrible news...
 
 @cs_pp
 title: <span style="color: var(--cs); font-style: italic;">Liberal</span> <span style="color: var(--pp); font-style: italic;">Coalition</span> (csspa - PP)
@@ -26,15 +29,19 @@ view-if: congreso_coalition_cs_pp_s > congreso_s_majority - 50
 choose-if: congreso_coalition_pp_cs_reach
 unavailable-subtitle: Cs and PP fall short of investiture, even with the smaller parties they could win over.
 on-arrival: {!
-    // TODO — form the Cs-led liberal cabinet (Cs president, PP the junior partner).
-    //   • mirrors @pp_cs but with the bigger party (Cs) taking the presidency; the
-    //     same right minors back it. Shares congreso_coalition_pp_cs_reach (the
-    //     PP+Cs arithmetic is identical — only who-leads differs).
+    Q.spanish_pm = Q.csspa_leader;
+    Q.spanish_pm_gender = Q.csspa_leader_gender;
+    Q.spanish_pm_party = "cs";
+    Q.spanish_coalition = ["cs", "pp"];
+    Q.spanish_coalition_disp = '<span style="color: var(--cs); font-style: italic;">Liberal</span> <span style="color: var(--pp); font-style: italic;">Coalition</span>';
 !}
 
-TODO
+**A new government is formed!**
 
--@post_event: TO-DO
+The recently appointed [+ spanish_coalition_disp +] Gobierno will be lead by [? if spanish_pm_gender == "m": Presidente ?][? if spanish_pm_gender == "f": Presidenta ?][+ spanish_pm +].
+
+-@post_event: This is terrible news...
+
 
 @pp_vox
 title: <span style="color: var(--pp); font-style: italic;">National</span> <span style="color: var(--vox); font-style: italic;">Right</span> Coalition (PP - Vox)
@@ -43,15 +50,18 @@ view-if: congreso_coalition_pp_vox_s > congreso_s_majority - 50
 choose-if: congreso_coalition_pp_vox_reach and not congreso_coalition_pp_cs_reach
 unavailable-subtitle: [? if congreso_coalition_pp_cs_reach: The PP would rather govern with csspa than lean on Vox. ?][? if not congreso_coalition_pp_vox_reach: Luckily PP and Vox simply don't have enough seats. ?]
 on-arrival: {!
-    // TODO — form the PP + Vox cabinet (only when the PP→Cs maths ISN'T there).
-    //   • a Vox-tainted cabinet can't be negotiated upward (no rightvox escalation):
-    //     pact-pragmatists and the Catalan right will NOT enable it — centralist
-    //     right only. So this reaches far less often than the PP+Cs option.
+    Q.spanish_pm = Q.pp_leader;
+    Q.spanish_pm_gender = Q.pp_leader_gender;
+    Q.spanish_pm_party = "pp";
+    Q.spanish_coalition = ["pp", "vox"];
+    Q.spanish_coalition_disp = '<span style="color: var(--pp); font-style: italic;">National</span> <span style="color: var(--vox); font-style: italic;">Right</span> Coalition';
 !}
 
-TODO
+**A new government is formed!**
 
--@post_event: TO-DO
+The recently appointed [+ spanish_coalition_disp +] Gobierno will be lead by [? if spanish_pm_gender == "m": Presidente ?][? if spanish_pm_gender == "f": Presidenta ?][+ spanish_pm +].
+
+-@post_event: This is terrible news...
 
 @pp_minority
 title: <span style="color: var(--pp); font-style: italic;">PP</span> Minority Government
@@ -60,10 +70,15 @@ view-if: congreso_coalition_pp_min_s > congreso_s_majority - 50
 choose-if: congreso_coalition_pp_min_reach
 unavailable-subtitle: Even with outside support, PP alone can't clear investiture.
 on-arrival: {!
-    // TODO — form a PP single-party (minority) cabinet, externally supported.
-    //   • president = pp; Cs + the right-leaning minors sit OUTSIDE (support/abstain).
+    Q.spanish_pm = Q.pp_leader;
+    Q.spanish_pm_gender = Q.pp_leader_gender
+    Q.spanish_pm_party = "pp";
+    Q.spanish_coalition = ["pp"];
+    Q.spanish_coalition_disp = '<span style="color: var(--pp); font-style: italic;">PP</span> Minority Government';
 !}
 
-TODO
+**A new government is formed!**
 
--@post_event: TO-DO
+The recently appointed [+ spanish_coalition_disp +] Gobierno will be lead by [? if spanish_pm_gender == "m": Presidente ?][? if spanish_pm_gender == "f": Presidenta ?][+ spanish_pm +].
+
+-@post_event: This is terrible news...

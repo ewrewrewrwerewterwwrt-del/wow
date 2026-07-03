@@ -4,37 +4,53 @@ You should not be here? Report a bug if you see this text.
 
 @progressive
 title: <span style="color: var(--psoe); font-style: italic;">Progressist</span> <span style="color: var(--up); font-style: italic;">Coalition</span> (PSOE - [? if congreso_left_carrier == "up": UP?][?if congreso_left_carrier != "up": [+ congreso_left_carrier +]?])
-subtitle: A difficult arithmetic made possible by kingmaker smaller parties. [? if congreso_coalition_progressive_talks: Pulling it over the line will demand hard concessions. ?]
+subtitle: A difficult arithmetic made possible by kingmaker smaller parties. [? if congreso_coalition_progressive_talks: Given the numbers, we have a chance to negotiate the conditions to make this possible. ?]
 view-if: congreso_coalition_progressive_s > congreso_s_majority - 50
 choose-if: congreso_coalition_progressive_reach and not congreso_coalition_psoe_cs_wtf and psoe_leader != "???"
 unavailable-subtitle: [? if not congreso_coalition_progressive_reach : The numbers don't add up, not even with every abstention that can be realistically negotiated. ?][? if congreso_coalition_psoe_cs_wtf: This does not seem to be the plan of [+ psoe_leader +] and [+ csspa_leader +] ?][? if psoe_leader == "???": The PSOE has no clear leadership at the moment. ?]
+on-arrival: congreso_coalition_lead_party = "psoe"
+set-jump: progressive_resolve
+go-to: progressive_resolve if not congreso_coalition_progressive_talks; congreso_coalition_negotiation if congreso_coalition_progressive_talks
+
+
+@progressive_resolve
 on-arrival: {!
-    // TODO — form the PSOE + left-carrier coalition cabinet.
-    //   left carrier = Q.congreso_left_carrier (sumar→up→podemos→iu)
-    //   • president = psoe, UNLESS Q (sorpasso): leftPodemosLed ⇒ carrier leads.
-    //   • the player negotiates support/abstention for concessions — reuse the
-    //     *_concessions_indy / *_concessions_social machinery (cf. parlament coalitions).
-    //   • Q.congreso_coalition_progressive_talks flags whether the maths needed
-    //     escalated (starred) support → bigger asks / lower trust payoff.
-    //   • set the "government formed" flags the engine/post_event read.
+    Q.spanish_pm = Q.psoe_leader;
+    Q.spanish_pm_gender = Q.psoe_leader_gender;
+    Q.spanish_pm_party = "psoe";
+    Q.spanish_coalition = ["psoe", Q.congreso_left_carrier];
+
+    Q.spanish_coalition_disp = '<span style="color: var(--psoe); font-style: italic;">Progressist</span> <span style="color: var(--up); font-style: italic;">Coalition</span>';
 !}
 
-TODO
+**A new government is formed!**
 
--@post_event: TO-DO
+The recently appointed [+ spanish_coalition_disp +] Gobierno will be lead by [? if spanish_pm_gender == "m": Presidente ?][? if spanish_pm_gender == "f": Presidenta ?][+ spanish_pm +].
+
+-@post_event: We'll have to see how really progressive is this coalition...
 
 @psoe_minority
 title: PSOE <span style="color: var(--psoe); font-style: italic;">Minority Government</span>
-subtitle: PSOE governs alone, tolerated from the outside. [? if congreso_coalition_psoe_min_talks: It hangs on concessions we'd have to wring out. ?]
+subtitle: PSOE governs alone, tolerated from the outside. [? if congreso_coalition_psoe_min_talks: Given the numbers, we have a chance to negotiate the conditions to make this possible. ?]
 view-if: congreso_coalition_psoe_min_s > congreso_s_majority - 50
 choose-if: congreso_coalition_psoe_min_reach and not congreso_coalition_psoe_cs_wtf and psoe_leader != "???"
 unavailable-subtitle: [? if congreso_coalition_psoe_min_s < congreso_s_majority: Even with outside support that could be negotiated, PSOE falls short of investiture. ?][? if congreso_coalition_psoe_cs_wtf: This does not seem to be the plan of [+ psoe_leader +] and [+ csspa_leader +]. ?][? if psoe_leader == "???": The PSOE has no clear leadership at the moment. ?]
+on-arrival: congreso_coalition_lead_party = "psoe"
+set-jump: psoe_minority_resolve
+go-to: psoe_minority_resolve if not congreso_coalition_psoe_min_talks; congreso_coalition_negotiation if congreso_coalition_psoe
+
+@psoe_minority_resolve
 on-arrival: {!
-    // TODO — form a PSOE single-party (minority) cabinet, externally supported.
-    //   • president = psoe; the left carrier + minors sit OUTSIDE (support/abstain).
-    //   • same concession flow as @progressive, but no cabinet seats to hand out.
+    Q.spanish_pm = Q.psoe_leader;
+    Q.spanish_pm_gender = Q.psoe_leader_gender;
+    Q.spanish_pm_party = "psoe";
+    Q.spanish_coalition = ["psoe"];
+
+    Q.spanish_coalition_disp = 'PSOE <span style="color: var(--psoe); font-style: italic;">Minority Government</span>';
 !}
 
-TODO
+**A new government is formed!**
 
--@post_event: TO-DO
+The recently appointed [+ spanish_coalition_disp +] Gobierno will be lead by [? if spanish_pm_gender == "m": Presidente ?][? if spanish_pm_gender == "f": Presidenta ?][+ spanish_pm +].
+
+-@post_event: Let's see how the PSOE fares...

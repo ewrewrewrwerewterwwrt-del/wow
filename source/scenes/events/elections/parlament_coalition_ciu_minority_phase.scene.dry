@@ -57,13 +57,14 @@ on-arrival: {!
 go-to: phase_text
 
 @phase_text
+new-page: true
 go-to: parlament_coalition_setnames
 set-jump: choices
+
 
 The representatives of [+ parlament_current_ciu +] have come forward with a [?if ciu_min_coalition_phase > 1: new?] proposal for the formation of a new government:
 
 @choices
-new-page: true
 
 [? if parlament_coalition_concessions_social or parlament_coalition_concessions_indy: **Policy Concessions**?]
 
