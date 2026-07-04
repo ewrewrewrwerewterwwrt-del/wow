@@ -610,9 +610,6 @@ go-to: start_menu_2
 
 
 @start
-choose-if: url_valid
-unavailable-subtitle: Route to Ítaca is currently in its early development stages. Check back soon(-ish) for the full experience!
-# unavailable-subtitle: Game loaded from an unrecognized origin, are you sure you're in the right place? TODO: put this as the right unavailable subtitle!
 on-arrival: {!
 Q.debug = true; // FIXME - TODO: remove!
 
